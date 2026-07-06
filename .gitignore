@@ -1,0 +1,13 @@
+.DS_Store
+.obsidian/
+.trash/
+.playwright-cli/
+node_modules/
+dist/
+build/
+.env
+.env.*
+
+# Large or generated local captures can be kept outside Git until intentionally curated.
+raw/tmp/
+raw/downloads/
