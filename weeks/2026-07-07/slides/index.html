@@ -4,27 +4,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="data:,">
-  <title>Search Agent Study Group - Week 1</title>
+  <title>Search Agent Study Group - Week 0 Consistent</title>
   <style>
     :root {
       color-scheme: light;
       --paper: #f4f6f1;
       --paper-deep: #e3e8df;
       --ink: #17201d;
-      --muted: #63706b;
+      --muted: #66726d;
+      --line: rgba(23, 32, 29, 0.15);
+      --soft-line: rgba(23, 32, 29, 0.075);
+      --surface: rgba(255, 255, 255, 0.58);
+      --surface-strong: rgba(255, 255, 255, 0.74);
       --teal: #0e8f80;
       --coral: #d85f45;
       --gold: #c9972d;
       --blue: #4677b8;
-      --line: rgba(23, 32, 29, 0.16);
-      --soft-line: rgba(23, 32, 29, 0.08);
-      --shadow: rgba(38, 52, 47, 0.16);
+      --purple: #785aa6;
+      --shadow: rgba(38, 52, 47, 0.13);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html,
     body {
@@ -40,6 +41,12 @@
     body {
       display: grid;
       place-items: center;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-color: rgba(23, 32, 29, 0.32);
+      text-underline-offset: 2px;
     }
 
     .deck {
@@ -65,6 +72,7 @@
       inset: 2.8%;
       border: 1px solid var(--line);
       pointer-events: none;
+      z-index: 3;
     }
 
     .deck::after {
@@ -78,18 +86,17 @@
       mix-blend-mode: soft-light;
       opacity: 0.68;
       pointer-events: none;
-      z-index: 3;
+      z-index: 4;
     }
 
     .slide {
       position: absolute;
       inset: 0;
       z-index: 2;
-      height: 100%;
       opacity: 0;
       pointer-events: none;
-      transform: translateX(18px);
-      transition: opacity 260ms ease, transform 260ms ease;
+      transform: translateX(16px);
+      transition: opacity 280ms ease, transform 280ms ease;
     }
 
     .slide.is-active {
@@ -100,200 +107,385 @@
 
     .title-slide {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(300px, 38%);
-      gap: clamp(24px, 5vw, 72px);
-      align-items: center;
-      padding: clamp(32px, 7vw, 92px);
+      grid-template-columns: 42% 58%;
+      gap: 0;
+      align-items: stretch;
+      padding: 0;
     }
 
-    .content {
-      max-width: 860px;
-    }
-
-    .eyebrow {
+    .eyebrow,
+    .kicker {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: clamp(22px, 3vw, 38px);
-      color: var(--muted);
-      font-size: clamp(13px, 1.25vw, 18px);
-      font-weight: 760;
+      color: var(--coral);
+      font-size: clamp(12px, 1vw, 15px);
+      font-weight: 850;
       text-transform: uppercase;
     }
 
-    .eyebrow::before {
+    .eyebrow::before,
+    .kicker::before {
       content: "";
-      width: 36px;
+      width: 30px;
       height: 3px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--teal), var(--coral), var(--gold));
+      background: var(--teal);
     }
 
-    h1 {
-      max-width: 780px;
+    .cover-copy {
+      position: relative;
+      z-index: 5;
+      padding-left: clamp(46px, 7vw, 90px);
+      padding-top: clamp(168px, 22.6vw, 290px);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: coverTitleIn 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .cover-title {
+      max-width: 520px;
       margin: 0;
-      font-size: clamp(44px, 8.3vw, 106px);
-      line-height: 0.98;
-      font-weight: 840;
-      letter-spacing: 0;
+      color: var(--ink);
+      font-size: clamp(48px, 5.25vw, 72px);
+      line-height: 0.97;
+      font-weight: 860;
     }
 
-    .title-mark {
+    .cover-subtitle {
+      margin: clamp(12px, 1.4vw, 18px) 0 0;
+      color: var(--teal);
+      font-size: clamp(34px, 3.3vw, 46px);
+      line-height: 1.02;
+      font-weight: 820;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: coverTitleIn 400ms cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
+    }
+
+    .cover-date {
+      margin: clamp(12px, 1.5vw, 20px) 0 0;
+      color: rgba(23, 32, 29, 0.58);
+      font-size: clamp(20px, 1.75vw, 26px);
+      line-height: 1.2;
+      font-weight: 680;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: coverTitleIn 400ms cubic-bezier(0.22, 1, 0.36, 1) 190ms forwards;
+    }
+
+    .cover-tags {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      margin-top: clamp(20px, 2.2vw, 28px);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: coverTitleIn 400ms cubic-bezier(0.22, 1, 0.36, 1) 260ms forwards;
+    }
+
+    .cover-tag,
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.42);
+      color: rgba(23, 32, 29, 0.72);
+      padding: 7px 11px;
+      font-size: clamp(10px, 0.82vw, 13px);
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .constellation-panel {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      transform: scale(0.98);
+      animation: constellationIn 700ms cubic-bezier(0.22, 1, 0.36, 1) 180ms forwards;
+    }
+
+    .constellation {
+      width: min(58vw, 740px);
+      height: min(74vh, 600px);
+      overflow: visible;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .constellation-link {
+      stroke-width: 1.1;
+      stroke-opacity: 0.22;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 420;
+      stroke-dashoffset: 420;
+      animation: edgeDraw 600ms ease 250ms forwards;
+      transition: stroke-opacity 180ms ease, stroke-width 180ms ease;
+    }
+
+    .constellation-link.is-hot {
+      stroke-opacity: 0.58;
+      stroke-width: 1.7;
+    }
+
+    .concept-node {
+      cursor: grab;
+      opacity: 0;
+      animation: nodePop 350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .concept-node.is-dragging {
+      cursor: grabbing;
+    }
+
+    .concept-node .node-glow {
+      opacity: 0.2;
+      filter: blur(2px);
+      transition: opacity 180ms ease, r 180ms ease;
+    }
+
+    .concept-node .node-pill {
+      fill: rgba(255, 255, 255, 0.62);
+      stroke-width: 1;
+      transition: fill 180ms ease, stroke-opacity 180ms ease;
+    }
+
+    .concept-node text {
+      fill: var(--ink);
+      dominant-baseline: middle;
+      text-anchor: middle;
+      font-weight: 790;
+      pointer-events: none;
+    }
+
+    .concept-node[data-kind="center"] text {
+      font-size: 26px;
+      font-weight: 870;
+    }
+
+    .concept-node[data-kind="cluster"] text {
+      font-size: 19px;
+      font-weight: 850;
+    }
+
+    .concept-node[data-kind="major"] text {
+      font-size: 15px;
+      font-weight: 830;
+    }
+
+    .concept-node[data-kind="topic"] text {
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .concept-node.is-hot .node-glow {
+      opacity: 0.46;
+    }
+
+    .concept-node.is-hot .node-pill {
+      fill: rgba(255, 255, 255, 0.82);
+      stroke-opacity: 0.74;
+    }
+
+    @keyframes coverTitleIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes constellationIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes edgeDraw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes nodePop {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .content-slide {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(14px, 1.8vw, 22px);
+      padding: clamp(36px, 4.8vw, 64px) clamp(48px, 6vw, 86px) clamp(52px, 5.6vw, 74px);
+    }
+
+    .slide-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: clamp(10px, 1.2vw, 16px);
+    }
+
+    .slide-title {
+      margin: 8px 0 0;
+      color: var(--ink);
+      font-size: clamp(38px, 4.6vw, 64px);
+      line-height: 0.98;
+      font-weight: 860;
+    }
+
+    .meter {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: rgba(23, 32, 29, 0.56);
+      font-size: clamp(12px, 0.95vw, 14px);
+      font-weight: 780;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tick {
+      width: 9px;
+      height: 9px;
+      border: 1px solid rgba(23, 32, 29, 0.32);
+      border-radius: 50%;
+    }
+
+    .state-shell {
+      display: grid;
+      grid-template-columns: minmax(210px, 0.26fr) minmax(0, 1fr);
+      gap: clamp(28px, 4vw, 64px);
+      min-height: 0;
+    }
+
+    .rail {
+      display: grid;
+      gap: clamp(14px, 1.8vw, 22px);
+      align-content: start;
+      padding: 12px 0 0;
+    }
+
+    .rail-item {
+      display: grid;
+      gap: 5px;
+      color: rgba(23, 32, 29, 0.42);
+      transition: color 300ms ease, transform 300ms ease;
+    }
+
+    .rail-num {
+      color: rgba(14, 143, 128, 0.48);
+      font-size: clamp(11px, 0.9vw, 14px);
+      font-weight: 860;
+    }
+
+    .rail-label {
+      font-size: clamp(20px, 1.75vw, 28px);
+      line-height: 1.05;
+      font-weight: 850;
+    }
+
+    .rail-item.is-current {
+      color: var(--ink);
+      transform: translateX(2px);
+    }
+
+    .rail-item.is-current .rail-num {
       color: var(--teal);
     }
 
-    .subtitle {
-      max-width: 720px;
-      margin: clamp(22px, 3.2vw, 36px) 0 0;
-      color: var(--muted);
-      font-size: clamp(18px, 2vw, 28px);
-      line-height: 1.34;
-      font-weight: 530;
+    .stage {
+      position: relative;
+      min-height: 0;
     }
 
-    .meta-row {
+    .state {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      gap: clamp(12px, 1.5vw, 18px);
+      align-content: start;
+      opacity: 0;
+      transform: translateY(14px);
+      pointer-events: none;
+      transition: opacity 380ms cubic-bezier(0.22, 1, 0.36, 1), transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .state.is-current {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .state-kicker {
+      margin: 0;
+      color: var(--coral);
+      font-size: clamp(13px, 1vw, 17px);
+      line-height: 1.1;
+      font-weight: 860;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .headline {
+      margin: 0;
+      max-width: 1040px;
+      color: var(--ink);
+      font-size: clamp(32px, 3.3vw, 56px);
+      line-height: 1.05;
+      font-weight: 860;
+    }
+
+    .statement,
+    .support {
+      margin: 0;
+      max-width: 860px;
+      color: rgba(23, 32, 29, 0.64);
+      font-size: clamp(18px, 1.45vw, 24px);
+      line-height: 1.28;
+      font-weight: 660;
+    }
+
+    .panel {
+      border: 1px solid rgba(23, 32, 29, 0.14);
+      background: var(--surface);
+      box-shadow: 0 18px 44px rgba(255, 255, 255, 0.22) inset;
+      padding: clamp(16px, 1.8vw, 26px);
+    }
+
+    .panel-title {
+      margin: 0 0 14px;
+      color: var(--teal);
+      font-size: clamp(17px, 1.35vw, 23px);
+      font-weight: 850;
+    }
+
+    .sourcebar {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: clamp(28px, 4vw, 48px);
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 40px;
-      padding: 9px 14px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.54);
-      box-shadow: 0 12px 34px rgba(255, 255, 255, 0.28) inset;
-      color: var(--ink);
-      font-size: clamp(13px, 1.1vw, 16px);
+      gap: 12px 20px;
+      color: rgba(23, 32, 29, 0.56);
+      font-size: clamp(11px, 0.88vw, 13px);
       font-weight: 700;
     }
 
-    .map {
-      position: relative;
-      aspect-ratio: 0.82 / 1;
-      min-height: 420px;
-      border-left: 1px solid var(--line);
-      display: grid;
-      align-items: center;
-      padding-left: clamp(28px, 4vw, 56px);
-    }
+    .source-state { display: none; }
 
-    .map-inner {
-      position: relative;
-      width: min(100%, 390px);
-      aspect-ratio: 1 / 1.24;
-    }
-
-    .orbit {
-      position: absolute;
-      inset: 8%;
-      border: 1px solid rgba(23, 32, 29, 0.18);
-      transform: rotate(-9deg);
-    }
-
-    .orbit:nth-child(2) {
-      inset: 20%;
-      transform: rotate(13deg);
-      border-color: rgba(14, 143, 128, 0.28);
-    }
-
-    .route {
-      position: absolute;
-      height: 2px;
-      transform-origin: left center;
-      background: linear-gradient(90deg, transparent, var(--teal), var(--coral), transparent);
-      opacity: 0.78;
-      animation: pulse 4.4s ease-in-out infinite;
-    }
-
-    .route.one {
-      width: 76%;
-      left: 7%;
-      top: 31%;
-      transform: rotate(20deg);
-    }
-
-    .route.two {
-      width: 70%;
-      left: 18%;
-      top: 66%;
-      transform: rotate(-25deg);
-      animation-delay: -1.5s;
-    }
-
-    .route.three {
-      width: 52%;
-      left: 27%;
-      top: 49%;
-      transform: rotate(90deg);
-      background: linear-gradient(90deg, transparent, var(--gold), var(--blue), transparent);
-      animation-delay: -2.5s;
-    }
-
-    .node {
-      position: absolute;
-      display: grid;
-      place-items: center;
-      width: clamp(74px, 7.6vw, 108px);
-      aspect-ratio: 1;
-      border: 1px solid rgba(23, 32, 29, 0.2);
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: 0 18px 42px var(--shadow);
-      color: var(--ink);
-      font-size: clamp(12px, 1vw, 15px);
-      font-weight: 780;
-      text-align: center;
-      line-height: 1.12;
-      animation: breathe 5s ease-in-out infinite;
-    }
-
-    .node.query {
-      left: 0;
-      top: 18%;
-      border-color: rgba(70, 119, 184, 0.38);
-    }
-
-    .node.search {
-      right: 6%;
-      top: 8%;
-      border-color: rgba(14, 143, 128, 0.38);
-      animation-delay: -0.8s;
-    }
-
-    .node.tools {
-      right: 0;
-      bottom: 20%;
-      border-color: rgba(216, 95, 69, 0.36);
-      animation-delay: -1.6s;
-    }
-
-    .node.answer {
-      left: 12%;
-      bottom: 8%;
-      border-color: rgba(201, 151, 45, 0.42);
-      animation-delay: -2.4s;
-    }
-
-    .center {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      display: grid;
-      place-items: center;
-      width: clamp(88px, 8.5vw, 126px);
-      aspect-ratio: 1;
-      transform: translate(-50%, -50%);
-      border: 1px solid rgba(23, 32, 29, 0.22);
-      background: #16211e;
-      color: #f8f9f4;
-      box-shadow: 0 26px 56px rgba(23, 32, 29, 0.28);
-      font-size: clamp(12px, 1.15vw, 16px);
-      font-weight: 820;
-      text-align: center;
-      line-height: 1.1;
+    .deck[data-reveal="0"] [aria-label="Why this study group"] .source-state-0,
+    .deck[data-reveal="1"] [aria-label="Why this study group"] .source-state-1,
+    .deck[data-reveal="2"] [aria-label="Why this study group"] .source-state-2,
+    .deck[data-reveal="3"] [aria-label="Why this study group"] .source-state-3,
+    .deck[data-reveal="4"] [aria-label="Why this study group"] .source-state-4,
+    .deck[data-reveal="5"] [aria-label="Why this study group"] .source-state-5,
+    .deck[data-reveal="6"] [aria-label="Why this study group"] .source-state-6 {
+      display: inline;
     }
 
     .footer {
@@ -301,7 +493,7 @@
       left: clamp(24px, 3vw, 44px);
       right: clamp(24px, 3vw, 44px);
       bottom: clamp(18px, 2.4vw, 34px);
-      z-index: 4;
+      z-index: 6;
       display: flex;
       justify-content: space-between;
       gap: 16px;
@@ -314,10 +506,16 @@
       position: absolute;
       left: 50%;
       bottom: clamp(18px, 2.4vw, 34px);
-      z-index: 5;
+      z-index: 7;
       display: flex;
       gap: 8px;
       transform: translateX(-50%);
+    }
+
+    .deck[data-slide="0"] .footer,
+    .deck[data-slide="0"] .progress {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .dot {
@@ -325,683 +523,227 @@
       height: 8px;
       border: 1px solid rgba(23, 32, 29, 0.38);
       border-radius: 50%;
-      background: transparent;
     }
 
-    .dot.is-active {
-      background: var(--ink);
-    }
+    .dot.is-active { background: var(--ink); }
 
-    .work-slide {
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: clamp(12px, 1.6vw, 20px);
-      padding: clamp(30px, 4.8vw, 66px) clamp(42px, 6.2vw, 88px) clamp(52px, 5.6vw, 76px);
-    }
-
-    .slide-header {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 24px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: clamp(10px, 1.2vw, 16px);
-    }
-
-    .slide-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--teal);
-      font-size: clamp(12px, 1vw, 15px);
-      font-weight: 820;
-      text-transform: uppercase;
-    }
-
-    .slide-kicker::before {
-      content: "";
-      width: 30px;
-      height: 3px;
-      background: var(--teal);
-    }
-
-    .work-title {
-      margin: 8px 0 0;
-      color: var(--ink);
-      font-size: clamp(38px, 4.8vw, 66px);
-      line-height: 0.98;
-      font-weight: 850;
-      letter-spacing: 0;
-    }
-
-    .reveal-meter {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      color: rgba(23, 32, 29, 0.56);
-      font-size: clamp(12px, 0.95vw, 14px);
-      font-weight: 780;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .reveal-tick {
-      width: 9px;
-      height: 9px;
-      border: 1px solid rgba(23, 32, 29, 0.32);
-      border-radius: 50%;
-      background: transparent;
-    }
-
-    .deck[data-reveal="0"] .reveal-tick:nth-child(1),
-    .deck[data-reveal="1"] .reveal-tick:nth-child(2),
-    .deck[data-reveal="2"] .reveal-tick:nth-child(3),
-    .deck[data-reveal="3"] .reveal-tick:nth-child(4),
-    .deck[data-reveal="4"] .reveal-tick:nth-child(5),
-    .deck[data-reveal="5"] .reveal-tick:nth-child(6),
-    .deck[data-reveal="6"] .reveal-tick:nth-child(7) {
-      background: var(--teal);
-      border-color: var(--teal);
-    }
-
-    .work-stage {
-      position: relative;
-      min-height: 0;
-    }
-
-    .work-state {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      grid-template-columns: minmax(280px, 0.54fr) minmax(0, 1.46fr);
-      gap: clamp(22px, 3.2vw, 46px);
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(18px);
-      transition: opacity 320ms ease, transform 320ms ease, filter 320ms ease;
-      filter: blur(2px);
-    }
-
-    .deck[data-reveal="0"] .work-state[data-state="0"],
-    .deck[data-reveal="1"] .work-state[data-state="1"],
-    .deck[data-reveal="2"] .work-state[data-state="2"],
-    .deck[data-reveal="3"] .work-state[data-state="3"],
-    .deck[data-reveal="4"] .work-state[data-state="4"],
-    .deck[data-reveal="5"] .work-state[data-state="5"],
-    .deck[data-reveal="6"] .work-state[data-state="6"] {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-      filter: blur(0);
-    }
-
-    .core-copy {
-      position: relative;
-      z-index: 2;
-    }
-
-    .quote-first {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(0, 1fr);
-      align-content: stretch;
-      gap: clamp(12px, 1.5vw, 18px);
-    }
-
-    .quote-first .core-copy {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 7px;
-      align-items: start;
-      border-left: 4px solid var(--coral);
-      padding-left: clamp(18px, 2vw, 26px);
-    }
-
-    .overview-state {
-      grid-template-columns: 1fr;
-      align-content: center;
-    }
-
-    .overview-panel {
-      display: grid;
-      gap: clamp(18px, 2vw, 28px);
-      width: min(100%, 1060px);
-      margin: 0 auto;
-      border-left: 4px solid var(--coral);
-      padding-left: clamp(22px, 2.4vw, 34px);
-    }
-
-    .overview-list {
-      display: grid;
-      gap: clamp(14px, 1.5vw, 20px);
+    .quote-text {
       margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .overview-list li {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: clamp(14px, 1.5vw, 20px);
-      align-items: baseline;
-      color: var(--ink);
-      font-size: clamp(30px, 3vw, 44px);
-      line-height: 1.03;
-      font-weight: 850;
-    }
-
-    .overview-list span {
-      color: var(--teal);
-      font-size: clamp(16px, 1.35vw, 20px);
-      font-weight: 860;
-    }
-
-    .therefore-line {
-      margin: 0;
-      color: var(--ink);
-      font-size: clamp(38px, 4.7vw, 66px);
-      line-height: 1.02;
-      font-weight: 860;
-      max-width: 1030px;
-    }
-
-    .therefore-line strong {
-      color: var(--coral);
-    }
-
-    .core-label {
-      margin-bottom: clamp(14px, 1.8vw, 22px);
-      color: var(--muted);
-      font-size: clamp(12px, 1vw, 15px);
-      font-weight: 820;
-      text-transform: uppercase;
-    }
-
-    blockquote {
-      margin: 0;
-      color: var(--ink);
-      font-size: clamp(24px, 2.75vw, 38px);
-      line-height: 1.1;
-      font-weight: 800;
-    }
-
-    .quote-first blockquote {
       max-width: 1120px;
-      font-size: clamp(18px, 1.82vw, 25px);
+      color: var(--ink);
+      font-size: clamp(18px, 1.78vw, 26px);
       line-height: 1.14;
-    }
-
-    .quote-first .short-quote {
-      font-size: clamp(22px, 2.25vw, 32px);
-      line-height: 1.12;
-    }
-
-    .quote-first .core-sentence {
-      max-width: none;
-      font-size: clamp(30px, 3vw, 44px);
-      line-height: 1;
-    }
-
-    .reliability-state {
-      gap: clamp(12px, 1.5vw, 18px);
-    }
-
-    .reliability-state .core-copy {
-      display: grid;
-      gap: clamp(10px, 1.15vw, 14px);
-      align-content: start;
-    }
-
-    .reliability-state.quote-first .core-copy {
-      grid-template-columns: 1fr;
-      max-width: 1120px;
-      padding-bottom: 0;
-    }
-
-    .reliability-visual-row {
-      display: grid;
-      grid-template-columns: minmax(220px, 0.34fr) minmax(0, 0.66fr);
-      gap: clamp(18px, 2vw, 28px);
-      align-items: stretch;
-      margin-top: clamp(18px, 2vw, 28px);
-      min-height: 0;
-    }
-
-    .reliability-state.quote-first .case-study {
-      max-width: 560px;
-      align-self: start;
-      border-color: rgba(216, 95, 69, 0.24);
-      background: rgba(255, 255, 255, 0.58);
-      box-shadow: 0 18px 44px rgba(255, 255, 255, 0.28) inset;
-      padding: clamp(15px, 1.5vw, 20px);
-    }
-
-    .reliability-state.quote-first .case-study p {
-      font-size: clamp(12px, 0.95vw, 14px);
-      line-height: 1.28;
-    }
-
-    .reliability-state.quote-first .case-study .secondary {
-      margin-top: 9px;
-      font-size: clamp(11px, 0.86vw, 12px);
-    }
-
-    .reliability-state.quote-first .anthropic-figure {
-      margin: 0;
-      padding: clamp(14px, 1.35vw, 18px) clamp(16px, 1.6vw, 22px);
-    }
-
-    .core-sentence {
-      max-width: 640px;
-      margin: 0;
-      color: var(--ink);
-      font-size: clamp(32px, 3.9vw, 54px);
-      line-height: 1.02;
-      font-weight: 850;
-    }
-
-    .argument-lines {
-      display: grid;
-      gap: 8px;
-      padding-left: 0;
-      border-left: 0;
-    }
-
-    .argument-lines p {
-      margin: 0;
-      color: var(--ink);
-      font-size: clamp(17px, 1.38vw, 20px);
-      line-height: 1.12;
-      font-weight: 760;
-    }
-
-    .argument-lines p:last-child {
-      color: var(--coral);
-      font-size: clamp(18px, 1.58vw, 23px);
-      font-weight: 850;
-    }
-
-    .case-study {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.58);
-      box-shadow: 0 16px 44px rgba(255, 255, 255, 0.28) inset;
-      padding: clamp(11px, 1.1vw, 15px);
-    }
-
-    .case-study strong {
-      display: block;
-      margin-bottom: 6px;
-      color: var(--ink);
-      font-size: clamp(15px, 1.14vw, 17px);
-      line-height: 1.16;
-      font-weight: 850;
-    }
-
-    .case-study p {
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(12px, 0.9vw, 14px);
-      line-height: 1.32;
-      font-weight: 620;
-    }
-
-    .case-study .secondary {
-      margin-top: 7px;
-      color: rgba(23, 32, 29, 0.52);
-      font-size: clamp(10px, 0.82vw, 12px);
-    }
-
-    .support-line {
-      max-width: 560px;
-      margin: clamp(14px, 1.8vw, 24px) 0 0;
-      color: var(--muted);
-      font-size: clamp(16px, 1.35vw, 20px);
-      line-height: 1.34;
-      font-weight: 620;
-    }
-
-    .quote-first .support-line {
-      max-width: 760px;
-      margin: 2px 0 0;
-      font-size: clamp(14px, 1.18vw, 17px);
-    }
-
-    .chart-card {
-      min-width: 0;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.68);
-      box-shadow: 0 26px 70px rgba(38, 52, 47, 0.13), 0 22px 60px rgba(255, 255, 255, 0.35) inset;
-      padding: clamp(16px, 1.8vw, 24px);
-    }
-
-    .quote-first .chart-card {
-      align-self: start;
-    }
-
-    .chart-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 12px;
-      color: rgba(23, 32, 29, 0.72);
-      font-size: clamp(13px, 1.05vw, 16px);
       font-weight: 820;
     }
 
-    .chart-title span:last-child {
-      color: var(--teal);
-      font-size: 0.92em;
+    .small-note {
+      margin: 0;
+      color: rgba(23, 32, 29, 0.62);
+      font-size: clamp(14px, 1.12vw, 17px);
+      line-height: 1.28;
+      font-weight: 680;
     }
 
-    .chart-card img {
+    .chart-panel img,
+    .chart-pair img {
       display: block;
       width: 100%;
       height: auto;
-    }
-
-    .anthropic-figure img {
-      max-height: min(37vh, 355px);
-      object-fit: contain;
-    }
-
-    .figure-caption {
-      margin: 8px 0 0;
-      color: rgba(23, 32, 29, 0.66);
-      font-size: clamp(13px, 1vw, 16px);
-      line-height: 1.3;
-      font-weight: 740;
-    }
-
-    .threshold-chart img {
-      max-height: min(37vh, 335px);
+      max-height: min(36vh, 330px);
       object-fit: contain;
     }
 
     .chart-pair {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(12px, 1.4vw, 18px);
-      align-items: stretch;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
     }
 
-    .mini-chart {
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
-      min-width: 0;
+    .mini-panel {
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.7);
-      padding: clamp(12px, 1.45vw, 18px);
+      background: rgba(255, 255, 255, 0.64);
+      padding: clamp(12px, 1.2vw, 16px);
     }
 
-    .mini-chart.emphasis {
-      border-color: rgba(14, 143, 128, 0.42);
-      box-shadow: 0 20px 52px rgba(14, 143, 128, 0.11);
-    }
-
-    .mini-chart-title {
-      margin-bottom: 8px;
-      color: rgba(23, 32, 29, 0.72);
-      font-size: clamp(12px, 1vw, 15px);
-      font-weight: 820;
+    .mini-title {
+      margin: 0 0 8px;
+      color: rgba(23, 32, 29, 0.68);
+      font-size: clamp(12px, 0.95vw, 14px);
+      font-weight: 850;
       text-transform: uppercase;
     }
 
-    .mini-chart img {
-      align-self: center;
+    .reliability-grid,
+    .system-grid,
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+      gap: clamp(20px, 2.8vw, 38px);
+      align-items: stretch;
+    }
+
+    .reliability-grid {
+      grid-template-columns: minmax(190px, 1fr) minmax(0, 2fr);
+      align-items: start;
+    }
+
+    .reliability-grid .chart-panel img {
+      max-height: min(43vh, 390px);
+    }
+
+    .anthropic-plain {
+      margin: 0;
+      display: grid;
+      align-content: center;
+    }
+
+    .anthropic-plain img {
+      display: block;
       width: 100%;
       height: auto;
-      max-height: min(42vh, 360px);
+      max-height: min(45vh, 410px);
       object-fit: contain;
     }
 
-    .system-state {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(0, 1fr);
-      align-content: stretch;
-      align-items: stretch;
-      gap: clamp(10px, 1.1vw, 14px);
-    }
-
-    .system-state .core-copy {
+    .challenge-block {
       display: grid;
-      gap: 5px;
-      align-items: start;
-      border-left: 4px solid var(--coral);
-      padding-left: clamp(18px, 2vw, 26px);
+      gap: clamp(8px, 1vw, 12px);
+      max-width: 1060px;
     }
 
-    .system-state .core-sentence,
-    .evolution-state .core-sentence {
-      font-size: clamp(28px, 2.72vw, 40px);
-      line-height: 1.02;
-    }
-
-    .system-state .support-line,
-    .evolution-state .support-line {
-      max-width: 980px;
-      margin: 0;
-      font-size: clamp(13px, 1vw, 15px);
-      line-height: 1.22;
-    }
-
-    .system-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(360px, 1fr);
-      gap: clamp(18px, 2.3vw, 32px);
-      min-height: 0;
-      align-items: stretch;
-    }
-
-    .quote-stack {
-      display: grid;
-      gap: clamp(10px, 1vw, 14px);
-      min-width: 0;
-    }
-
-    .source-quote {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.62);
-      box-shadow: 0 18px 44px rgba(255, 255, 255, 0.28) inset;
-      padding: clamp(12px, 1.1vw, 16px);
-    }
-
-    .source-quote.primary {
-      border-color: rgba(14, 143, 128, 0.22);
-    }
-
-    .source-quote p {
+    .challenge-line {
       margin: 0;
       color: var(--ink);
-      font-size: clamp(13px, 1.02vw, 15px);
-      line-height: 1.28;
-      font-weight: 680;
+      font-size: clamp(25px, 2.45vw, 42px);
+      line-height: 1.08;
+      font-weight: 780;
     }
 
-    .source-quote.secondary p {
-      color: rgba(23, 32, 29, 0.78);
-      font-size: clamp(12px, 0.92vw, 14px);
-      line-height: 1.25;
+    .challenge-line strong {
+      color: var(--ink);
+      font-weight: 880;
+    }
+
+    .challenge-line.emphasis {
+      color: rgba(23, 32, 29, 0.9);
+      font-size: clamp(28px, 2.75vw, 48px);
+      font-weight: 850;
+    }
+
+    .challenge-line.emphasis strong {
+      color: var(--teal);
+    }
+
+    .case-box {
+      border-left: 4px solid rgba(216, 95, 69, 0.4);
+      background: var(--surface);
+      padding: clamp(14px, 1.4vw, 20px);
+    }
+
+    .case-box strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-size: clamp(16px, 1.2vw, 19px);
+      line-height: 1.16;
+      font-weight: 850;
+    }
+
+    .case-box strong span {
+      display: block;
+    }
+
+    .case-box strong span:first-child {
+      color: var(--teal);
+      font-size: 0.92em;
+    }
+
+    .case-box p {
+      margin: 0;
+      color: rgba(23, 32, 29, 0.62);
+      font-size: clamp(12px, 0.95vw, 14px);
+      line-height: 1.32;
       font-weight: 650;
-    }
-
-    .quote-source {
-      margin-top: clamp(7px, 0.7vw, 10px);
-      color: rgba(23, 32, 29, 0.56);
-      font-size: clamp(10px, 0.82vw, 12px);
-      font-weight: 720;
-    }
-
-    .quote-source a {
-      color: inherit;
-      text-decoration-color: rgba(23, 32, 29, 0.34);
-      text-underline-offset: 2px;
-    }
-
-    .hl {
-      border-radius: 3px;
-      padding: 0 3px;
-      font-weight: 820;
-    }
-
-    .hl-models,
-    .component-models {
-      color: #2d6bb2;
-      background: rgba(70, 119, 184, 0.12);
-      border-color: rgba(70, 119, 184, 0.36);
-    }
-
-    .hl-tools,
-    .component-tools {
-      color: #0e8377;
-      background: rgba(14, 143, 128, 0.12);
-      border-color: rgba(14, 143, 128, 0.36);
-    }
-
-    .hl-instructions,
-    .component-instructions {
-      color: #b6533f;
-      background: rgba(216, 95, 69, 0.13);
-      border-color: rgba(216, 95, 69, 0.34);
-    }
-
-    .hl-orchestration,
-    .component-orchestration {
-      color: #a67818;
-      background: rgba(201, 151, 45, 0.15);
-      border-color: rgba(201, 151, 45, 0.38);
-    }
-
-    .hl-guardrails,
-    .component-guardrails {
-      color: #785aa6;
-      background: rgba(120, 90, 166, 0.13);
-      border-color: rgba(120, 90, 166, 0.36);
-    }
-
-    .hl-evaluation,
-    .component-evaluation {
-      color: #2f8560;
-      background: rgba(47, 133, 96, 0.13);
-      border-color: rgba(47, 133, 96, 0.36);
     }
 
     .component-map {
       position: relative;
-      min-height: 350px;
+      min-height: min(38vh, 360px);
       border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.54);
-      box-shadow: 0 24px 64px rgba(38, 52, 47, 0.1), 0 22px 60px rgba(255, 255, 255, 0.34) inset;
+      background: var(--surface);
       overflow: hidden;
     }
 
     .component-map::before {
       content: "";
       position: absolute;
-      inset: 12%;
-      border: 1px dashed rgba(23, 32, 29, 0.16);
+      inset: 13%;
+      border: 1px dashed rgba(23, 32, 29, 0.15);
       border-radius: 50%;
     }
 
-    .component-center {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      display: grid;
-      place-items: center;
-      width: clamp(150px, 14vw, 210px);
-      min-height: clamp(92px, 8.8vw, 126px);
-      transform: translate(-50%, -50%);
-      border: 1px solid rgba(23, 32, 29, 0.22);
-      background: #16211e;
-      color: #f8f9f4;
-      box-shadow: 0 26px 56px rgba(23, 32, 29, 0.22);
-      padding: 16px;
-      text-align: center;
-      font-size: clamp(15px, 1.35vw, 20px);
-      line-height: 1.08;
-      font-weight: 840;
-    }
-
+    .component-center,
     .component-node {
       position: absolute;
       display: grid;
       place-items: center;
-      width: clamp(110px, 9.2vw, 136px);
+      text-align: center;
+      line-height: 1.1;
+      font-weight: 850;
+      z-index: 2;
+    }
+
+    .component-center {
+      left: 50%;
+      top: 50%;
+      width: clamp(142px, 13vw, 200px);
+      min-height: 100px;
+      transform: translate(-50%, -50%);
+      background: #16211e;
+      color: #f8f9f4;
+      padding: 16px;
+      font-size: clamp(14px, 1.25vw, 19px);
+    }
+
+    .component-node {
+      width: clamp(110px, 9.4vw, 144px);
       min-height: 48px;
       border: 1px solid currentColor;
       background: rgba(255, 255, 255, 0.78);
-      box-shadow: 0 14px 32px rgba(38, 52, 47, 0.12);
-      padding: 9px 10px;
-      text-align: center;
-      font-size: clamp(12px, 0.98vw, 15px);
-      line-height: 1.08;
-      font-weight: 830;
+      padding: 8px 10px;
+      font-size: clamp(11px, 0.9vw, 14px);
     }
 
-    .component-node:nth-of-type(2) { left: 50%; top: 9%; transform: translateX(-50%); }
-    .component-node:nth-of-type(3) { right: 7%; top: 25%; }
-    .component-node:nth-of-type(4) { right: 7%; bottom: 22%; }
-    .component-node:nth-of-type(5) { left: 50%; bottom: 8%; transform: translateX(-50%); }
-    .component-node:nth-of-type(6) { left: 7%; bottom: 22%; }
-    .component-node:nth-of-type(7) { left: 7%; top: 25%; }
+    .component-node:nth-of-type(2) { left: 50%; top: 8%; transform: translateX(-50%); color: var(--blue); }
+    .component-node:nth-of-type(3) { right: 7%; top: 25%; color: var(--teal); }
+    .component-node:nth-of-type(4) { right: 7%; bottom: 22%; color: var(--coral); }
+    .component-node:nth-of-type(5) { left: 50%; bottom: 7%; transform: translateX(-50%); color: var(--gold); }
+    .component-node:nth-of-type(6) { left: 7%; bottom: 22%; color: var(--purple); }
+    .component-node:nth-of-type(7) { left: 7%; top: 25%; color: #2f8560; }
 
-    .map-qualifier {
+    .map-note {
       position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 14px;
-      color: rgba(23, 32, 29, 0.55);
-      font-size: clamp(10px, 0.82vw, 12px);
+      left: 16px;
+      right: 16px;
+      bottom: 12px;
+      color: rgba(23, 32, 29, 0.52);
+      font-size: clamp(10px, 0.8vw, 12px);
       font-weight: 720;
       text-align: center;
-    }
-
-    .evolution-state {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(0, 1fr);
-      align-items: stretch;
-      gap: clamp(10px, 1.1vw, 14px);
-    }
-
-    .evolution-state .core-copy {
-      display: grid;
-      gap: 5px;
-      align-items: start;
-      border-left: 4px solid var(--coral);
-      padding-left: clamp(18px, 2vw, 26px);
-    }
-
-    .evolution-panel {
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: clamp(8px, 0.9vw, 12px);
-      min-height: 0;
-    }
-
-    .evolution-heading {
-      margin: 0;
-      color: rgba(23, 32, 29, 0.68);
-      font-size: clamp(12px, 1vw, 15px);
-      font-weight: 820;
-      text-transform: uppercase;
     }
 
     .evolution-table {
       width: 100%;
       border-collapse: collapse;
-      overflow: hidden;
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.66);
-      box-shadow: 0 24px 64px rgba(38, 52, 47, 0.1), 0 22px 60px rgba(255, 255, 255, 0.34) inset;
     }
 
     .evolution-table th,
     .evolution-table td {
       border: 1px solid rgba(23, 32, 29, 0.13);
-      padding: clamp(12px, 1.25vw, 17px);
+      padding: clamp(12px, 1.2vw, 18px);
       text-align: left;
-      vertical-align: middle;
     }
 
     .evolution-table th {
@@ -1014,355 +756,207 @@
 
     .evolution-table td {
       color: var(--ink);
-      font-size: clamp(16px, 1.35vw, 20px);
+      font-size: clamp(15px, 1.25vw, 20px);
       line-height: 1.16;
       font-weight: 760;
     }
 
-    .evolution-table td:first-child {
-      width: 24%;
-      font-weight: 880;
-    }
-
-    .era-prompt td:first-child {
-      color: #b6533f;
-      background: rgba(216, 95, 69, 0.08);
-    }
-
-    .era-context td:first-child {
-      color: #0e8377;
-      background: rgba(14, 143, 128, 0.08);
-    }
-
-    .era-harness td:first-child {
-      color: #a67818;
-      background: rgba(201, 151, 45, 0.1);
-    }
-
-    .evolution-source {
-      color: rgba(23, 32, 29, 0.58);
-      font-size: clamp(11px, 0.9vw, 13px);
-      font-weight: 680;
-    }
-
-    .evolution-source a {
-      color: inherit;
-      text-decoration-color: rgba(23, 32, 29, 0.32);
-      text-underline-offset: 2px;
-    }
-
-    .group-kind-slide {
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
-      gap: clamp(22px, 3vh, 34px);
-      padding: clamp(42px, 5.6vh, 64px) clamp(58px, 4.5vw, 86px) clamp(52px, 6.7vh, 72px);
-    }
-
-    .group-kind-header {
-      display: grid;
-      gap: clamp(10px, 1.6vh, 18px);
-      align-content: start;
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
-    .group-kind-slide.is-active .group-kind-header {
-      animation: workflowTitleIn 380ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    .group-kind-title {
-      margin: 0;
-      color: var(--ink);
-      font-size: clamp(46px, 4.35vw, 74px);
-      line-height: 1.04;
-      font-weight: 860;
-      letter-spacing: 0;
-    }
-
-    .group-kind-subtitle {
-      margin: 0;
-      color: rgba(23, 32, 29, 0.58);
-      font-size: clamp(20px, 1.45vw, 28px);
-      line-height: 1.25;
-      font-weight: 660;
-    }
-
-    .group-kind-layout {
-      display: grid;
-      grid-template-columns: minmax(210px, 0.24fr) minmax(0, 1fr);
-      gap: clamp(34px, 4.4vw, 76px);
-      min-height: 0;
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
-    .group-kind-slide.is-active .group-kind-layout {
-      animation: workflowHeadingsIn 360ms cubic-bezier(0.22, 1, 0.36, 1) 150ms forwards;
-    }
-
-    .group-nav {
-      display: grid;
-      gap: clamp(16px, 2.2vh, 26px);
-      align-content: start;
-      border-left: 4px solid rgba(216, 95, 69, 0.28);
-      padding: clamp(10px, 1.5vh, 18px) 0 0 clamp(18px, 1.8vw, 28px);
-    }
-
-    .group-nav-item {
-      display: grid;
-      gap: 5px;
-      color: rgba(23, 32, 29, 0.38);
-      transition: color 400ms cubic-bezier(0.22, 1, 0.36, 1), transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .group-nav-number {
-      color: rgba(14, 143, 128, 0.48);
-      font-size: clamp(12px, 0.9vw, 15px);
-      font-weight: 860;
-    }
-
-    .group-nav-label {
-      font-size: clamp(22px, 1.85vw, 30px);
-      line-height: 1.05;
-      font-weight: 850;
-    }
-
-    .deck[data-reveal="0"] .group-nav-item:nth-child(1),
-    .deck[data-reveal="1"] .group-nav-item:nth-child(2),
-    .deck[data-reveal="2"] .group-nav-item:nth-child(3) {
-      color: var(--ink);
-      transform: translateX(5px);
-    }
-
-    .deck[data-reveal="0"] .group-nav-item:nth-child(1) .group-nav-number,
-    .deck[data-reveal="1"] .group-nav-item:nth-child(2) .group-nav-number,
-    .deck[data-reveal="2"] .group-nav-item:nth-child(3) .group-nav-number {
-      color: var(--teal);
-    }
-
-    .group-content {
+    .engineering-flow {
       position: relative;
-      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(34px, 5vw, 76px) minmax(0, 1fr) clamp(34px, 5vw, 76px) minmax(0, 1fr);
+      gap: clamp(14px, 1.6vw, 24px);
+      align-items: center;
+      min-height: clamp(170px, 24vh, 240px);
+      padding: clamp(12px, 1.4vw, 20px);
     }
 
-    .group-state {
-      position: absolute;
-      inset: 0;
+    .engineering-card {
+      min-height: clamp(112px, 15vh, 160px);
+      border: 1px solid rgba(23, 32, 29, 0.14);
+      background: rgba(255, 255, 255, 0.54);
+      padding: clamp(12px, 1.35vw, 20px);
       display: grid;
-      align-content: start;
-      gap: clamp(16px, 2vh, 24px);
+      align-content: center;
+      gap: 10px;
       opacity: 0;
       transform: translateY(14px);
-      pointer-events: none;
-      transition: opacity 430ms cubic-bezier(0.22, 1, 0.36, 1), transform 430ms cubic-bezier(0.22, 1, 0.36, 1);
+      animation: flowCardIn 480ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
-    .deck[data-reveal="0"] .group-state[data-state="0"],
-    .deck[data-reveal="1"] .group-state[data-state="1"],
-    .deck[data-reveal="2"] .group-state[data-state="2"] {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
+    .engineering-card.context-card { animation-delay: 180ms; }
+    .engineering-card.harness-card { animation-delay: 360ms; }
+
+    .engineering-flow.before-harness .flow-arrow.two,
+    .engineering-flow.before-harness .harness-card {
+      visibility: hidden;
+      animation: none;
     }
 
-    .group-kicker {
-      margin: 0;
-      color: var(--coral);
-      font-size: clamp(14px, 1.05vw, 18px);
-      line-height: 1.1;
-      font-weight: 860;
-      letter-spacing: 0.05em;
-    }
-
-    .group-main {
-      margin: 0;
-      max-width: 980px;
+    .engineering-era {
       color: var(--ink);
-      font-size: clamp(34px, 3.2vw, 54px);
-      line-height: 1.05;
+      font-size: clamp(18px, 1.55vw, 27px);
+      line-height: 1.04;
       font-weight: 860;
     }
 
-    .group-main.secondary {
-      max-width: 760px;
-      font-size: clamp(28px, 2.5vw, 42px);
+    .engineering-focus {
+      color: rgba(23, 32, 29, 0.58);
+      font-size: clamp(12px, 0.92vw, 15px);
+      line-height: 1.2;
+      font-weight: 720;
     }
 
-    .group-support {
-      margin: 0;
-      max-width: 820px;
-      color: rgba(23, 32, 29, 0.62);
-      font-size: clamp(18px, 1.45vw, 24px);
-      line-height: 1.28;
-      font-weight: 660;
-    }
-
-    .change-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .change-chip {
-      border: 1px solid rgba(23, 32, 29, 0.14);
-      background: rgba(255, 255, 255, 0.58);
-      padding: 8px 12px;
-      color: rgba(23, 32, 29, 0.7);
-      font-size: clamp(13px, 1vw, 16px);
-      line-height: 1.12;
-      font-weight: 740;
-    }
-
-    .learning-panel,
-    .room-panel {
-      border: 1px solid rgba(23, 32, 29, 0.14);
-      background: rgba(255, 255, 255, 0.56);
-      box-shadow: 0 18px 44px rgba(255, 255, 255, 0.24) inset;
-      padding: clamp(18px, 2vw, 28px);
-    }
-
-    .panel-title {
-      margin: 0 0 clamp(14px, 1.5vh, 20px);
+    .engineering-artifact {
       color: var(--teal);
-      font-size: clamp(18px, 1.45vw, 24px);
-      line-height: 1.1;
+      font-size: clamp(11px, 0.82vw, 13px);
+      line-height: 1.2;
       font-weight: 850;
+      text-transform: uppercase;
     }
 
-    .question-grid {
+    .flow-arrow {
+      height: 3px;
+      background: linear-gradient(90deg, rgba(14, 143, 128, 0.08), var(--teal));
+      position: relative;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: flowArrowIn 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .flow-arrow.one { animation-delay: 520ms; }
+    .flow-arrow.two { animation-delay: 720ms; }
+
+    .flow-arrow::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      width: 11px;
+      height: 11px;
+      border-top: 3px solid var(--teal);
+      border-right: 3px solid var(--teal);
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    @keyframes flowCardIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes flowArrowIn {
+      to {
+        opacity: 1;
+        transform: scaleX(1);
+      }
+    }
+
+    .engineering-stack {
+      display: grid;
+      gap: clamp(14px, 1.6vw, 22px);
+    }
+
+    .engineering-stack .engineering-flow {
+      min-height: clamp(170px, 24vh, 240px);
+      padding: clamp(12px, 1.4vw, 20px);
+    }
+
+    .engineering-stack .engineering-card {
+      min-height: clamp(112px, 15vh, 160px);
+      padding: clamp(12px, 1.35vw, 20px);
+    }
+
+    .engineering-stack .engineering-era {
+      font-size: clamp(18px, 1.55vw, 27px);
+    }
+
+    .engineering-stack .engineering-focus {
+      font-size: clamp(12px, 0.92vw, 15px);
+    }
+
+    .engineering-stack .engineering-artifact {
+      font-size: clamp(11px, 0.82vw, 13px);
+    }
+
+    .engineering-stack .evolution-table th,
+    .engineering-stack .evolution-table td {
+      padding: clamp(8px, 0.82vw, 12px);
+    }
+
+    .engineering-stack .evolution-table td {
+      font-size: clamp(13px, 1.02vw, 17px);
+    }
+
+    .questions-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px 16px;
     }
 
-    .question-item {
+    .question {
       border-top: 1px solid rgba(23, 32, 29, 0.12);
       padding-top: 10px;
       color: var(--ink);
-      font-size: clamp(16px, 1.22vw, 21px);
+      font-size: clamp(15px, 1.15vw, 19px);
       line-height: 1.2;
       font-weight: 720;
     }
 
-    .group-refs {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      color: rgba(23, 32, 29, 0.56);
-      font-size: clamp(11px, 0.86vw, 13px);
-      line-height: 1.25;
-      font-weight: 700;
-    }
-
-    .group-refs a {
-      color: inherit;
-      text-decoration-color: rgba(23, 32, 29, 0.32);
-      text-underline-offset: 2px;
-    }
-
-    .compound-layout,
-    .collab-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 0.92fr) minmax(340px, 0.86fr);
-      gap: clamp(24px, 3.2vw, 46px);
-      align-items: center;
-    }
-
-    .learning-curve {
+    .curve-box {
       position: relative;
-      min-height: clamp(260px, 36vh, 360px);
-      border: 1px solid rgba(23, 32, 29, 0.14);
-      background: rgba(255, 255, 255, 0.55);
-      overflow: hidden;
+      min-height: min(36vh, 340px);
+      border: 1px solid var(--line);
+      background: var(--surface);
     }
 
-    .axis-x,
-    .axis-y {
+    .curve-box svg {
       position: absolute;
-      background: rgba(23, 32, 29, 0.22);
-    }
-
-    .axis-x {
-      left: 16%;
-      right: 12%;
-      bottom: 21%;
-      height: 1px;
-    }
-
-    .axis-y {
-      left: 16%;
-      top: 14%;
-      bottom: 21%;
-      width: 1px;
-    }
-
-    .curve-svg {
-      position: absolute;
-      inset: 11% 8% 16% 13%;
+      inset: 12% 8% 16% 12%;
       width: auto;
       height: auto;
       overflow: visible;
     }
 
-    .curve-svg path {
+    .curve-box path {
       fill: none;
       stroke: var(--teal);
       stroke-width: 4;
       stroke-linecap: round;
     }
 
-    .curve-dip {
-      color: var(--coral);
+    .axis-line {
       position: absolute;
-      left: 22%;
-      bottom: 11%;
+      background: rgba(23, 32, 29, 0.22);
+    }
+
+    .axis-x { left: 15%; right: 12%; bottom: 21%; height: 1px; }
+    .axis-y { left: 15%; top: 14%; bottom: 21%; width: 1px; }
+
+    .curve-label {
+      position: absolute;
       font-size: clamp(11px, 0.85vw, 13px);
-      font-weight: 780;
+      font-weight: 790;
     }
 
-    .curve-up {
-      color: var(--teal);
-      position: absolute;
-      right: 9%;
-      top: 18%;
-      font-size: clamp(11px, 0.85vw, 13px);
-      font-weight: 780;
-      text-align: right;
-    }
+    .curve-dip { left: 21%; bottom: 12%; color: var(--coral); }
+    .curve-up { right: 8%; top: 18%; color: var(--teal); text-align: right; }
+    .axis-value { left: 6%; top: 16%; color: var(--muted); writing-mode: vertical-rl; transform: rotate(180deg); }
+    .axis-today { left: 14%; bottom: 7%; color: var(--muted); }
+    .axis-later { right: 10%; bottom: 7%; color: var(--muted); }
 
-    .axis-label {
-      position: absolute;
-      color: rgba(23, 32, 29, 0.56);
-      font-size: clamp(10px, 0.8vw, 12px);
-      font-weight: 760;
-    }
-
-    .axis-value { left: 7%; top: 15%; writing-mode: vertical-rl; transform: rotate(180deg); }
-    .axis-today { left: 15%; bottom: 7%; }
-    .axis-later { right: 11%; bottom: 7%; }
-
-    .room-panel {
+    .room-grid {
       display: grid;
-      gap: 10px;
-    }
-
-    .room-panel p {
-      margin: 0;
-      color: var(--ink);
-      font-size: clamp(23px, 2vw, 34px);
-      line-height: 1.18;
-      font-weight: 780;
-    }
-
-    .room-panel .room-footer {
-      color: rgba(23, 32, 29, 0.58);
-      font-size: clamp(13px, 1vw, 16px);
-      font-weight: 720;
+      grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.85fr);
+      gap: clamp(20px, 3vw, 42px);
+      align-items: center;
     }
 
     .shared-diagram {
       position: relative;
-      min-height: clamp(300px, 43vh, 420px);
+      min-height: min(42vh, 400px);
     }
 
     .shared-center,
@@ -1370,12 +964,9 @@
       position: absolute;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(14, 143, 128, 0.28);
-      background: rgba(255, 255, 255, 0.72);
       text-align: center;
-      color: var(--ink);
-      font-weight: 820;
       line-height: 1.12;
+      font-weight: 820;
       z-index: 2;
     }
 
@@ -1388,13 +979,16 @@
       border-radius: 50%;
       background: #16211e;
       color: #f8f9f4;
-      font-size: clamp(16px, 1.2vw, 22px);
       padding: 18px;
+      font-size: clamp(16px, 1.2vw, 22px);
     }
 
     .shared-node {
       width: clamp(132px, 11vw, 190px);
       min-height: 56px;
+      border: 1px solid rgba(14, 143, 128, 0.28);
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--ink);
       padding: 10px 12px;
       font-size: clamp(12px, 0.92vw, 15px);
     }
@@ -1417,134 +1011,340 @@
       stroke-linecap: round;
     }
 
-    .workflow-slide {
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: clamp(22px, 3.2vh, 34px);
-      padding: clamp(42px, 5.9vh, 64px) clamp(58px, 4.5vw, 86px) clamp(52px, 6.7vh, 72px);
+    @keyframes groupItemIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .workflow-header {
-      display: grid;
-      gap: clamp(14px, 2.2vh, 24px);
-      align-content: start;
+    @keyframes curveDraw {
+      to {
+        stroke-dashoffset: 0;
+      }
     }
 
-    .workflow-title {
+    [aria-label="What kind of group is this"] .state {
+      gap: clamp(8px, 1vw, 13px);
+    }
+
+    [aria-label="What kind of group is this"] .slide-title {
+      font-size: clamp(36px, 4.1vw, 58px);
+    }
+
+    [aria-label="What kind of group is this"] .slide-header {
+      padding-bottom: clamp(8px, 0.9vw, 13px);
+    }
+
+    [aria-label="What kind of group is this"] .headline {
+      max-width: 1120px;
+    }
+
+    .group-seq > * {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .state.is-current.group-seq > * {
+      animation: groupItemIn 380ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .state.is-current.group-seq > *:nth-child(1) { animation-delay: 40ms; }
+    .state.is-current.group-seq > *:nth-child(2) { animation-delay: 120ms; }
+    .state.is-current.group-seq > *:nth-child(3) { animation-delay: 210ms; }
+    .state.is-current.group-seq > *:nth-child(4) { animation-delay: 300ms; }
+    .state.is-current.group-seq > *:nth-child(5) { animation-delay: 390ms; }
+    .state.is-current.group-seq > *:nth-child(6) { animation-delay: 470ms; }
+
+    .opening-headline {
       margin: 0;
       color: var(--ink);
-      font-size: clamp(44px, 3.85vw, 72px);
-      line-height: 1.05;
-      font-weight: 860;
-      letter-spacing: 0;
-      opacity: 0;
-      transform: translateY(8px);
+      font-size: clamp(27px, 2.55vw, 42px);
+      line-height: 1.06;
+      font-weight: 850;
     }
 
-    .workflow-slide.is-active .workflow-title {
-      animation: workflowTitleIn 380ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    .workflow-subtitle {
-      margin: 0;
-      color: rgba(23, 32, 29, 0.58);
-      font-size: clamp(18px, 1.45vw, 28px);
-      line-height: 1.24;
-      font-weight: 660;
-      opacity: 0;
-      transform: translateY(6px);
-    }
-
-    .workflow-slide.is-active .workflow-subtitle {
-      animation: workflowSubtitleIn 340ms cubic-bezier(0.22, 1, 0.36, 1) 90ms forwards;
-    }
-
-    .workflow-body {
-      position: relative;
+    .evidence-row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: clamp(64px, 9.6vw, 184px);
-      min-height: 0;
-      padding-top: clamp(24px, 3.1vh, 34px);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(14px, 1.7vw, 24px);
     }
 
-    .workflow-body::before {
+    .source-evidence {
+      border-left: 3px solid rgba(14, 143, 128, 0.46);
+      background: rgba(255, 255, 255, 0.42);
+      padding: clamp(9px, 0.9vw, 13px) clamp(12px, 1.1vw, 16px);
+    }
+
+    .source-evidence:nth-child(2) {
+      border-left-color: rgba(216, 95, 69, 0.46);
+    }
+
+    .evidence-quote {
+      margin: 0 0 8px;
+      color: rgba(23, 32, 29, 0.78);
+      font-size: clamp(14px, 1vw, 16px);
+      line-height: 1.25;
+      font-weight: 680;
+    }
+
+    .source-org {
+      display: block;
+      color: rgba(23, 32, 29, 0.58);
+      font-size: clamp(10px, 0.78vw, 12px);
+      font-weight: 860;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .source-title {
+      color: var(--ink);
+      font-size: clamp(12px, 0.9vw, 14px);
+      font-weight: 720;
+      text-decoration: none;
+    }
+
+    .source-title:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .takeaway {
+      margin: 0;
+      max-width: 1040px;
+      color: var(--ink);
+      font-size: clamp(30px, 2.85vw, 48px);
+      line-height: 1.04;
+      font-weight: 880;
+    }
+
+    .takeaway-emphasis {
+      color: var(--teal);
+    }
+
+    .tool-change-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 9px 12px;
+    }
+
+    .tool-change-label {
+      color: rgba(23, 32, 29, 0.56);
+      font-size: clamp(11px, 0.86vw, 13px);
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .tool-chip {
+      min-height: 28px;
+      border-color: rgba(23, 32, 29, 0.12);
+      background: rgba(255, 255, 255, 0.36);
+      color: rgba(23, 32, 29, 0.66);
+      font-size: clamp(10px, 0.78vw, 12px);
+    }
+
+    .durable-panel {
+      padding: clamp(12px, 1.2vw, 17px);
+    }
+
+    .durable-panel .panel-title {
+      margin-bottom: 9px;
+      font-size: clamp(15px, 1.15vw, 19px);
+    }
+
+    .durable-questions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 clamp(18px, 2vw, 30px);
+    }
+
+    .durable-question {
+      position: relative;
+      min-height: 35px;
+      border-top: 1px solid rgba(23, 32, 29, 0.11);
+      padding: 8px 0 7px 17px;
+      color: var(--ink);
+      font-size: clamp(14px, 0.96vw, 16px);
+      line-height: 1.18;
+      font-weight: 730;
+    }
+
+    .durable-question::before {
       content: "";
       position: absolute;
-      left: 50%;
-      top: clamp(10px, 1.4vh, 16px);
-      bottom: clamp(18px, 2.6vh, 28px);
-      width: 1px;
-      background: rgba(23, 32, 29, 0.16);
-      opacity: 0;
+      left: 0;
+      top: 13px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(14, 143, 128, 0.62);
     }
 
-    .workflow-slide.is-active .workflow-body::before {
-      animation: workflowLinesIn 420ms ease 220ms forwards;
+    .learning-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+      gap: clamp(22px, 3vw, 44px);
+      align-items: center;
+    }
+
+    .learning-copy {
+      display: grid;
+      gap: clamp(14px, 1.4vw, 22px);
+    }
+
+    .learning-copy .support {
+      max-width: 760px;
+    }
+
+    .curve-box.polished {
+      min-height: min(43vh, 405px);
+      border-color: rgba(23, 32, 29, 0.12);
+      background: rgba(255, 255, 255, 0.46);
+    }
+
+    .curve-box.polished path {
+      stroke-dasharray: 530;
+      stroke-dashoffset: 530;
+    }
+
+    .state.is-current .curve-box.polished path {
+      animation: curveDraw 720ms cubic-bezier(0.22, 1, 0.36, 1) 280ms forwards;
+    }
+
+    .break-even {
+      position: absolute;
+      left: 49%;
+      top: 51%;
+      bottom: 21%;
+      width: 1px;
+      border-left: 1px dashed rgba(23, 32, 29, 0.24);
+    }
+
+    .break-even::after {
+      content: "break-even";
+      position: absolute;
+      left: 8px;
+      top: -18px;
+      color: rgba(23, 32, 29, 0.46);
+      font-size: clamp(10px, 0.74vw, 12px);
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .curve-note {
+      margin: clamp(10px, 1vw, 14px) 0 0;
+      color: rgba(23, 32, 29, 0.62);
+      font-size: clamp(15px, 1.12vw, 20px);
+      line-height: 1.3;
+      font-weight: 670;
+    }
+
+    .room-copy {
+      display: grid;
+      gap: clamp(9px, 1.05vw, 14px);
+    }
+
+    [aria-label="What kind of group is this"] .room-grid {
+      grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.82fr);
+      gap: clamp(18px, 2.4vw, 34px);
+      align-items: start;
+    }
+
+    [aria-label="What kind of group is this"] .room-grid .headline {
+      font-size: clamp(30px, 3vw, 48px);
+    }
+
+    [aria-label="What kind of group is this"] .room-copy .support {
+      font-size: clamp(16px, 1.22vw, 20px);
+      line-height: 1.22;
+    }
+
+    .room-culture {
+      border: 1px solid rgba(23, 32, 29, 0.14);
+      background: rgba(255, 255, 255, 0.56);
+      padding: clamp(13px, 1.35vw, 19px);
+    }
+
+    .culture-lines {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      margin: 0 0 12px;
+      color: var(--ink);
+      font-size: clamp(17px, 1.26vw, 22px);
+      line-height: 1.08;
+      font-weight: 850;
+    }
+
+    .warm-line {
+      margin: 0;
+      color: rgba(23, 32, 29, 0.68);
+      font-size: clamp(15px, 1.05vw, 18px);
+      line-height: 1.25;
+      font-weight: 690;
+    }
+
+    [aria-label="What kind of group is this"] .room-copy .small-note {
+      margin: 0;
+      font-size: clamp(12px, 0.9vw, 14px);
+      line-height: 1.18;
+    }
+
+    [aria-label="What kind of group is this"] .shared-diagram {
+      min-height: min(37vh, 340px);
+      margin-top: 16px;
+    }
+
+    [aria-label="What kind of group is this"] .shared-center {
+      width: clamp(132px, 10.5vw, 172px);
+      font-size: clamp(14px, 1.05vw, 18px);
+    }
+
+    [aria-label="What kind of group is this"] .shared-node {
+      width: clamp(116px, 9.5vw, 158px);
+      min-height: 48px;
+      padding: 8px 10px;
+      font-size: clamp(11px, 0.82vw, 13px);
+    }
+
+    .group-sourcebar {
+      min-height: 0;
+    }
+
+    .group-source-state {
+      display: none;
+    }
+
+    .deck[data-reveal="0"] [aria-label="What kind of group is this"] .group-source-state-0 {
+      display: inline;
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(54px, 8vw, 150px);
+      min-height: 0;
     }
 
     .workflow-column {
-      position: relative;
       display: grid;
       grid-template-rows: auto repeat(3, auto);
-      align-content: start;
-      gap: clamp(24px, 5vh, 54px);
-    }
-
-    .workflow-column::after {
-      content: "";
-      position: absolute;
-      left: clamp(72px, 6.6vw, 126px);
-      right: 0;
-      top: clamp(170px, 19vh, 206px);
-      height: clamp(130px, 14.8vh, 160px);
-      border-top: 1px solid rgba(23, 32, 29, 0.11);
-      border-bottom: 1px solid rgba(23, 32, 29, 0.11);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .workflow-slide.is-active .workflow-column::after {
-      animation: workflowLinesIn 420ms ease 220ms forwards;
-    }
-
-    .workflow-column h3 {
-      margin: 0;
-      color: var(--ink);
-      font-size: clamp(28px, 2.15vw, 42px);
-      line-height: 1.1;
-      font-weight: 850;
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
-    .workflow-slide.is-active .workflow-column h3 {
-      animation: workflowHeadingsIn 360ms cubic-bezier(0.22, 1, 0.36, 1) 180ms forwards;
+      gap: clamp(24px, 3.7vw, 44px);
     }
 
     .workflow-row {
-      position: relative;
       display: grid;
-      grid-template-columns: clamp(50px, 4.4vw, 84px) clamp(12px, 1.25vw, 24px) minmax(0, 1fr);
-      gap: clamp(14px, 1.35vw, 26px);
+      grid-template-columns: clamp(46px, 4vw, 72px) 2px minmax(0, 1fr);
+      gap: clamp(14px, 1.5vw, 24px);
       align-items: center;
-      opacity: 0;
-    }
-
-    .workflow-column.left .workflow-row {
-      transform: translateX(-18px);
-    }
-
-    .workflow-column.right .workflow-row {
-      transform: translateX(18px);
     }
 
     .workflow-number {
       color: rgba(216, 95, 69, 0.72);
-      font-size: clamp(34px, 2.85vw, 56px);
+      font-size: clamp(34px, 2.85vw, 54px);
       line-height: 1;
       font-weight: 860;
-      font-variant-numeric: tabular-nums;
     }
 
     .workflow-accent {
@@ -1562,230 +1362,98 @@
     }
 
     .workflow-row p {
-      margin: clamp(8px, 1.1vh, 14px) 0 0;
+      margin: 8px 0 0;
       color: rgba(23, 32, 29, 0.62);
-      font-size: clamp(16px, 1.18vw, 23px);
+      font-size: clamp(16px, 1.18vw, 22px);
       line-height: 1.28;
       font-weight: 630;
-    }
-
-    .deck[data-reveal="1"] .workflow-slide.is-active .workflow-column.left .workflow-row,
-    .deck[data-reveal="2"] .workflow-slide.is-active .workflow-column.left .workflow-row,
-    .deck[data-reveal="3"] .workflow-slide.is-active .workflow-column.left .workflow-row,
-    .deck[data-reveal="2"] .workflow-slide.is-active .workflow-column.right .workflow-row,
-    .deck[data-reveal="3"] .workflow-slide.is-active .workflow-column.right .workflow-row {
-      transition: opacity 430ms cubic-bezier(0.22, 1, 0.36, 1), transform 430ms cubic-bezier(0.22, 1, 0.36, 1);
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .workflow-column .workflow-row:nth-of-type(2) {
-      transition-delay: 130ms;
-    }
-
-    .workflow-column .workflow-row:nth-of-type(3) {
-      transition-delay: 260ms;
-    }
-
-    .adk-inline {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: clamp(9px, 1vw, 14px);
-      margin-top: clamp(10px, 1.4vh, 15px);
-      opacity: 0;
-      transform: translateY(8px) scale(0.98);
     }
 
     .adk-pill {
       display: inline-flex;
       align-items: center;
-      min-height: clamp(32px, 3.9vh, 42px);
-      min-width: clamp(190px, 16vw, 310px);
+      min-height: 38px;
       border: 1px solid rgba(14, 143, 128, 0.36);
       background: rgba(14, 143, 128, 0.07);
       padding: 6px 12px;
       color: rgba(23, 32, 29, 0.72);
-      font-size: clamp(14px, 1vw, 19px);
+      font-size: clamp(14px, 1vw, 18px);
       font-weight: 680;
     }
 
-    .adk-pill strong {
-      color: var(--teal);
-      font-weight: 850;
-    }
-
-    .adk-note {
-      margin: 0;
-      color: rgba(23, 32, 29, 0.5);
-      font-size: clamp(12px, 0.9vw, 17px);
-      line-height: 1.2;
-      font-weight: 640;
-      opacity: 0;
-    }
-
-    .deck[data-reveal="1"] .workflow-slide.is-active .adk-inline,
-    .deck[data-reveal="2"] .workflow-slide.is-active .adk-inline,
-    .deck[data-reveal="3"] .workflow-slide.is-active .adk-inline {
-      transition: opacity 360ms cubic-bezier(0.22, 1, 0.36, 1) 430ms, transform 360ms cubic-bezier(0.22, 1, 0.36, 1) 430ms;
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .deck[data-reveal="1"] .workflow-slide.is-active .adk-note,
-    .deck[data-reveal="2"] .workflow-slide.is-active .adk-note,
-    .deck[data-reveal="3"] .workflow-slide.is-active .adk-note {
-      transition: opacity 280ms ease 520ms;
-      opacity: 1;
-    }
+    .adk-pill strong { color: var(--teal); }
 
     .cadence-strip {
-      display: grid;
-      grid-template-columns: 1fr;
-      min-height: clamp(92px, 13vh, 150px);
-      gap: clamp(10px, 1.3vh, 16px);
-      align-content: center;
+      min-height: clamp(82px, 10.8vh, 118px);
       border: 1px solid rgba(23, 32, 29, 0.13);
-      border-radius: clamp(16px, 1.35vw, 28px);
-      background: rgba(255, 255, 255, 0.5);
-      padding: clamp(18px, 2.3vh, 26px) clamp(24px, 2.6vw, 50px);
-      opacity: 0;
-      transform: translateY(14px) scaleX(0.985);
-      transform-origin: center;
+      border-radius: clamp(16px, 1.35vw, 26px);
+      background: var(--surface);
+      padding: clamp(14px, 1.9vh, 22px) clamp(22px, 2.4vw, 44px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+      align-items: center;
+      gap: clamp(18px, 2.2vw, 34px);
     }
 
-    .deck[data-reveal="3"] .cadence-strip {
-      transition: opacity 460ms cubic-bezier(0.22, 1, 0.36, 1), transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
-      opacity: 1;
-      transform: translateY(0) scaleX(1);
-    }
-
-    .cadence-strip p {
+    .cadence-primary,
+    .cadence-secondary {
       margin: 0;
-      color: rgba(23, 32, 29, 0.72);
-      font-size: clamp(18px, 1.55vw, 32px);
-      line-height: 1.28;
-      font-weight: 690;
-      opacity: 0;
-      transform: translateY(6px);
+      font-size: clamp(17px, 1.4vw, 26px);
+      line-height: 1.25;
+      font-weight: 720;
     }
 
-    .cadence-label {
-      color: var(--coral);
-      font-weight: 760;
+    .cadence-secondary {
+      color: var(--muted);
+      font-size: clamp(13px, 1.02vw, 18px);
     }
 
-    .cadence-value {
-      color: var(--ink);
-      font-weight: 850;
+    [aria-label="How will the group work"] .state[data-state="2"] {
+      height: 100%;
+      align-content: stretch;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: clamp(14px, 2vh, 22px);
     }
 
-    .deck[data-reveal="3"] .cadence-strip .cadence-primary {
-      transition: opacity 330ms ease 110ms, transform 330ms ease 110ms;
-      opacity: 1;
-      transform: translateY(0);
+    [aria-label="How will the group work"] .state[data-state="2"] .workflow-grid {
+      align-content: start;
     }
 
-    .deck[data-reveal="3"] .cadence-strip .cadence-secondary {
-      transition: opacity 300ms ease 210ms, transform 300ms ease 210ms;
-      opacity: 1;
-      transform: translateY(0);
+    [aria-label="How will the group work"] .state[data-state="2"] .workflow-column {
+      gap: clamp(14px, 2vw, 24px);
     }
 
-    .source-area {
+    [aria-label="How will the group work"] .state[data-state="2"] .adk-pill {
+      min-height: 30px;
+      margin-top: 6px;
+      padding: 4px 10px;
+      font-size: clamp(12px, 0.92vw, 15px);
+    }
+
+    [aria-label="How will the group work"] .state[data-state="2"] .adk-pill + .small-note {
+      margin-top: 5px;
+      font-size: clamp(11px, 0.86vw, 14px);
+      line-height: 1.15;
+    }
+
+    .cadence-wide {
+      grid-column: 1 / -1;
+    }
+
+    .accent { color: var(--coral); }
+
+    .hl { border-radius: 3px; padding: 0 3px; font-weight: 820; }
+    .hl-models { color: #2d6bb2; background: rgba(70,119,184,0.12); }
+    .hl-tools { color: #0e8377; background: rgba(14,143,128,0.12); }
+    .hl-instructions { color: #b6533f; background: rgba(216,95,69,0.13); }
+    .hl-orchestration { color: #a67818; background: rgba(201,151,45,0.15); }
+    .hl-guardrails { color: #785aa6; background: rgba(120,90,166,0.13); }
+    .hl-evaluation { color: #2f8560; background: rgba(47,133,96,0.13); }
+
+    .metric {
       display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      border-top: 1px solid var(--line);
-      padding-top: clamp(9px, 1vw, 13px);
-      color: rgba(23, 32, 29, 0.58);
-      font-size: clamp(11px, 0.9vw, 13px);
-      font-weight: 650;
-      line-height: 1.3;
-    }
-
-    .source-area a {
-      color: inherit;
-      text-decoration-color: rgba(23, 32, 29, 0.32);
-      text-underline-offset: 2px;
-    }
-
-    .source-state {
-      display: none;
-    }
-
-    .deck[data-reveal="0"] .source-state-0,
-    .deck[data-reveal="1"] .source-state-1,
-    .deck[data-reveal="2"] .source-state-2,
-    .deck[data-reveal="3"] .source-state-3,
-    .deck[data-reveal="4"] .source-state-4,
-    .deck[data-reveal="5"] .source-state-5,
-    .deck[data-reveal="6"] .source-state-6 {
-      display: inline;
-    }
-
-    @keyframes workflowTitleIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes workflowSubtitleIn {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes workflowHeadingsIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes workflowLinesIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    @keyframes pulse {
-      0%,
-      100% {
-        opacity: 0.22;
-        filter: saturate(0.8);
-      }
-      45% {
-        opacity: 0.88;
-        filter: saturate(1.2);
-      }
-    }
-
-    @keyframes breathe {
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-7px);
-      }
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1793,416 +1461,300 @@
       *::before,
       *::after {
         animation-duration: 0.001ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
         transition-duration: 150ms !important;
       }
-
-      .workflow-row,
-      .adk-inline,
-      .cadence-strip,
-      .cadence-strip p,
-      .workflow-title,
-      .workflow-subtitle,
-      .workflow-column h3 {
-        transform: none !important;
-      }
-    }
-
-    @media (max-aspect-ratio: 4 / 3) {
-      .title-slide,
-      .work-slide {
-        grid-template-columns: 1fr;
-        align-content: center;
-        gap: 22px;
-        padding: clamp(28px, 8vw, 56px);
-      }
-
-      .content {
-        max-width: none;
-      }
-
-      .map {
-        min-height: 210px;
-        border-left: 0;
-        border-top: 1px solid var(--line);
-        padding: 22px 0 0;
-      }
-
-      .map-inner {
-        width: min(76vw, 360px);
-        aspect-ratio: 1.55 / 1;
-        margin: 0 auto;
-      }
-
-      .work-slide {
-        grid-template-rows: auto minmax(0, 1fr) auto;
-      }
-
-      .work-state {
-        grid-template-columns: 1fr;
-        align-content: start;
-        overflow: auto;
-        padding-right: 4px;
-      }
-
-      .reliability-state {
-        grid-template-columns: 1fr;
-      }
-
-      .quote-first .core-copy {
-        grid-template-columns: 1fr;
-      }
-
-      blockquote,
-      .core-sentence {
-        max-width: none;
-      }
-
-      .chart-pair {
-        grid-template-columns: 1fr;
-      }
-
-      .node {
-        width: clamp(58px, 13vw, 86px);
-      }
-
-      .center {
-        width: clamp(68px, 14vw, 98px);
-      }
-    }
-
-    @media (max-width: 760px) {
-      .deck {
-        width: 100vw;
-        height: 100vh;
-      }
-
-      .deck::before {
-        inset: 16px;
-      }
-
-      .slide-header,
-      .source-area {
-        align-items: start;
-        flex-direction: column;
-      }
-
-      .work-title {
-        font-size: clamp(34px, 9vw, 48px);
-      }
-
-      blockquote {
-        font-size: clamp(24px, 7vw, 34px);
-      }
-
-      .core-sentence {
-        font-size: clamp(30px, 8vw, 42px);
-      }
-
-      .footer {
-        flex-direction: column;
-        gap: 4px;
-      }
+      .state { transform: none !important; }
     }
   </style>
 </head>
 <body>
-  <main class="deck" aria-label="Search Agent Study Group deck">
-    <section class="slide title-slide is-active" data-title="01 / Building agents" aria-label="Search Agent Study Group title slide">
-      <div class="content">
-        <div class="eyebrow">Week 1 / July 7, 2026</div>
-        <h1>Search Agent <span class="title-mark">Study Group</span></h1>
-        <p class="subtitle">
-          Reading together: OpenAI's <strong>Building agents</strong>, from foundations to practical implementation.
-        </p>
-        <div class="meta-row" aria-label="Session metadata">
-          <span class="tag">first meeting</span>
-          <span class="tag">agent foundations</span>
-          <span class="tag">search as workflow</span>
+  <main class="deck" aria-label="Search Agent Study Group consistent deck">
+    <section class="slide title-slide is-active" data-title="01 / Search Agent Study Group" aria-label="Search Agent Study Group title slide">
+      <div class="cover-copy">
+        <h1 class="cover-title">Search Agent<br>Study Group</h1>
+        <p class="cover-subtitle">Agent 101</p>
+        <p class="cover-date">Week 0 · July 7, 2026</p>
+        <div class="cover-tags" aria-label="Cover topics">
+          <span class="cover-tag">Why agents now</span>
+          <span class="cover-tag">Expectations</span>
+          <span class="cover-tag">Logistics</span>
         </div>
       </div>
 
-      <aside class="map" aria-label="Abstract search-agent workflow">
-        <div class="map-inner">
-          <div class="orbit"></div>
-          <div class="orbit"></div>
-          <div class="route one"></div>
-          <div class="route two"></div>
-          <div class="route three"></div>
-          <div class="node query">question</div>
-          <div class="node search">search</div>
-          <div class="node tools">tools</div>
-          <div class="node answer">answer</div>
-          <div class="center">agent<br>loop</div>
-        </div>
+      <aside class="constellation-panel" aria-label="Agent study concept constellation">
+        <svg class="constellation" viewBox="0 0 720 560" role="img" aria-label="Concept map centered on agents, with build, control, and steer clusters.">
+          <defs>
+            <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="6" result="blur"></feGaussianBlur>
+              <feMerge>
+                <feMergeNode in="blur"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+          <g class="constellation-links"></g>
+          <g class="constellation-nodes"></g>
+        </svg>
       </aside>
     </section>
 
-    <section class="slide work-slide" data-title="02 / Why this study group?" data-reveals="5" aria-label="Why this study group">
+    <section class="slide content-slide" data-title="02 / Why this study group?" data-reveals="7" aria-label="Why this study group">
       <header class="slide-header">
         <div>
-          <div class="slide-kicker">Why this study group?</div>
-          <h2 class="work-title">Why this study group?</h2>
+          <h2 class="slide-title">Why this study group?</h2>
         </div>
-        <div class="reveal-meter" aria-label="Reveal progress">
-          <span class="reveal-tick" aria-hidden="true"></span>
-          <span class="reveal-tick" aria-hidden="true"></span>
-          <span class="reveal-tick" aria-hidden="true"></span>
-          <span class="reveal-tick" aria-hidden="true"></span>
-          <span class="reveal-tick" aria-hidden="true"></span>
-          <span id="reveal-label">1 of 3</span>
-        </div>
+        <div class="meter"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="label">1 of 7</span></div>
       </header>
 
-      <div class="work-stage">
-        <article class="work-state quote-first" data-state="0" aria-label="Longer horizon work">
-          <div class="core-copy">
-            <p class="core-sentence">Agents are changing how we work</p>
-            <blockquote>
-              “users moved from only asking Codex for one answer at a time into increasingly orchestrating multiple agent tasks over the course of a day”
-            </blockquote>
-            <p class="support-line">AI use is shifting from single answers to delegated, longer-horizon work.</p>
-          </div>
-          <figure class="chart-card threshold-chart">
-            <figcaption class="chart-title">
-              <span>Requests above human-time thresholds</span>
-              <span>Individual users</span>
-            </figcaption>
-            <img src="assets/requests-above-human-time-thresholds.svg" alt="Requests above human-time thresholds chart from OpenAI showing rising shares of sampled individual users making Codex requests estimated above 30 minutes, 1 hour, 4 hours, and 8 hours of human work.">
-          </figure>
-        </article>
-
-        <article class="work-state quote-first" data-state="1" aria-label="Non-developer adoption">
-          <div class="core-copy">
-            <p class="core-sentence">Agents are changing how we work</p>
-            <blockquote class="short-quote">“More non-developers are using Codex for agentic work.”</blockquote>
-            <p class="support-line">We can see the same pattern in recent Engineering Excellence and Innovations Showcase meetings: many teams are now building agent systems.</p>
-          </div>
-          <figure class="chart-card adoption-chart">
-            <figcaption class="chart-title">
-              <span>Developer vs. non-developer adoption growth</span>
-              <span>Relative to Aug 1, 2025</span>
-            </figcaption>
-            <div class="chart-pair">
-              <div class="mini-chart">
-                <div class="mini-chart-title">Developer</div>
-                <img src="assets/developer-adoption-growth.svg" alt="Developer Codex adoption growth chart from OpenAI.">
-              </div>
-              <div class="mini-chart emphasis">
-                <div class="mini-chart-title">Non-developer</div>
-                <img src="assets/non-developer-adoption-growth.svg" alt="Non-developer Codex adoption growth chart from OpenAI showing faster growth for individual and organizational users.">
-              </div>
-            </div>
-          </figure>
-        </article>
-
-        <article class="work-state quote-first reliability-state" data-state="2" aria-label="Capability is not reliability">
-          <div class="core-copy">
-            <p class="core-sentence">Capability is not reliability</p>
-            <div class="argument-lines">
-              <p>The challenge is not merely telling the agent what to do.</p>
-              <p>The challenge is designing a system in which it can reliably do the right thing.</p>
-            </div>
-          </div>
-          <div class="reliability-visual-row">
-            <div class="case-study">
-              <strong>Case study: Neural Ranker Auto Research</strong>
-              <p>Hackathon project with Nidhin, Dong, and Hemakshi</p>
-              <p class="secondary">We’ll present this project in Search Algo Weekly in ~2 weeks.</p>
-            </div>
-            <figure class="chart-card anthropic-figure">
-              <figcaption class="chart-title">
-                <span>Calibrating the system prompt in the process of context engineering</span>
-                <span>Anthropic</span>
-              </figcaption>
-              <img src="assets/anthropic-calibrating-system-prompt.png" alt="Anthropic figure titled Calibrating the system prompt, showing a spectrum from too specific, to just right, to too vague guidance.">
-              <p class="figure-caption">Reliable behavior requires the right level of guidance—not too vague, not too brittle.</p>
+      <div class="state-shell">
+        <nav class="rail">
+          <div class="rail-item"><span class="rail-num">01</span><span class="rail-label">Agents are changing how we work</span></div>
+          <div class="rail-item"><span class="rail-num">02</span><span class="rail-label">Capability is not reliability</span></div>
+          <div class="rail-item"><span class="rail-num">03</span><span class="rail-label">Agent building is more than writing instructions</span></div>
+        </nav>
+        <div class="stage">
+          <article class="state" data-state="0">
+            <p class="state-kicker">Agents are changing how we work</p>
+            <p class="quote-text">“users moved from only asking Codex for one answer at a time into increasingly orchestrating multiple agent tasks over the course of a day”</p>
+            <p class="small-note">AI use is shifting from single answers to delegated, longer-horizon work.</p>
+            <figure class="panel chart-panel">
+              <p class="panel-title">Requests above human-time thresholds</p>
+              <img src="assets/requests-above-human-time-thresholds.svg" alt="Requests above human-time thresholds chart from OpenAI.">
             </figure>
-          </div>
-        </article>
+          </article>
 
-        <article class="work-state system-state" data-state="3" aria-label="Agent building is more than writing instructions">
-          <div class="core-copy">
-            <p class="core-sentence">Agent building is more than writing instructions</p>
-            <p class="support-line">Building a reliable and controllable agent requires more than prompts, skills, or Markdown instruction files.</p>
-          </div>
-          <div class="system-grid">
-            <div class="quote-stack">
-              <figure class="source-quote primary">
-                <p>
-                  “To build reliable agents, start with strong foundations”:
-                  pair <span class="hl hl-models">capable models</span> with
-                  <span class="hl hl-tools">well-defined tools</span> and
-                  <span class="hl hl-instructions">clear, structured instructions</span>;
-                  choose <span class="hl hl-orchestration">orchestration patterns</span> that fit the system, with
-                  <span class="hl hl-orchestration">multi-agent systems</span> only when needed; and apply
-                  <span class="hl hl-guardrails">Guardrails</span> throughout production use.
-                </p>
-                <div class="quote-source">
-                  Source: OpenAI, <a href="https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/">“A practical guide to building agents”</a>
-                </div>
-              </figure>
-              <figure class="source-quote secondary">
-                <p>
-                  “This may seem like a lot of extra work to set up, but
-                  <span class="hl hl-evaluation">the investment of automating evaluations pays off quickly</span>.”
-                </p>
-                <div class="quote-source">
-                  Source: Google Agent Development Kit, <a href="https://adk.dev/evaluate/">“Why evaluate agents”</a>
-                </div>
+          <article class="state" data-state="1">
+            <p class="state-kicker">Agents are changing how we work</p>
+            <p class="quote-text">“More non-developers are using Codex for agentic work.”</p>
+            <p class="small-note">We can see the same pattern in recent Engineering Excellence and Innovations Showcase meetings: many teams are now building agent systems.</p>
+            <figure class="panel">
+              <p class="panel-title">Developer vs. non-developer adoption growth</p>
+              <div class="chart-pair">
+                <div class="mini-panel"><p class="mini-title">Developer</p><img src="assets/developer-adoption-growth.svg" alt="Developer Codex adoption growth chart from OpenAI."></div>
+                <div class="mini-panel"><p class="mini-title">Non-developer</p><img src="assets/non-developer-adoption-growth.svg" alt="Non-developer Codex adoption growth chart from OpenAI."></div>
+              </div>
+            </figure>
+          </article>
+
+          <article class="state" data-state="2">
+            <p class="state-kicker">Capability is not reliability</p>
+            <div class="challenge-block">
+              <p class="challenge-line"><strong>The challenge is</strong> not merely telling the agent what to do.</p>
+              <p class="challenge-line emphasis"><strong>The challenge is</strong> designing a system in which it can reliably do the right thing.</p>
+            </div>
+            <div class="reliability-grid">
+              <div class="case-box">
+                <strong><span>Case study:</span><span>Neural Ranker Auto Research</span></strong>
+                <p>Hackathon project with Nidhin, Dong, and Hemakshi</p>
+                <p>We’ll present this project in Search Algo Weekly in ~2 weeks.</p>
+              </div>
+              <figure class="anthropic-plain">
+                <img src="assets/anthropic-calibrating-system-prompt.png" alt="Anthropic figure titled Calibrating the system prompt.">
               </figure>
             </div>
-            <div class="component-map" aria-label="Working map for this study group: six engineering components around an effective, controllable agent system">
-              <div class="component-center">Effective, controllable<br>agent system</div>
-              <div class="component-node component-models">Models</div>
-              <div class="component-node component-tools">Tools</div>
-              <div class="component-node component-instructions">Instructions</div>
-              <div class="component-node component-orchestration">Orchestration</div>
-              <div class="component-node component-guardrails">Guardrails</div>
-              <div class="component-node component-evaluation">Evaluation</div>
-              <div class="map-qualifier">Working map for this study group</div>
-            </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="work-state evolution-state" data-state="4" aria-label="Prompt Engineering to Context Engineering to Harness Engineering">
-          <div class="core-copy">
-            <p class="core-sentence">Agent building is more than writing instructions</p>
-            <p class="support-line">Prompt Engineering → Context Engineering → Harness Engineering</p>
-          </div>
-          <div class="evolution-panel">
-            <p class="evolution-heading">The Evolution at a Glance</p>
+          <article class="state" data-state="3">
+            <p class="state-kicker">Agent building is more than writing instructions</p>
+            <div class="system-grid">
+              <div>
+                <div class="panel">
+                  <p class="statement">“To build reliable agents, start with strong foundations”: pair <span class="hl hl-models">capable models</span> with <span class="hl hl-tools">well-defined tools</span> and <span class="hl hl-instructions">clear, structured instructions</span>; choose <span class="hl hl-orchestration">orchestration patterns</span> that fit the system, with <span class="hl hl-orchestration">multi-agent systems</span> only when needed; and apply <span class="hl hl-guardrails">Guardrails</span> throughout production use.</p>
+                </div>
+                <div class="panel">
+                  <p class="small-note">“This may seem like a lot of extra work to set up, but <span class="hl hl-evaluation">the investment of automating evaluations pays off quickly</span>.”</p>
+                </div>
+              </div>
+              <div class="component-map">
+                <div class="component-center">Effective, controllable<br>agent system</div>
+                <div class="component-node">Models</div>
+                <div class="component-node">Tools</div>
+                <div class="component-node">Instructions</div>
+                <div class="component-node">Orchestration</div>
+                <div class="component-node">Guardrails</div>
+                <div class="component-node">Evaluation</div>
+                <div class="map-note">Working map for this study group</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="state" data-state="4">
+            <p class="state-kicker">Agent building is more than writing instructions</p>
+            <div class="engineering-flow before-harness" aria-label="Prompt engineering to context engineering">
+              <div class="engineering-card prompt-card">
+                <div class="engineering-era">Prompt<br>Engineering</div>
+                <div class="engineering-focus">Instructions</div>
+                <div class="engineering-artifact">Prompt</div>
+              </div>
+              <div class="flow-arrow one" aria-hidden="true"></div>
+              <div class="engineering-card context-card">
+                <div class="engineering-era">Context<br>Engineering</div>
+                <div class="engineering-focus">Information</div>
+                <div class="engineering-artifact">Context Window</div>
+              </div>
+              <div class="flow-arrow two" aria-hidden="true"></div>
+              <div class="engineering-card harness-card">
+                <div class="engineering-era">Harness<br>Engineering</div>
+                <div class="engineering-focus">Execution Systems</div>
+                <div class="engineering-artifact">Runtime System</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="state" data-state="5">
+            <p class="state-kicker">Agent building is more than writing instructions</p>
+            <div class="engineering-flow" aria-label="Prompt engineering to context engineering to harness engineering">
+              <div class="engineering-card prompt-card">
+                <div class="engineering-era">Prompt<br>Engineering</div>
+                <div class="engineering-focus">Instructions</div>
+                <div class="engineering-artifact">Prompt</div>
+              </div>
+              <div class="flow-arrow one" aria-hidden="true"></div>
+              <div class="engineering-card context-card">
+                <div class="engineering-era">Context<br>Engineering</div>
+                <div class="engineering-focus">Information</div>
+                <div class="engineering-artifact">Context Window</div>
+              </div>
+              <div class="flow-arrow two" aria-hidden="true"></div>
+              <div class="engineering-card harness-card">
+                <div class="engineering-era">Harness<br>Engineering</div>
+                <div class="engineering-focus">Execution Systems</div>
+                <div class="engineering-artifact">Runtime System</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="state" data-state="6">
+            <p class="state-kicker">Agent building is more than writing instructions</p>
+            <div class="engineering-stack">
+              <div class="engineering-flow" aria-label="Prompt engineering to context engineering to harness engineering">
+                <div class="engineering-card prompt-card">
+                  <div class="engineering-era">Prompt<br>Engineering</div>
+                  <div class="engineering-focus">Instructions</div>
+                  <div class="engineering-artifact">Prompt</div>
+                </div>
+                <div class="flow-arrow one" aria-hidden="true"></div>
+                <div class="engineering-card context-card">
+                  <div class="engineering-era">Context<br>Engineering</div>
+                  <div class="engineering-focus">Information</div>
+                  <div class="engineering-artifact">Context Window</div>
+                </div>
+                <div class="flow-arrow two" aria-hidden="true"></div>
+                <div class="engineering-card harness-card">
+                  <div class="engineering-era">Harness<br>Engineering</div>
+                  <div class="engineering-focus">Execution Systems</div>
+                  <div class="engineering-artifact">Runtime System</div>
+                </div>
+              </div>
+            
             <table class="evolution-table">
-              <thead>
-                <tr>
-                  <th>Era</th>
-                  <th>Focus</th>
-                  <th>Core Question</th>
-                  <th>Primary Artifact</th>
-                </tr>
-              </thead>
+              <thead><tr><th>Era</th><th>Focus</th><th>Core Question</th><th>Primary Artifact</th></tr></thead>
               <tbody>
-                <tr class="era-prompt">
-                  <td>Prompt Engineering</td>
-                  <td>Instructions</td>
-                  <td>“What should I ask?”</td>
-                  <td>Prompt</td>
-                </tr>
-                <tr class="era-context">
-                  <td>Context Engineering</td>
-                  <td>Information</td>
-                  <td>“What should the model know?”</td>
-                  <td>Context Window</td>
-                </tr>
-                <tr class="era-harness">
-                  <td>Harness Engineering</td>
-                  <td>Execution Systems</td>
-                  <td>“How should the agent operate?”</td>
-                  <td>Runtime System</td>
-                </tr>
+                <tr><td>Prompt Engineering</td><td>Instructions</td><td>“What should I ask?”</td><td>Prompt</td></tr>
+                <tr><td>Context Engineering</td><td>Information</td><td>“What should the model know?”</td><td>Context Window</td></tr>
+                <tr><td>Harness Engineering</td><td>Execution Systems</td><td>“How should the agent operate?”</td><td>Runtime System</td></tr>
               </tbody>
             </table>
-            <div class="evolution-source">
-              Recreated from “The Evolution at a Glance” in Vishal Mysore, <a href="https://medium.com/@visrow/harness-engineering-vs-prompt-engineering-vs-context-engineering-explained-0423b692c87d">“Harness Engineering vs Prompt Engineering vs Context Engineering Explained”</a>. Working framework for discussion, not an official taxonomy.
             </div>
-          </div>
-        </article>
+          </article>
+        </div>
       </div>
 
-      <div class="source-area" aria-label="Sources">
-        <span class="source-state source-state-0">Charts and article: OpenAI, <a href="https://openai.com/index/how-agents-are-transforming-work/">“How agents are transforming work”</a> (2026)</span>
-        <span class="source-state source-state-0 source-state-1">Underlying paper: <a href="https://arxiv.org/html/2606.26959">“The Shift to Agentic AI: Evidence from Codex”</a></span>
-        <span class="source-state source-state-1">Charts and article: OpenAI, <a href="https://openai.com/index/how-agents-are-transforming-work/">“How agents are transforming work”</a> (2026)</span>
-        <span class="source-state source-state-2">Anthropic, <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">“Effective context engineering for AI agents”</a> (2025)</span>
-        <span class="source-state source-state-3">OpenAI, <a href="https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/">“A practical guide to building agents”</a>; Google ADK, <a href="https://adk.dev/evaluate/">“Why evaluate agents”</a></span>
-        <span class="source-state source-state-4">Vishal Mysore, <a href="https://medium.com/@visrow/harness-engineering-vs-prompt-engineering-vs-context-engineering-explained-0423b692c87d">“Harness Engineering vs Prompt Engineering vs Context Engineering Explained”</a></span>
+      <div class="sourcebar">
+        <span class="source-state source-state-0 source-state-1">OpenAI · <a href="https://openai.com/index/how-agents-are-transforming-work/">How agents are transforming work</a> (2026)</span>
+        <span class="source-state source-state-0 source-state-1">Underlying paper · <a href="https://arxiv.org/html/2606.26959">The Shift to Agentic AI: Evidence from Codex</a></span>
+        <span class="source-state source-state-2">Anthropic · <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a> (2025)</span>
+        <span class="source-state source-state-3">OpenAI · <a href="https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/">A practical guide to building agents</a></span>
+        <span class="source-state source-state-3">Google ADK · <a href="https://adk.dev/evaluate/">Why evaluate agents</a></span>
+        <span class="source-state source-state-4 source-state-5 source-state-6">Vishal Mysore · <a href="https://medium.com/@visrow/harness-engineering-vs-prompt-engineering-vs-context-engineering-explained-0423b692c87d">Harness Engineering vs Prompt Engineering vs Context Engineering Explained</a></span>
       </div>
     </section>
 
-    <section class="slide group-kind-slide" data-title="03 / What kind of group is this?" data-reveals="3" aria-label="What kind of group is this">
-      <header class="group-kind-header">
-        <h2 class="group-kind-title">What kind of group is this?</h2>
-        <p class="group-kind-subtitle">A long-term investment in a fast-moving field</p>
+    <section class="slide content-slide" data-title="03 / What kind of group is this?" data-reveals="3" aria-label="What kind of group is this">
+      <header class="slide-header">
+        <div>
+          <h2 class="slide-title">What kind of group is this?</h2>
+          <p class="small-note">A long-term investment in a fast-moving field</p>
+        </div>
+        <div class="meter"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="label">1 of 3</span></div>
       </header>
 
-      <div class="group-kind-layout">
-        <nav class="group-nav" aria-label="Group framing">
-          <div class="group-nav-item">
-            <span class="group-nav-number">01</span>
-            <span class="group-nav-label">Fast-moving field</span>
-          </div>
-          <div class="group-nav-item">
-            <span class="group-nav-number">02</span>
-            <span class="group-nav-label">Time before payoff</span>
-          </div>
-          <div class="group-nav-item">
-            <span class="group-nav-number">03</span>
-            <span class="group-nav-label">Collaborative learning</span>
-          </div>
+      <div class="state-shell">
+        <nav class="rail">
+          <div class="rail-item"><span class="rail-num">01</span><span class="rail-label">Fast-moving field</span></div>
+          <div class="rail-item"><span class="rail-num">02</span><span class="rail-label">Time before payoff</span></div>
+          <div class="rail-item"><span class="rail-num">03</span><span class="rail-label">Collaborative learning</span></div>
         </nav>
-
-        <div class="group-content">
-          <article class="group-state" data-state="0" aria-label="Fast-moving field">
-            <p class="group-kicker">THE FIELD WILL KEEP CHANGING</p>
-            <p class="group-main">The tools will change faster than<br>the underlying engineering questions.</p>
-            <div class="change-chips">
-              <span class="change-chip">Models</span>
-              <span class="change-chip">Frameworks</span>
-              <span class="change-chip">Prompt formats</span>
-              <span class="change-chip">Tooling</span>
-            </div>
-            <div class="learning-panel">
-              <p class="panel-title">What we want to keep learning</p>
-              <div class="question-grid">
-                <div class="question-item">How do we define success?</div>
-                <div class="question-item">What context should the model see?</div>
-                <div class="question-item">How should tools be designed?</div>
-                <div class="question-item">How do we verify outcomes?</div>
-                <div class="question-item">When should the agent stop or ask for help?</div>
-                <div class="question-item">How do we debug failures?</div>
+        <div class="stage">
+          <article class="state group-seq" data-state="0">
+            <p class="state-kicker">THE FIELD WILL KEEP CHANGING</p>
+            <p class="opening-headline">Some of what we learn will become obsolete.</p>
+            <div class="evidence-row">
+              <div class="source-evidence">
+                <p class="evidence-quote">“the exact formatting of prompts is likely becoming less important as models become more capable.”</p>
+                <span class="source-org">Anthropic</span>
+                <a class="source-title" href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a>
+              </div>
+              <div class="source-evidence">
+                <p class="evidence-quote">“Observability tools and conventions are evolving as AI systems evolve.”</p>
+                <span class="source-org">Microsoft</span>
+                <a class="source-title" href="https://learn.microsoft.com/en-us/security/zero-trust/sfi/observability-ai-systems">Observability for Generative AI and agentic AI systems</a>
               </div>
             </div>
-            <div class="group-refs">
-              <span>Anthropic · <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Effective context engineering for AI agents</a></span>
-              <span>Microsoft · <a href="https://learn.microsoft.com/en-us/azure/foundry/concepts/observability">Observability in generative AI</a></span>
+            <p class="takeaway">The tools will change faster than<br><span class="takeaway-emphasis">the underlying engineering questions.</span></p>
+            <div class="tool-change-row">
+              <span class="tool-change-label">What may change quickly</span>
+              <span class="chip tool-chip">Models</span><span class="chip tool-chip">Frameworks</span><span class="chip tool-chip">Prompt formats</span><span class="chip tool-chip">Observability conventions</span>
             </div>
-          </article>
-
-          <article class="group-state" data-state="1" aria-label="Time before payoff">
-            <p class="group-kicker">THIS MAY COST TIME BEFORE IT SAVES TIME</p>
-            <div class="compound-layout">
-              <div>
-                <p class="group-main secondary">This may not save us time next week.</p>
-                <p class="group-support">The goal is to change how we work over the next few years.</p>
-                <p class="group-support">Reading is slower than immediately attempting the task — until the learning starts to compound.</p>
-              </div>
-              <div class="learning-curve" aria-label="Learning curve and compounding visual">
-                <span class="axis-y"></span>
-                <span class="axis-x"></span>
-                <svg class="curve-svg" viewBox="0 0 320 220" aria-hidden="true">
-                  <path d="M 28 132 C 64 166, 105 154, 139 127 C 184 91, 232 70, 296 31"></path>
-                </svg>
-                <span class="curve-dip">Initial learning cost</span>
-                <span class="curve-up">Reusable mental models</span>
-                <span class="axis-label axis-value">Value</span>
-                <span class="axis-label axis-today">Today</span>
-                <span class="axis-label axis-later">Later</span>
+            <div class="panel durable-panel">
+              <p class="panel-title">Questions that outlast the tools</p>
+              <div class="durable-questions">
+                <div class="durable-question">How do we define success?</div>
+                <div class="durable-question">What context should the model see?</div>
+                <div class="durable-question">How should tools be designed?</div>
+                <div class="durable-question">How do we verify outcomes?</div>
+                <div class="durable-question">When should the agent stop or ask for help?</div>
+                <div class="durable-question">How do we debug failures?</div>
               </div>
             </div>
           </article>
 
-          <article class="group-state" data-state="2" aria-label="Collaborative learning">
-            <p class="group-kicker">THIS IS COLLABORATIVE LEARNING</p>
-            <div class="collab-layout">
-              <div class="room-panel">
-                <p>Not a lecture style.</p>
-                <p>We are learning together, comparing experiences, and building shared understanding.</p>
-                <p class="panel-title">How we want the room to feel</p>
-                <p>Please ask the silly questions —<br>they are often the most useful ones.</p>
-                <p class="room-footer">Study together · Compare experiences · Develop a shared understanding</p>
+          <article class="state group-seq" data-state="1">
+            <p class="state-kicker">LEARNING MAY SLOW US DOWN BEFORE IT SPEEDS US UP</p>
+            <div class="learning-layout">
+              <div class="learning-copy">
+                <p class="headline">This may not save us time next week.</p>
+                <p class="support">The goal is to build mental models and reusable patterns that compound over the next few years.</p>
+                <p class="curve-note">Doing the task once may be faster than studying the system.<br>The payoff comes when the learning transfers to many future tasks.</p>
               </div>
-              <div class="shared-diagram" aria-label="Shared understanding diagram">
+              <div class="curve-box polished">
+                <span class="axis-line axis-y"></span><span class="axis-line axis-x"></span>
+                <span class="break-even"></span>
+                <svg viewBox="0 0 320 220" aria-hidden="true"><path d="M 28 126 C 61 158, 91 163, 120 142 C 154 117, 177 103, 208 82 C 238 61, 267 45, 296 28"></path></svg>
+                <span class="curve-label curve-dip">Initial learning cost</span>
+                <span class="curve-label curve-up">Reusable mental models</span>
+                <span class="curve-label axis-value">Value</span>
+                <span class="curve-label axis-today">Today</span>
+                <span class="curve-label axis-later">Later</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="state group-seq" data-state="2">
+            <p class="state-kicker">THIS IS COLLABORATIVE LEARNING</p>
+            <div class="room-grid">
+              <div class="room-copy">
+                <p class="headline">A study group, not a lecture series.</p>
+                <p class="support">No one is expected to arrive with all the answers.</p>
+                <p class="support">We are learning together, comparing experiences, and building shared understanding.</p>
+                <div class="room-culture">
+                  <p class="panel-title">How we want the room to feel</p>
+                  <p class="culture-lines"><span>Ask basic questions.</span><span>Challenge the readings.</span><span>Share failures.</span></p>
+                  <p class="warm-line">Please ask the silly questions—they are often the most useful ones.</p>
+                </div>
+                <p class="small-note">Study together · Compare experiences · Develop shared understanding</p>
+              </div>
+              <div class="shared-diagram">
                 <svg class="shared-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                   <line x1="50" y1="32" x2="50" y2="22"></line>
                   <line x1="66" y1="50" x2="78" y2="50"></line>
@@ -2219,161 +1771,426 @@
           </article>
         </div>
       </div>
+
+      <div class="sourcebar group-sourcebar" aria-hidden="true"></div>
     </section>
 
-    <section class="slide workflow-slide" data-title="04 / How will the group work?" data-reveals="4" aria-label="How will the group work">
-      <header class="workflow-header">
-        <h2 class="workflow-title">How will the group work?</h2>
-        <p class="workflow-subtitle">A casual study group, not a lecture series</p>
+    <section class="slide content-slide" data-title="04 / How will the group work?" data-reveals="3" aria-label="How will the group work">
+      <header class="slide-header">
+        <div>
+          <h2 class="slide-title">How will the group work?</h2>
+          <p class="small-note">A casual study group, not a lecture series</p>
+        </div>
+        <div class="meter"><span class="tick"></span><span class="tick"></span><span class="tick"></span><span class="label">1 of 3</span></div>
       </header>
 
-      <div class="workflow-body">
-        <section class="workflow-column left" aria-label="How we'll learn">
-          <h3>How we’ll learn</h3>
-          <div class="workflow-row">
-            <span class="workflow-number">1</span>
-            <span class="workflow-accent" aria-hidden="true"></span>
-            <div>
-              <h4>Start with shared readings</h4>
-              <p>Official docs, engineering blogs, selected posts.</p>
-            </div>
+      <div class="stage">
+        <article class="state" data-state="0">
+          <div class="workflow-grid">
+            <section class="workflow-column">
+              <p class="panel-title">How we’ll learn</p>
+              <div class="workflow-row"><span class="workflow-number">1</span><span class="workflow-accent"></span><div><h4>Start with shared readings</h4><p>Official docs, engineering blogs, selected posts.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">2</span><span class="workflow-accent"></span><div><h4>Discuss concepts together</h4><p>Questions, confusions, failures, and takeaways.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">3</span><span class="workflow-accent"></span><div><h4>Connect to implementation</h4><p>Walk through a real GitHub repository.</p><span class="adk-pill">Initial framework · <strong>Google ADK</strong></span><p class="small-note">A starting point, not a commitment to one framework.</p></div></div>
+            </section>
           </div>
-          <div class="workflow-row">
-            <span class="workflow-number">2</span>
-            <span class="workflow-accent" aria-hidden="true"></span>
-            <div>
-              <h4>Discuss concepts together</h4>
-              <p>Questions, confusions, failures, and takeaways.</p>
-            </div>
-          </div>
-          <div class="workflow-row">
-            <span class="workflow-number">3</span>
-            <span class="workflow-accent" aria-hidden="true"></span>
-            <div>
-              <h4>Connect to implementation</h4>
-              <p>Walk through a real GitHub repository.</p>
-              <div class="adk-inline">
-                <span class="adk-pill">Initial framework · <strong>Google ADK</strong></span>
-                <p class="adk-note">A starting point, not a commitment to one framework.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        </article>
 
-        <section class="workflow-column right" aria-label="How we'll organize">
-          <h3>How we’ll organize</h3>
-          <div class="workflow-row">
-            <span class="workflow-number">1</span>
-            <span class="workflow-accent" aria-hidden="true"></span>
-            <div>
-              <h4>First few sessions</h4>
-              <p>Facilitated by Nidhin and me.</p>
-            </div>
+        <article class="state" data-state="1">
+          <div class="workflow-grid">
+            <section class="workflow-column">
+              <p class="panel-title">How we’ll learn</p>
+              <div class="workflow-row"><span class="workflow-number">1</span><span class="workflow-accent"></span><div><h4>Start with shared readings</h4><p>Official docs, engineering blogs, selected posts.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">2</span><span class="workflow-accent"></span><div><h4>Discuss concepts together</h4><p>Questions, confusions, failures, and takeaways.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">3</span><span class="workflow-accent"></span><div><h4>Connect to implementation</h4><p>Walk through a real GitHub repository.</p><span class="adk-pill">Initial framework · <strong>Google ADK</strong></span><p class="small-note">A starting point, not a commitment to one framework.</p></div></div>
+            </section>
+            <section class="workflow-column">
+              <p class="panel-title">How we’ll organize</p>
+              <div class="workflow-row"><span class="workflow-number">1</span><span class="workflow-accent"></span><div><h4>First few sessions</h4><p>Facilitated by Nidhin and me.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">2</span><span class="workflow-accent"></span><div><h4>Participation</h4><p>No attendance or presentation pressure.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">3</span><span class="workflow-accent"></span><div><h4>Direction</h4><p>Reading materials and topics are open to suggestions.</p></div></div>
+            </section>
           </div>
-          <div class="workflow-row">
-            <span class="workflow-number">2</span>
-            <span class="workflow-accent" aria-hidden="true"></span>
-            <div>
-              <h4>Participation</h4>
-              <p>No attendance or presentation pressure.</p>
-            </div>
+        </article>
+
+        <article class="state" data-state="2">
+          <div class="workflow-grid">
+            <section class="workflow-column">
+              <p class="panel-title">How we’ll learn</p>
+              <div class="workflow-row"><span class="workflow-number">1</span><span class="workflow-accent"></span><div><h4>Start with shared readings</h4><p>Official docs, engineering blogs, selected posts.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">2</span><span class="workflow-accent"></span><div><h4>Discuss concepts together</h4><p>Questions, confusions, failures, and takeaways.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">3</span><span class="workflow-accent"></span><div><h4>Connect to implementation</h4><p>Walk through a real GitHub repository.</p><span class="adk-pill">Initial framework · <strong>Google ADK</strong></span><p class="small-note">A starting point, not a commitment to one framework.</p></div></div>
+            </section>
+            <section class="workflow-column">
+              <p class="panel-title">How we’ll organize</p>
+              <div class="workflow-row"><span class="workflow-number">1</span><span class="workflow-accent"></span><div><h4>First few sessions</h4><p>Facilitated by Nidhin and me.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">2</span><span class="workflow-accent"></span><div><h4>Participation</h4><p>No attendance or presentation pressure.</p></div></div>
+              <div class="workflow-row"><span class="workflow-number">3</span><span class="workflow-accent"></span><div><h4>Direction</h4><p>Reading materials and topics are open to suggestions.</p></div></div>
+            </section>
           </div>
-          <div class="workflow-row">
-            <span class="workflow-number">3</span>
-            <span class="workflow-accent" aria-hidden="true"></span>
-            <div>
-              <h4>Direction</h4>
-              <p>Reading materials and topics are open to suggestions.</p>
+          <footer class="cadence-strip">
+            <div class="cadence-wide">
+              <p class="cadence-primary"><span class="accent">Meeting cadence:</span> <strong>Weekly · 60 minutes</strong></p>
+              <p class="cadence-secondary">We can wrap up early if we finish ahead of time.</p>
             </div>
-          </div>
-        </section>
+          </footer>
+        </article>
       </div>
-
-      <footer class="cadence-strip" aria-label="Meeting cadence and initial framework">
-        <p class="cadence-primary"><span class="cadence-label">Meeting cadence:</span> <span class="cadence-value">Weekly · 60 minutes</span></p>
-        <p class="cadence-secondary">We can wrap up early if we finish ahead of time.</p>
-      </footer>
     </section>
 
-    <footer class="footer" aria-label="Deck footer">
+    <footer class="footer">
       <span>Search Agent Study Group</span>
-      <span id="slide-title">01 / Building agents</span>
+      <span id="slide-title">01 / Search Agent Study Group</span>
     </footer>
-    <div class="progress" aria-label="Slide progress">
-      <span class="dot is-active" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-      <span class="dot" aria-hidden="true"></span>
-    </div>
+    <div class="progress" aria-label="Slide progress"></div>
   </main>
 
   <script>
     const slides = Array.from(document.querySelectorAll(".slide"));
-    const dots = Array.from(document.querySelectorAll(".dot"));
-    const title = document.querySelector("#slide-title");
+    const progress = document.querySelector(".progress");
     const deck = document.querySelector(".deck");
-    const revealLabels = Array.from(document.querySelectorAll("#reveal-label, .reveal-label"));
+    const footerTitle = document.querySelector("#slide-title");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let current = 0;
     let reveal = 0;
 
+    const totalSteps = slides.reduce((sum, slide) => sum + Number(slide.dataset.reveals || 1), 0);
+    progress.innerHTML = Array.from({ length: totalSteps }, () => '<span class="dot" aria-hidden="true"></span>').join("");
+    const dots = Array.from(document.querySelectorAll(".dot"));
+
+    function initConstellation() {
+      const svg = document.querySelector(".constellation");
+      if (!svg) return;
+
+      const colors = {
+        build: "#4677b8",
+        control: "#785aa6",
+        steer: "#0e8f80",
+        center: "#17201d",
+      };
+      const clusterAnchors = {
+        build: { x: 250, y: 218 },
+        control: { x: 510, y: 220 },
+        steer: { x: 390, y: 388 },
+        center: { x: 370, y: 292 },
+      };
+      const nodes = [
+        { id: "Agents", kind: "center", cluster: "center", x: 370, y: 292, tx: 370, ty: 292 },
+        { id: "Build", kind: "cluster", cluster: "build", x: 250, y: 218, tx: 250, ty: 218 },
+        { id: "Control", kind: "cluster", cluster: "control", x: 510, y: 220, tx: 510, ty: 220 },
+        { id: "Steer", kind: "cluster", cluster: "steer", x: 390, y: 388, tx: 390, ty: 388 },
+        { id: "tools", kind: "major", cluster: "build", x: 190, y: 106, tx: 190, ty: 106 },
+        { id: "workflows", kind: "major", cluster: "build", x: 320, y: 110, tx: 320, ty: 110 },
+        { id: "orchestration", kind: "major", cluster: "build", x: 190, y: 300, tx: 190, ty: 300 },
+        { id: "memory", kind: "topic", cluster: "build", x: 338, y: 250, tx: 338, ty: 250 },
+        { id: "retrieval", kind: "topic", cluster: "build", x: 118, y: 194, tx: 118, ty: 194 },
+        { id: "planning", kind: "topic", cluster: "build", x: 288, y: 328, tx: 288, ty: 328 },
+        { id: "augmented LLM", kind: "topic", cluster: "build", x: 282, y: 166, tx: 282, ty: 166 },
+        { id: "prompt chaining", kind: "topic", cluster: "build", x: 112, y: 250, tx: 112, ty: 250 },
+        { id: "routing", kind: "topic", cluster: "build", x: 190, y: 158, tx: 190, ty: 158 },
+        { id: "parallelization", kind: "topic", cluster: "build", x: 344, y: 300, tx: 344, ty: 300 },
+        { id: "orchestrator-workers", kind: "topic", cluster: "build", x: 174, y: 372, tx: 174, ty: 372 },
+        { id: "multi-agent", kind: "topic", cluster: "build", x: 92, y: 330, tx: 92, ty: 330 },
+        { id: "handoffs", kind: "topic", cluster: "build", x: 344, y: 362, tx: 344, ty: 362 },
+        { id: "evals", kind: "major", cluster: "control", x: 520, y: 92, tx: 520, ty: 92 },
+        { id: "guardrails", kind: "major", cluster: "control", x: 620, y: 158, tx: 620, ty: 158 },
+        { id: "reliability", kind: "major", cluster: "control", x: 642, y: 260, tx: 642, ty: 260 },
+        { id: "tracing", kind: "topic", cluster: "control", x: 478, y: 302, tx: 478, ty: 302 },
+        { id: "observability", kind: "topic", cluster: "control", x: 600, y: 338, tx: 600, ty: 338 },
+        { id: "verification", kind: "topic", cluster: "control", x: 436, y: 132, tx: 436, ty: 132 },
+        { id: "tool use", kind: "topic", cluster: "control", x: 610, y: 92, tx: 610, ty: 92 },
+        { id: "trajectory", kind: "topic", cluster: "control", x: 548, y: 284, tx: 548, ty: 284 },
+        { id: "harness engineering", kind: "topic", cluster: "control", x: 486, y: 362, tx: 486, ty: 362 },
+        { id: "context", kind: "major", cluster: "steer", x: 386, y: 470, tx: 386, ty: 470 },
+        { id: "prompt engineering", kind: "topic", cluster: "steer", x: 268, y: 442, tx: 268, ty: 442 },
+        { id: "context engineering", kind: "topic", cluster: "steer", x: 506, y: 444, tx: 506, ty: 444 },
+        { id: "context window", kind: "topic", cluster: "steer", x: 470, y: 510, tx: 470, ty: 510 },
+        { id: "MCP", kind: "topic", cluster: "steer", x: 302, y: 510, tx: 302, ty: 510 },
+      ].map((node, index) => ({ ...node, vx: 0, vy: 0, index }));
+
+      const links = [
+        ["Agents", "Build"], ["Agents", "Control"], ["Agents", "Steer"],
+        ["Build", "tools"], ["Build", "workflows"], ["Build", "orchestration"], ["Build", "memory"], ["Build", "retrieval"], ["Build", "planning"], ["Build", "augmented LLM"], ["Build", "prompt chaining"], ["Build", "routing"], ["Build", "parallelization"], ["Build", "orchestrator-workers"], ["Build", "multi-agent"], ["Build", "handoffs"],
+        ["Control", "evals"], ["Control", "guardrails"], ["Control", "tracing"], ["Control", "observability"], ["Control", "verification"], ["Control", "tool use"], ["Control", "trajectory"], ["Control", "reliability"], ["Control", "harness engineering"],
+        ["Steer", "prompt engineering"], ["Steer", "context engineering"], ["Steer", "context"], ["Steer", "context window"], ["Steer", "MCP"],
+        ["orchestration", "multi-agent"], ["evals", "reliability"], ["tracing", "observability"], ["context engineering", "context window"], ["retrieval", "context"], ["prompt engineering", "context engineering"], ["harness engineering", "reliability"],
+      ].map(([source, target]) => ({ source, target, cluster: nodes.find((node) => node.id === target)?.cluster || nodes.find((node) => node.id === source)?.cluster || "center" }));
+
+      const byId = new Map(nodes.map((node) => [node.id, node]));
+      const linkLayer = svg.querySelector(".constellation-links");
+      const nodeLayer = svg.querySelector(".constellation-nodes");
+      const linkEls = links.map((link) => {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.classList.add("constellation-link");
+        line.dataset.source = link.source;
+        line.dataset.target = link.target;
+        line.setAttribute("stroke", colors[link.cluster] || colors.center);
+        linkLayer.appendChild(line);
+        return line;
+      });
+
+      function labelWidth(node) {
+        if (node.kind === "center") return 118;
+        if (node.kind === "cluster") return 96;
+        if (node.kind === "major") return Math.max(72, node.id.length * 7.6 + 26);
+        return Math.max(48, node.id.length * 6.2 + 20);
+      }
+
+      const nodeEls = nodes.map((node) => {
+        const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        const width = labelWidth(node);
+        const height = node.kind === "center" ? 52 : node.kind === "cluster" ? 42 : node.kind === "major" ? 34 : 26;
+        const color = colors[node.cluster] || colors.center;
+        group.classList.add("concept-node");
+        group.dataset.id = node.id;
+        group.dataset.kind = node.kind;
+        group.style.animationDelay = `${250 + node.index * 28}ms`;
+        group.innerHTML = `
+          <circle class="node-glow" cx="0" cy="0" r="${height * 0.62}" fill="${color}" filter="url(#softGlow)"></circle>
+          <rect class="node-pill" x="${-width / 2}" y="${-height / 2}" width="${width}" height="${height}" rx="${height / 2}" stroke="${color}" stroke-opacity="0.38"></rect>
+          <text x="0" y="1">${node.id}</text>
+        `;
+        nodeLayer.appendChild(group);
+        return group;
+      });
+
+      function renderConstellation() {
+        links.forEach((link, index) => {
+          const source = byId.get(link.source);
+          const target = byId.get(link.target);
+          linkEls[index].setAttribute("x1", source.x);
+          linkEls[index].setAttribute("y1", source.y);
+          linkEls[index].setAttribute("x2", target.x);
+          linkEls[index].setAttribute("y2", target.y);
+        });
+        nodes.forEach((node, index) => {
+          nodeEls[index].setAttribute("transform", `translate(${node.x.toFixed(1)} ${node.y.toFixed(1)})`);
+        });
+      }
+
+      function linkedIds(id) {
+        const ids = new Set([id]);
+        links.forEach((link) => {
+          if (link.source === id) ids.add(link.target);
+          if (link.target === id) ids.add(link.source);
+        });
+        return ids;
+      }
+
+      function setHot(id, isHot) {
+        const ids = linkedIds(id);
+        nodeEls.forEach((el) => el.classList.toggle("is-hot", isHot && ids.has(el.dataset.id)));
+        linkEls.forEach((el) => {
+          const direct = el.dataset.source === id || el.dataset.target === id;
+          el.classList.toggle("is-hot", isHot && direct);
+        });
+      }
+
+      function tick(alpha) {
+        nodes.forEach((node) => {
+          if (node.dragging) return;
+          const anchor = clusterAnchors[node.cluster] || clusterAnchors.center;
+          const targetX = node.kind === "topic" || node.kind === "major" ? node.tx * 0.93 + anchor.x * 0.07 : node.tx;
+          const targetY = node.kind === "topic" || node.kind === "major" ? node.ty * 0.93 + anchor.y * 0.07 : node.ty;
+          node.vx += (targetX - node.x) * 0.018 * alpha;
+          node.vy += (targetY - node.y) * 0.018 * alpha;
+        });
+
+        links.forEach((link) => {
+          const source = byId.get(link.source);
+          const target = byId.get(link.target);
+          const dx = target.x - source.x;
+          const dy = target.y - source.y;
+          const distance = Math.max(1, Math.hypot(dx, dy));
+          const desired = source.kind === "center" ? 150 : source.kind === "cluster" ? 118 : 94;
+          const force = (distance - desired) * 0.0015 * alpha;
+          const fx = (dx / distance) * force;
+          const fy = (dy / distance) * force;
+          if (!source.dragging) {
+            source.vx += fx;
+            source.vy += fy;
+          }
+          if (!target.dragging) {
+            target.vx -= fx;
+            target.vy -= fy;
+          }
+        });
+
+        for (let i = 0; i < nodes.length; i += 1) {
+          for (let j = i + 1; j < nodes.length; j += 1) {
+            const a = nodes[i];
+            const b = nodes[j];
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            const distance = Math.max(1, Math.hypot(dx, dy));
+            const minDistance = (a.kind === "topic" && b.kind === "topic") ? 35 : a.kind === "major" || b.kind === "major" ? 50 : 62;
+            if (distance < minDistance) {
+              const push = (minDistance - distance) * 0.018 * alpha;
+              const fx = (dx / distance) * push;
+              const fy = (dy / distance) * push;
+              if (!a.dragging) {
+                a.vx -= fx;
+                a.vy -= fy;
+              }
+              if (!b.dragging) {
+                b.vx += fx;
+                b.vy += fy;
+              }
+            }
+          }
+        }
+
+        nodes.forEach((node) => {
+          if (!node.dragging) {
+            node.vx *= 0.74;
+            node.vy *= 0.74;
+            node.x = Math.max(44, Math.min(676, node.x + node.vx));
+            node.y = Math.max(42, Math.min(518, node.y + node.vy));
+          }
+        });
+        renderConstellation();
+      }
+
+      if (!prefersReducedMotion) {
+        let alpha = 1;
+        let frame = 0;
+        const settle = () => {
+          tick(alpha);
+          alpha *= 0.94;
+          frame += 1;
+          if (frame < 90 && alpha > 0.006) requestAnimationFrame(settle);
+        };
+        requestAnimationFrame(settle);
+      } else {
+        renderConstellation();
+      }
+
+      function pointerPoint(event) {
+        const point = svg.createSVGPoint();
+        point.x = event.clientX;
+        point.y = event.clientY;
+        return point.matrixTransform(svg.getScreenCTM().inverse());
+      }
+
+      nodeEls.forEach((el) => {
+        const node = byId.get(el.dataset.id);
+        el.addEventListener("pointerenter", () => setHot(node.id, true));
+        el.addEventListener("pointerleave", () => {
+          if (!node.dragging) setHot(node.id, false);
+        });
+        el.addEventListener("pointerdown", (event) => {
+          event.preventDefault();
+          const start = pointerPoint(event);
+          node.dragging = true;
+          node.dragOffsetX = node.x - start.x;
+          node.dragOffsetY = node.y - start.y;
+          el.classList.add("is-dragging");
+          try {
+            el.setPointerCapture(event.pointerId);
+          } catch {
+            // Synthetic pointer events used in automated checks may not own capture.
+          }
+          setHot(node.id, true);
+        });
+        el.addEventListener("pointermove", (event) => {
+          if (!node.dragging) return;
+          const point = pointerPoint(event);
+          node.x = Math.max(44, Math.min(676, point.x + node.dragOffsetX));
+          node.y = Math.max(42, Math.min(518, point.y + node.dragOffsetY));
+          node.tx = node.x;
+          node.ty = node.y;
+          node.vx = 0;
+          node.vy = 0;
+          tick(0.35);
+        });
+        el.addEventListener("pointerup", (event) => {
+          if (!node.dragging) return;
+          node.dragging = false;
+          el.classList.remove("is-dragging");
+          try {
+            if (el.hasPointerCapture(event.pointerId)) el.releasePointerCapture(event.pointerId);
+          } catch {
+            // Ignore capture release for synthetic events.
+          }
+          setHot(node.id, false);
+          if (!prefersReducedMotion) {
+            let alpha = 0.35;
+            let frame = 0;
+            const cool = () => {
+              tick(alpha);
+              alpha *= 0.88;
+              frame += 1;
+              if (frame < 36 && alpha > 0.01) requestAnimationFrame(cool);
+            };
+            requestAnimationFrame(cool);
+          }
+        });
+      });
+
+      renderConstellation();
+    }
+
+    function revealCount(index) {
+      return Number(slides[index].dataset.reveals || 1);
+    }
+
     function progressOffset(slideIndex, revealIndex) {
       let offset = 0;
-      for (let index = 0; index < slideIndex; index += 1) {
-        offset += Number(slides[index].dataset.reveals || 1);
-      }
+      for (let index = 0; index < slideIndex; index += 1) offset += revealCount(index);
       return offset + revealIndex;
     }
 
+    function render() {
+      const active = slides[current];
+      reveal = Math.max(0, Math.min(reveal, revealCount(current) - 1));
+      slides.forEach((slide, index) => {
+        const activeSlide = index === current;
+        slide.classList.toggle("is-active", activeSlide);
+        slide.setAttribute("aria-hidden", String(!activeSlide));
+        slide.querySelectorAll(".state").forEach((state) => {
+          state.classList.toggle("is-current", activeSlide && Number(state.dataset.state) === reveal);
+        });
+        slide.querySelectorAll(".rail-item").forEach((item, itemIndex) => {
+          const map = active.dataset.title?.startsWith("02") ? [0, 0, 1, 2, 2, 2, 2] : null;
+          const activeIndex = map ? map[reveal] : reveal;
+          item.classList.toggle("is-current", activeSlide && itemIndex === activeIndex);
+        });
+        slide.querySelectorAll(".tick").forEach((tick, tickIndex) => {
+          tick.style.background = activeSlide && tickIndex === reveal ? "var(--teal)" : "transparent";
+          tick.style.borderColor = activeSlide && tickIndex === reveal ? "var(--teal)" : "rgba(23, 32, 29, 0.32)";
+        });
+        const label = slide.querySelector(".label");
+        if (label) label.textContent = activeSlide ? `${reveal + 1} of ${revealCount(current)}` : label.textContent;
+      });
+      deck.dataset.reveal = String(reveal);
+      deck.dataset.slide = String(current);
+      dots.forEach((dot, index) => dot.classList.toggle("is-active", index === progressOffset(current, reveal)));
+      footerTitle.textContent = active.dataset.title || "";
+    }
+
     function showSlide(index) {
-      current = Math.max(0, Math.min(index, slides.length - 1));
+      const target = Math.max(0, Math.min(index, slides.length - 1));
+      if (target === current) {
+        render();
+        return;
+      }
+      current = target;
       reveal = 0;
       render();
     }
 
-    function render() {
-      const activeSlide = slides[current];
-      const revealCount = Number(activeSlide.dataset.reveals || 1);
-      reveal = Math.max(0, Math.min(reveal, revealCount - 1));
-
-      slides.forEach((slide, slideIndex) => {
-        slide.classList.toggle("is-active", slideIndex === current);
-        slide.setAttribute("aria-hidden", String(slideIndex !== current));
-      });
-
-      deck.dataset.reveal = String(reveal);
-
-      dots.forEach((dot, dotIndex) => {
-        const progressIndex = progressOffset(current, reveal);
-        dot.classList.toggle("is-active", dotIndex === progressIndex);
-      });
-
-      title.textContent = activeSlide.dataset.title;
-      revealLabels.forEach((label) => {
-        label.textContent = current === 0 ? "" : `${reveal + 1} of ${revealCount}`;
-      });
-    }
-
     function next() {
-      const activeSlide = slides[current];
-      const revealCount = Number(activeSlide.dataset.reveals || 1);
-      if (reveal < revealCount - 1) {
+      if (reveal < revealCount(current) - 1) {
         reveal += 1;
         render();
         return;
       }
-      if (current === slides.length - 1) {
+      if (current < slides.length - 1) {
+        showSlide(current + 1);
         return;
       }
-      showSlide(current + 1);
+      reveal = revealCount(current) - 1;
+      render();
     }
 
     function previous() {
@@ -2384,7 +2201,7 @@
       }
       if (current > 0) {
         current -= 1;
-        reveal = Number(slides[current].dataset.reveals || 1) - 1;
+        reveal = revealCount(current) - 1;
         render();
       }
     }
@@ -2400,7 +2217,8 @@
       }
     });
 
-    showSlide(0);
+    initConstellation();
+    render();
   </script>
 </body>
 </html>
