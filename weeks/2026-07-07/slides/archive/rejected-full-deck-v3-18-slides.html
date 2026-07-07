@@ -1,0 +1,2276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Agent Study Group 01 - Building Good Agents</title>
+  <style>
+    :root {
+      --ink: #12110f;
+      --paper: #f6f7f2;
+      --paper-2: #ebece5;
+      --muted: #6f716b;
+      --line: rgba(18, 17, 15, 0.16);
+      --line-strong: rgba(18, 17, 15, 0.34);
+      --green: #0f8b6f;
+      --blue: #3366ff;
+      --gold: #d99519;
+      --coral: #e85d4f;
+      --violet: #7c4dff;
+      --black: #0b0b0a;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(18, 17, 15, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    body {
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        #11110f;
+      background-size: 44px 44px;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .deck-shell {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .slide-frame {
+      position: relative;
+      width: min(100%, calc((100vh - 48px) * 16 / 9));
+      aspect-ratio: 16 / 9;
+      max-height: calc(100vh - 48px);
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+      padding: 42px 48px 34px;
+      background:
+        linear-gradient(90deg, rgba(18, 17, 15, 0.04) 1px, transparent 1px),
+        linear-gradient(rgba(18, 17, 15, 0.04) 1px, transparent 1px),
+        var(--paper);
+      background-size: 36px 36px;
+    }
+
+    .slide.active {
+      display: grid;
+    }
+
+    .kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 34px;
+      height: 3px;
+      background: var(--green);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 960px;
+      font-size: clamp(54px, 6vw, 86px);
+      line-height: 0.92;
+      font-weight: 820;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      max-width: 1060px;
+      font-size: clamp(38px, 4.5vw, 62px);
+      line-height: 0.98;
+      font-weight: 780;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 20px;
+      line-height: 1.1;
+      font-weight: 760;
+    }
+
+    .subtitle {
+      max-width: 780px;
+      color: #3f413d;
+      font-size: 22px;
+      line-height: 1.32;
+    }
+
+    .body {
+      position: relative;
+      min-height: 0;
+      display: grid;
+      align-items: stretch;
+      gap: 22px;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 24px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .progress-line {
+      width: 220px;
+      height: 3px;
+      background: rgba(18, 17, 15, 0.11);
+    }
+
+    .progress-line span {
+      display: block;
+      height: 100%;
+      width: var(--progress, 0%);
+      background: var(--green);
+    }
+
+    .fragment {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 260ms ease, transform 260ms ease;
+    }
+
+    .fragment.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-grid {
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+    }
+
+    .thesis-mark {
+      width: min(470px, 100%);
+      aspect-ratio: 1;
+      justify-self: end;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+
+    .thesis-ring {
+      position: absolute;
+      inset: 10%;
+      border: 2px solid var(--line-strong);
+      border-radius: 50%;
+    }
+
+    .thesis-ring:nth-child(2) {
+      inset: 22%;
+      border-color: rgba(51, 102, 255, 0.36);
+    }
+
+    .thesis-core {
+      width: 150px;
+      height: 150px;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: 50%;
+      text-align: center;
+      font-weight: 820;
+      line-height: 1.08;
+    }
+
+    .orbit-label {
+      position: absolute;
+      min-width: 108px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+      font-size: 14px;
+      font-weight: 760;
+      text-align: center;
+    }
+
+    .orbit-label.context { top: 5%; left: 34%; border-top: 4px solid var(--blue); }
+    .orbit-label.ctrl { right: 2%; top: 42%; border-top: 4px solid var(--coral); }
+    .orbit-label.evals { bottom: 8%; left: 30%; border-top: 4px solid var(--green); }
+    .orbit-label.tools { left: 0; top: 42%; border-top: 4px solid var(--gold); }
+
+    .type-grid {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
+    }
+
+    .type-panel,
+    .metric-panel,
+    .layer-panel,
+    .roadmap-item,
+    .check-row,
+    .plain-panel {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.68);
+      padding: 20px;
+    }
+
+    .type-panel {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+      min-height: 420px;
+    }
+
+    .type-panel .icon {
+      width: 74px;
+      height: 74px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--ink);
+      font-size: 34px;
+      font-weight: 860;
+    }
+
+    .type-panel:nth-child(1) .icon { border-bottom: 5px solid var(--muted); }
+    .type-panel:nth-child(2) .icon { border-bottom: 5px solid var(--gold); }
+    .type-panel:nth-child(3) .icon { border-bottom: 5px solid var(--green); }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      color: #343631;
+      font-size: 18px;
+      line-height: 1.26;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 720;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .decision-grid {
+      grid-template-columns: 0.95fr 1.05fr;
+      align-items: center;
+    }
+
+    .decision-ladder {
+      display: grid;
+      gap: 14px;
+    }
+
+    .ladder-step {
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      padding: 14px 16px;
+    }
+
+    .ladder-step strong {
+      font-size: 19px;
+    }
+
+    .ladder-step span {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 720;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .number {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      font-weight: 820;
+    }
+
+    .risk-board {
+      min-height: 430px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      padding: 22px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .risk-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .risk-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .risk-row strong {
+      font-size: 19px;
+    }
+
+    .risk-meter {
+      display: grid;
+      grid-template-columns: repeat(5, 22px);
+      gap: 4px;
+    }
+
+    .risk-meter i {
+      height: 12px;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+    }
+
+    .risk-meter[data-level="1"] i:nth-child(-n+1),
+    .risk-meter[data-level="2"] i:nth-child(-n+2) {
+      background: var(--green);
+    }
+
+    .risk-meter[data-level="3"] i:nth-child(-n+3) {
+      background: var(--gold);
+    }
+
+    .risk-meter[data-level="5"] i:nth-child(-n+5) {
+      background: var(--coral);
+    }
+
+    .action-flow {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: stretch;
+    }
+
+    .state-column {
+      display: grid;
+      gap: 14px;
+    }
+
+    .state-box {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.75);
+      padding: 18px;
+    }
+
+    .state-box strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .state-box p {
+      color: #3d403b;
+      font-size: 17px;
+      line-height: 1.26;
+    }
+
+    .world-board {
+      position: relative;
+      border: 1px solid var(--line);
+      background: var(--white);
+      overflow: hidden;
+      min-height: 420px;
+    }
+
+    .world-board::before {
+      content: "Customer system";
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .world-item {
+      position: absolute;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 14px;
+      font-weight: 760;
+    }
+
+    .world-item:nth-child(1) { left: 40px; top: 78px; width: 180px; border-top: 5px solid var(--blue); }
+    .world-item:nth-child(2) { right: 50px; top: 100px; width: 190px; border-top: 5px solid var(--gold); }
+    .world-item:nth-child(3) { left: 100px; bottom: 86px; width: 210px; border-top: 5px solid var(--green); }
+    .world-item:nth-child(4) { right: 82px; bottom: 72px; width: 180px; border-top: 5px solid var(--coral); }
+
+    .act-arrow {
+      position: absolute;
+      left: 42%;
+      top: 45%;
+      width: 128px;
+      height: 4px;
+      background: var(--coral);
+      transform: rotate(-10deg);
+      transform-origin: center;
+    }
+
+    .act-arrow::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -6px;
+      border-left: 14px solid var(--coral);
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+    }
+
+    .loop-wrap {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      align-items: center;
+    }
+
+    .loop-diagram {
+      position: relative;
+      min-height: 470px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      overflow: hidden;
+    }
+
+    .loop-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .loop-path {
+      fill: none;
+      stroke: rgba(18, 17, 15, 0.22);
+      stroke-width: 3;
+      stroke-dasharray: 9 10;
+    }
+
+    .loop-pulse {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--green);
+      offset-path: path("M 150 235 C 170 105, 380 105, 400 235 C 380 365, 170 365, 150 235");
+      animation: loop 4.8s linear infinite;
+      position: absolute;
+      left: 0;
+      top: 0;
+      box-shadow: 0 0 0 8px rgba(15, 139, 111, 0.16);
+    }
+
+    @keyframes loop {
+      from { offset-distance: 0%; }
+      to { offset-distance: 100%; }
+    }
+
+    .loop-node {
+      position: absolute;
+      width: 154px;
+      height: 86px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      background: var(--paper);
+      font-size: 20px;
+      font-weight: 820;
+      text-align: center;
+    }
+
+    .loop-node.observe { left: 38px; top: 190px; border-top: 6px solid var(--blue); }
+    .loop-node.decide { left: calc(50% - 77px); top: 56px; border-top: 6px solid var(--gold); }
+    .loop-node.act { right: 38px; top: 190px; border-top: 6px solid var(--coral); }
+    .loop-node.observe2 { left: calc(50% - 77px); bottom: 56px; border-top: 6px solid var(--green); }
+
+    .loop-side {
+      display: grid;
+      align-content: center;
+      gap: 16px;
+    }
+
+    .big-statement {
+      font-size: 34px;
+      line-height: 1.06;
+      font-weight: 800;
+    }
+
+    .architecture {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      align-items: center;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .layer-panel {
+      min-height: 132px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .layer-panel .label {
+      width: 122px;
+      color: var(--paper);
+      background: var(--ink);
+      padding: 12px;
+      font-weight: 820;
+      text-align: center;
+    }
+
+    .layer-panel:nth-child(1) { border-left: 7px solid var(--green); }
+    .layer-panel:nth-child(2) { border-left: 7px solid var(--coral); }
+    .layer-panel:nth-child(3) { border-left: 7px solid var(--blue); }
+
+    .layer-panel ul {
+      margin: 0;
+      padding-left: 19px;
+      color: #30322f;
+      font-size: 17px;
+      line-height: 1.38;
+    }
+
+    .system-map {
+      position: relative;
+      height: 450px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      overflow: hidden;
+    }
+
+    .map-core {
+      position: absolute;
+      left: calc(50% - 78px);
+      top: calc(50% - 78px);
+      width: 156px;
+      height: 156px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--paper);
+      font-weight: 840;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .map-chip {
+      position: absolute;
+      width: 142px;
+      min-height: 70px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 10px;
+      text-align: center;
+      font-weight: 760;
+      line-height: 1.15;
+    }
+
+    .map-chip:nth-child(2) { left: 32px; top: 52px; border-top: 5px solid var(--gold); }
+    .map-chip:nth-child(3) { right: 32px; top: 52px; border-top: 5px solid var(--blue); }
+    .map-chip:nth-child(4) { left: 34px; bottom: 54px; border-top: 5px solid var(--green); }
+    .map-chip:nth-child(5) { right: 34px; bottom: 54px; border-top: 5px solid var(--coral); }
+
+    .decision-engine {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+
+    .engine-board,
+    .context-board,
+    .control-board,
+    .trade-board {
+      border: 1px solid var(--line);
+      background: var(--white);
+      padding: 22px;
+      min-height: 430px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .engine-row {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 16px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    .engine-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .engine-row strong {
+      font-size: 19px;
+    }
+
+    .engine-row p {
+      color: #3d403b;
+      font-size: 16px;
+      line-height: 1.28;
+    }
+
+    .model-chip {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 12px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .routing-line {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .route-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.74);
+      padding: 16px;
+      min-height: 130px;
+    }
+
+    .route-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .route-card p {
+      color: #3d403b;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .context-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+
+    .context-board {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .context-layer {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 14px 16px;
+    }
+
+    .context-layer strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .context-layer p {
+      color: #3d403b;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .context-arrow {
+      text-align: center;
+      color: var(--muted);
+      font-size: 22px;
+      font-weight: 820;
+    }
+
+    .tool-grid {
+      grid-template-columns: 0.68fr 1.32fr;
+      align-items: stretch;
+    }
+
+    .tool-contract {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+    }
+
+    .contract-step {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.75);
+      padding: 14px;
+    }
+
+    .contract-step strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .contract-step p {
+      color: #3d403b;
+      font-size: 15px;
+      line-height: 1.28;
+    }
+
+    .official-panel {
+      position: relative;
+      border: 1px solid var(--line);
+      background: #fdfdfb;
+      padding: 16px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .official-panel img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .official-panel.fc img {
+      max-height: 405px;
+    }
+
+    .official-panel.cua img {
+      max-height: 430px;
+    }
+
+    .source-caption {
+      position: absolute;
+      right: 14px;
+      bottom: 10px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.82);
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: 720;
+    }
+
+    .cua-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: stretch;
+    }
+
+    .environment-loop {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+    }
+
+    .env-step {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.76);
+      padding: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .env-step b {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 15px;
+    }
+
+    .ownership-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+
+    .ownership-card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.76);
+      padding: 22px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 18px;
+    }
+
+    .ownership-card h3 {
+      font-size: 24px;
+    }
+
+    .mini-flow {
+      display: grid;
+      gap: 10px;
+      align-content: center;
+    }
+
+    .mini-flow div {
+      border: 1px solid var(--line);
+      background: var(--white);
+      padding: 12px;
+      text-align: center;
+      font-weight: 760;
+    }
+
+    .pattern-grid {
+      grid-template-columns: 0.85fr 1.15fr;
+      align-items: stretch;
+    }
+
+    .pattern-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .pattern {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.74);
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      min-height: 300px;
+    }
+
+    .pattern h3 {
+      font-size: 22px;
+    }
+
+    .pattern p {
+      color: #3d403b;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .pattern .when {
+      align-self: end;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .official-wide {
+      border: 1px solid var(--line);
+      background: #fdfdfb;
+      padding: 16px;
+      display: grid;
+      place-items: center;
+      min-height: 390px;
+      position: relative;
+    }
+
+    .official-wide img {
+      max-width: 100%;
+      max-height: 350px;
+      object-fit: contain;
+    }
+
+    .control-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+
+    .control-board {
+      grid-template-columns: 1fr 1fr;
+      min-height: 430px;
+    }
+
+    .control-item {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 14px;
+    }
+
+    .control-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 17px;
+    }
+
+    .control-item p {
+      color: #3d403b;
+      font-size: 14px;
+      line-height: 1.28;
+    }
+
+    .boundary-box {
+      border: 2px solid var(--coral);
+      background: rgba(232, 93, 79, 0.06);
+      min-height: 430px;
+      position: relative;
+      padding: 26px;
+      display: grid;
+      place-items: center;
+    }
+
+    .boundary-core {
+      width: 210px;
+      height: 124px;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      font-weight: 820;
+      text-align: center;
+      line-height: 1.14;
+    }
+
+    .boundary-label {
+      position: absolute;
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      font-weight: 760;
+    }
+
+    .boundary-label:nth-child(2) { left: 28px; top: 26px; border-top: 5px solid var(--gold); }
+    .boundary-label:nth-child(3) { right: 28px; top: 70px; border-top: 5px solid var(--blue); }
+    .boundary-label:nth-child(4) { left: 48px; bottom: 58px; border-top: 5px solid var(--green); }
+    .boundary-label:nth-child(5) { right: 42px; bottom: 34px; border-top: 5px solid var(--coral); }
+
+    .eval-grid {
+      grid-template-columns: repeat(4, 1fr);
+      align-items: stretch;
+    }
+
+    .metric-panel {
+      min-height: 360px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 12px;
+    }
+
+    .metric-panel .metric-number {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 820;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metric-panel h3 {
+      font-size: 24px;
+    }
+
+    .metric-panel p {
+      color: #3d403b;
+      font-size: 17px;
+      line-height: 1.3;
+    }
+
+    .improve-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: stretch;
+    }
+
+    .flywheel {
+      position: relative;
+      border: 1px solid var(--line);
+      background: var(--white);
+      min-height: 440px;
+      overflow: hidden;
+    }
+
+    .fly-path {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .fly-path path {
+      fill: none;
+      stroke: rgba(18, 17, 15, 0.24);
+      stroke-width: 3;
+      stroke-dasharray: 8 10;
+    }
+
+    .fly-dot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--blue);
+      offset-path: path("M 155 220 C 155 95, 415 95, 415 220 C 415 345, 155 345, 155 220");
+      animation: loop 6s linear infinite;
+      box-shadow: 0 0 0 7px rgba(51, 102, 255, 0.16);
+    }
+
+    .fly-node {
+      position: absolute;
+      width: 136px;
+      min-height: 58px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 10px;
+      text-align: center;
+      font-weight: 760;
+      line-height: 1.15;
+    }
+
+    .fly-node.runs { left: 42px; top: 190px; border-top: 5px solid var(--green); }
+    .fly-node.traces { left: 135px; top: 54px; border-top: 5px solid var(--blue); }
+    .fly-node.failures { right: 88px; top: 70px; border-top: 5px solid var(--gold); }
+    .fly-node.dataset { right: 40px; top: 190px; border-top: 5px solid var(--coral); }
+    .fly-node.graders { right: 118px; bottom: 58px; border-top: 5px solid var(--violet); }
+    .fly-node.improve { left: 116px; bottom: 72px; border-top: 5px solid var(--green); }
+
+    .eval-types {
+      display: grid;
+      gap: 14px;
+      align-content: center;
+    }
+
+    .eval-type {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.74);
+      padding: 18px;
+    }
+
+    .eval-type strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+
+    .eval-type p {
+      color: #3d403b;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    .trade-grid {
+      grid-template-columns: 0.85fr 1.15fr;
+      align-items: center;
+    }
+
+    .trade-triangle {
+      min-height: 430px;
+      position: relative;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .triangle-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .trade-point {
+      position: absolute;
+      width: 142px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 12px;
+      text-align: center;
+      font-weight: 820;
+    }
+
+    .trade-point:nth-child(2) { left: calc(50% - 71px); top: 42px; border-top: 5px solid var(--green); }
+    .trade-point:nth-child(3) { left: 52px; bottom: 56px; border-top: 5px solid var(--gold); }
+    .trade-point:nth-child(4) { right: 52px; bottom: 56px; border-top: 5px solid var(--blue); }
+
+    .trade-board {
+      min-height: 360px;
+    }
+
+    .trade-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 14px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 14px;
+    }
+
+    .trade-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .trade-row strong {
+      font-size: 18px;
+    }
+
+    .trade-row p {
+      color: #3d403b;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    .roadmap-grid {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
+    }
+
+    .roadmap-item {
+      min-height: 118px;
+      display: grid;
+      gap: 8px;
+      border-top-width: 6px;
+    }
+
+    .roadmap-item:nth-child(1),
+    .roadmap-item:nth-child(2),
+    .roadmap-item:nth-child(3) { border-top-color: var(--green); }
+
+    .roadmap-item:nth-child(4),
+    .roadmap-item:nth-child(5),
+    .roadmap-item:nth-child(6) { border-top-color: var(--coral); }
+
+    .roadmap-item:nth-child(7),
+    .roadmap-item:nth-child(8),
+    .roadmap-item:nth-child(9) { border-top-color: var(--blue); }
+
+    .roadmap-item strong {
+      font-size: 18px;
+    }
+
+    .roadmap-item span {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 820;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .checklist-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: stretch;
+    }
+
+    .check-row {
+      min-height: 98px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start;
+      font-size: 17px;
+      line-height: 1.22;
+    }
+
+    .check-row b {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 13px;
+    }
+
+    .controls {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px;
+      background: rgba(11, 11, 10, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--paper);
+      backdrop-filter: blur(12px);
+    }
+
+    .controls button,
+    .reader-toggle,
+    .reader-close {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--paper);
+      min-width: 38px;
+      height: 34px;
+      padding: 0 12px;
+      cursor: pointer;
+    }
+
+    .controls button:hover,
+    .reader-toggle:hover,
+    .reader-close:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .slide-count {
+      min-width: 78px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(246, 247, 242, 0.78);
+    }
+
+    .reader-toggle {
+      position: fixed;
+      right: 18px;
+      bottom: 16px;
+      z-index: 42;
+      min-width: 88px;
+    }
+
+    .reader-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 40;
+      width: min(520px, 94vw);
+      height: 100vh;
+      transform: translateX(104%);
+      transition: transform 260ms ease;
+      background: #10100f;
+      color: var(--paper);
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: -24px 0 80px rgba(0, 0, 0, 0.35);
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .reader-panel.open {
+      transform: translateX(0);
+    }
+
+    .reader-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .reader-head strong {
+      font-size: 16px;
+    }
+
+    .reader-body {
+      overflow: auto;
+      padding: 22px 24px 32px;
+    }
+
+    .reader-body h3 {
+      color: var(--paper);
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .reader-meta {
+      color: rgba(246, 247, 242, 0.62);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .reader-quote {
+      border-left: 4px solid var(--green);
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(246, 247, 242, 0.9);
+      line-height: 1.42;
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+
+    .reader-body ul {
+      margin: 0 0 18px;
+      padding-left: 20px;
+      color: rgba(246, 247, 242, 0.82);
+      line-height: 1.44;
+    }
+
+    .reader-body li + li {
+      margin-top: 8px;
+    }
+
+    .reader-body img {
+      display: block;
+      width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      background: #fff;
+      padding: 10px;
+      margin: 12px 0 18px;
+    }
+
+    .reader-links {
+      display: grid;
+      gap: 8px;
+    }
+
+    .reader-links a {
+      color: #9dc2ff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(157, 194, 255, 0.36);
+      width: fit-content;
+    }
+
+    .reader-links a:hover {
+      border-bottom-color: currentColor;
+    }
+
+    @media (max-width: 900px) {
+      .deck-shell {
+        padding: 0;
+      }
+
+      .slide-frame {
+        width: 100vw;
+        height: 100vh;
+        max-height: none;
+        aspect-ratio: auto;
+      }
+
+      .slide {
+        padding: 28px 24px 82px;
+        overflow-y: auto;
+        gap: 16px;
+      }
+
+      h1 {
+        font-size: 46px;
+      }
+
+      h2 {
+        font-size: 34px;
+      }
+
+      .body,
+      .hero-grid,
+      .type-grid,
+      .decision-grid,
+      .action-flow,
+      .loop-wrap,
+      .architecture,
+      .decision-engine,
+      .context-grid,
+      .tool-grid,
+      .cua-grid,
+      .ownership-grid,
+      .pattern-grid,
+      .control-grid,
+      .eval-grid,
+      .improve-grid,
+      .trade-grid,
+      .roadmap-grid,
+      .checklist-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .type-panel,
+      .risk-board,
+      .world-board,
+      .loop-diagram,
+      .system-map,
+      .engine-board,
+      .context-board,
+      .boundary-box,
+      .flywheel,
+      .trade-triangle {
+        min-height: auto;
+      }
+
+      .thesis-mark,
+      .world-board,
+      .loop-diagram,
+      .system-map,
+      .flywheel,
+      .trade-triangle {
+        height: 360px;
+      }
+
+      .pattern-matrix,
+      .control-board,
+      .routing-line {
+        grid-template-columns: 1fr;
+      }
+
+      .official-panel.fc img,
+      .official-panel.cua img,
+      .official-wide img {
+        max-height: 360px;
+      }
+
+      .reader-toggle {
+        right: 14px;
+        bottom: 60px;
+      }
+
+      .controls {
+        bottom: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck-shell" aria-live="polite">
+    <div class="slide-frame" id="deck">
+      <section class="slide active" data-source="0">
+        <header>
+          <div class="kicker">Agent Study Group 01</div>
+        </header>
+        <div class="body hero-grid">
+          <div>
+            <h1>From chatbot to controlled action system</h1>
+            <p class="subtitle" style="margin-top: 24px;">The first map we need is not an API tour. It is the architecture of a system that can observe, decide, act, and improve.</p>
+          </div>
+          <div class="thesis-mark" aria-label="Agent architecture overview">
+            <div class="thesis-ring"></div>
+            <div class="thesis-ring"></div>
+            <div class="thesis-core">controlled<br>loop</div>
+            <div class="orbit-label context">context</div>
+            <div class="orbit-label ctrl">controls</div>
+            <div class="orbit-label evals">evals</div>
+            <div class="orbit-label tools">tools</div>
+          </div>
+        </div>
+        <footer class="footer"><span>Thesis: a good agent is a measurable action system.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="1">
+        <header>
+          <div class="kicker">Part 1 - From answers to actions</div>
+          <h2>Chatbot, workflow, agent: three different control shapes</h2>
+        </header>
+        <div class="body type-grid">
+          <div class="type-panel fragment">
+            <div class="icon">?</div>
+            <h3>Chatbot</h3>
+            <div class="mini-list">
+              <div>Produces language.</div>
+              <div>No direct external action.</div>
+              <div>The user owns the next step.</div>
+            </div>
+            <div class="tagline">answer system</div>
+          </div>
+          <div class="type-panel fragment">
+            <div class="icon">#</div>
+            <h3>Workflow</h3>
+            <div class="mini-list">
+              <div>Follows predefined paths.</div>
+              <div>LLM steps can be inside the flow.</div>
+              <div>Code owns the route.</div>
+            </div>
+            <div class="tagline">fixed path</div>
+          </div>
+          <div class="type-panel fragment">
+            <div class="icon">></div>
+            <h3>Agent</h3>
+            <div class="mini-list">
+              <div>Chooses steps dynamically.</div>
+              <div>Uses tools based on feedback.</div>
+              <div>The loop owns the route.</div>
+            </div>
+            <div class="tagline">adaptive loop</div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: "agent" is about who controls the next step.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="2">
+        <header>
+          <div class="kicker">Decision before design</div>
+          <h2>Should this even be an agent?</h2>
+        </header>
+        <div class="body decision-grid">
+          <div>
+            <p class="big-statement">Autonomy is not free. It buys flexibility by spending latency, cost, and control.</p>
+            <p class="subtitle" style="margin-top: 20px;">Start with the simplest system that can do the job. Add agency only when the task demands dynamic decisions.</p>
+          </div>
+          <div class="decision-ladder">
+            <div class="ladder-step fragment"><div class="number">1</div><strong>One call + examples</strong><span>start here</span></div>
+            <div class="ladder-step fragment"><div class="number">2</div><strong>RAG or tool-assisted answer</strong><span>if context is missing</span></div>
+            <div class="ladder-step fragment"><div class="number">3</div><strong>Fixed workflow</strong><span>if path is known</span></div>
+            <div class="ladder-step fragment"><div class="number">4</div><strong>Agent loop</strong><span>if steps are unknown</span></div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: complexity should earn its place.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="3">
+        <header>
+          <div class="kicker">Why action matters</div>
+          <h2>Action changes the problem from output quality to system responsibility</h2>
+        </header>
+        <div class="body action-flow">
+          <div class="state-column">
+            <div class="state-box fragment">
+              <strong>Language output</strong>
+              <p>"Here is the refund policy."</p>
+            </div>
+            <div class="state-box fragment">
+              <strong>Tool call</strong>
+              <p>Check order, prepare refund, update ticket, notify user.</p>
+            </div>
+            <div class="state-box fragment">
+              <strong>State change</strong>
+              <p>Something outside the model is now different.</p>
+            </div>
+          </div>
+          <div class="world-board" aria-label="External systems affected by agent action">
+            <div class="world-item fragment">Order status</div>
+            <div class="world-item fragment">Refund request</div>
+            <div class="world-item fragment">CRM ticket</div>
+            <div class="world-item fragment">Human approval</div>
+            <div class="act-arrow"></div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: usefulness and risk arrive together.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="4">
+        <header>
+          <div class="kicker">Execution core</div>
+          <h2>The core runtime is a feedback loop</h2>
+        </header>
+        <div class="body loop-wrap">
+          <div class="loop-diagram" aria-label="Observe decide act observe loop">
+            <svg class="loop-svg" viewBox="0 0 550 470" preserveAspectRatio="none" aria-hidden="true">
+              <path class="loop-path" d="M 150 235 C 170 105, 380 105, 400 235 C 380 365, 170 365, 150 235"></path>
+            </svg>
+            <div class="loop-pulse"></div>
+            <div class="loop-node observe">Observe</div>
+            <div class="loop-node decide">Decide</div>
+            <div class="loop-node act">Act</div>
+            <div class="loop-node observe2">Observe</div>
+          </div>
+          <div class="loop-side">
+            <p class="big-statement">The model does not live alone. It is inside a loop that receives context and changes the environment.</p>
+            <div class="plain-panel fragment">
+              <h3>Where failure can happen</h3>
+              <div class="mini-list" style="margin-top: 12px;">
+                <div>Wrong observation</div>
+                <div>Wrong decision</div>
+                <div>Wrong action</div>
+                <div>Wrong interpretation of result</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: agent design starts with the loop.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="5">
+        <header>
+          <div class="kicker">The full map</div>
+          <h2>A good agent has three layers, not just four primitives</h2>
+        </header>
+        <div class="body architecture">
+          <div class="stack">
+            <div class="layer-panel fragment">
+              <div class="label">Layer 1<br>Execution Core</div>
+              <ul>
+                <li>Goal, model, instructions</li>
+                <li>Context, state, memory</li>
+                <li>Tools, environment, loop</li>
+              </ul>
+            </div>
+            <div class="layer-panel fragment">
+              <div class="label">Layer 2<br>Control Plane</div>
+              <ul>
+                <li>Permissions and least privilege</li>
+                <li>Guardrails and approvals</li>
+                <li>Stopping, escalation, recovery</li>
+              </ul>
+            </div>
+            <div class="layer-panel fragment">
+              <div class="label">Layer 3<br>Improvement Loop</div>
+              <ul>
+                <li>Traces and observability</li>
+                <li>Evals and regression suites</li>
+                <li>Failure analysis and iteration</li>
+              </ul>
+            </div>
+          </div>
+          <div class="system-map fragment">
+            <div class="map-core">agent<br>system</div>
+            <div class="map-chip">model + instructions</div>
+            <div class="map-chip">context + memory</div>
+            <div class="map-chip">tools + environment</div>
+            <div class="map-chip">controls + evals</div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: implementation primitives sit inside a larger architecture.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="6">
+        <header>
+          <div class="kicker">Decision engine</div>
+          <h2>Model choice matters, but instructions define the job</h2>
+        </header>
+        <div class="body decision-engine">
+          <div>
+            <p class="big-statement">The model is the decision engine. The task contract, instructions, and policies tell it what decisions are allowed to mean.</p>
+            <div class="routing-line" style="margin-top: 22px;">
+              <div class="route-card fragment"><strong>Fast model</strong><p>High-volume chat, low-risk routing, simple extraction.</p></div>
+              <div class="route-card fragment"><strong>Reasoning model</strong><p>Planning, multi-tool use, code, high-cost mistakes.</p></div>
+              <div class="route-card fragment"><strong>Escalation</strong><p>Use humans when uncertainty or impact crosses a boundary.</p></div>
+            </div>
+          </div>
+          <div class="engine-board">
+            <div class="engine-row fragment"><div class="model-chip">Goal</div><div><strong>Outcome contract</strong><p>What result is the system responsible for?</p></div></div>
+            <div class="engine-row fragment"><div class="model-chip">Model</div><div><strong>Reasoning budget</strong><p>How much capability, latency, and cost does this step deserve?</p></div></div>
+            <div class="engine-row fragment"><div class="model-chip">Instructions</div><div><strong>Behavior policy</strong><p>What should it do, refuse, clarify, or escalate?</p></div></div>
+            <div class="engine-row fragment"><div class="model-chip">Output</div><div><strong>Decision format</strong><p>Free text, structured output, tool call, or handoff?</p></div></div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: do not confuse "better model" with "better agent".</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="7">
+        <header>
+          <div class="kicker">Context, state, memory</div>
+          <h2>The agent can only decide from the state it can see</h2>
+        </header>
+        <div class="body context-grid">
+          <div>
+            <p class="big-statement">Context engineering is the work of choosing what enters the model's limited attention at each step.</p>
+            <p class="subtitle" style="margin-top: 18px;">State and memory are not one feature. They are a strategy for preserving the right information while the loop keeps moving.</p>
+          </div>
+          <div class="context-board">
+            <div class="context-layer fragment"><strong>Task state</strong><p>Current goal, constraints, unresolved decisions, last observation.</p></div>
+            <div class="context-arrow fragment">+</div>
+            <div class="context-layer fragment"><strong>Retrieved context</strong><p>Files, policies, search results, database records, examples.</p></div>
+            <div class="context-arrow fragment">+</div>
+            <div class="context-layer fragment"><strong>Persistent memory</strong><p>Notes, user preferences, project state, summaries, checkpoints.</p></div>
+            <div class="context-arrow fragment">=</div>
+            <div class="context-layer fragment"><strong>Decision context</strong><p>The actual information available for the next model call.</p></div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: more context is not always better; high-signal context is better.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="8">
+        <header>
+          <div class="kicker">Tools as contracts</div>
+          <h2>Function calling turns language into a contract for action</h2>
+        </header>
+        <div class="body tool-grid">
+          <div class="tool-contract">
+            <div class="contract-step fragment"><strong>Expose capability</strong><p>Describe what the tool does and which arguments are valid.</p></div>
+            <div class="contract-step fragment"><strong>Model chooses</strong><p>The model selects a tool and proposes structured arguments.</p></div>
+            <div class="contract-step fragment"><strong>App executes</strong><p>Your system performs the action and returns the result.</p></div>
+            <div class="contract-step fragment"><strong>Loop continues</strong><p>The result becomes new context for the next decision.</p></div>
+          </div>
+          <figure class="official-panel fc">
+            <img src="assets/v3/official/fc-diagram.png" alt="Official OpenAI function calling diagram">
+            <figcaption class="source-caption">OpenAI function-calling diagram</figcaption>
+          </figure>
+        </div>
+        <footer class="footer"><span>Takeaway: the hard part is the contract, not the JSON syntax.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="9">
+        <header>
+          <div class="kicker">Environment loop</div>
+          <h2>Computer use is not just another tool call</h2>
+        </header>
+        <div class="body cua-grid">
+          <figure class="official-panel cua">
+            <img src="assets/v3/official/cua-diagram.png" alt="Official OpenAI computer use diagram">
+            <figcaption class="source-caption">OpenAI computer-use diagram</figcaption>
+          </figure>
+          <div class="environment-loop">
+            <div class="env-step fragment"><b>1</b><div><strong>Observe screen</strong><p>The environment returns pixels, not a clean API result.</p></div></div>
+            <div class="env-step fragment"><b>2</b><div><strong>Choose action</strong><p>The model proposes click, type, scroll, or navigate.</p></div></div>
+            <div class="env-step fragment"><b>3</b><div><strong>Execute outside model</strong><p>Your runtime applies the action in a browser or computer.</p></div></div>
+            <div class="env-step fragment"><b>4</b><div><strong>Observe again</strong><p>The next screenshot determines the next step.</p></div></div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: UI agents are grounded by repeated environmental feedback.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="10">
+        <header>
+          <div class="kicker">Runtime ownership</div>
+          <h2>Orchestration asks: who controls the loop?</h2>
+        </header>
+        <div class="body ownership-grid">
+          <div class="ownership-card fragment">
+            <h3>Responses API</h3>
+            <div class="mini-flow">
+              <div>You manage state</div>
+              <div>You execute tools</div>
+              <div>You decide routing</div>
+              <div>You own the loop</div>
+            </div>
+          </div>
+          <div class="ownership-card fragment">
+            <h3>Agents SDK</h3>
+            <div class="mini-flow">
+              <div>SDK runs agent loop</div>
+              <div>Handoffs are primitives</div>
+              <div>Guardrails attach to runs</div>
+              <div>Tracing is built in</div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: abstraction is a tradeoff between speed and fine-grained control.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="11">
+        <header>
+          <div class="kicker">System patterns</div>
+          <h2>Workflow, single agent, or multi-agent system?</h2>
+        </header>
+        <div class="body pattern-grid">
+          <div class="pattern-matrix">
+            <div class="pattern fragment"><h3>Workflow</h3><p>Use when the path is known and consistency matters.</p><div class="when">code controls path</div></div>
+            <div class="pattern fragment"><h3>Single agent</h3><p>Use when steps are uncertain but one tool/instruction scope is coherent.</p><div class="when">model controls path</div></div>
+            <div class="pattern fragment"><h3>Multi-agent</h3><p>Use when separation of concerns, tool overload, or different reasoning needs are real.</p><div class="when">handoffs control scope</div></div>
+          </div>
+          <figure class="official-wide fragment">
+            <img src="assets/v3/official/diagram-19.png" alt="Official OpenAI agentic workflows diagram">
+            <figcaption class="source-caption">OpenAI agentic workflows diagram</figcaption>
+          </figure>
+        </div>
+        <footer class="footer"><span>Takeaway: multi-agent is a remedy for specific complexity, not a default aesthetic.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="12">
+        <header>
+          <div class="kicker">Control plane</div>
+          <h2>Guardrails are only one part of the control plane</h2>
+        </header>
+        <div class="body control-grid">
+          <div class="control-board">
+            <div class="control-item fragment"><strong>Permissions</strong><p>What systems and actions are available?</p></div>
+            <div class="control-item fragment"><strong>Input guardrails</strong><p>What requests should be refused or redirected?</p></div>
+            <div class="control-item fragment"><strong>Tool guardrails</strong><p>Which calls require validation before execution?</p></div>
+            <div class="control-item fragment"><strong>Human approval</strong><p>When must a person review the action?</p></div>
+            <div class="control-item fragment"><strong>Stopping</strong><p>When does the loop stop or escalate?</p></div>
+            <div class="control-item fragment"><strong>Recovery</strong><p>What happens after tool failure or uncertainty?</p></div>
+          </div>
+          <div class="boundary-box">
+            <div class="boundary-core">agent action<br>boundary</div>
+            <div class="boundary-label fragment">may do</div>
+            <div class="boundary-label fragment">must not do</div>
+            <div class="boundary-label fragment">ask first</div>
+            <div class="boundary-label fragment">stop here</div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: control decides when autonomy is allowed to continue.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="13">
+        <header>
+          <div class="kicker">Evaluation mental model</div>
+          <h2>How do we know the agent actually works?</h2>
+        </header>
+        <div class="body eval-grid">
+          <div class="metric-panel fragment"><div class="metric-number">01</div><h3>Outcome quality</h3><p>Did the final state satisfy the task, not just sound plausible?</p></div>
+          <div class="metric-panel fragment"><div class="metric-number">02</div><h3>Trajectory quality</h3><p>Did it choose the right tools, valid arguments, routes, and recovery steps?</p></div>
+          <div class="metric-panel fragment"><div class="metric-number">03</div><h3>Safety and control</h3><p>Did it respect policies, permissions, approvals, and action boundaries?</p></div>
+          <div class="metric-panel fragment"><div class="metric-number">04</div><h3>Efficiency</h3><p>How many steps, tokens, tool calls, seconds, and dollars did it use?</p></div>
+        </div>
+        <footer class="footer"><span>Takeaway: agent evals inspect the result and the path.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="14">
+        <header>
+          <div class="kicker">Improvement loop</div>
+          <h2>Evals are the engineering feedback loop for agents</h2>
+        </header>
+        <div class="body improve-grid">
+          <div class="flywheel" aria-label="Agent improvement loop">
+            <svg class="fly-path" viewBox="0 0 570 440" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M 155 220 C 155 95, 415 95, 415 220 C 415 345, 155 345, 155 220"></path>
+            </svg>
+            <div class="fly-dot"></div>
+            <div class="fly-node runs fragment">Real runs</div>
+            <div class="fly-node traces fragment">Traces</div>
+            <div class="fly-node failures fragment">Failure taxonomy</div>
+            <div class="fly-node dataset fragment">Eval dataset</div>
+            <div class="fly-node graders fragment">Graders</div>
+            <div class="fly-node improve fragment">Improve system</div>
+          </div>
+          <div class="eval-types">
+            <div class="eval-type fragment"><strong>Capability evals</strong><p>Can the agent learn to handle difficult tasks it currently struggles with?</p></div>
+            <div class="eval-type fragment"><strong>Regression evals</strong><p>Did a prompt, model, tool, or routing change break tasks that used to work?</p></div>
+            <div class="eval-type fragment"><strong>Version comparison</strong><p>The point is not a single score. It is knowing whether the system improved.</p></div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: traces become tests, tests become better agents.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="15">
+        <header>
+          <div class="kicker">Production tradeoffs</div>
+          <h2>Production quality is a tradeoff surface</h2>
+        </header>
+        <div class="body trade-grid">
+          <div class="trade-triangle">
+            <svg class="triangle-lines" viewBox="0 0 440 430" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M220 92 L88 342 L352 342 Z" fill="none" stroke="rgba(18,17,15,0.28)" stroke-width="3"></path>
+              <path d="M220 92 L220 236 M88 342 L220 236 M352 342 L220 236" fill="none" stroke="rgba(18,17,15,0.18)" stroke-width="2" stroke-dasharray="8 8"></path>
+            </svg>
+            <div class="trade-point fragment">Reliability</div>
+            <div class="trade-point fragment">Cost</div>
+            <div class="trade-point fragment">Latency</div>
+          </div>
+          <div class="trade-board">
+            <div class="trade-row fragment"><strong>Reliability</strong><p>Better reasoning, more checks, approvals, and retries can improve quality.</p></div>
+            <div class="trade-row fragment"><strong>Latency</strong><p>Every extra model call, tool call, and human gate adds time.</p></div>
+            <div class="trade-row fragment"><strong>Cost</strong><p>Longer traces, larger context, and stronger models must justify their value.</p></div>
+            <div class="trade-row fragment"><strong>Design task</strong><p>Choose the acceptable failure boundary for this product and user.</p></div>
+          </div>
+        </div>
+        <footer class="footer"><span>Takeaway: production agent design is optimization under constraints.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="16">
+        <header>
+          <div class="kicker">Study group roadmap</div>
+          <h2>Our future meetings deepen the map</h2>
+        </header>
+        <div class="body roadmap-grid">
+          <div class="roadmap-item fragment"><span>Execution core</span><strong>Models, reasoning, instructions</strong></div>
+          <div class="roadmap-item fragment"><span>Execution core</span><strong>Context, state, memory</strong></div>
+          <div class="roadmap-item fragment"><span>Execution core</span><strong>Tools, APIs, RAG, MCP</strong></div>
+          <div class="roadmap-item fragment"><span>Runtime</span><strong>Agent loops and orchestration</strong></div>
+          <div class="roadmap-item fragment"><span>Runtime</span><strong>Workflows and multi-agent patterns</strong></div>
+          <div class="roadmap-item fragment"><span>Control plane</span><strong>Guardrails, permissions, oversight</strong></div>
+          <div class="roadmap-item fragment"><span>Improvement loop</span><strong>Tracing, evals, iteration</strong></div>
+          <div class="roadmap-item fragment"><span>Production</span><strong>Reliability, latency, cost</strong></div>
+          <div class="roadmap-item fragment"><span>Environment</span><strong>Computer-use agents</strong></div>
+        </div>
+        <footer class="footer"><span>Takeaway: not every agent needs everything, but every agent can be inspected through this map.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+
+      <section class="slide" data-source="17">
+        <header>
+          <div class="kicker">Reusable checklist</div>
+          <h2>Questions to ask about any agent</h2>
+        </header>
+        <div class="body checklist-grid">
+          <div class="check-row fragment"><b>1</b><span>What task and outcome is the system responsible for?</span></div>
+          <div class="check-row fragment"><b>2</b><span>Does this need an agent, or would a simpler workflow work?</span></div>
+          <div class="check-row fragment"><b>3</b><span>What model and instructions make decisions?</span></div>
+          <div class="check-row fragment"><b>4</b><span>What context, state, and memory are available at each step?</span></div>
+          <div class="check-row fragment"><b>5</b><span>What tools and actions can the system access?</span></div>
+          <div class="check-row fragment"><b>6</b><span>Who controls the loop, handoffs, and stopping?</span></div>
+          <div class="check-row fragment"><b>7</b><span>What permissions, guardrails, and approvals apply?</span></div>
+          <div class="check-row fragment"><b>8</b><span>How will we trace, evaluate, and improve it?</span></div>
+          <div class="check-row fragment"><b>9</b><span>What are the acceptable cost, latency, and failure boundaries?</span></div>
+        </div>
+        <footer class="footer"><span>End frame: inspect the system, not the demo sparkle.</span><div class="progress-line"><span></span></div></footer>
+      </section>
+    </div>
+  </main>
+
+  <div class="controls" aria-label="Slide controls">
+    <button id="prev" type="button" aria-label="Previous slide">Prev</button>
+    <div class="slide-count" id="count">1 / 18</div>
+    <button id="next" type="button" aria-label="Next slide">Next</button>
+  </div>
+  <button class="reader-toggle" id="readerToggle" type="button" aria-expanded="false" aria-controls="reader">Source</button>
+  <aside class="reader-panel" id="reader" aria-hidden="true">
+    <div class="reader-head">
+      <strong>Source reader</strong>
+      <button class="reader-close" id="readerClose" type="button">Close</button>
+    </div>
+    <div class="reader-body" id="readerBody"></div>
+  </aside>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const count = document.getElementById("count");
+    const reader = document.getElementById("reader");
+    const readerBody = document.getElementById("readerBody");
+    const readerToggle = document.getElementById("readerToggle");
+    const readerClose = document.getElementById("readerClose");
+
+    const sources = [
+      {
+        title: "OpenAI Developers: Building agents",
+        meta: "Primary reading, introduction",
+        quote: "Core framing: agents combine instructions, guardrails, and tools to act for a user.",
+        bullets: [
+          "Use the OpenAI track as the shared study object.",
+          "This deck turns the reading into an architecture map for future sessions."
+        ],
+        links: [
+          ["Original page", "https://developers.openai.com/tracks/building-agents"],
+          ["Local downloaded page", "assets/v3/source/building-agents.html"]
+        ]
+      },
+      {
+        title: "OpenAI + Anthropic",
+        meta: "Definition boundary",
+        quote: "Workflows follow predefined paths; agents dynamically direct process and tool usage.",
+        bullets: [
+          "OpenAI distinguishes chatbot-like answering from systems connected to tools.",
+          "Anthropic adds a useful workflow vs agent control distinction."
+        ],
+        links: [
+          ["OpenAI primary reading", "https://developers.openai.com/tracks/building-agents"],
+          ["Anthropic: Building effective agents", "https://www.anthropic.com/engineering/building-effective-agents"]
+        ]
+      },
+      {
+        title: "Anthropic: Building effective agents",
+        meta: "When not to use agents",
+        quote: "Start simple; add agentic complexity only when it improves outcomes.",
+        bullets: [
+          "Agentic systems trade latency and cost for task performance.",
+          "Fixed workflows are better when the path is known."
+        ],
+        links: [["Source", "https://www.anthropic.com/engineering/building-effective-agents"]]
+      },
+      {
+        title: "OpenAI Developers: Building agents",
+        meta: "Agent definition and tools",
+        quote: "Agents become useful when they can take action.",
+        bullets: [
+          "Tool access changes the system from answer generation to action execution.",
+          "Action requires boundaries: what can happen, what must not happen, and what needs approval."
+        ],
+        links: [["Primary reading", "https://developers.openai.com/tracks/building-agents"]]
+      },
+      {
+        title: "OpenAI CUA + Anthropic agent loop",
+        meta: "Feedback loop",
+        quote: "The model uses results from the environment to choose the next step.",
+        bullets: [
+          "OpenAI's computer-use section makes the observe/action feedback loop explicit.",
+          "Anthropic describes agents as tool-using systems operating from environmental feedback."
+        ],
+        links: [
+          ["OpenAI computer use section", "https://developers.openai.com/tracks/building-agents"],
+          ["Anthropic: Building effective agents", "https://www.anthropic.com/engineering/building-effective-agents"]
+        ]
+      },
+      {
+        title: "Synthesized architecture framework",
+        meta: "Three layers",
+        quote: "OpenAI's primitives are implementation pieces, not the whole production system.",
+        bullets: [
+          "Execution core: the loop can perform work.",
+          "Control plane: the loop is bounded.",
+          "Improvement loop: the loop is measured and improved."
+        ],
+        links: [
+          ["Primary reading", "https://developers.openai.com/tracks/building-agents"],
+          ["Source map", "../source-map.md"]
+        ]
+      },
+      {
+        title: "OpenAI model guidance + context engineering",
+        meta: "Decision engine",
+        quote: "Use stronger reasoning where task complexity justifies latency and cost.",
+        bullets: [
+          "The model is one component in the decision engine.",
+          "Instructions and task contracts shape allowed behavior."
+        ],
+        links: [
+          ["Primary reading", "https://developers.openai.com/tracks/building-agents"],
+          ["Anthropic context engineering", "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"]
+        ]
+      },
+      {
+        title: "Anthropic: Effective context engineering",
+        meta: "Context, state, memory",
+        quote: "Context is finite; curate high-signal information for the next decision.",
+        bullets: [
+          "Context is broader than prompt text.",
+          "State, retrieval, and memory decide what the model can know now."
+        ],
+        links: [["Source", "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"]]
+      },
+      {
+        title: "OpenAI: Function calling vs built-in tools",
+        meta: "Official diagram",
+        quote: "Function calling requires your application to execute the tool and return results.",
+        image: "assets/v3/official/fc-diagram.png",
+        bullets: [
+          "The model proposes a call; your app owns execution for custom functions.",
+          "Built-in tools move more execution into platform-managed capability."
+        ],
+        links: [["Primary reading", "https://developers.openai.com/tracks/building-agents"]]
+      },
+      {
+        title: "OpenAI: Computer use",
+        meta: "Official diagram",
+        quote: "Computer use requires executing actions, then sending back a screenshot.",
+        image: "assets/v3/official/cua-diagram.png",
+        bullets: [
+          "The result is not automatically just appended as a normal tool result.",
+          "The environment must be observed again after each action."
+        ],
+        links: [["Primary reading", "https://developers.openai.com/tracks/building-agents"]]
+      },
+      {
+        title: "OpenAI: Responses API and Agents SDK",
+        meta: "Loop ownership",
+        quote: "Responses gives lower-level control; Agents SDK packages the agent loop.",
+        bullets: [
+          "Responses API is the lower-level foundation.",
+          "Agents SDK adds agent loop, handoffs, guardrails, sessions, and tracing."
+        ],
+        links: [["Primary reading", "https://developers.openai.com/tracks/building-agents"]]
+      },
+      {
+        title: "OpenAI + Anthropic",
+        meta: "Orchestration and multi-agent design",
+        quote: "Split agents when separation of concerns is real.",
+        image: "assets/v3/official/diagram-19.png",
+        bullets: [
+          "OpenAI recommends separate agents for separate tasks, long instructions, or tool overload.",
+          "Anthropic emphasizes simpler workflow patterns before autonomous agents."
+        ],
+        links: [
+          ["Primary reading", "https://developers.openai.com/tracks/building-agents"],
+          ["Anthropic: Building effective agents", "https://www.anthropic.com/engineering/building-effective-agents"]
+        ]
+      },
+      {
+        title: "OpenAI best practices + Agents SDK guardrails",
+        meta: "Control plane",
+        quote: "Guardrails are policies and checks around inputs, outputs, and actions.",
+        bullets: [
+          "Do not reduce guardrails to moderation.",
+          "A production control plane also includes permissions, approvals, stopping, and recovery."
+        ],
+        links: [
+          ["Primary reading", "https://developers.openai.com/tracks/building-agents"],
+          ["OpenAI practical guide", "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/"]
+        ]
+      },
+      {
+        title: "OpenAI agent evals + Anthropic evals",
+        meta: "Outcome and trajectory",
+        quote: "Evaluate both final state and the path the agent took.",
+        bullets: [
+          "OpenAI trace grading scores workflow-level behavior.",
+          "Anthropic distinguishes outcome from transcript, trace, or trajectory."
+        ],
+        links: [
+          ["OpenAI: Evaluate agent workflows", "https://developers.openai.com/api/docs/guides/agent-evals"],
+          ["Anthropic: Demystifying evals", "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"]
+        ]
+      },
+      {
+        title: "Evaluation flywheel",
+        meta: "Continuous improvement",
+        quote: "Traces expose failures; datasets and graders make improvement repeatable.",
+        bullets: [
+          "Capability evals measure new hard tasks.",
+          "Regression evals protect tasks that already worked."
+        ],
+        links: [
+          ["OpenAI: Evaluate agent workflows", "https://developers.openai.com/api/docs/guides/agent-evals"],
+          ["Anthropic: Demystifying evals", "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"]
+        ]
+      },
+      {
+        title: "OpenAI examples and best practices",
+        meta: "Production constraints",
+        quote: "Production agents must be optimized for reliability, latency, and cost.",
+        bullets: [
+          "Different use cases optimize for different constraints.",
+          "Reliability work often adds cost and latency."
+        ],
+        links: [["Primary reading", "https://developers.openai.com/tracks/building-agents"]]
+      },
+      {
+        title: "Agent Study Group roadmap",
+        meta: "Future learning areas",
+        quote: "The architecture becomes our curriculum map.",
+        bullets: [
+          "The roadmap is not a claim that every agent needs every complex component.",
+          "It is a map for asking better design questions."
+        ],
+        links: [["Slide brief", "../slide-brief.md"]]
+      },
+      {
+        title: "Closing checklist",
+        meta: "Reusable inspection frame",
+        quote: "Use the same questions to inspect any future agent demo.",
+        bullets: [
+          "Task, model, context, tools, loop, controls, evals, and constraints.",
+          "The checklist keeps demos grounded in system design."
+        ],
+        links: [["Slide brief", "../slide-brief.md"]]
+      }
+    ];
+
+    let current = 0;
+    let step = 0;
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedSlide = Number(params.get("slide"));
+    const allSteps = params.get("step") === "all";
+    if (Number.isFinite(requestedSlide) && requestedSlide >= 1 && requestedSlide <= slides.length) {
+      current = requestedSlide - 1;
+    }
+
+    function fragmentsFor(slide) {
+      return Array.from(slide.querySelectorAll(".fragment"));
+    }
+
+    function maxStep(slide) {
+      return fragmentsFor(slide).length;
+    }
+
+    function render() {
+      slides.forEach((slide, index) => {
+        const active = index === current;
+        slide.classList.toggle("active", active);
+        slide.querySelector(".progress-line span").style.setProperty("--progress", `${((current + 1) / slides.length) * 100}%`);
+        fragmentsFor(slide).forEach((fragment, fragmentIndex) => {
+          fragment.classList.toggle("visible", active && step > fragmentIndex);
+        });
+      });
+      count.textContent = `${current + 1} / ${slides.length}`;
+      updateReader();
+      const url = new URL(window.location.href);
+      url.searchParams.set("slide", String(current + 1));
+      if (step > 0) url.searchParams.set("step", String(step));
+      else url.searchParams.delete("step");
+      window.history.replaceState(null, "", url);
+    }
+
+    function next() {
+      const limit = maxStep(slides[current]);
+      if (step < limit) {
+        step += 1;
+      } else if (current < slides.length - 1) {
+        current += 1;
+        step = allSteps ? maxStep(slides[current]) : 0;
+      }
+      render();
+    }
+
+    function prev() {
+      if (step > 0) {
+        step -= 1;
+      } else if (current > 0) {
+        current -= 1;
+        step = allSteps ? maxStep(slides[current]) : maxStep(slides[current]);
+      }
+      render();
+    }
+
+    function goTo(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      step = allSteps ? maxStep(slides[current]) : 0;
+      render();
+    }
+
+    function sourceForCurrent() {
+      const key = Number(slides[current].dataset.source || current);
+      return sources[key] || sources[current] || sources[0];
+    }
+
+    function updateReader() {
+      const source = sourceForCurrent();
+      const image = source.image ? `<img src="${source.image}" alt="${source.title}">` : "";
+      const bullets = (source.bullets || []).map((item) => `<li>${item}</li>`).join("");
+      const links = (source.links || []).map(([label, href]) => `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`).join("");
+      readerBody.innerHTML = `
+        <h3>${source.title}</h3>
+        <div class="reader-meta">${source.meta}</div>
+        <div class="reader-quote">${source.quote}</div>
+        ${image}
+        <ul>${bullets}</ul>
+        <div class="reader-links">${links}</div>
+      `;
+    }
+
+    function setReader(open) {
+      reader.classList.toggle("open", open);
+      reader.setAttribute("aria-hidden", String(!open));
+      readerToggle.setAttribute("aria-expanded", String(open));
+    }
+
+    document.getElementById("next").addEventListener("click", next);
+    document.getElementById("prev").addEventListener("click", prev);
+    readerToggle.addEventListener("click", () => setReader(!reader.classList.contains("open")));
+    readerClose.addEventListener("click", () => setReader(false));
+
+    window.addEventListener("keydown", (event) => {
+      const key = event.key;
+      if (key === "ArrowRight" || key === "PageDown" || key === " ") {
+        event.preventDefault();
+        next();
+      } else if (key === "ArrowLeft" || key === "PageUp") {
+        event.preventDefault();
+        prev();
+      } else if (key === "Home") {
+        event.preventDefault();
+        goTo(0);
+      } else if (key === "End") {
+        event.preventDefault();
+        goTo(slides.length - 1);
+      } else if (key.toLowerCase() === "s") {
+        event.preventDefault();
+        setReader(!reader.classList.contains("open"));
+      } else if (key === "Escape") {
+        setReader(false);
+      }
+    });
+
+    if (allSteps) {
+      step = maxStep(slides[current]);
+    }
+    render();
+  </script>
+</body>
+</html>

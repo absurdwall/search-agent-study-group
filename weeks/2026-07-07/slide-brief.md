@@ -1,31 +1,20 @@
 # Slide Brief
 
-## Audience
+Status: reset.
 
-## Talk Objective
+The previous generated slide directions were rejected and should not be used as the basis for the next version.
 
-By the end, the group should understand:
+Archived rejected attempts:
 
-1.
-2.
-3.
+- `weeks/2026-07-07/slides/archive/rejected-full-deck-v3-18-slides.html`
+- `weeks/2026-07-07/slides/archive/rejected-five-slide-prototype-2026-07-07/index.html`
 
-## Narrative Arc
+Next pass starts from scratch.
 
-1. Setup:
-2. Tension:
-3. Mechanism:
-4. Implication:
-5. Discussion:
+Before writing slides again, we should first agree on:
 
-## Demo / Interaction Opportunities
-
-| Idea | Purpose | Complexity | Keep / Cut |
-| --- | --- | --- | --- |
-|  |  |  |  |
-
-## Slide Plan
-
-| # | Title | Message | Visual / Interaction | Notes |
-| --- | --- | --- | --- | --- |
-| 1 |  |  |  |  |
+1. What the first meeting must accomplish.
+2. What story we want the audience to follow.
+3. What concepts deserve visual explanation.
+4. Which original source excerpts and figures are actually worth putting on screen.
+5. What slide style we want to test before building the deck.

@@ -1,0 +1,1429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>Agent Study Group 01 - Five-slide Prototype</title>
+  <style>
+    :root {
+      --ink: #11110f;
+      --paper: #f7f5ed;
+      --panel: #fffef9;
+      --muted: #717169;
+      --line: rgba(17, 17, 15, 0.18);
+      --line-strong: rgba(17, 17, 15, 0.36);
+      --green: #00856f;
+      --blue: #2f64ff;
+      --gold: #d58b00;
+      --red: #e3483f;
+      --violet: #7552ff;
+      --cyan: #15a4b8;
+      --shadow: 0 26px 80px rgba(0, 0, 0, 0.28);
+      --reader-width: min(430px, 34vw);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        #0d0d0c;
+      background-size: 42px 42px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .deck-shell {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      transition: transform 280ms ease;
+      transform-origin: left center;
+    }
+
+    body.reader-open .deck-shell {
+      transform: scale(0.68);
+    }
+
+    .slide-frame {
+      width: min(calc(100vw - 44px), calc((100vh - 44px) * 16 / 9));
+      max-height: calc(100vh - 44px);
+      aspect-ratio: 16 / 9;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(17, 17, 15, 0.045) 1px, transparent 1px),
+        linear-gradient(rgba(17, 17, 15, 0.045) 1px, transparent 1px),
+        var(--paper);
+      background-size: 36px 36px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+      padding: 36px 42px 32px;
+    }
+
+    .slide.active {
+      display: grid;
+    }
+
+    .kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 34px;
+      height: 3px;
+      background: var(--green);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1,
+    h2 {
+      max-width: 1080px;
+      font-size: clamp(40px, 4.45vw, 60px);
+      line-height: 1.06;
+      font-weight: 850;
+      letter-spacing: 0;
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 19px;
+      line-height: 1.05;
+      font-weight: 820;
+    }
+
+    .subline {
+      color: #3f403b;
+      font-size: 18px;
+      line-height: 1.32;
+    }
+
+    .body {
+      min-height: 0;
+      position: relative;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      min-height: 26px;
+    }
+
+    .progress {
+      width: 220px;
+      height: 3px;
+      background: rgba(17, 17, 15, 0.12);
+    }
+
+    .progress span {
+      display: block;
+      width: var(--progress);
+      height: 100%;
+      background: var(--green);
+    }
+
+    .canvas {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 20% 18%, rgba(0, 133, 111, 0.06), transparent 28%),
+        linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.58));
+      overflow: hidden;
+    }
+
+    .node,
+    .packet,
+    .gate,
+    .label-chip,
+    .state-box,
+    .trace-node,
+    .lens,
+    .mini-panel {
+      position: absolute;
+      border: 1px solid var(--line);
+      background: rgba(255, 254, 249, 0.92);
+      box-shadow: 0 10px 26px rgba(17, 17, 15, 0.08);
+    }
+
+    .node {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-weight: 830;
+      line-height: 1.08;
+    }
+
+    .node.dark {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    .node.blue { border-top: 5px solid var(--blue); }
+    .node.green { border-top: 5px solid var(--green); }
+    .node.gold { border-top: 5px solid var(--gold); }
+    .node.red { border-top: 5px solid var(--red); }
+    .node.violet { border-top: 5px solid var(--violet); }
+
+    .packet {
+      min-width: 132px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 780;
+      line-height: 1.18;
+      transition: transform 460ms ease, opacity 220ms ease, background 220ms ease, border-color 220ms ease;
+      opacity: 0;
+      z-index: 6;
+    }
+
+    .packet.green { border-left: 5px solid var(--green); }
+    .packet.blue { border-left: 5px solid var(--blue); }
+    .packet.gold { border-left: 5px solid var(--gold); }
+    .packet.red { border-left: 5px solid var(--red); }
+
+    .pipe {
+      position: absolute;
+      height: 3px;
+      transform-origin: left center;
+      background: rgba(17, 17, 15, 0.18);
+      overflow: hidden;
+    }
+
+    .pipe::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-101%);
+      background: var(--green);
+      transition: transform 460ms ease;
+    }
+
+    .pipe.red::after { background: var(--red); }
+    .pipe.blue::after { background: var(--blue); }
+    .pipe.gold::after { background: var(--gold); }
+
+    .on,
+    .slide[data-step="0"] [data-on~="0"],
+    .slide[data-step="1"] [data-on~="1"],
+    .slide[data-step="2"] [data-on~="1"],
+    .slide[data-step="2"] [data-on~="2"],
+    .slide[data-step="3"] [data-on~="1"],
+    .slide[data-step="3"] [data-on~="2"],
+    .slide[data-step="3"] [data-on~="3"],
+    .slide[data-step="4"] [data-on~="1"],
+    .slide[data-step="4"] [data-on~="2"],
+    .slide[data-step="4"] [data-on~="3"],
+    .slide[data-step="4"] [data-on~="4"],
+    .slide[data-step="5"] [data-on~="1"],
+    .slide[data-step="5"] [data-on~="2"],
+    .slide[data-step="5"] [data-on~="3"],
+    .slide[data-step="5"] [data-on~="4"],
+    .slide[data-step="5"] [data-on~="5"],
+    .slide[data-step="6"] [data-on~="1"],
+    .slide[data-step="6"] [data-on~="2"],
+    .slide[data-step="6"] [data-on~="3"],
+    .slide[data-step="6"] [data-on~="4"],
+    .slide[data-step="6"] [data-on~="5"],
+    .slide[data-step="6"] [data-on~="6"],
+    .slide[data-step="7"] [data-on~="1"],
+    .slide[data-step="7"] [data-on~="2"],
+    .slide[data-step="7"] [data-on~="3"],
+    .slide[data-step="7"] [data-on~="4"],
+    .slide[data-step="7"] [data-on~="5"],
+    .slide[data-step="7"] [data-on~="6"],
+    .slide[data-step="7"] [data-on~="7"] {
+      opacity: 1;
+    }
+
+    .slide[data-step="1"] [data-flow~="1"]::after,
+    .slide[data-step="2"] [data-flow~="1"]::after,
+    .slide[data-step="2"] [data-flow~="2"]::after,
+    .slide[data-step="3"] [data-flow~="1"]::after,
+    .slide[data-step="3"] [data-flow~="2"]::after,
+    .slide[data-step="3"] [data-flow~="3"]::after,
+    .slide[data-step="4"] [data-flow~="1"]::after,
+    .slide[data-step="4"] [data-flow~="2"]::after,
+    .slide[data-step="4"] [data-flow~="3"]::after,
+    .slide[data-step="4"] [data-flow~="4"]::after,
+    .slide[data-step="5"] [data-flow~="1"]::after,
+    .slide[data-step="5"] [data-flow~="2"]::after,
+    .slide[data-step="5"] [data-flow~="3"]::after,
+    .slide[data-step="5"] [data-flow~="4"]::after,
+    .slide[data-step="5"] [data-flow~="5"]::after,
+    .slide[data-step="6"] [data-flow~="1"]::after,
+    .slide[data-step="6"] [data-flow~="2"]::after,
+    .slide[data-step="6"] [data-flow~="3"]::after,
+    .slide[data-step="6"] [data-flow~="4"]::after,
+    .slide[data-step="6"] [data-flow~="5"]::after,
+    .slide[data-step="6"] [data-flow~="6"]::after,
+    .slide[data-step="7"] [data-flow~="1"]::after,
+    .slide[data-step="7"] [data-flow~="2"]::after,
+    .slide[data-step="7"] [data-flow~="3"]::after,
+    .slide[data-step="7"] [data-flow~="4"]::after,
+    .slide[data-step="7"] [data-flow~="5"]::after,
+    .slide[data-step="7"] [data-flow~="6"]::after,
+    .slide[data-step="7"] [data-flow~="7"]::after {
+      transform: translateX(0);
+    }
+
+    [data-on] {
+      opacity: 0;
+      transition: opacity 260ms ease, transform 320ms ease, filter 320ms ease;
+    }
+
+    .caption {
+      position: absolute;
+      left: 22px;
+      bottom: 18px;
+      max-width: 520px;
+      color: #3c3d38;
+      font-size: 17px;
+      line-height: 1.3;
+      background: rgba(247, 245, 237, 0.86);
+      padding: 10px 12px;
+      border-left: 4px solid var(--green);
+    }
+
+    /* Slide 1 */
+    .s1 .customer { left: 46px; top: 50px; width: 210px; height: 90px; }
+    .s1 .model { left: 360px; top: 70px; width: 170px; height: 118px; border-radius: 50%; }
+    .s1 .answer { left: 612px; top: 56px; width: 250px; padding: 14px 16px; font-size: 18px; opacity: 1; }
+    .s1 .action-packet { transform: translate(612px, 168px); }
+    .s1[data-step="1"] .answer,
+    .s1[data-step="2"] .answer,
+    .s1[data-step="3"] .answer,
+    .s1[data-step="4"] .answer,
+    .s1[data-step="5"] .answer {
+      transform: scale(0.72) translate(130px, 105px);
+      opacity: 0.35;
+    }
+    .s1[data-step="1"] .action-packet,
+    .s1[data-step="2"] .action-packet,
+    .s1[data-step="3"] .action-packet,
+    .s1[data-step="4"] .action-packet,
+    .s1[data-step="5"] .action-packet {
+      opacity: 1;
+    }
+    .s1 .sys { width: 146px; height: 72px; font-size: 15px; }
+    .s1 .order { left: 286px; top: 296px; }
+    .s1 .policy { left: 476px; top: 296px; }
+    .s1 .ledger { left: 666px; top: 296px; }
+    .s1 .approval { left: 856px; top: 296px; }
+    .s1 .notify { left: 1046px; top: 296px; }
+    .s1 .read-path { left: 415px; top: 232px; width: 285px; transform: rotate(19deg); }
+    .s1 .write-path { left: 805px; top: 332px; width: 170px; }
+    .s1 .notify-path { left: 995px; top: 332px; width: 92px; }
+    .s1 .gate {
+      left: 862px;
+      top: 214px;
+      width: 150px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      font-weight: 830;
+      border-color: var(--red);
+      background: rgba(227, 72, 63, 0.08);
+    }
+    .s1[data-step="4"] .gate,
+    .s1[data-step="5"] .gate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .s1 .trace-strip {
+      left: 760px;
+      bottom: 26px;
+      width: 430px;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+    .s1 .trace-strip span {
+      flex: 1;
+      height: 7px;
+      background: rgba(17, 17, 15, 0.15);
+    }
+    .s1[data-step="5"] .trace-strip span:nth-child(-n+5) {
+      background: var(--green);
+    }
+
+    /* Slide 2 */
+    .s2 h2 {
+      font-size: clamp(37px, 4.15vw, 54px);
+      line-height: 1.06;
+    }
+    .s2 .lane {
+      position: absolute;
+      left: 70px;
+      right: 70px;
+      height: 92px;
+      border: 1px solid var(--line);
+      background: rgba(255, 254, 249, 0.66);
+    }
+    .s2 .lane h3 {
+      position: absolute;
+      left: 16px;
+      top: 14px;
+      font-size: 18px;
+    }
+    .s2 .lane.chatbot { top: 34px; }
+    .s2 .lane.workflow { top: 148px; }
+    .s2 .lane.agent { top: 262px; }
+    .s2 .trace-node {
+      width: 116px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 800;
+      top: 46px;
+    }
+    .s2 .n1 { left: 165px; }
+    .s2 .n2 { left: 330px; }
+    .s2 .n3 { left: 495px; }
+    .s2 .n4 { left: 660px; }
+    .s2 .n5 { left: 825px; }
+    .s2 .n6 { left: 990px; }
+    .s2 .lane .pipe { top: 65px; width: 49px; }
+    .s2 .p1 { left: 282px; }
+    .s2 .p2 { left: 447px; }
+    .s2 .p3 { left: 612px; }
+    .s2 .p4 { left: 777px; }
+    .s2 .p5 { left: 942px; }
+    .s2 .control-badge {
+      left: 154px;
+      top: 392px;
+      width: 136px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 850;
+      color: var(--paper);
+      background: var(--ink);
+      transition: transform 420ms ease, background 220ms ease;
+    }
+    .s2[data-step="1"] .control-badge { transform: translate(0, -328px); background: var(--blue); }
+    .s2[data-step="2"] .control-badge { transform: translate(0, -214px); background: var(--gold); }
+    .s2[data-step="3"] .control-badge,
+    .s2[data-step="4"] .control-badge { transform: translate(0, -100px); background: var(--green); }
+    .s2 .simplicity {
+      left: 340px;
+      top: 390px;
+      right: 70px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      font-weight: 850;
+      border-left: 5px solid var(--green);
+    }
+    .s2 .caption {
+      left: 70px;
+      bottom: 16px;
+      max-width: 540px;
+      font-size: 15px;
+      line-height: 1.28;
+      padding: 9px 11px;
+    }
+
+    /* Shared loop layout for slides 3 and 4 */
+    .env-box { left: 46px; top: 36px; width: 274px; height: 194px; padding: 16px; }
+    .context-box { left: 390px; top: 36px; width: 300px; height: 194px; padding: 16px; }
+    .model-box { left: 768px; top: 56px; width: 150px; height: 150px; border-radius: 50%; }
+    .runtime-box { left: 988px; top: 54px; width: 210px; height: 154px; padding: 16px; }
+    .box-title { color: var(--muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 830; margin-bottom: 9px; }
+    .kv { display: grid; gap: 6px; font-size: 14px; line-height: 1.22; }
+    .kv b { font-weight: 830; }
+    .s3 .obs-packet { transform: translate(246px, 116px); }
+    .s3[data-step="1"] .obs-packet,
+    .s3[data-step="2"] .obs-packet,
+    .s3[data-step="3"] .obs-packet,
+    .s3[data-step="4"] .obs-packet,
+    .s3[data-step="5"] .obs-packet,
+    .s3[data-step="6"] .obs-packet { opacity: 1; transform: translate(404px, 116px); }
+    .s3 .ctx-item { position: relative; padding: 6px 8px; margin: 5px 0; background: rgba(0, 133, 111, 0.08); border-left: 3px solid var(--green); opacity: 0; transform: translateY(8px); }
+    .s3[data-step="2"] .ctx-item,
+    .s3[data-step="3"] .ctx-item,
+    .s3[data-step="4"] .ctx-item,
+    .s3[data-step="5"] .ctx-item,
+    .s3[data-step="6"] .ctx-item { opacity: 1; transform: translateY(0); }
+    .s3 .tool-packet { transform: translate(760px, 226px); }
+    .s3[data-step="3"] .tool-packet { opacity: 1; transform: translate(760px, 226px); }
+    .s3[data-step="4"] .tool-packet,
+    .s3[data-step="5"] .tool-packet,
+    .s3[data-step="6"] .tool-packet { opacity: 1; transform: translate(930px, 226px); }
+    .s3 .result-packet { transform: translate(930px, 298px); }
+    .s3[data-step="5"] .result-packet,
+    .s3[data-step="6"] .result-packet { opacity: 1; transform: translate(464px, 304px); }
+    .s3 .next-decision {
+      left: 690px;
+      top: 354px;
+      width: 190px;
+      padding: 12px 14px;
+      border-left: 5px solid var(--gold);
+      font-weight: 830;
+    }
+    .s3 .figure-stage {
+      position: absolute;
+      left: 890px;
+      right: 46px;
+      top: 286px;
+      height: 200px;
+      border: 1px solid var(--line);
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 18px 44px rgba(17, 17, 15, 0.12);
+    }
+    .s3 .figure-stage img {
+      position: absolute;
+      height: 520px;
+      width: auto;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%) scale(0.46);
+      transform-origin: 50% 0;
+      transition: transform 420ms ease, opacity 220ms ease;
+      opacity: 0.18;
+    }
+    .s3[data-step="3"] .figure-stage img,
+    .s3[data-step="4"] .figure-stage img,
+    .s3[data-step="5"] .figure-stage img,
+    .s3[data-step="6"] .figure-stage img {
+      opacity: 0.88;
+    }
+    .s3[data-step="3"] .figure-stage img { transform: translateX(-50%) translateY(-2px) scale(0.86); }
+    .s3[data-step="4"] .figure-stage img { transform: translateX(-50%) translateY(-140px) scale(0.86); }
+    .s3[data-step="5"] .figure-stage img { transform: translateX(-50%) translateY(-250px) scale(0.86); }
+    .s3[data-step="6"] .figure-stage img { transform: translateX(-50%) translateY(-8px) scale(0.46); }
+    .s3 .figure-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(180deg, rgba(17, 17, 15, 0.04), rgba(17, 17, 15, 0.11));
+      pointer-events: none;
+    }
+    .s3 .diagram-hotspot {
+      position: absolute;
+      z-index: 3;
+      border: 3px solid var(--green);
+      background: rgba(0, 133, 111, 0.08);
+      box-shadow: 0 0 0 999px rgba(17, 17, 15, 0.18);
+      opacity: 0;
+      transition: opacity 260ms ease, inset 420ms ease, transform 420ms ease;
+    }
+    .s3[data-step="3"] .diagram-hotspot {
+      opacity: 1;
+      left: 46px;
+      top: 42px;
+      width: 196px;
+      height: 58px;
+    }
+    .s3[data-step="4"] .diagram-hotspot {
+      opacity: 1;
+      left: 66px;
+      top: 76px;
+      width: 168px;
+      height: 56px;
+    }
+    .s3[data-step="5"] .diagram-hotspot {
+      opacity: 1;
+      left: 50px;
+      top: 68px;
+      width: 184px;
+      height: 64px;
+    }
+    .s3[data-step="6"] .diagram-hotspot {
+      opacity: 1;
+      left: 74px;
+      top: 22px;
+      width: 116px;
+      height: 158px;
+      box-shadow: 0 0 0 999px rgba(17, 17, 15, 0.08);
+    }
+    .s3 .fig-label {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 8px;
+      z-index: 4;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 7px 8px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .s3 .fig-label::after { content: "official source diagram"; color: var(--ink); }
+    .s3[data-step="3"] .fig-label::after { content: "1: model sees tool schema"; }
+    .s3[data-step="4"] .fig-label::after { content: "2: structured tool call"; }
+    .s3[data-step="5"] .fig-label::after { content: "3: runtime executes and returns result"; }
+    .s3[data-step="6"] .fig-label::after { content: "full trace restored"; }
+
+    /* Slide 4 */
+    .s4 .core-loop {
+      left: 420px;
+      top: 142px;
+      width: 400px;
+      height: 220px;
+      border: 2px solid rgba(17, 17, 15, 0.2);
+      border-radius: 140px;
+      background: rgba(255, 254, 249, 0.7);
+    }
+    .s4 .loop-label { width: 96px; height: 48px; font-size: 14px; }
+    .s4 .l-observe { left: 414px; top: 228px; }
+    .s4 .l-decide { left: 572px; top: 126px; }
+    .s4 .l-act { left: 734px; top: 228px; }
+    .s4 .l-return { left: 572px; top: 332px; }
+    .s4 .arch-chip {
+      width: 184px;
+      min-height: 58px;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      text-align: center;
+      font-weight: 830;
+      line-height: 1.12;
+    }
+    .s4 .instructions { left: 518px; top: 40px; border-top: 5px solid var(--gold); }
+    .s4 .context-ring {
+      left: 338px;
+      top: 84px;
+      width: 566px;
+      height: 340px;
+      border: 2px dashed rgba(47, 100, 255, 0.45);
+      border-radius: 180px;
+      background: transparent;
+    }
+    .s4 .tools { left: 872px; top: 228px; border-top: 5px solid var(--green); }
+    .s4 .orchestration {
+      left: 298px;
+      top: 456px;
+      width: 650px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      font-weight: 830;
+      border-top: 5px solid var(--violet);
+    }
+    .s4 .control-plane {
+      left: 110px;
+      top: 140px;
+      width: 186px;
+      height: 214px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-weight: 850;
+      border: 2px solid var(--red);
+      background: rgba(227, 72, 63, 0.07);
+    }
+    .s4 .eval-layer {
+      right: 92px;
+      top: 138px;
+      width: 186px;
+      height: 214px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-weight: 850;
+      border: 2px solid var(--blue);
+      background: rgba(47, 100, 255, 0.07);
+    }
+    .s4 .mapping {
+      left: 110px;
+      bottom: 24px;
+      right: 92px;
+      height: 66px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 760;
+    }
+    .s4 .mapping b { color: var(--green); }
+
+    /* Slide 5 */
+    .s5 .final-msg {
+      left: 382px;
+      top: 28px;
+      width: 490px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      font-weight: 850;
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .s5 .run {
+      position: absolute;
+      top: 120px;
+      width: 520px;
+      height: 260px;
+      border: 1px solid var(--line);
+      background: rgba(255, 254, 249, 0.78);
+    }
+    .s5 .run-a { left: 58px; }
+    .s5 .run-b { right: 58px; }
+    .s5 .run h3 {
+      position: absolute;
+      left: 16px;
+      top: 14px;
+    }
+    .s5 .step {
+      position: absolute;
+      width: 96px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 830;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .s5 .step.bad { border-color: rgba(227, 72, 63, 0.75); background: rgba(227, 72, 63, 0.08); }
+    .s5 .step.warn { border-color: rgba(213, 139, 0, 0.7); background: rgba(213, 139, 0, 0.08); }
+    .s5 .run .a1, .s5 .run .b1 { left: 28px; top: 86px; }
+    .s5 .run .a2, .s5 .run .b2 { left: 148px; top: 86px; }
+    .s5 .run .a3, .s5 .run .b3 { left: 268px; top: 86px; }
+    .s5 .run .a4, .s5 .run .b4 { left: 388px; top: 86px; }
+    .s5 .run .a5, .s5 .run .b5 { left: 208px; top: 174px; }
+    .s5 .eval-lenses {
+      left: 58px;
+      right: 58px;
+      top: 402px;
+      height: 70px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+    .s5 .lens {
+      position: relative;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-weight: 850;
+      border-top: 5px solid var(--blue);
+    }
+    .s5 .improve-pipe {
+      left: 116px;
+      right: 116px;
+      bottom: 24px;
+      height: 58px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+    .s5 .improve-pipe span {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 830;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .s5 .same-only {
+      left: 458px;
+      top: 88px;
+      width: 340px;
+      padding: 10px 12px;
+      font-weight: 830;
+      border-left: 5px solid var(--gold);
+    }
+
+    .controls {
+      position: fixed;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px;
+      background: rgba(13, 13, 12, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(12px);
+    }
+
+    .controls button,
+    .source-button,
+    .reader-close {
+      height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--paper);
+      padding: 0 12px;
+      cursor: pointer;
+    }
+
+    .controls button:hover,
+    .source-button:hover,
+    .reader-close:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .count {
+      color: rgba(247, 245, 237, 0.76);
+      font-size: 13px;
+      min-width: 94px;
+      text-align: center;
+    }
+
+    .source-button {
+      position: fixed;
+      right: 18px;
+      bottom: 14px;
+      z-index: 32;
+      min-width: 96px;
+    }
+
+    .reader {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: var(--reader-width);
+      height: 100vh;
+      z-index: 40;
+      transform: translateX(104%);
+      transition: transform 280ms ease;
+      background: #11110f;
+      color: var(--paper);
+      border-left: 1px solid rgba(255, 255, 255, 0.16);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      box-shadow: -28px 0 90px rgba(0, 0, 0, 0.38);
+    }
+
+    body.reader-open .reader {
+      transform: translateX(0);
+    }
+
+    .reader-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 17px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .reader-title {
+      font-weight: 850;
+    }
+
+    .reader-body {
+      overflow: auto;
+      padding: 20px 22px 30px;
+    }
+
+    .reader-body h3 {
+      color: var(--paper);
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .reader-meta {
+      color: rgba(247, 245, 237, 0.58);
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .source-excerpt {
+      background: rgba(255, 255, 255, 0.06);
+      border-left: 4px solid var(--green);
+      padding: 12px 12px;
+      margin: 0 0 14px;
+      white-space: pre-wrap;
+      color: rgba(247, 245, 237, 0.9);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .reader-body img {
+      width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      background: #fff;
+      padding: 10px;
+      margin: 8px 0 16px;
+    }
+
+    .reader-note {
+      color: rgba(247, 245, 237, 0.68);
+      font-size: 13px;
+      line-height: 1.36;
+    }
+
+    .reader-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: #9ec2ff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(158, 194, 255, 0.4);
+    }
+
+    @media (max-width: 900px) {
+      .deck-shell {
+        padding: 0;
+      }
+
+      body.reader-open .deck-shell {
+        transform: none;
+      }
+
+      .slide-frame {
+        width: 100vw;
+        height: 100vh;
+        max-height: none;
+        aspect-ratio: auto;
+      }
+
+      .slide {
+        padding: 26px 22px 82px;
+        overflow: auto;
+      }
+
+      h1,
+      h2 {
+        font-size: 34px;
+      }
+
+      .body {
+        min-height: 620px;
+      }
+
+      .reader {
+        width: 94vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck-shell">
+    <div class="slide-frame" id="deck">
+      <section class="slide s1 active" data-max-step="5" data-step="0">
+        <header>
+          <div class="kicker">Prototype 1 / 5</div>
+          <h1>From answer to action</h1>
+        </header>
+        <div class="body">
+          <div class="canvas">
+            <div class="node customer blue">Customer asks<br>refund request</div>
+            <div class="node model dark">model</div>
+            <div class="node answer green">"Here is the refund policy."</div>
+            <div class="packet action-packet gold">proposed action:<br>prepare refund</div>
+
+            <div class="node sys order blue" data-on="2 3 4 5">inspect<br>order</div>
+            <div class="node sys policy blue" data-on="2 3 4 5">verify<br>policy</div>
+            <div class="node sys ledger red" data-on="2 3 4 5">refund<br>ledger</div>
+            <div class="node sys approval gold" data-on="2 3 4 5">approval<br>gate</div>
+            <div class="node sys notify green" data-on="2 3 4 5">notify<br>user</div>
+
+            <div class="pipe read-path blue" data-flow="3 4 5"></div>
+            <div class="pipe write-path red" data-flow="5"></div>
+            <div class="pipe notify-path green" data-flow="5"></div>
+            <div class="gate" data-on="4 5">approval required</div>
+            <div class="trace-strip node" data-on="5">trace <span></span><span></span><span></span><span></span><span></span></div>
+            <div class="caption">The boundary changes when the system can write to the world. Permissions, approval, and evals appear exactly when action becomes possible.</div>
+          </div>
+        </div>
+        <footer class="footer"><span id="status-1">Step 0: answer only</span><div class="progress"><span></span></div></footer>
+      </section>
+
+      <section class="slide s2" data-max-step="4" data-step="0">
+        <header>
+          <div class="kicker">Prototype 2 / 5</div>
+          <h2>Chatbot, workflow, and agent are control structures</h2>
+        </header>
+        <div class="body">
+          <div class="canvas">
+            <div class="lane chatbot">
+              <h3>Chatbot</h3>
+              <div class="trace-node n1">user asks</div>
+              <div class="pipe p1" data-flow="1 2 3 4"></div>
+              <div class="trace-node n2">model answers</div>
+              <div class="pipe p2" data-flow="1 2 3 4"></div>
+              <div class="trace-node n3">user acts</div>
+            </div>
+            <div class="lane workflow">
+              <h3>Workflow</h3>
+              <div class="trace-node n1">request</div>
+              <div class="pipe p1 gold" data-flow="2 3 4"></div>
+              <div class="trace-node n2">fixed check</div>
+              <div class="pipe p2 gold" data-flow="2 3 4"></div>
+              <div class="trace-node n3">fixed approval</div>
+              <div class="pipe p3 gold" data-flow="2 3 4"></div>
+              <div class="trace-node n4">fixed notify</div>
+            </div>
+            <div class="lane agent">
+              <h3>Agent</h3>
+              <div class="trace-node n1">request</div>
+              <div class="pipe p1" data-flow="3 4"></div>
+              <div class="trace-node n2">observe order</div>
+              <div class="pipe p2" data-flow="3 4"></div>
+              <div class="trace-node n3">decide route</div>
+              <div class="pipe p3" data-flow="3 4"></div>
+              <div class="trace-node n4">approval path</div>
+              <div class="pipe p4 red" data-flow="3 4"></div>
+              <div class="trace-node n5">write action</div>
+            </div>
+            <div class="node control-badge">control owner</div>
+            <div class="node simplicity" data-on="4">Prefer the simplest reliable system.</div>
+            <div class="caption">The distinction is not how many boxes exist. It is who decides the next step: user, code, or a model-directed loop.</div>
+          </div>
+        </div>
+        <footer class="footer"><span id="status-2">Step 0: same refund task, lanes waiting</span><div class="progress"><span></span></div></footer>
+      </section>
+
+      <section class="slide s3" data-max-step="6" data-step="0">
+        <header>
+          <div class="kicker">Prototype 3 / 5</div>
+          <h2>The agent loop as a changing state machine</h2>
+        </header>
+        <div class="body">
+          <div class="canvas">
+            <div class="state-box env-box">
+              <div class="box-title">environment state</div>
+              <div class="kv">
+                <div><b>Order:</b> ORD-1042</div>
+                <div><b>Age:</b> 12 days</div>
+                <div><b>Refund:</b> none</div>
+                <div><b>Approval:</b> missing</div>
+              </div>
+            </div>
+            <div class="state-box context-box">
+              <div class="box-title">decision context</div>
+              <div class="ctx-item">goal: resolve refund request</div>
+              <div class="ctx-item">observation: ORD-1042, 12 days</div>
+              <div class="ctx-item">policy: approval required before write</div>
+            </div>
+            <div class="node model-box dark">model<br>decision</div>
+            <div class="state-box runtime-box">
+              <div class="box-title">runtime</div>
+              <div class="kv">
+                <div>executes tool</div>
+                <div>queries systems</div>
+                <div>returns result</div>
+              </div>
+            </div>
+            <div class="packet obs-packet blue">observation packet<br>order state</div>
+            <div class="packet tool-packet gold">{ tool: verify_refund_eligibility,<br>order_id: ORD-1042 }</div>
+            <div class="packet result-packet green">tool result:<br>eligible, approval needed</div>
+            <div class="node next-decision" data-on="6">second decision changes:<br>request approval</div>
+            <div class="figure-stage" data-on="3 4 5 6">
+              <img src="assets/v3/official/fc-diagram.png" alt="Official OpenAI function-calling diagram">
+              <div class="diagram-hotspot" aria-hidden="true"></div>
+              <div class="fig-label"></div>
+            </div>
+            <div class="caption">The second model call is different because the context now contains a new observation and tool result.</div>
+          </div>
+        </div>
+        <footer class="footer"><span id="status-3">Step 0: world state before the loop</span><div class="progress"><span></span></div></footer>
+      </section>
+
+      <section class="slide s4" data-max-step="7" data-step="0">
+        <header>
+          <div class="kicker">Prototype 4 / 5</div>
+          <h2>The architecture grows around the same loop</h2>
+        </header>
+        <div class="body">
+          <div class="canvas">
+            <div class="node core-loop"></div>
+            <div class="node loop-label l-observe blue">observe</div>
+            <div class="node loop-label l-decide gold">decide</div>
+            <div class="node loop-label l-act red">act</div>
+            <div class="node loop-label l-return green">observe</div>
+            <div class="node arch-chip instructions gold" data-on="1 2 3 4 5 6 7">model +<br>instructions</div>
+            <div class="node context-ring" data-on="2 3 4 5 6 7"></div>
+            <div class="node arch-chip tools green" data-on="3 4 5 6 7">tools +<br>environment</div>
+            <div class="node orchestration" data-on="4 5 6 7">orchestration controls repeated steps, routing, and handoffs</div>
+            <div class="node control-plane" data-on="5 6 7">control plane<br><span style="font-size:13px;">permissions, approval, stopping</span></div>
+            <div class="node eval-layer" data-on="6 7">improvement loop<br><span style="font-size:13px;">trace, eval, iteration</span></div>
+            <div class="node mapping" data-on="7">
+              <div><b>OpenAI primitives</b> explain how work executes: model, tools, state/memory, orchestration.</div>
+              <div><b>Production lenses</b> ask how action is controlled and improved.</div>
+            </div>
+            <div class="caption">This is the candidate visual language: begin with the loop, then grow execution, control, and improvement around it.</div>
+          </div>
+        </div>
+        <footer class="footer"><span id="status-4">Step 0: reused loop only</span><div class="progress"><span></span></div></footer>
+      </section>
+
+      <section class="slide s5" data-max-step="4" data-step="0">
+        <header>
+          <div class="kicker">Prototype 5 / 5</div>
+          <h2>Evaluation needs outcome and trajectory</h2>
+        </header>
+        <div class="body">
+          <div class="canvas">
+            <div class="node final-msg">Same final message: "Your refund has been processed."</div>
+            <div class="node same-only" data-on="0 1 2 3 4">Final-answer grading sees both runs as similar.</div>
+            <div class="run run-a" data-on="1 2 3 4">
+              <h3>Run A: controlled</h3>
+              <div class="step a1">correct<br>tool</div>
+              <div class="step a2">eligibility<br>check</div>
+              <div class="step a3">approval<br>received</div>
+              <div class="step a4">one refund<br>write</div>
+              <div class="step a5">notify<br>user</div>
+            </div>
+            <div class="run run-b" data-on="2 3 4">
+              <h3>Run B: risky trajectory</h3>
+              <div class="step b1 bad">wrong<br>tool</div>
+              <div class="step b2 warn">retry<br>loop</div>
+              <div class="step b3 bad">skips<br>approval</div>
+              <div class="step b4 bad">double write<br>attempt</div>
+              <div class="step b5">same<br>message</div>
+            </div>
+            <div class="eval-lenses" data-on="3 4">
+              <div class="lens">outcome</div>
+              <div class="lens">trajectory</div>
+              <div class="lens">safety + control</div>
+              <div class="lens">efficiency</div>
+            </div>
+            <div class="improve-pipe" data-on="4">
+              <span>trace</span>
+              <span>failure category</span>
+              <span>eval case</span>
+              <span>grader</span>
+              <span>regression test</span>
+              <span>system improvement</span>
+            </div>
+            <div class="caption">Agent evals inspect the path, not just the final sentence.</div>
+          </div>
+        </div>
+        <footer class="footer"><span id="status-5">Step 0: same final message</span><div class="progress"><span></span></div></footer>
+      </section>
+    </div>
+  </main>
+
+  <div class="controls" aria-label="Presenter controls">
+    <button type="button" id="prev">Prev</button>
+    <div class="count" id="count">1 / 5 - 0</div>
+    <button type="button" id="next">Next</button>
+  </div>
+  <button type="button" class="source-button" id="sourceButton" aria-expanded="false">Source</button>
+
+  <aside class="reader" id="reader" aria-hidden="true">
+    <div class="reader-head">
+      <div class="reader-title">Local source reader</div>
+      <button type="button" class="reader-close" id="readerClose">Close</button>
+    </div>
+    <div class="reader-body" id="readerBody">
+      <div class="reader-note">Loading local source...</div>
+    </div>
+  </aside>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const count = document.getElementById("count");
+    const reader = document.getElementById("reader");
+    const readerBody = document.getElementById("readerBody");
+    const sourceButton = document.getElementById("sourceButton");
+    const readerClose = document.getElementById("readerClose");
+
+    const sourceFiles = {
+      openai: {
+        title: "Building agents",
+        url: "https://developers.openai.com/tracks/building-agents",
+        path: "../../../raw/references/Building agents.md"
+      },
+      anthropic: {
+        title: "Building effective agents",
+        url: "https://www.anthropic.com/engineering/building-effective-agents",
+        path: "../../../raw/references/Building Effective AI Agents.md"
+      }
+    };
+
+    const sourceByState = {
+      "1-0": { file: "openai", lines: [711, 712] },
+      "1-1": { file: "openai", lines: [709, 709] },
+      "1-2": { file: "openai", lines: [902, 904] },
+      "1-3": { file: "openai", lines: [900, 904] },
+      "1-4": { file: "openai", lines: [1298, 1306] },
+      "1-5": { file: "openai", lines: [1141, 1145] },
+
+      "2-0": { file: "anthropic", lines: [41, 46] },
+      "2-1": { file: "openai", lines: [711, 713] },
+      "2-2": { file: "anthropic", lines: [45, 46] },
+      "2-3": { file: "anthropic", lines: [171, 173] },
+      "2-4": { file: "anthropic", lines: [50, 54] },
+
+      "3-0": { file: "anthropic", lines: [171, 173] },
+      "3-1": { file: "openai", lines: [919, 925], image: "assets/v3/official/fc-diagram.png" },
+      "3-2": { file: "openai", lines: [921, 925], image: "assets/v3/official/fc-diagram.png" },
+      "3-3": { file: "openai", lines: [921, 926], image: "assets/v3/official/fc-diagram.png" },
+      "3-4": { file: "openai", lines: [921, 926], image: "assets/v3/official/fc-diagram.png" },
+      "3-5": { file: "openai", lines: [923, 925], image: "assets/v3/official/fc-diagram.png" },
+      "3-6": { file: "openai", lines: [923, 925], image: "assets/v3/official/fc-diagram.png" },
+
+      "4-0": { file: "openai", lines: [729, 731] },
+      "4-1": { file: "openai", lines: [1128, 1135] },
+      "4-2": { file: "openai", lines: [729, 731] },
+      "4-3": { file: "openai", lines: [902, 904] },
+      "4-4": { file: "openai", lines: [1120, 1124] },
+      "4-5": { file: "openai", lines: [1139, 1145] },
+      "4-6": { file: "openai", lines: [1141, 1145] },
+      "4-7": { file: "openai", lines: [729, 731] },
+
+      "5-0": { file: "anthropic", lines: [156, 162] },
+      "5-1": { file: "anthropic", lines: [196, 200] },
+      "5-2": { file: "anthropic", lines: [171, 181] },
+      "5-3": { file: "anthropic", lines: [196, 200] },
+      "5-4": { file: "anthropic", lines: [156, 162] }
+    };
+
+    const statusText = {
+      1: [
+        "Step 0: answer only",
+        "Step 1: answer becomes an action proposal",
+        "Step 2: external systems enter the picture",
+        "Step 3: read-only checks run before writes",
+        "Step 4: write path stops at approval",
+        "Step 5: approved action leaves a trace"
+      ],
+      2: [
+        "Step 0: same refund task, lanes waiting",
+        "Step 1: chatbot -> user owns next step",
+        "Step 2: workflow -> code owns route",
+        "Step 3: agent -> model loop changes route",
+        "Step 4: use the simplest reliable system"
+      ],
+      3: [
+        "Step 0: world state before the loop",
+        "Step 1: observation enters context",
+        "Step 2: context assembles for decision",
+        "Step 3: model chooses a structured tool call",
+        "Step 4: runtime executes outside the model",
+        "Step 5: tool result returns from the environment",
+        "Step 6: next decision changes because context changed"
+      ],
+      4: [
+        "Step 0: reused loop only",
+        "Step 1: add model and instructions",
+        "Step 2: add context, state, and memory",
+        "Step 3: add tools and environment",
+        "Step 4: add orchestration",
+        "Step 5: add control plane",
+        "Step 6: add tracing and evaluation",
+        "Step 7: map OpenAI primitives into the broader inspection model"
+      ],
+      5: [
+        "Step 0: same final message",
+        "Step 1: good trace is revealed",
+        "Step 2: risky trace reaches the same final text",
+        "Step 3: eval lenses inspect path and result",
+        "Step 4: trace becomes an improvement loop"
+      ]
+    };
+
+    const cache = {};
+    let current = 0;
+    let step = 0;
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedSlide = Number(params.get("slide"));
+    const requestedStep = Number(params.get("step"));
+    if (Number.isFinite(requestedSlide) && requestedSlide >= 1 && requestedSlide <= slides.length) {
+      current = requestedSlide - 1;
+    }
+    if (Number.isFinite(requestedStep) && requestedStep >= 0) {
+      step = requestedStep;
+    }
+
+    function maxStep() {
+      return Number(slides[current].dataset.maxStep || 0);
+    }
+
+    function clampStep() {
+      step = Math.max(0, Math.min(step, maxStep()));
+    }
+
+    function render() {
+      clampStep();
+      slides.forEach((slide, index) => {
+        const isActive = index === current;
+        slide.classList.toggle("active", isActive);
+        if (isActive) slide.dataset.step = String(step);
+        slide.querySelector(".progress span").style.setProperty("--progress", `${((current + 1) / slides.length) * 100}%`);
+      });
+      const slideNumber = current + 1;
+      count.textContent = `${slideNumber} / ${slides.length} - ${step}`;
+      const status = document.getElementById(`status-${slideNumber}`);
+      if (status) status.textContent = statusText[slideNumber][step] || statusText[slideNumber][0];
+      const url = new URL(window.location.href);
+      url.searchParams.set("slide", String(slideNumber));
+      url.searchParams.set("step", String(step));
+      window.history.replaceState(null, "", url);
+      if (document.body.classList.contains("reader-open")) updateReader();
+    }
+
+    function next() {
+      if (step < maxStep()) {
+        step += 1;
+      } else if (current < slides.length - 1) {
+        current += 1;
+        step = 0;
+      }
+      render();
+    }
+
+    function prev() {
+      if (step > 0) {
+        step -= 1;
+      } else if (current > 0) {
+        current -= 1;
+        step = maxStep();
+      }
+      render();
+    }
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+
+    async function loadSource(key) {
+      if (cache[key]) return cache[key];
+      const source = sourceFiles[key];
+      const response = await fetch(encodeURI(source.path));
+      if (!response.ok) throw new Error(`Could not load ${source.path}`);
+      const text = await response.text();
+      const lines = text.split(/\r?\n/);
+      cache[key] = { ...source, lines };
+      return cache[key];
+    }
+
+    async function updateReader() {
+      const slideNumber = current + 1;
+      const config = sourceByState[`${slideNumber}-${step}`] || sourceByState[`${slideNumber}-0`];
+      readerBody.innerHTML = "<div class=\"reader-note\">Loading local source...</div>";
+      try {
+        const source = await loadSource(config.file);
+        const start = config.lines[0];
+        const end = config.lines[1];
+        const excerpt = source.lines.slice(start - 1, end).map((line, index) => {
+          return `${String(start + index).padStart(4, " ")}  ${line}`;
+        }).join("\n");
+        const image = config.image ? `<img src="${config.image}" alt="Local official source figure">` : "";
+        const coverageNote = slideNumber === 5
+          ? "<div class=\"reader-note\">Note: the local vault currently has the Anthropic effective-agents clip, not the dedicated evals article clip. This reader uses the closest local source excerpt for the prototype.</div>"
+          : "";
+        readerBody.innerHTML = `
+          <h3>${escapeHtml(source.title)}</h3>
+          <div class="reader-meta">Local clip: ${escapeHtml(source.path)}<br>Original: ${escapeHtml(source.url)}<br>Lines ${start}-${end}</div>
+          ${image}
+          <pre class="source-excerpt">${escapeHtml(excerpt)}</pre>
+          ${coverageNote}
+          <a class="reader-link" href="${encodeURI(source.path)}" target="_blank" rel="noopener noreferrer">Open local clip</a>
+        `;
+      } catch (error) {
+        readerBody.innerHTML = `
+          <h3>Source unavailable</h3>
+          <div class="reader-note">${escapeHtml(error.message)}</div>
+        `;
+      }
+    }
+
+    function setReader(open) {
+      document.body.classList.toggle("reader-open", open);
+      reader.setAttribute("aria-hidden", String(!open));
+      sourceButton.setAttribute("aria-expanded", String(open));
+      if (open) updateReader();
+    }
+
+    document.getElementById("next").addEventListener("click", next);
+    document.getElementById("prev").addEventListener("click", prev);
+    sourceButton.addEventListener("click", () => setReader(!document.body.classList.contains("reader-open")));
+    readerClose.addEventListener("click", () => setReader(false));
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        next();
+      } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        prev();
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        current = 0;
+        step = 0;
+        render();
+      } else if (event.key === "End") {
+        event.preventDefault();
+        current = slides.length - 1;
+        step = maxStep();
+        render();
+      } else if (event.key.toLowerCase() === "s") {
+        event.preventDefault();
+        setReader(!document.body.classList.contains("reader-open"));
+      } else if (event.key === "Escape") {
+        setReader(false);
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
