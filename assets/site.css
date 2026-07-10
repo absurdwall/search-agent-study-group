@@ -353,6 +353,12 @@ td {
   font-weight: 600;
 }
 
+.presentation-note {
+  margin-bottom: 0.7rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .presentation-embed {
   overflow: hidden;
   border: 1px solid var(--line-strong);
