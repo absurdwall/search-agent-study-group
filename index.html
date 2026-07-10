@@ -3,124 +3,143 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agent Study Group</title>
+    <meta
+      name="description"
+      content="Search Agent Study Group — a space to read, discuss, and learn about agent-related research and systems together."
+    />
+    <title>Search Agent Study Group</title>
     <link rel="icon" href="data:," />
-    <style>
-      :root {
-        color-scheme: dark;
-        --text: #f4f0e8;
-        --muted: #aab4bd;
-        --line: #3a424a;
-        --accent: #70d6c5;
-        font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        min-height: 100vh;
-        background:
-          radial-gradient(circle at 18% 18%, rgb(112 214 197 / 0.16), transparent 28rem),
-          radial-gradient(circle at 82% 22%, rgb(246 200 95 / 0.12), transparent 24rem),
-          linear-gradient(135deg, #101214, #17191b 45%, #101417);
-        color: var(--text);
-      }
-
-      main {
-        width: min(72rem, calc(100vw - 2rem));
-        min-height: 100vh;
-        margin: 0 auto;
-        display: grid;
-        align-content: center;
-        gap: 2rem;
-        padding: 4rem 0;
-      }
-
-      h1 {
-        max-width: 11ch;
-        margin: 0;
-        font-size: clamp(4rem, 10vw, 8.5rem);
-        line-height: 0.95;
-        letter-spacing: 0;
-      }
-
-      p {
-        max-width: 44rem;
-        margin: 0;
-        color: var(--muted);
-        font-size: clamp(1.1rem, 2vw, 1.5rem);
-        line-height: 1.45;
-      }
-
-      .kicker {
-        color: var(--accent);
-        font-size: 0.9rem;
-        font-weight: 800;
-        letter-spacing: 0;
-        text-transform: uppercase;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-        gap: 1rem;
-      }
-
-      a.card {
-        display: grid;
-        gap: 0.75rem;
-        min-height: 10rem;
-        padding: 1rem;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: rgb(24 29 34 / 0.76);
-        color: inherit;
-        text-decoration: none;
-        transition:
-          border-color 180ms ease,
-          transform 180ms ease;
-      }
-
-      a.card:hover {
-        border-color: var(--accent);
-        transform: translateY(-2px);
-      }
-
-      .card strong {
-        font-size: 1.2rem;
-      }
-
-      .card span {
-        color: var(--muted);
-        line-height: 1.35;
-      }
-    </style>
+    <link rel="stylesheet" href="assets/site.css" />
   </head>
   <body>
-    <main>
-      <div class="kicker">Agent Study Group</div>
-      <h1>Weekly HTML Decks</h1>
-      <p>
-        A small publishing home for study-group presentations: selected material, deep
-        walkthroughs, and web-native slides built for sharing in the meeting and linking from
-        Notion.
-      </p>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-name" href="./" aria-current="page">Search Agent Study Group</a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="#resources">Resources</a>
+          <a href="#weekly-schedule">Weeks</a>
+          <a href="https://github.com/absurdwall/search-agent-study-group">GitHub</a>
+        </nav>
+      </div>
+    </header>
 
-      <section class="grid" aria-label="Decks and project links">
-        <a class="card" href="weeks/2026-07-07/slides/">
-          <strong>2026-07-07</strong>
-          <span>First meeting deck placeholder.</span>
-        </a>
-        <a class="card" href="meta/project-organization.md">
-          <strong>Project Rules</strong>
-          <span>Folder organization, raw material policy, and publishing workflow.</span>
-        </a>
+    <div class="site-layout">
+      <aside class="side-toc" aria-label="On this page">
+        <section class="side-toc-section">
+          <h2>On this page</h2>
+          <nav aria-label="Homepage sections">
+            <a href="#logistics">Logistics</a>
+            <a href="#resources">Resources</a>
+            <a href="#weekly-schedule">Weekly schedule</a>
+            <a href="#assignments">Assignments</a>
+          </nav>
+        </section>
+        <section class="side-toc-section">
+          <h2>Group links</h2>
+          <nav aria-label="Group links">
+            <a href="https://outrageous-tango-920.notion.site/Agent-Study-Group-Home-1566f86e0b05832bbbac817d762daad8?pvs=74">Notion workspace</a>
+            <a href="https://github.com/absurdwall/search-agent-study-group">GitHub repository</a>
+          </nav>
+        </section>
+      </aside>
+
+      <main class="page">
+      <section class="page-intro" aria-labelledby="page-title">
+        <h1 id="page-title">Search Agent Study Group</h1>
+        <p class="lede">
+          We are a reading and discussion group focused on agent-related research
+          and systems. Each week, we work through selected material together.
+        </p>
       </section>
-    </main>
+
+      <section class="content-section" id="logistics" aria-labelledby="logistics-heading">
+        <h2 id="logistics-heading">Logistics</h2>
+        <dl class="facts">
+          <div>
+            <dt>Meeting time</dt>
+            <dd>Tuesday, 2–3 pm ET</dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>Hoboken office · Room 318, 325, or 326</dd>
+          </div>
+          <div>
+            <dt>Contact</dt>
+            <dd><span>#search-agent-study-group</span> · <a href="mailto:search_agent_study_group@walmart.com">search_agent_study_group@walmart.com</a></dd>
+          </div>
+          <div>
+            <dt>Public materials</dt>
+            <dd>This is a Walmart Search study group. This public site contains public material only; internal information is not posted here.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="content-section" id="resources" aria-labelledby="resources-heading">
+        <h2 id="resources-heading">Resources</h2>
+        <ul class="resource-list">
+          <li>
+            <a href="https://outrageous-tango-920.notion.site/Agent-Study-Group-Home-1566f86e0b05832bbbac817d762daad8?pvs=74">Notion workspace</a>
+          </li>
+          <li>
+            <a href="https://github.com/absurdwall/search-agent-study-group">GitHub repository</a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="content-section" id="weekly-schedule" aria-labelledby="schedule-heading">
+        <h2 id="schedule-heading">Weekly Schedule</h2>
+        <p class="section-note">
+          Each week links to its own page with the selected materials and plan.
+        </p>
+        <div class="table-wrap" tabindex="0" aria-label="Weekly schedule table">
+          <table class="schedule-table">
+            <thead>
+              <tr>
+                <th scope="col">Week</th>
+                <th scope="col">Date</th>
+                <th scope="col">Topic</th>
+                <th scope="col">Material</th>
+                <th scope="col">Assignment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Week"><a href="weeks/2026-07-07/">Week 0</a></td>
+                <td data-label="Date">Jul 7, 2026</td>
+                <td data-label="Topic"><span class="topic-title">Building agents</span></td>
+                <td data-label="Material">OpenAI Developers</td>
+                <td data-label="Assignment">—</td>
+              </tr>
+              <tr>
+                <td data-label="Week"><a href="weeks/2026-07-14/">Week 1</a></td>
+                <td data-label="Date">Jul 14, 2026</td>
+                <td data-label="Topic"><span class="topic-title">Agentic AI systems and a complete ADK run</span></td>
+                <td data-label="Material">Google ADK personalized-shopping sample</td>
+                <td data-label="Assignment">—</td>
+              </tr>
+              <tr>
+                <td data-label="Week"><a href="weeks/2026-07-21/">Week 2</a></td>
+                <td data-label="Date">Jul 21, 2026</td>
+                <td data-label="Topic"><span class="topic-title">Sparky</span></td>
+                <td data-label="Material">To be announced</td>
+                <td data-label="Assignment">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="content-section" id="assignments" aria-labelledby="assignments-heading">
+        <h2 id="assignments-heading">Assignments</h2>
+        <p class="section-note">
+          Assignments are listed here when a week includes one; the full prompt
+          and any supporting material live on that week’s page.
+        </p>
+        <p class="empty-state">No assignments have been posted yet.</p>
+      </section>
+
+        <footer class="footer">Search Agent Study Group</footer>
+      </main>
+    </div>
   </body>
 </html>
