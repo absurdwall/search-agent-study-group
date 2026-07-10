@@ -9,11 +9,9 @@
 
 ## Current Weeks
 
-- [[weeks/2026-07-07/materials|2026-07-07 Materials]]
-- [[weeks/2026-07-07/study-notes|2026-07-07 Study Notes]]
-- [[weeks/2026-07-07/slide-brief|2026-07-07 Slide Brief]]
+- [[weeks/2026-07-07/index|2026-07-07 Kickoff]]
 - [[weeks/2026-07-14/materials|2026-07-14 Materials]]
 
-## Published Decks
+## Published Slides
 
-- [2026-07-07 deck placeholder](../weeks/2026-07-07/slides/)
+- [2026-07-07 kickoff slides](../weeks/2026-07-07/slides/)

@@ -336,6 +336,36 @@ td {
   font-weight: 600;
 }
 
+.presentation-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.presentation-heading h2 {
+  margin-bottom: 0.65rem;
+}
+
+.presentation-heading a {
+  flex: 0 0 auto;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.presentation-embed {
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: #fff;
+}
+
+.presentation-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
 .source-list,
 .plain-list {
   max-width: 43rem;
