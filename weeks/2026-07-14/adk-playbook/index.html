@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Search Agent Study Group Google ADK playbook." />
-    <title>Google ADK Playbook · Search Agent Study Group</title>
+    <meta
+      name="description"
+      content="A beginner-friendly Google ADK setup playbook for the Search Agent Study Group."
+    />
+    <title>Google ADK Setup Playbook · Search Agent Study Group</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="../../../assets/site.css" />
   </head>
@@ -20,26 +23,421 @@
       </div>
     </header>
 
-    <main class="page standalone-page">
-      <section class="page-intro" aria-labelledby="page-title">
-        <h1 id="page-title">Google ADK Playbook</h1>
-        <p class="lede">A maintained group reference for working with Google ADK.</p>
-      </section>
+    <div class="site-layout playbook-layout">
+      <aside class="side-toc" aria-label="On this page">
+        <section class="side-toc-section">
+          <h2>On this page</h2>
+          <nav aria-label="Playbook sections">
+            <a href="#overview">The setup path</a>
+            <a href="#clone">1. Download the lab</a>
+            <a href="#setup">2. Create the environment</a>
+            <a href="#offline-check">3. Verify offline</a>
+            <a href="#api-key">4. Create and configure an API key</a>
+            <a href="#live-check">5. Try one live agent call</a>
+            <a href="#troubleshooting">Troubleshooting</a>
+            <a href="#resources">Related resources</a>
+          </nav>
+        </section>
+        <section class="side-toc-section">
+          <h2>Project links</h2>
+          <nav aria-label="Project links">
+            <a href="https://github.com/absurdwall/search-agent-lab">Learner lab repository</a>
+            <a href="../">Week 1 overview</a>
+          </nav>
+        </section>
+      </aside>
 
-      <section class="content-section" aria-labelledby="status-heading">
-        <h2 id="status-heading">Status</h2>
-        <p class="section-note">The group’s playbook will be added here later. Until then, use the public ADK material below.</p>
-      </section>
+      <main class="page">
+        <section class="page-intro" aria-labelledby="page-title">
+          <p class="eyebrow">Living playbook · Version 0.3</p>
+          <h1 id="page-title">Set up Google ADK</h1>
+          <p class="lede">
+            A small, reproducible path from a fresh machine to a verified Google
+            ADK environment. We are writing this guide while running every step
+            ourselves, so it will improve as the study group learns more.
+          </p>
+        </section>
 
-      <section class="content-section" aria-labelledby="references-heading">
-        <h2 id="references-heading">Public references</h2>
-        <ul class="source-list">
-          <li><a href="https://adk.dev/get-started/python/">Google ADK: Get started with Python</a></li>
-          <li><a href="https://github.com/google/adk-samples/tree/main/python/agents/personalized-shopping">Google ADK personalized-shopping sample</a></li>
-        </ul>
-      </section>
+        <section class="content-section" id="overview" aria-labelledby="overview-heading">
+          <h2 id="overview-heading">The setup path</h2>
+          <ol class="setup-path" aria-label="Google ADK setup path">
+            <li><span>1</span><div><strong>Clone</strong> the clean learner repository.</div></li>
+            <li><span>2</span><div><strong>Build</strong> and verify its local environment.</div></li>
+            <li><span>3</span><div><strong>Add</strong> your own Gemini API key locally.</div></li>
+          </ol>
+          <dl class="facts playbook-facts">
+            <div>
+              <dt>Last verified</dt>
+              <dd>July 11, 2026</dd>
+            </div>
+            <div>
+              <dt>Tested baseline</dt>
+              <dd>macOS · Python 3.11 · Google ADK 2.4.0</dd>
+            </div>
+            <div>
+              <dt>First backend</dt>
+              <dd>Google AI with a Gemini API key</dd>
+            </div>
+          </dl>
+          <div class="notice notice-important">
+            <p class="notice-title">Keep the setup isolated</p>
+            <p>
+              Do not run a bare <code>pip install google-adk</code> inside a shared
+              Anaconda, Spyder, or system Python environment. The lab creates its
+              own <code>.venv</code> so ADK cannot upgrade packages used by other tools.
+            </p>
+          </div>
+          <div class="notice notice-important">
+            <p class="notice-title">Use a network and device that permit the lab</p>
+            <p>
+              A corporate VPN, proxy, firewall, or managed laptop may block GitHub,
+              Python package downloads, or Google AI services. We recommend using
+              a personal laptop for this learner project. If a network step fails,
+              try a personal network or disconnect the VPN only when company policy
+              permits it. Do not bypass employer security controls.
+            </p>
+          </div>
+        </section>
 
-      <footer class="footer"><a href="../">← Back to Week 1</a></footer>
-    </main>
+        <section class="content-section playbook-step" id="clone" aria-labelledby="clone-heading">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true">1</span>
+            <h2 id="clone-heading">Download the learner repository</h2>
+          </div>
+          <p>
+            The learner repository contains the tested dependencies, setup notes,
+            and a small offline-first notebook. Clone it, then enter the folder.
+          </p>
+          <h3>Choose one base folder</h3>
+          <p>
+            Set <code>PROJECTS_DIR</code> to the folder where you keep coding projects.
+            Git will create <code>search-agent-lab</code> inside it automatically.
+          </p>
+          <div class="command-block" aria-label="Choose a base folder">
+            <div class="command-label">Example only · replace this path with your own</div>
+            <pre><code>export PROJECTS_DIR="/your/base/directory"</code></pre>
+          </div>
+          <p class="section-note">
+            Do not run that example unchanged. Replace <code>/your/base/directory</code>
+            with a real folder on your computer before continuing.
+          </p>
+          <div class="command-block" aria-label="Clone the learner repository">
+            <div class="command-label">Terminal · after setting PROJECTS_DIR</div>
+            <pre><code>mkdir -p "$PROJECTS_DIR"
+cd "$PROJECTS_DIR"
+git clone https://github.com/absurdwall/search-agent-lab.git
+cd search-agent-lab</code></pre>
+          </div>
+          <p class="section-note">
+            Already cloned it? Run <code>cd "$PROJECTS_DIR/search-agent-lab"</code>, then <code>git pull</code> before continuing.
+          </p>
+        </section>
+
+        <section class="content-section playbook-step" id="setup" aria-labelledby="setup-heading">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true">2</span>
+            <h2 id="setup-heading">Set up the isolated environment</h2>
+          </div>
+          <p>
+            Create a repository-local Python environment and install the exact
+            dependency set that has already passed the lab’s offline check.
+          </p>
+          <div class="command-block" aria-label="Create and verify the isolated Python environment">
+            <div class="command-label">Terminal · from the repository root</div>
+            <pre><code>cd "$PROJECTS_DIR/search-agent-lab"
+python3.11 --version
+python3.11 -m venv .venv
+source .venv/bin/activate
+
+python -m pip install --require-hashes -r requirements.lock
+python -m pip check
+adk --version</code></pre>
+          </div>
+          <div class="notice notice-important">
+            <p class="notice-title">Prefer the official installation path?</p>
+            <p>
+              Our <code>requirements.lock</code> keeps every learner on the same
+              tested package versions. If you prefer to manage your own versions,
+              keep the <code>.venv</code> active and run
+              <code>python -m pip install google-adk</code> instead. Follow the
+              <a href="https://adk.dev/get-started/python/">official Python quickstart</a>
+              and <a href="https://adk.dev/get-started/installation/">installation guide</a>.
+              Do not run both installation commands in the same environment.
+            </p>
+          </div>
+          <p>
+            A successful setup ends with <code>No broken requirements found.</code>
+            and an ADK version. Before running agent commands, verify that this
+            terminal is using the lab environment:
+          </p>
+          <div class="command-block" aria-label="Verify active Python paths">
+            <div class="command-label">Environment check</div>
+            <pre><code>which python
+which pip
+which adk</code></pre>
+          </div>
+          <p class="section-note">
+            All three paths should begin with the repository path and include <code>.venv/bin/</code>.
+          </p>
+          <h3>What the virtual environment does</h3>
+          <p>
+            <code>python3.11 -m venv .venv</code> creates an isolated Python
+            environment inside this copy of the repository. Activating it makes
+            this terminal use that Python and its packages. Each learner creates
+            their own <code>.venv</code>; the folder is never uploaded to GitHub.
+          </p>
+          <dl class="facts playbook-facts choice-facts">
+            <div><dt><code>requirements.lock</code></dt><dd>Committed — the shared installation recipe</dd></div>
+            <div><dt><code>.venv/</code></dt><dd>Local only — generated on each learner’s computer</dd></div>
+            <div><dt><code>.env.example</code></dt><dd>Committed — an empty credential template</dd></div>
+            <div><dt><code>.env</code></dt><dd>Local only — contains the learner’s real API key</dd></div>
+          </dl>
+          <h3>Coming back in a later terminal session</h3>
+          <p>
+            Creating and installing the environment is a one-time setup. On later
+            runs, enter the repository and activate the existing environment:
+          </p>
+          <div class="command-block" aria-label="Reactivate the existing virtual environment">
+            <div class="command-label">Terminal · later sessions</div>
+            <pre><code>export PROJECTS_DIR="/your/base/directory"
+cd "$PROJECTS_DIR/search-agent-lab"
+source .venv/bin/activate</code></pre>
+          </div>
+          <p class="section-note">
+            When you are finished, run <code>deactivate</code> to leave the virtual environment.
+          </p>
+        </section>
+
+        <section class="content-section playbook-step" id="offline-check" aria-labelledby="offline-heading">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true">3</span>
+            <h2 id="offline-heading">Verify the setup without an API call</h2>
+          </div>
+          <p>
+            For now, we encourage every learner to run the repository locally on
+            their own computer. This keeps the environment and branch workflow
+            predictable. If there is strong demand, we can add a supported GitHub
+            Codespaces path later.
+          </p>
+          <h3>Run the notebook in VS Code</h3>
+          <p>
+            Install the VS Code <strong>Python</strong> and <strong>Jupyter</strong>
+            extensions, then open the <code>search-agent-lab</code> folder itself in
+            VS Code. Open <code>notebooks/00_setup_check.ipynb</code> and:
+          </p>
+          <ol class="plain-list playbook-list">
+            <li>Click <strong>Select Kernel</strong> in the notebook’s upper-right corner.</li>
+            <li>Choose <strong>Select Another Kernel… → Python Environments</strong>.</li>
+            <li>Select the Python interpreter inside <code>search-agent-lab/.venv</code>.</li>
+            <li>Run all cells.</li>
+          </ol>
+          <p>
+            The locked setup already installs <code>ipykernel</code>, so no extra
+            package installation or VS Code restart should normally be necessary.
+            The notebook uses a tiny deterministic local tool, so this first check
+            needs no API key, network request, or model quota.
+          </p>
+          <div class="notice notice-important">
+            <p class="notice-title">If the .venv kernel does not appear</p>
+            <p>
+              Activate the environment and register it once, then run
+              <strong>Developer: Reload Window</strong> from the VS Code Command Palette:
+            </p>
+            <div class="command-block" aria-label="Register the virtual environment as a Jupyter kernel">
+              <div class="command-label">Terminal · fallback only</div>
+              <pre><code>cd "$PROJECTS_DIR/search-agent-lab"
+source .venv/bin/activate
+python -m ipykernel install --user --name "search-agent-lab" --display-name "Search Agent Lab"</code></pre>
+            </div>
+          </div>
+          <div class="success-marker" role="note" aria-label="Expected setup-check result">
+            <span>Expected result</span>
+            <code>Offline setup check: PASS</code>
+          </div>
+          <p class="section-note">
+            The committed notebook stays output-free. Clear saved cell output before committing changes.
+          </p>
+        </section>
+
+        <section class="content-section playbook-step" id="api-key" aria-labelledby="api-key-heading">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true">4</span>
+            <h2 id="api-key-heading">Create a Gemini API key</h2>
+          </div>
+          <p>
+            Open <a href="https://aistudio.google.com/apikey">Google AI Studio — API Keys</a>,
+            sign in, and create a key for your own use.
+          </p>
+          <h3>Choose a project and name the key</h3>
+          <p>
+            Select <strong>Default Gemini Project</strong>, or another Free-tier
+            project that you personally own. A separate project is optional; it
+            is useful only when you deliberately want separate billing, quota,
+            permissions, or collaborators. Use a recognizable key name such as
+            <code>search-agent-lab</code>.
+          </p>
+          <div class="notice notice-free">
+            <p class="notice-title">What is free?</p>
+            <p>
+              If the selected project shows <strong>Free</strong> under Billing
+              Tier, the initial lab can use Gemini 3.5 Flash input and output at
+              no charge within the model’s Free-tier limits. A Google AI Pro
+              subscription is not required. Do not enable billing for this
+              exercise. On the Free tier, Google may use the content you send and
+              receive to improve its products. Do not use Walmart information,
+              personal data, confidential material, or other sensitive content;
+              use only public information or invented examples.
+              <a href="https://ai.google.dev/gemini-api/docs/pricing">Check current pricing</a>.
+            </p>
+          </div>
+          <ul class="plain-list playbook-list">
+            <li>Use your own key; do not share one key across the group.</li>
+            <li>
+              Store it only in the repository’s local <code>.env</code> file. Before
+              pasting the key, run <code>git check-ignore .env</code>; the expected
+              output is <code>.env</code>, confirming that Git will not upload it.
+            </li>
+            <li>Do not paste it into chat, a recording, notebook output, or Git.</li>
+          </ul>
+          <div class="notice notice-secret">
+            <p class="notice-title">Recording this step?</p>
+            <p>
+              Pause or hide the recording before the key appears on screen. If
+              a key appears in a screenshot, chat, terminal transcript, or video,
+              delete it immediately and create a replacement. Never reuse the
+              exposed key.
+            </p>
+          </div>
+          <h3>Store the key in the local repository</h3>
+          <p>
+            A key may appear as a long string beginning with something like
+            <code>AQ.…</code>; the exact format can change. Treat the entire value
+            as a password and never show it in screenshots, recordings, or messages.
+            Create the private local file before pasting the key:
+          </p>
+          <div class="command-block" aria-label="Create the local environment file">
+            <div class="command-label">Terminal</div>
+            <pre><code>cd "$PROJECTS_DIR/search-agent-lab"
+cp .env.example .env
+git check-ignore .env .venv</code></pre>
+          </div>
+          <p>
+            The last command should list both <code>.env</code> and <code>.venv</code>,
+            confirming that Git ignores them. Open <code>.env</code> in a text editor,
+            then paste the replacement key only into that local file.
+          </p>
+          <p class="section-note">
+            Do not put the real key in <code>.env.example</code>. That file is a
+            public, tracked template; <code>.env</code> is the private, ignored copy.
+          </p>
+          <div class="command-block" aria-label="Gemini API key environment variable">
+            <div class="command-label">Inside .env · never commit this file</div>
+            <pre><code>GOOGLE_API_KEY="your-own-key-goes-here"</code></pre>
+          </div>
+        </section>
+
+        <section class="content-section playbook-step" id="live-check" aria-labelledby="live-heading">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true">5</span>
+            <h2 id="live-heading">Try one live agent call</h2>
+          </div>
+          <p>
+            Reopen <code>notebooks/00_setup_check.ipynb</code> with the same
+            <code>.venv</code> kernel. Change <code>RUN_LIVE_CHECK</code> from
+            <code>False</code> to <code>True</code>, then run all cells again. This
+            time the notebook makes one small Gemini-backed ADK invocation and
+            shows a safe, redacted timeline of the agent and its tool call.
+          </p>
+          <div class="success-marker" role="note" aria-label="Expected live-check evidence">
+            <span>Successful live check</span>
+            <code>credential: detected locally · live check enabled: True · tool call · tool result · final answer</code>
+          </div>
+          <h3>Week 1 completion evidence</h3>
+          <p>
+            Share a screenshot or pasted excerpt containing only the redacted
+            success lines above. Before submitting it, confirm that it contains
+            no API key, <code>.env</code> contents, personal path, email address,
+            confidential prompt, or other sensitive information. The experimental
+            JSON-schema warning may appear and does not mean the check failed.
+          </p>
+          <div class="notice notice-free">
+            <p class="notice-title">What this proves</p>
+            <p>
+              The learner has a working local Python environment, Google ADK,
+              private credential loading, a Gemini connection, and an agent run
+              that completed a tool call and returned a final response.
+            </p>
+          </div>
+
+          <h3>Optional: generate the official starter agent</h3>
+          <p>
+            To explore ADK’s current project generator, run the command below
+            while the <code>.venv</code> is active:
+          </p>
+          <div class="command-block" aria-label="Create an ADK starter agent">
+            <div class="command-label">Terminal</div>
+            <pre><code>adk create my_agent</code></pre>
+          </div>
+          <dl class="facts playbook-facts choice-facts">
+            <div>
+              <dt>Model</dt>
+              <dd>Choose <strong>1 · gemini-3.5-flash</strong></dd>
+            </div>
+            <div>
+              <dt>Backend</dt>
+              <dd>Choose <strong>1 · Google AI</strong></dd>
+            </div>
+          </dl>
+          <div class="notice notice-important">
+            <p class="notice-title">Do not choose “Login with Google” for this setup</p>
+            <p>
+              That option starts a Google Cloud authentication flow and looks for
+              a Cloud or Express Mode project. The learner baseline intentionally
+              uses the simpler Google AI API-key path.
+            </p>
+          </div>
+        </section>
+
+        <section class="content-section" id="troubleshooting" aria-labelledby="troubleshooting-heading">
+          <h2 id="troubleshooting-heading">Troubleshooting notes</h2>
+          <p>
+            We will add short, verified fixes here as study-group members encounter
+            issues while following the playbook.
+          </p>
+        </section>
+
+        <section class="content-section" id="resources" aria-labelledby="resources-heading">
+          <h2 id="resources-heading">Related resources</h2>
+          <ul class="source-list resource-notes">
+            <li>
+              <a href="https://adk.dev/get-started/python/">Google ADK Python quickstart</a>
+              <small>The official starting point for installing, creating, and running an agent.</small>
+            </li>
+            <li>
+              <a href="https://adk.dev/get-started/installation/">Google ADK installation guide</a>
+              <small>Advanced environment and installation details.</small>
+            </li>
+            <li>
+              <a href="https://aistudio.google.com/apikey">Google AI Studio API keys</a>
+              <small>Create and manage the personal key used by the first learner path.</small>
+            </li>
+            <li>
+              <a href="https://github.com/absurdwall/search-agent-lab">Search Agent Lab</a>
+              <small>The clean learner repository used by this playbook.</small>
+            </li>
+            <li>
+              <a href="https://github.com/google/adk-docs/blob/main/examples/python/notebooks/shop_agent.ipynb">Google ADK shop-agent notebook</a>
+              <small>The instructor demo used later to make a complete agent run visible.</small>
+            </li>
+            <li>
+              <a href="https://adk.dev/events/">Google ADK events</a>
+              <small>How ADK represents messages, tool calls, tool results, state changes, and final responses.</small>
+            </li>
+          </ul>
+        </section>
+
+        <footer class="footer"><a href="../">← Back to Week 1</a></footer>
+      </main>
+    </div>
   </body>
 </html>

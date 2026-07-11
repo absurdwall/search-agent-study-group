@@ -390,6 +390,234 @@ td {
   color: var(--muted);
 }
 
+.playbook-layout {
+  grid-template-columns: 11.5rem minmax(0, 1fr);
+}
+
+.playbook-layout .page {
+  max-width: 47rem;
+}
+
+.playbook-facts {
+  margin-top: 1rem;
+}
+
+.setup-path {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+
+.setup-path li {
+  display: grid;
+  grid-template-columns: 1.65rem 1fr;
+  align-content: start;
+  column-gap: 0.48rem;
+  padding: 0.9rem 0.8rem 0.9rem 0;
+  color: #3d4851;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.setup-path li + li {
+  padding-left: 0.8rem;
+  border-left: 1px solid var(--line);
+}
+
+.setup-path li span {
+  display: inline-grid;
+  width: 1.45rem;
+  height: 1.45rem;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: #40505d;
+  font-size: 0.72rem;
+  font-weight: 760;
+}
+
+.setup-path li strong {
+  display: block;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+
+.notice {
+  max-width: 43rem;
+  margin: 1rem 0 0;
+  padding: 0.78rem 0.9rem;
+  border-left: 3px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.notice p {
+  margin-bottom: 0;
+  color: #46515a;
+  font-size: 0.86rem;
+}
+
+.notice .notice-title {
+  margin-bottom: 0.18rem;
+  color: var(--ink);
+  font-weight: 720;
+}
+
+.notice-important {
+  border-left-color: #b7892f;
+  background: #f5f0df;
+}
+
+.notice-secret {
+  border-left-color: #8b6571;
+  background: #f3edef;
+}
+
+.notice-free {
+  border-left-color: #5f8568;
+  background: #edf4ee;
+}
+
+.playbook-step > p,
+.troubleshooting-item p {
+  max-width: 43rem;
+}
+
+.step-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.65rem;
+}
+
+.step-heading h2 {
+  margin: 0;
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.25;
+}
+
+.step-number {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: #3f4d59;
+  font-size: 0.78rem;
+  font-weight: 760;
+}
+
+.playbook-list {
+  margin-bottom: 0.65rem;
+}
+
+.command-block {
+  max-width: 43rem;
+  margin: 0.8rem 0;
+  overflow: hidden;
+  border: 1px solid #cfd4d8;
+  background: #f1f2f0;
+}
+
+.command-label {
+  padding: 0.38rem 0.65rem;
+  border-bottom: 1px solid #d6d9dc;
+  color: #69737c;
+  font-size: 0.68rem;
+  font-weight: 730;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.command-block pre {
+  margin: 0;
+  padding: 0.72rem 0.8rem;
+  overflow-x: auto;
+  color: #27313a;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  tab-size: 2;
+}
+
+code {
+  padding: 0.08em 0.26em;
+  border-radius: 2px;
+  background: #eceeec;
+  color: #27313a;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.88em;
+}
+
+.command-block code,
+.success-marker code {
+  padding: 0;
+  background: transparent;
+  font-size: inherit;
+}
+
+.success-marker {
+  display: flex;
+  max-width: 43rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.85rem 0;
+  padding: 0.68rem 0.8rem;
+  border-top: 1px solid #9fb7a4;
+  border-bottom: 1px solid #cbd9ce;
+  background: #edf4ee;
+}
+
+.success-marker span {
+  color: #5d6f61;
+  font-size: 0.7rem;
+  font-weight: 740;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.success-marker code {
+  color: #294c31;
+  font-weight: 650;
+}
+
+.playbook-step h3,
+.troubleshooting-item h3 {
+  max-width: 43rem;
+  margin: 1.1rem 0 0.38rem;
+  color: #303a43;
+  font-size: 0.96rem;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+}
+
+.choice-facts {
+  margin-bottom: 0.75rem;
+}
+
+.troubleshooting-item {
+  max-width: 43rem;
+  padding-bottom: 0.75rem;
+}
+
+.troubleshooting-item + .troubleshooting-item {
+  padding-top: 0.2rem;
+  border-top: 1px solid var(--line);
+}
+
+.resource-notes li {
+  margin-bottom: 0.58rem;
+}
+
 @media (max-width: 620px) {
   body {
     font-size: 15px;
@@ -424,6 +652,25 @@ td {
 
   .facts {
     grid-template-columns: 8rem 1fr;
+  }
+
+  .setup-path {
+    display: block;
+  }
+
+  .setup-path li,
+  .setup-path li + li {
+    padding: 0.7rem 0;
+    border-left: 0;
+  }
+
+  .setup-path li + li {
+    border-top: 1px solid var(--line);
+  }
+
+  .success-marker {
+    display: grid;
+    gap: 0.25rem;
   }
 
   .table-wrap {
