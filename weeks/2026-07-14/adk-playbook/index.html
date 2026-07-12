@@ -481,6 +481,18 @@ adk create my_agent</code></pre>
 [root_agent]: Hello! I am your AI assistant.
 [user]: exit</code></pre>
           </div>
+          <p>
+            To chat in a browser and inspect the agent's run details, start ADK Web
+            from the same directory:
+          </p>
+          <div class="command-block" aria-label="Open the ADK web interface">
+            <div class="command-label">Terminal</div>
+            <pre><code>adk web --port 8000</code></pre>
+          </div>
+          <p class="section-note">
+            Open <a href="http://localhost:8000"><code>http://localhost:8000</code></a>
+            and select <code>my_agent</code> in the upper-left menu.
+          </p>
           <p class="section-note">
             ADK may print experimental credential-service warnings before the
             prompt. If <code>Running agent root_agent</code> and <code>[user]:</code>
