@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Week 1 — Agentic AI systems and a complete ADK run, Search Agent Study Group."
+      content="Week 1 — Agent concepts and an observable ADK run, Search Agent Study Group."
     />
     <title>Week 1 · Search Agent Study Group</title>
     <link rel="icon" href="data:," />
@@ -26,7 +26,7 @@
     <main class="page standalone-page">
       <section class="page-intro" aria-labelledby="page-title">
         <h1 id="page-title">Week 1</h1>
-        <p class="week-topic">Agentic AI systems and a complete ADK run</p>
+        <p class="week-topic">Agent concepts and an observable ADK run</p>
         <p class="week-meta">July 14, 2026 · Search Agent Study Group</p>
       </section>
 
@@ -34,20 +34,8 @@
         <h2 id="materials-heading">Materials</h2>
         <ul class="source-list">
           <li>
-            <a href="https://github.com/google/adk-docs/blob/main/examples/python/notebooks/shop_agent.ipynb">Google ADK shop-agent notebook</a>
-            <small>The instructor demo used for the prompt-to-output walkthrough.</small>
-          </li>
-          <li>
-            <a href="https://github.com/absurdwall/search-agent-lab">Search Agent Lab</a>
-            <small>The clean learner repository for setup checks and later assignments.</small>
-          </li>
-          <li>
-            <a href="https://adk.dev/get-started/python/">Google ADK: Get started with Python</a>
-            <small>Public reference for setting up and running an ADK agent.</small>
-          </li>
-          <li>
-            <a href="adk-playbook/">Search Agent Group ADK playbook</a>
-            <small>Our living, tested setup guide for the study group.</small>
+            <a href="https://outrageous-tango-920.notion.site/Week-1-Resources-39b6f86e0b0581468aaeeb145b289384">Week 1 resources</a>
+            <small>The living Notion view for selected references, examples, and demo material.</small>
           </li>
         </ul>
       </section>
@@ -55,18 +43,78 @@
       <section class="content-section" aria-labelledby="goals-heading">
         <h2 id="goals-heading">Goals</h2>
         <ol class="plain-list">
-          <li>Build a high-level map of an agentic AI system and why each component matters. This will serve as a roadmap for later weeks.</li>
-          <li>Walk through one complete agent run in Google ADK, from the user prompt to the final response.</li>
+          <li>See the broader landscape of components that may appear in an agentic system and in later study-group sessions.</li>
+          <li>Establish shared definitions for the foundational concepts behind agents and tool use.</li>
+          <li>Connect those concepts to one observable Google ADK run, from definitions in code to runtime events.</li>
         </ol>
       </section>
 
+      <section class="content-section" aria-labelledby="landscape-heading">
+        <h2 id="landscape-heading">Agentic system landscape</h2>
+        <p class="section-note">
+          A five-minute roadmap, not a checklist. An agent may use only a small
+          subset of these components; later sessions can revisit each area in depth.
+        </p>
+        <figure class="concept-map-figure">
+          <img
+            src="assets/agentic-ai-concept-map.png"
+            alt="Agentic AI concept map grouping potential study topics into core building blocks, context and interfaces, orchestration and execution, control and safety, and quality and operations."
+            width="1672"
+            height="941"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </section>
+
       <section class="content-section" aria-labelledby="plan-heading">
-        <h2 id="plan-heading">Coverage plan</h2>
-        <ol class="plain-list">
-          <li>Map the core system components: model and instructions, tools, orchestration, state and memory, approvals and guardrails, and evaluation.</li>
-          <li>Use the shop-agent notebook to follow an initial user prompt, model requests, tool calls, agent delegation, and the final response.</li>
-          <li>Connect the walkthrough back to the system map and identify questions for future weeks.</li>
+        <h2 id="plan-heading">Session plan</h2>
+        <ol class="session-agenda">
+          <li>
+            <span class="agenda-time">5 min</span>
+            <div>
+              <h3>Map the agentic-system landscape</h3>
+              <p>A quick tour of the possible study-group syllabus: capabilities, runtime, state, control, and evaluation.</p>
+            </div>
+          </li>
+          <li>
+            <span class="agenda-time">30 min</span>
+            <div>
+              <h3>Build the foundational vocabulary</h3>
+              <p>Introduce the LLM, agent, tool, skill, and ReAct concepts that the rest of the session will use.</p>
+            </div>
+          </li>
+          <li>
+            <span class="agenda-time">15 min</span>
+            <div>
+              <h3>Observe a Google ADK agent run</h3>
+              <p>Connect agent, tools, app, session, runner, and run definitions to live events in ADK Web—including the visible instruction context, tool declarations and calls, results, and session flow.</p>
+            </div>
+          </li>
         </ol>
+        <p class="section-note agenda-note">
+          The planned content uses about 50 minutes, leaving roughly 10 minutes
+          for transitions, questions, and the optional Week 1 assignment. The
+          demo will expose observable runtime data, not private model reasoning.
+        </p>
+      </section>
+
+      <section class="content-section" aria-labelledby="concepts-heading">
+        <h2 id="concepts-heading">Concepts introduced</h2>
+        <p class="section-note">
+          Week 1 uses these working definitions as a shared map. We will refine
+          them as later sessions add more concrete systems and tradeoffs.
+        </p>
+        <ul class="concept-link-list">
+          <li><a href="../../glossary/#large-language-model">Large language model (LLM)</a></li>
+          <li><a href="../../glossary/#augmented-llm">Augmented LLM</a></li>
+          <li><a href="../../glossary/#agent">Agent</a></li>
+          <li><a href="../../glossary/#tool">Tool</a></li>
+          <li><a href="../../glossary/#workflow">Workflow</a></li>
+          <li><a href="../../glossary/#callback">Callback</a></li>
+          <li><a href="../../glossary/#guardrail">Guardrail</a></li>
+          <li><a href="../../glossary/#agent-evaluation">Agent evaluation</a></li>
+        </ul>
       </section>
 
       <section class="content-section" id="assignment" aria-labelledby="assignment-heading">

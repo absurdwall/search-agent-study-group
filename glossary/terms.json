@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "generated_from": "glossary/terms/*.md",
+  "terms": [
+    {
+      "id": "agent",
+      "term": "Agent",
+      "aliases": [
+        "AI agent",
+        "LLM agent"
+      ],
+      "category": "agent-systems",
+      "status": "published",
+      "introduced_in": "week-01",
+      "last_reviewed": "2026-07-12",
+      "relations": [
+        {
+          "type": "contrasts_with",
+          "target": "workflow"
+        },
+        {
+          "type": "evaluated_by",
+          "target": "agent-evaluation"
+        },
+        {
+          "type": "uses",
+          "target": "augmented-llm"
+        },
+        {
+          "type": "uses",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Building effective agents",
+          "url": "https://www.anthropic.com/engineering/building-effective-agents",
+          "note": "Supports the distinction between model-directed agents and systems that follow predefined workflow paths."
+        },
+        {
+          "title": "A practical guide to building agents",
+          "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
+          "note": "Describes agents as systems that independently complete tasks by managing workflow execution and selecting tools within guardrails."
+        }
+      ],
+      "sections": {
+        "Simple definition": "A system that lets a model choose the next steps and tools needed to reach a goal.",
+        "Working definition": "An agent is a system that uses a model to direct how it pursues a goal, choosing actions and tools as the task unfolds and stopping, correcting, or handing back control when appropriate.",
+        "Why it matters": "Agent design is useful when the path cannot be fully specified in advance. That flexibility can solve ambiguous, multi-step tasks, but it also increases cost, latency, and the need for evaluation and safeguards.",
+        "Example": "Given “investigate why this order is late,” an agent decides which order and carrier tools to call, interprets the results, asks for missing information if needed, and produces a supported answer.",
+        "Common confusion": "“Agent” is used broadly across the field. In this glossary, the key test is who controls the path: predefined code indicates a workflow; model-directed action selection indicates an agent.",
+        "Study-group notes": "This definition intentionally combines Anthropic's architectural distinction with OpenAI's task-completion framing."
+      }
+    },
+    {
+      "id": "agent-evaluation",
+      "term": "Agent evaluation",
+      "aliases": [
+        "agent eval",
+        "agent evals"
+      ],
+      "category": "control-and-quality",
+      "status": "published",
+      "introduced_in": "week-01",
+      "last_reviewed": "2026-07-12",
+      "relations": [
+        {
+          "type": "related",
+          "target": "agent"
+        },
+        {
+          "type": "related",
+          "target": "guardrail"
+        },
+        {
+          "type": "related",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Why evaluate agents",
+          "url": "https://adk.dev/evaluate/",
+          "note": "Explains why probabilistic agents require evaluation of both final results and the trajectory used to reach them."
+        },
+        {
+          "title": "ADK Evaluation Criteria",
+          "url": "https://adk.dev/evaluate/criteria/",
+          "note": "Provides concrete criteria for tool trajectory, response quality, groundedness, safety, and multi-turn task success."
+        }
+      ],
+      "sections": {
+        "Simple definition": "A repeatable test of whether an agent completes tasks well and behaves acceptably.",
+        "Working definition": "Agent evaluation is the systematic testing of whether an agent succeeds on representative tasks and behaves acceptably along the way. It can measure final answers, tool choices and arguments, action trajectories, groundedness, safety, latency, and cost.",
+        "Why it matters": "Agent behavior varies across runs and can fail even when the final response looks plausible. Repeatable eval cases and criteria make changes measurable and reveal where the process, not only the answer, breaks down.",
+        "Example": "An order-support eval set checks whether the agent selects the correct lookup tool, passes the right order ID, avoids unauthorized actions, and returns a grounded answer across common and edge cases.",
+        "Common confusion": "Agent evals complement rather than replace ordinary unit and integration tests. Deterministic code should still be tested deterministically; evals address variable model behavior and end-to-end task quality.",
+        "Study-group notes": "Evaluation targets should match the task: an acceptable alternate tool path may need rubric-based scoring rather than exact trajectory matching."
+      }
+    },
+    {
+      "id": "augmented-llm",
+      "term": "Augmented LLM",
+      "aliases": [
+        "tool-augmented LLM",
+        "LLM with retrieval, tools, and memory"
+      ],
+      "category": "foundations",
+      "status": "published",
+      "introduced_in": "week-01",
+      "last_reviewed": "2026-07-12",
+      "relations": [
+        {
+          "type": "related",
+          "target": "agent"
+        },
+        {
+          "type": "related",
+          "target": "large-language-model"
+        },
+        {
+          "type": "uses",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Building effective agents",
+          "url": "https://www.anthropic.com/engineering/building-effective-agents",
+          "note": "Defines the augmented LLM as an LLM enhanced with capabilities such as retrieval, tools, and memory."
+        }
+      ],
+      "sections": {
+        "Simple definition": "An LLM connected to extra capabilities such as retrieval, tools, or memory.",
+        "Working definition": "An augmented LLM is an LLM connected to added capabilities such as retrieval, tools, and memory. The model can use those capabilities to obtain context or act beyond what a single prompt-and-response call can do.",
+        "Why it matters": "It is a useful building block between a bare model call and a larger agentic system. Many valuable applications need augmentation without needing an autonomous agent loop.",
+        "Example": "A support assistant retrieves the relevant help article, checks an account through a read-only tool, and uses the returned context to answer a question.",
+        "Common confusion": "Adding a tool does not automatically make a system an agent. The surrounding code may still decide every step, which is closer to a predefined workflow.",
+        "Study-group notes": "Anthropic uses this term as a foundational building block; other sources may describe the same idea without giving it a separate name."
+      }
+    },
+    {
+      "id": "callback",
+      "term": "Callback",
+      "aliases": [
+        "lifecycle callback",
+        "agent callback"
+      ],
+      "category": "control-and-quality",
+      "status": "published",
+      "introduced_in": "week-01",
+      "last_reviewed": "2026-07-12",
+      "relations": [
+        {
+          "type": "related",
+          "target": "agent-evaluation"
+        },
+        {
+          "type": "related",
+          "target": "guardrail"
+        },
+        {
+          "type": "related",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Callbacks: Observe, Customize, and Control Agent Behavior",
+          "url": "https://adk.dev/callbacks/",
+          "note": "Documents callbacks as hooks before or after agent, model, and tool execution for observation and behavior control."
+        },
+        {
+          "title": "ADK Technical Overview",
+          "url": "https://adk.dev/get-started/about/",
+          "note": "Summarizes callbacks as custom code that runs at specific process points for checks, logging, or modifications."
+        }
+      ],
+      "sections": {
+        "Simple definition": "Code that runs automatically at a specific point in an agent's process.",
+        "Working definition": "A callback is developer-supplied code that runs at a defined point in an agent's lifecycle, such as before or after an agent, model, or tool executes. It can observe, log, modify, block, or replace behavior at that point.",
+        "Why it matters": "Callbacks provide controlled intervention points without rewriting the core agent loop. They are useful for tracing, policy checks, caching, approvals, and adapting requests or results.",
+        "Example": "A `before_tool` callback inspects a proposed refund amount and requires human approval before the refund tool runs above a threshold.",
+        "Common confusion": "A callback is a mechanism, not a policy. A guardrail can be implemented with a callback, but callbacks can also perform neutral tasks such as logging or metrics collection.",
+        "Study-group notes": "The exact callback names and whether they can replace execution are framework-specific; the lifecycle-hook idea is broader."
+      }
+    },
+    {
+      "id": "guardrail",
+      "term": "Guardrail",
+      "aliases": [
+        "agent guardrail",
+        "safety guardrail"
+      ],
+      "category": "control-and-quality",
+      "status": "published",
+      "introduced_in": "week-01",
+      "last_reviewed": "2026-07-12",
+      "relations": [
+        {
+          "type": "evaluated_by",
+          "target": "agent-evaluation"
+        },
+        {
+          "type": "related",
+          "target": "callback"
+        },
+        {
+          "type": "related",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "A practical guide to building agents",
+          "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
+          "note": "Describes layered model-based and rules-based guardrails for managing privacy, safety, relevance, and tool risk."
+        }
+      ],
+      "sections": {
+        "Simple definition": "A check or control that keeps an agent within defined boundaries.",
+        "Working definition": "A guardrail is a check or control that constrains an agent's inputs, outputs, tool use, or execution so the system stays within defined safety, policy, quality, or scope boundaries.",
+        "Why it matters": "Agents can take variable paths and may affect external systems. Layered guardrails help detect unsafe requests, limit risky actions, validate outputs, and escalate to people when automation should stop.",
+        "Example": "Before a message is sent, one guardrail removes unnecessary personal data, another verifies the recipient, and a high-impact action requires explicit approval.",
+        "Common confusion": "Guardrails are not a substitute for authentication, authorization, least privilege, secure software design, or human oversight. They are one layer in a broader defense.",
+        "Study-group notes": ""
+      }
+    },
+    {
+      "id": "large-language-model",
+      "term": "Large language model (LLM)",
+      "aliases": [
+        "LLM",
+        "language model"
+      ],
+      "category": "foundations",
+      "status": "published",
+      "introduced_in": "week-01",
+      "last_reviewed": "2026-07-12",
+      "relations": [
+        {
+          "type": "related",
+          "target": "augmented-llm"
+        },
+        {
+          "type": "related",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "A practical guide to building agents",
+          "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
+          "note": "Identifies the model as the component that supplies an agent's reasoning and decision-making."
+        }
+      ],
+      "sections": {
+        "Simple definition": "A model that reads language input and generates language output.",
+        "Working definition": "A large language model is a model trained on large collections of language data to interpret prompts and generate likely continuations. In an agent system, the LLM is usually the reasoning and decision-making component, not the whole agent.",
+        "Why it matters": "The model shapes what the system can understand and generate, but reliability also depends on instructions, context, tools, orchestration, and checks around it.",
+        "Example": "Given a customer question and relevant policy text, an LLM can draft an answer. By itself, it cannot verify a live order status unless the surrounding system supplies that information or a tool.",
+        "Common confusion": "An LLM and an agent are not synonyms. An LLM produces model outputs; an agent combines a model with a process for pursuing a goal, often including tools and guardrails.",
+        "Study-group notes": ""
+      }
+    },
+    {
+      "id": "tool",
+      "term": "Tool",
+      "aliases": [
+        "agent tool",
+        "function tool"
+      ],
+      "category": "agent-systems",
+      "status": "published",
+      "introduced_in": "week-01",
+      "last_reviewed": "2026-07-12",
+      "relations": [
+        {
+          "type": "related",
+          "target": "agent"
+        },
+        {
+          "type": "related",
+          "target": "augmented-llm"
+        },
+        {
+          "type": "related",
+          "target": "guardrail"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Custom Tools for ADK",
+          "url": "https://adk.dev/tools-custom/",
+          "note": "Defines a tool as a specific, structured capability that lets an agent act or interact beyond text generation."
+        },
+        {
+          "title": "A practical guide to building agents",
+          "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
+          "note": "Distinguishes data, action, and orchestration tools and explains how tools extend an agent through external systems."
+        }
+      ],
+      "sections": {
+        "Simple definition": "A defined capability an agent can call to get information or take an action.",
+        "Working definition": "A tool is a named, structured capability an agent or augmented LLM can invoke to retrieve information, perform a defined action, or delegate work. Its interface tells the model what the capability does and what inputs it accepts.",
+        "Why it matters": "Tools connect model reasoning to current data and real effects. Clear descriptions, narrow permissions, predictable outputs, and good error handling strongly affect agent performance and safety.",
+        "Example": "A `lookup_order(order_id)` tool accepts an order identifier and returns structured shipment status. The model chooses whether and how to call it; the tool executes developer-defined logic.",
+        "Common confusion": "The tool does not usually reason independently. It performs its defined operation; the model or orchestration layer decides when to invoke it and what to do with the result.",
+        "Study-group notes": ""
+      }
+    },
+    {
+      "id": "workflow",
+      "term": "Workflow",
+      "aliases": [
+        "LLM workflow",
+        "agentic workflow"
+      ],
+      "category": "agent-systems",
+      "status": "published",
+      "introduced_in": "week-01",
+      "last_reviewed": "2026-07-12",
+      "relations": [
+        {
+          "type": "contrasts_with",
+          "target": "agent"
+        },
+        {
+          "type": "uses",
+          "target": "large-language-model"
+        },
+        {
+          "type": "uses",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Building effective agents",
+          "url": "https://www.anthropic.com/engineering/building-effective-agents",
+          "note": "Defines workflows as systems in which LLMs and tools follow predefined code paths."
+        },
+        {
+          "title": "A practical guide to building agents",
+          "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
+          "note": "Frames a workflow as the sequence of steps required to reach a user's goal and explains when an LLM controls its execution."
+        }
+      ],
+      "sections": {
+        "Simple definition": "A predefined sequence of steps used to complete a task.",
+        "Working definition": "A workflow is a sequence or graph of steps used to reach a goal. In an LLM workflow, code normally determines the path and invokes models or tools at predefined points.",
+        "Why it matters": "Workflows are often easier to predict, test, and operate than agents. They fit tasks whose branches and success conditions can be specified clearly in advance.",
+        "Example": "A content pipeline always drafts an outline, checks it against fixed criteria, writes the article, and then runs a final policy check.",
+        "Common confusion": "Some teams use “agentic workflow” for any automation containing an LLM. This glossary reserves “agent” for systems where the model dynamically directs the process, while acknowledging that broader usage exists.",
+        "Study-group notes": ""
+      }
+    }
+  ]
+}

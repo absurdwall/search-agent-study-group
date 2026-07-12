@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A practical glossary of agent concepts for the Search Agent Study Group."
+    />
+    <title>Agent Concepts Glossary · Search Agent Study Group</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../assets/site.css" />
+    <script src="glossary.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-name" href="../">Search Agent Study Group</a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="./" aria-current="page">Glossary</a>
+          <a href="../#weekly-schedule">Weeks</a>
+          <a href="https://github.com/absurdwall/search-agent-study-group">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="glossary-page">
+      <section class="page-intro glossary-intro" aria-labelledby="page-title">
+        <p class="eyebrow">Living reference · 8 concepts</p>
+        <h1 id="page-title">Agent Concepts Glossary</h1>
+        <p class="lede">
+          A compact wall of concepts we will revisit across the study group.
+          Pick a card for a simple definition, then open it again for examples,
+          connections, notes, and sources.
+        </p>
+      </section>
+
+      <section class="glossary-tools" aria-label="Glossary search and filters">
+        <div class="search-field">
+          <label for="glossary-search">Search concepts</label>
+          <input
+            id="glossary-search"
+            type="search"
+            inputmode="search"
+            autocomplete="off"
+            placeholder="Try “tool”, “workflow”, or “safety”"
+          />
+        </div>
+        <div class="filter-group" aria-labelledby="category-label">
+          <span id="category-label">Category</span>
+          <div id="category-filters" class="filter-buttons"></div>
+        </div>
+        <p id="results-summary" class="results-summary" aria-live="polite"></p>
+      </section>
+
+      <section aria-labelledby="concepts-heading">
+        <h2 id="concepts-heading" class="visually-hidden">Concepts</h2>
+        <div id="glossary-list" class="glossary-list" aria-busy="true">
+          <p class="glossary-state">Loading glossary…</p>
+        </div>
+        <div id="no-results" class="no-results" hidden>
+          <h2>No concepts match</h2>
+          <p>Try a broader word, check another category, or clear the current filters.</p>
+          <button id="clear-filters" class="text-button" type="button">Clear search and filters</button>
+        </div>
+      </section>
+
+      <footer class="footer glossary-footer">
+        <a href="../">← Back to the study group home</a>
+      </footer>
+    </main>
+    <noscript>
+      <p class="standalone-page">This glossary needs JavaScript to load its generated term index.</p>
+    </noscript>
+  </body>
+</html>

@@ -1,39 +1,31 @@
 # Search Agent Study Group
 
-Weekly study and presentation workspace for agent-related material selected by the user.
+Public website and teaching-materials workspace for a weekly study group on
+agentic AI systems.
 
-## Operating Contract
+- [Study group website](https://absurdwall.github.io/search-agent-study-group/)
+- [Learner lab](https://github.com/absurdwall/search-agent-lab)
+- [Notion resources](https://outrageous-tango-920.notion.site/Agent-Study-Group-Home-1566f86e0b05832bbbac817d762daad8?pvs=74)
 
-- The weekly source material comes from the user.
-- Codex helps understand the material deeply and prepares HTML slides for the presentation.
-- Extended reading is allowed when it helps explain a concept, but source discovery is not the default task.
-- Slides should use the web well: animation, demos, interaction, responsive layouts, and speaker-friendly structure.
-- The Presentations plugin is out of scope unless a PPTX or Google Slides export is explicitly requested.
+## Repository map
 
-## Project Shape
+- `weeks/`: weekly pages, preparation notes, demos, and HTML presentations
+- `glossary/`: source-backed agent concept definitions and the public glossary
+- `raw/`: immutable source captures, assets, and external-repository snapshots
+- `meta/`: project organization, publishing workflow, indexes, and logs
+- `templates/`: reusable weekly and HTML-deck starters
+- `scripts/`: small dependency-free maintenance and validation tools
 
-- `weeks/`: dated meeting preparation folders
-- `raw/`: immutable clips, assets, and repo snapshots
-- `meta/`: project rules, publishing workflow, index, and log
-- `templates/`: reusable week and deck starters
+See [`meta/project-organization.md`](meta/project-organization.md) for the full
+working agreement.
 
-See `meta/project-organization.md` for the full contract.
+## Local preview
 
-## Suggested Weekly Folder
-
-Create a dated folder such as:
-
-```text
-weeks/2026-07-07-topic-name/
-weeks/2026-07-07-topic-name/slides/
-```
-
-The reusable starters live in `templates/week/` and `templates/html-deck/`.
-
-## Local Preview
+From the repository root:
 
 ```bash
 python3 -m http.server 8765
 ```
 
-Then open `http://127.0.0.1:8765/`.
+Then open <http://127.0.0.1:8765/>. The public site is published from `main`
+through GitHub Pages.
