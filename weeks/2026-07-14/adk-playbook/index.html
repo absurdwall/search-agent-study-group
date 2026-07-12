@@ -506,11 +506,19 @@ adk create my_agent</code></pre>
             These notes come from real runs of the learner setup.
           </p>
           <div class="troubleshooting-item">
-            <h3>Google returns <code>503 UNAVAILABLE</code> or a high-demand message</h3>
+            <h3>The Notebook shows <code>HTTP 500</code>, while Gemini reports <code>503 UNAVAILABLE</code></h3>
             <p>
-              The model service is temporarily at capacity. Your local environment
-              check is still valid. Wait briefly, then rerun only the live checkpoint
-              cell; do not rebuild <code>.venv</code> or create another API key.
+              The ADK API server may surface an upstream model failure as
+              <code>HTTP 500 Internal Server Error</code>. Check the terminal running
+              <code>adk api_server</code> or <code>adk web</code>. If its underlying
+              message says Gemini returned <code>503 UNAVAILABLE</code> or is experiencing
+              high demand, the model service is temporarily at capacity; it does not
+              mean your local environment or API key is broken.
+            </p>
+            <p>
+              Wait briefly and retry. For a shared-server demo, create a fresh session
+              before retrying so partial events from the failed run do not affect the
+              next result. Do not rebuild <code>.venv</code> or create another API key.
             </p>
           </div>
         </section>
