@@ -31,9 +31,11 @@
             <a href="#overview">The setup path</a>
             <a href="#clone">1. Download the lab</a>
             <a href="#setup">2. Create the environment</a>
-            <a href="#offline-check">3. Verify offline</a>
+            <a href="#offline-check">3. Check the local environment</a>
             <a href="#api-key">4. Create and configure an API key</a>
-            <a href="#live-check">5. Try one live agent call</a>
+            <a href="#live-check">5. Complete the live checkpoint</a>
+            <a href="#submit-checkpoint">6. Submit the checkpoint (optional)</a>
+            <a href="#starter-agent">Optional: run a starter agent</a>
             <a href="#troubleshooting">Troubleshooting</a>
             <a href="#resources">Related resources</a>
           </nav>
@@ -49,7 +51,7 @@
 
       <main class="page">
         <section class="page-intro" aria-labelledby="page-title">
-          <p class="eyebrow">Living playbook · Version 0.3</p>
+          <p class="eyebrow">Living playbook · Version 0.4</p>
           <h1 id="page-title">Set up Google ADK</h1>
           <p class="lede">
             A small, reproducible path from a fresh machine to a verified Google
@@ -62,8 +64,8 @@
           <h2 id="overview-heading">The setup path</h2>
           <ol class="setup-path" aria-label="Google ADK setup path">
             <li><span>1</span><div><strong>Clone</strong> the clean learner repository.</div></li>
-            <li><span>2</span><div><strong>Build</strong> and verify its local environment.</div></li>
-            <li><span>3</span><div><strong>Add</strong> your own Gemini API key locally.</div></li>
+            <li><span>2</span><div><strong>Prepare</strong> its isolated local environment.</div></li>
+            <li><span>3</span><div><strong>Complete</strong> one optional live checkpoint.</div></li>
           </ol>
           <dl class="facts playbook-facts">
             <div>
@@ -106,7 +108,7 @@
           </div>
           <p>
             The learner repository contains the tested dependencies, setup notes,
-            and a small offline-first notebook. Clone it, then enter the folder.
+            and a small setup-check notebook. Clone it, then enter the folder.
           </p>
           <h3>Choose one base folder</h3>
           <p>
@@ -189,7 +191,7 @@ which adk</code></pre>
           <dl class="facts playbook-facts choice-facts">
             <div><dt><code>requirements.lock</code></dt><dd>Committed — the shared installation recipe</dd></div>
             <div><dt><code>.venv/</code></dt><dd>Local only — generated on each learner’s computer</dd></div>
-            <div><dt><code>.env.example</code></dt><dd>Committed — an empty credential template</dd></div>
+            <div><dt><code>.env.example</code></dt><dd>Committed — a safe placeholder template</dd></div>
             <div><dt><code>.env</code></dt><dd>Local only — contains the learner’s real API key</dd></div>
           </dl>
           <h3>Coming back in a later terminal session</h3>
@@ -211,7 +213,7 @@ source .venv/bin/activate</code></pre>
         <section class="content-section playbook-step" id="offline-check" aria-labelledby="offline-heading">
           <div class="step-heading">
             <span class="step-number" aria-hidden="true">3</span>
-            <h2 id="offline-heading">Verify the setup without an API call</h2>
+            <h2 id="offline-heading">Check the local environment</h2>
           </div>
           <p>
             For now, we encourage every learner to run the repository locally on
@@ -229,13 +231,15 @@ source .venv/bin/activate</code></pre>
             <li>Click <strong>Select Kernel</strong> in the notebook’s upper-right corner.</li>
             <li>Choose <strong>Select Another Kernel… → Python Environments</strong>.</li>
             <li>Select the Python interpreter inside <code>search-agent-lab/.venv</code>.</li>
+            <li>Replace <code>GITHUB_USERNAME = "your-github-username"</code> with your public GitHub login.</li>
             <li>Run all cells.</li>
           </ol>
           <p>
             The locked setup already installs <code>ipykernel</code>, so no extra
             package installation or VS Code restart should normally be necessary.
-            The notebook uses a tiny deterministic local tool, so this first check
-            needs no API key, network request, or model quota.
+            The first part checks the Python version, ADK installation, repository,
+            checkpoint utilities, and credential detection. Without a key, it makes
+            no model request and leaves the live checkpoint waiting.
           </p>
           <div class="notice notice-important">
             <p class="notice-title">If the .venv kernel does not appear</p>
@@ -252,7 +256,13 @@ python -m ipykernel install --user --name "search-agent-lab" --display-name "Sea
           </div>
           <div class="success-marker" role="note" aria-label="Expected setup-check result">
             <span>Expected result</span>
-            <code>Offline setup check: PASS</code>
+            <code>Local environment check: PASS</code>
+          </div>
+          <div class="command-block" aria-label="Expected result before adding an API key">
+            <div class="command-label">Expected without GOOGLE_API_KEY</div>
+            <pre><code>credential: not configured
+Local environment check: PASS
+Live agent checkpoint is waiting for GOOGLE_API_KEY; no model request was made.</code></pre>
           </div>
           <p class="section-note">
             The committed notebook stays output-free. Clear saved cell output before committing changes.
@@ -339,44 +349,90 @@ git check-ignore .env .venv</code></pre>
         <section class="content-section playbook-step" id="live-check" aria-labelledby="live-heading">
           <div class="step-heading">
             <span class="step-number" aria-hidden="true">5</span>
-            <h2 id="live-heading">Try one live agent call</h2>
+            <h2 id="live-heading">Complete the live agent checkpoint</h2>
           </div>
           <p>
-            Reopen <code>notebooks/00_setup_check.ipynb</code> with the same
-            <code>.venv</code> kernel. Change <code>RUN_LIVE_CHECK</code> from
-            <code>False</code> to <code>True</code>, then run all cells again. This
-            time the notebook makes one small Gemini-backed ADK invocation and
-            shows a safe, redacted timeline of the agent and its tool call.
+            Return to <code>notebooks/00_setup_check.ipynb</code> with the same
+            <code>.venv</code> kernel and run all cells again. When the notebook
+            detects <code>GOOGLE_API_KEY</code>, it automatically makes one small
+            Gemini-backed ADK invocation—there is no live-mode switch to change.
+            Raw ADK events pass through an allowlisted adapter before anything is
+            displayed or assessed.
           </p>
-          <div class="success-marker" role="note" aria-label="Expected live-check evidence">
-            <span>Successful live check</span>
-            <code>credential: detected locally · live check enabled: True · tool call · tool result · final answer</code>
+          <div class="command-block" aria-label="Expected successful live-agent timeline">
+            <div class="command-label">Expected successful timeline</div>
+            <pre><code>Redacted runtime timeline
+user input    | Use lookup_lab_status for the public topic google-adk, then give one short setup status.
+agent         | setup_agent
+tool call     | {'tool': 'lookup_lab_status', 'arguments': {'topic': 'google-adk'}}
+tool result   | {'tool': 'lookup_lab_status', 'result': {'status': 'ready', 'topic': 'google-adk', 'summary': 'The deterministic local tool completed.'}}
+final answer  | Final response received (content omitted by setup check).</code></pre>
           </div>
-          <h3>Week 1 completion evidence</h3>
           <p>
-            Share a screenshot or pasted excerpt containing only the redacted
-            success lines above. Before submitting it, confirm that it contains
-            no API key, <code>.env</code> contents, personal path, email address,
-            confidential prompt, or other sensitive information. The experimental
-            JSON-schema warning may appear and does not mean the check failed.
+            The checkpoint unlocks only after the real run contains the expected
+            tool call, exact allowlisted tool result, and a non-thought final-answer
+            event. The notebook then combines that validated evidence with your
+            GitHub username to produce a deterministic weekly codename.
           </p>
+          <div class="command-block" aria-label="Example successful checkpoint output">
+            <div class="command-label">Maintainer example · your codename will be different</div>
+            <pre><code>🎉 The agent found its first tool!
+Week 1 agent codename: 🟣 Violet Dolphin — Agent Trailblazer
+Optional public Issue Form: https://github.com/absurdwall/search-agent-lab/issues/new?...</code></pre>
+          </div>
+          <p class="section-note">
+            <code>🟣 Violet Dolphin — Agent Trailblazer</code> is the maintainer’s
+            codename. Your result is generated from your own GitHub username and
+            the validated checkpoint evidence, so expect a different color, animal,
+            or agent title.
+          </p>
+        </section>
+
+        <section class="content-section playbook-step" id="submit-checkpoint" aria-labelledby="submit-heading">
+          <div class="step-heading">
+            <span class="step-number" aria-hidden="true">6</span>
+            <h2 id="submit-heading">Submit the checkpoint (optional)</h2>
+          </div>
+          <p>
+            Submission is separate from setup. Use it only if you want a public,
+            lightweight confirmation that your Week 1 checkpoint completed.
+          </p>
+          <ol class="plain-list playbook-list">
+            <li>Open the prefilled Issue Form URL printed by the notebook.</li>
+            <li>Confirm the checkpoint ID, checkpoint phrase, and codename are already filled in.</li>
+            <li>Check <strong>I completed the optional live checkpoint and am sharing only the generated public codename.</strong></li>
+            <li>Select <strong>Create</strong>. Do not add notebook output, paths, prompts, or credentials.</li>
+            <li>Wait briefly while GitHub Actions validates the actual Issue author.</li>
+          </ol>
           <div class="notice notice-free">
-            <p class="notice-title">What this proves</p>
+            <p class="notice-title">What happens after submission?</p>
             <p>
-              The learner has a working local Python environment, Google ADK,
-              private credential loading, a Gemini connection, and an agent run
-              that completed a tool call and returned a final response.
+              A valid submission receives <code>checkpoint</code>, <code>passed</code>,
+              and <code>week-01</code> labels, a celebratory bot comment, and automatic
+              closure. This is a public, optional honor-system check-in—not
+              authentication, certification, or formal grading.
             </p>
           </div>
+          <p class="section-note">
+            Maintainer verification: <a href="https://github.com/absurdwall/search-agent-lab/issues/1">Week 1 checkpoint Issue #1</a>
+            passed and closed automatically. View the
+            <a href="https://github.com/absurdwall/search-agent-lab/actions/runs/29172545987">successful Action run</a>.
+          </p>
+        </section>
 
-          <h3>Optional: generate the official starter agent</h3>
+        <section class="content-section" id="starter-agent" aria-labelledby="starter-heading">
+          <h2 id="starter-heading">Optional: create and chat with an ADK starter agent</h2>
           <p>
-            To explore ADK’s current project generator, run the command below
-            while the <code>.venv</code> is active:
+            This optional exercise follows the
+            <a href="https://adk.dev/get-started/python/">official ADK Python quickstart</a>.
+            It is not part of the setup checkpoint, but it shows what the ADK CLI
+            generates and lets you have one simple terminal conversation.
           </p>
           <div class="command-block" aria-label="Create an ADK starter agent">
-            <div class="command-label">Terminal</div>
-            <pre><code>adk create my_agent</code></pre>
+            <div class="command-label">Terminal · with .venv active</div>
+            <pre><code>cd "$PROJECTS_DIR/search-agent-lab"
+source .venv/bin/activate
+adk create my_agent</code></pre>
           </div>
           <dl class="facts playbook-facts choice-facts">
             <div>
@@ -396,14 +452,55 @@ git check-ignore .env .venv</code></pre>
               uses the simpler Google AI API-key path.
             </p>
           </div>
+          <p>The CLI creates a small agent project:</p>
+          <div class="command-block" aria-label="Generated ADK starter-agent files">
+            <div class="command-label">Expected project structure</div>
+            <pre><code>my_agent/
+├── __init__.py
+├── agent.py
+├── .env
+└── .gitignore</code></pre>
+          </div>
+          <div class="notice notice-secret">
+            <p class="notice-title">The generated agent has its own .env</p>
+            <p>
+              ADK stores the selected credential configuration in
+              <code>my_agent/.env</code>. Treat it as a secret: never print, share,
+              or commit it.
+            </p>
+          </div>
+          <p>Start the generated agent with the official CLI command:</p>
+          <div class="command-block" aria-label="Run and chat with the ADK starter agent">
+            <div class="command-label">Terminal</div>
+            <pre><code>adk run my_agent</code></pre>
+          </div>
+          <div class="command-block" aria-label="Example ADK starter-agent conversation">
+            <div class="command-label">Example conversation</div>
+            <pre><code>Running agent root_agent, type exit to exit.
+[user]: introduce yourself
+[root_agent]: Hello! I am your AI assistant.
+[user]: exit</code></pre>
+          </div>
+          <p class="section-note">
+            ADK may print experimental credential-service warnings before the
+            prompt. If <code>Running agent root_agent</code> and <code>[user]:</code>
+            appear, the starter agent is ready for a short chat.
+          </p>
         </section>
 
         <section class="content-section" id="troubleshooting" aria-labelledby="troubleshooting-heading">
           <h2 id="troubleshooting-heading">Troubleshooting notes</h2>
           <p>
-            We will add short, verified fixes here as study-group members encounter
-            issues while following the playbook.
+            These notes come from real runs of the learner setup.
           </p>
+          <div class="troubleshooting-item">
+            <h3>Google returns <code>503 UNAVAILABLE</code> or a high-demand message</h3>
+            <p>
+              The model service is temporarily at capacity. Your local environment
+              check is still valid. Wait briefly, then rerun only the live checkpoint
+              cell; do not rebuild <code>.venv</code> or create another API key.
+            </p>
+          </div>
         </section>
 
         <section class="content-section" id="resources" aria-labelledby="resources-heading">
@@ -424,6 +521,10 @@ git check-ignore .env .venv</code></pre>
             <li>
               <a href="https://github.com/absurdwall/search-agent-lab">Search Agent Lab</a>
               <small>The clean learner repository used by this playbook.</small>
+            </li>
+            <li>
+              <a href="https://github.com/absurdwall/search-agent-lab/issues/1">Verified Week 1 checkpoint</a>
+              <small>The first end-to-end learner run, validated and closed automatically by GitHub Actions.</small>
             </li>
             <li>
               <a href="https://github.com/google/adk-docs/blob/main/examples/python/notebooks/shop_agent.ipynb">Google ADK shop-agent notebook</a>

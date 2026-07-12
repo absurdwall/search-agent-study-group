@@ -69,9 +69,36 @@
         </ol>
       </section>
 
-      <section class="content-section" aria-labelledby="assignment-heading">
+      <section class="content-section" id="assignment" aria-labelledby="assignment-heading">
         <h2 id="assignment-heading">Assignment</h2>
-        <p class="empty-state">No assignment has been posted for this week.</p>
+        <p class="week-topic">Set up Google ADK and complete your first live agent checkpoint</p>
+        <p class="section-note">
+          This is an optional, lightweight Week 1 assignment. The goal is to
+          confirm that your local learner environment can run a real ADK agent,
+          observe its tool call safely, and receive your own agent codename.
+        </p>
+        <h3>Complete the assignment</h3>
+        <ol class="plain-list">
+          <li>Follow the <a href="adk-playbook/">Google ADK Setup Playbook</a> to clone the learner repository and create its isolated environment.</li>
+          <li>Create and store your own Gemini API key locally.</li>
+          <li>Run <code>notebooks/00_setup_check.ipynb</code> through the live checkpoint.</li>
+        </ol>
+        <div class="notice notice-free">
+          <p class="notice-title">You are done when</p>
+          <p>
+            The notebook shows the redacted agent timeline, confirms the expected
+            tool call and result, and generates your personalized Week 1 agent
+            codename. Your codename will be different from the maintainer example.
+          </p>
+        </div>
+        <h3>Optional public check-in</h3>
+        <p>
+          The notebook also generates a prefilled GitHub Issue Form. Submitting
+          it is optional and separate from completing the setup. If you submit
+          it, GitHub Actions validates the checkpoint, celebrates your codename,
+          and closes the issue automatically.
+        </p>
+        <p><a href="adk-playbook/#clone">Start the Week 1 assignment →</a></p>
       </section>
 
       <footer class="footer"><a href="../../">← Back to the study group home</a></footer>
