@@ -162,6 +162,15 @@ a:focus-visible {
   text-transform: uppercase;
 }
 
+.agent-emoji {
+  display: inline-block;
+  margin-left: 0.1em;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  font-size: 0.9em;
+  line-height: 1;
+  vertical-align: 0.04em;
+}
+
 h1,
 h2,
 h3,
