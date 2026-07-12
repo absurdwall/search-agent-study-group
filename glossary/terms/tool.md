@@ -7,15 +7,16 @@ status: published
 introduced_in: week-01
 last_reviewed: 2026-07-12
 relations: [
-  {"type": "related", "target": "augmented-llm"},
   {"type": "related", "target": "agent"},
-  {"type": "related", "target": "guardrail"}
+  {"type": "related", "target": "callback"},
+  {"type": "related", "target": "guardrail"},
+  {"type": "related", "target": "model-context-protocol"}
 ]
 sources: [
   {
     "title": "Custom Tools for ADK",
     "url": "https://adk.dev/tools-custom/",
-    "note": "Defines a tool as a specific, structured capability that lets an agent act or interact beyond text generation."
+    "note": "Defines a tool as a specific capability that lets an agent perform developer-defined actions beyond text generation."
   },
   {
     "title": "A practical guide to building agents",
@@ -27,22 +28,24 @@ sources: [
 
 ## Simple definition
 
-A defined capability an agent can call to get information or take an action.
+A defined capability an agent can request to retrieve information, perform an action, or delegate work.
 
 ## Working definition
 
-A tool is a named, structured capability an agent or augmented LLM can invoke to retrieve information, perform a defined action, or delegate work. Its interface tells the model what the capability does and what inputs it accepts.
+A tool is a named, structured capability exposed to an agent. The model sees a description and input schema and can emit a structured request to use it; the framework validates that request, executes developer-defined logic, and returns the result to the agent.
 
 ## Why it matters
 
-Tools connect model reasoning to current data and real effects. Clear descriptions, narrow permissions, predictable outputs, and good error handling strongly affect agent performance and safety.
+Tools connect model reasoning to current data and real effects. Clear names, descriptions, schemas, narrow permissions, predictable outputs, and useful errors strongly affect whether an agent behaves reliably and safely.
 
 ## Example
 
-A `lookup_order(order_id)` tool accepts an order identifier and returns structured shipment status. The model chooses whether and how to call it; the tool executes developer-defined logic.
+A `lookup_order(order_id)` tool accepts an order identifier and returns structured shipment status. The model chooses whether and how to request it, while application code performs the actual lookup.
 
 ## Common confusion
 
-The tool does not usually reason independently. It performs its defined operation; the model or orchestration layer decides when to invoke it and what to do with the result.
+The LLM does not directly execute a Python function or API. It produces a request; the framework or application decides whether to allow the request, runs the tool, and adds the result to the next model context.
 
 ## Study-group notes
+
+Week 1 emphasized the full protocol: schema shown to the model → structured tool request → framework execution → result returned as a new observation.

@@ -7,16 +7,17 @@ status: published
 introduced_in: week-01
 last_reviewed: 2026-07-12
 relations: [
-  {"type": "uses", "target": "augmented-llm"},
+  {"type": "uses", "target": "large-language-model"},
+  {"type": "uses", "target": "react"},
   {"type": "uses", "target": "tool"},
-  {"type": "contrasts_with", "target": "workflow"},
-  {"type": "evaluated_by", "target": "agent-evaluation"}
+  {"type": "narrower", "target": "llm-agent"},
+  {"type": "narrower", "target": "sub-agent"}
 ]
 sources: [
   {
     "title": "Building effective agents",
     "url": "https://www.anthropic.com/engineering/building-effective-agents",
-    "note": "Supports the distinction between model-directed agents and systems that follow predefined workflow paths."
+    "note": "Supports the distinction between model-directed agents and systems that follow predefined code paths."
   },
   {
     "title": "A practical guide to building agents",
@@ -28,24 +29,24 @@ sources: [
 
 ## Simple definition
 
-A system that lets a model choose the next steps and tools needed to reach a goal.
+An LLM-based system that uses tools in a loop, choosing what to do next until it reaches a goal.
 
 ## Working definition
 
-An agent is a system that uses a model to direct how it pursues a goal, choosing actions and tools as the task unfolds and stopping, correcting, or handing back control when appropriate.
+An agent is a system in which a model dynamically directs how a goal is pursued. It interprets the current context, selects actions or tools, observes results, and repeats until it can answer, stop, correct course, or return control to a person.
 
 ## Why it matters
 
-Agent design is useful when the path cannot be fully specified in advance. That flexibility can solve ambiguous, multi-step tasks, but it also increases cost, latency, and the need for evaluation and safeguards.
+Agents are useful when a task's path cannot be completely specified in advance. That flexibility enables ambiguous, multi-step work, but it also increases cost, latency, variability, and the need for evaluation and guardrails.
 
 ## Example
 
-Given “investigate why this order is late,” an agent decides which order and carrier tools to call, interprets the results, asks for missing information if needed, and produces a supported answer.
+Given “find organic milk under $4 and add the cheapest,” an agent searches the live catalog, compares the returned products, calls the cart tool with the selected item, and then reports the result.
 
 ## Common confusion
 
-“Agent” is used broadly across the field. In this glossary, the key test is who controls the path: predefined code indicates a workflow; model-directed action selection indicates an agent.
+Adding an LLM to an application does not automatically make it an agent. The defining property in this glossary is model-directed execution: the model chooses the next step rather than only filling a fixed position in a predefined pipeline.
 
 ## Study-group notes
 
-This definition intentionally combines Anthropic's architectural distinction with OpenAI's task-completion framing.
+Week 1 shorthand: “Agent = LLM + Tools + Loop.” The formula is a useful architectural map, while the fuller definition emphasizes that the model controls the evolving path.
