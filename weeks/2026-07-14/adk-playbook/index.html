@@ -506,19 +506,28 @@ adk create my_agent</code></pre>
             These notes come from real runs of the learner setup.
           </p>
           <div class="troubleshooting-item">
-            <h3>The Notebook shows <code>HTTP 500</code>, while Gemini reports <code>503 UNAVAILABLE</code></h3>
+            <h3>Gemini returns <code>503 UNAVAILABLE</code> or a high-demand message</h3>
             <p>
-              The ADK API server may surface an upstream model failure as
-              <code>HTTP 500 Internal Server Error</code>. Check the terminal running
-              <code>adk api_server</code> or <code>adk web</code>. If its underlying
-              message says Gemini returned <code>503 UNAVAILABLE</code> or is experiencing
-              high demand, the model service is temporarily at capacity; it does not
-              mean your local environment or API key is broken.
+              The model service is temporarily at capacity. Your local environment
+              check may still be valid. Wait briefly and retry the live check; do not
+              rebuild <code>.venv</code> or create another API key solely because of
+              this message.
+            </p>
+          </div>
+          <div class="troubleshooting-item">
+            <h3>A shared-server Notebook shows <code>HTTP 500 Internal Server Error</code></h3>
+            <p>
+              <code>HTTP 500</code> is the ADK API server's outer error and does not,
+              by itself, identify the underlying problem. Check the terminal running
+              <code>adk api_server</code> or <code>adk web</code> for the real provider
+              or application error.
             </p>
             <p>
-              Wait briefly and retry. For a shared-server demo, create a fresh session
-              before retrying so partial events from the failed run do not affect the
-              next result. Do not rebuild <code>.venv</code> or create another API key.
+              If that terminal shows Gemini <code>503 UNAVAILABLE</code> or a high-demand
+              message, follow the capacity guidance above. Create a fresh session before
+              retrying so partial events from the failed run do not affect the next
+              result. If the terminal shows a different cause, troubleshoot that specific
+              message instead.
             </p>
           </div>
         </section>
