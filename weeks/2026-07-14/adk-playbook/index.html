@@ -131,6 +131,11 @@ git clone https://github.com/absurdwall/search-agent-lab.git
 cd search-agent-lab</code></pre>
           </div>
           <p class="section-note">
+            Walmart Git alternative: use the
+            <a href="https://gecgithub01.walmart.com/t0w0jqs/search-agent-lab">internal mirror</a>
+            if you cannot use personal GitHub. Walmart access is required.
+          </p>
+          <p class="section-note">
             Already cloned it? Run <code>cd "$PROJECTS_DIR/search-agent-lab"</code>, then <code>git pull</code> before continuing.
           </p>
         </section>
@@ -151,6 +156,7 @@ python3.11 --version
 python3.11 -m venv .venv
 source .venv/bin/activate
 
+python -m pip install --upgrade pip
 python -m pip install --require-hashes -r requirements.lock
 python -m pip check
 adk --version</code></pre>
@@ -505,6 +511,16 @@ adk create my_agent</code></pre>
           <p>
             These notes come from real runs of the learner setup.
           </p>
+          <div class="troubleshooting-item">
+            <h3><code>--require-hashes</code> fails, followed by <code>adk: command not found</code></h3>
+            <p>
+              The locked install stopped before Google ADK was installed, so the missing
+              <code>adk</code> command is a second symptom of the same failure. Pull the
+              latest learner repo, recreate <code>.venv</code>, and run the setup commands
+              again, including <code>python -m pip install --upgrade pip</code> before the
+              locked install.
+            </p>
+          </div>
           <div class="troubleshooting-item">
             <h3>Gemini returns <code>503 UNAVAILABLE</code> or a high-demand message</h3>
             <p>
