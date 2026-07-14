@@ -9,6 +9,11 @@
 
 - [Google ADK personalized-shopping sample](https://github.com/google/adk-samples/tree/main/python/agents/personalized-shopping)
 - [Google ADK: Get started with Python](https://adk.dev/get-started/python/)
+- [ADK fundamentals workshop notebook](notebooks/01_adk_fundamentals.ipynb) — follow one example from stateless OpenRouter calls to an ADK session and catalog tool, with an embedded public-trace walkthrough.
+
+## Workshop Notebook Setup
+
+From the repository root, copy `.env.example` to `.env`, fill the OpenRouter and Langfuse credentials locally, then open the notebook and run it from top to bottom. Never commit `.env` or paste credentials into notebook cells.
 
 ## Session Goals
 

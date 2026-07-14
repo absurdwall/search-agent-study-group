@@ -9,6 +9,7 @@ __pycache__/
 *.py[cod]
 .env
 .env.*
+!.env.example
 
 # Large or generated local captures can be kept outside Git until intentionally curated.
 raw/tmp/
