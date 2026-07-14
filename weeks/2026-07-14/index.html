@@ -63,16 +63,156 @@
           A five-minute roadmap, not a checklist. An agent may use only a small
           subset of these components; later sessions can revisit each area in depth.
         </p>
-        <figure class="concept-map-figure">
-          <img
-            src="assets/agentic-ai-concept-map.png"
-            alt="Agentic AI concept map grouping potential study topics into core building blocks, context and interfaces, orchestration and execution, control and safety, and quality and operations."
-            width="1672"
-            height="941"
-            loading="lazy"
-            decoding="async"
-          />
+        <figure class="concept-carousel" data-concept-carousel aria-label="Agentic system landscape diagrams">
+          <div class="concept-carousel-stage">
+            <div class="concept-carousel-slide is-active" data-carousel-slide aria-hidden="false">
+              <img
+                src="assets/agentic-ai-concept-map.png"
+                alt="Agentic AI concept map grouping potential study topics into core building blocks, context and interfaces, orchestration and execution, control and safety, and quality and operations."
+                width="1672"
+                height="941"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="concept-carousel-slide" data-carousel-slide aria-hidden="true">
+              <img
+                src="assets/adk-components.png"
+                alt="Google ADK component overview showing agents, tools, orchestration, callbacks, streaming, sessions, evaluation, deployment, artifacts, memory, code execution, planning, debugging, trace, and models."
+                width="1350"
+                height="1060"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+          <figcaption class="concept-carousel-caption">
+            <span class="is-active" data-carousel-caption>Study-group map of potential topics for future sessions.</span>
+            <span data-carousel-caption hidden>
+              Source: Google,
+              <a href="https://adk.dev/get-started/about/">ADK Technical Overview</a>.
+            </span>
+          </figcaption>
+          <div class="concept-carousel-controls" aria-label="Choose a landscape diagram">
+            <button
+              class="concept-carousel-dot is-active"
+              type="button"
+              data-carousel-dot
+              aria-label="Show the study-group agentic AI concept map"
+              aria-pressed="true"
+            ></button>
+            <button
+              class="concept-carousel-dot"
+              type="button"
+              data-carousel-dot
+              aria-label="Show the Google ADK component overview"
+              aria-pressed="false"
+            ></button>
+          </div>
         </figure>
+
+        <div class="landscape-example" aria-labelledby="configuration-mechanisms-heading">
+          <h3 id="configuration-mechanisms-heading">Coding-agent configuration</h3>
+          <p class="table-scroll-hint">Scroll horizontally to compare all five tools →</p>
+          <div class="table-wrap mechanism-table-wrap" tabindex="0" role="region" aria-label="Repository-level configuration mechanisms across agentic AI coding tools">
+            <table class="mechanism-table">
+              <caption>
+                Overview of repository-level configuration mechanisms across
+                agentic AI coding tools.
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Mechanism</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Claude</th>
+                  <th scope="col">Copilot</th>
+                  <th scope="col">Codex</th>
+                  <th scope="col">Cursor</th>
+                  <th scope="col">Gemini</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Context Files</th>
+                  <td>Markdown file loaded into the context each session.</td>
+                  <td><code>CLAUDE.md</code></td>
+                  <td><code>.github/{copilot-instructions.md | instructions/*.md}</code></td>
+                  <td><code>AGENTS.md</code>, <code>AGENTS.override.md</code></td>
+                  <td><code>AGENTS.md</code>, <code>.cursorrules</code></td>
+                  <td><code>GEMINI.md</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Settings</th>
+                  <td>JSON/TOML config for project-level tool behavior.</td>
+                  <td><code>.claude/settings(.local)?.json</code></td>
+                  <td>—</td>
+                  <td><code>.codex/config.toml</code></td>
+                  <td><code>.cursor/cli.json</code></td>
+                  <td><code>.gemini/{settings.json | config.yaml}</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Skills</th>
+                  <td>Reusable knowledge and invocable workflows.</td>
+                  <td><code>.claude/skills/</code></td>
+                  <td><code>.github/skills/</code></td>
+                  <td><code>.codex/skills/</code></td>
+                  <td><code>.cursor/skills/</code></td>
+                  <td><code>.gemini/skills/</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Subagents</th>
+                  <td>Specialized agents that operate in parallel to the central agent loop, in their own context.</td>
+                  <td><code>.claude/agents/</code></td>
+                  <td><code>.github/agents/</code></td>
+                  <td>—</td>
+                  <td><code>.cursor/agents/</code></td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <th scope="row">Commands</th>
+                  <td>User-triggered shortcuts for predefined prompts.</td>
+                  <td><code>.claude/commands/</code></td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td><code>.cursor/commands/</code></td>
+                  <td><code>.gemini/commands/</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Hooks</th>
+                  <td>Scripts executed at specific agent lifecycle points.</td>
+                  <td><code>.claude/settings.json</code></td>
+                  <td><code>.github/hooks/*.json</code></td>
+                  <td>—</td>
+                  <td><code>.cursor/hooks.json</code></td>
+                  <td><code>.gemini/settings.json</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Rules</th>
+                  <td>System-level instructions to control agent behavior.</td>
+                  <td>—</td>
+                  <td>—</td>
+                  <td><code>.codex/rules/</code></td>
+                  <td><code>.cursor/rules/</code></td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <th scope="row">MCP</th>
+                  <td>External tool or data connections via the Model Context Protocol.</td>
+                  <td><code>.mcp.json</code></td>
+                  <td>—</td>
+                  <td><code>.codex/config.toml</code></td>
+                  <td><code>.cursor/mcp.json</code></td>
+                  <td><code>.gemini/settings.json</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="paper-citation">
+            Source: Table 1 in Galster et al. (2026),
+            <a href="https://arxiv.org/html/2602.14690"><cite>Harness Engineering for Agentic AI Coding Tools: An Exploratory Study</cite></a>,
+            arXiv:2602.14690v5 (30 June 2026).
+          </p>
+        </div>
       </section>
 
       <section class="content-section" aria-labelledby="plan-heading">
@@ -178,5 +318,57 @@
 
       <footer class="footer"><a href="../../">← Back to the study group home</a></footer>
     </main>
+    <script>
+      (() => {
+        const carousel = document.querySelector("[data-concept-carousel]");
+        if (!carousel) return;
+
+        const slides = [...carousel.querySelectorAll("[data-carousel-slide]")];
+        const captions = [...carousel.querySelectorAll("[data-carousel-caption]")];
+        const dots = [...carousel.querySelectorAll("[data-carousel-dot]")];
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        let current = 0;
+        let timer;
+
+        const showSlide = (next) => {
+          current = (next + slides.length) % slides.length;
+
+          slides.forEach((slide, index) => {
+            const active = index === current;
+            slide.classList.toggle("is-active", active);
+            slide.setAttribute("aria-hidden", String(!active));
+          });
+
+          captions.forEach((caption, index) => {
+            const active = index === current;
+            caption.classList.toggle("is-active", active);
+            caption.hidden = !active;
+          });
+
+          dots.forEach((dot, index) => {
+            const active = index === current;
+            dot.classList.toggle("is-active", active);
+            dot.setAttribute("aria-pressed", String(active));
+          });
+        };
+
+        const startTimer = () => {
+          window.clearInterval(timer);
+          if (reduceMotion.matches || document.hidden) return;
+          timer = window.setInterval(() => showSlide(current + 1), 10000);
+        };
+
+        dots.forEach((dot, index) => {
+          dot.addEventListener("click", () => {
+            showSlide(index);
+            startTimer();
+          });
+        });
+
+        document.addEventListener("visibilitychange", startTimer);
+        reduceMotion.addEventListener("change", startTimer);
+        startTimer();
+      })();
+    </script>
   </body>
 </html>
