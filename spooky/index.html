@@ -30,6 +30,7 @@
           <nav aria-label="Project page sections">
             <a href="#status">Current status</a>
             <a href="#roadmap">Capability roadmap</a>
+            <a href="#ask-spooky">Ask Spooky</a>
             <a href="#project-boundary">Project boundary</a>
           </nav>
         </section>
@@ -197,6 +198,40 @@
           </ol>
         </section>
 
+        <section class="content-section" id="ask-spooky" aria-labelledby="ask-spooky-heading">
+          <h2 id="ask-spooky-heading">Ask Spooky</h2>
+          <p class="section-note">
+            Ask one question about the published study-group glossary. Spooky answers
+            one turn at a time and links to the supporting material it found.
+          </p>
+
+          <div class="spooky-qa" data-spooky-qa data-state="idle" aria-busy="false">
+            <form class="spooky-qa-form" data-spooky-form>
+              <label class="spooky-qa-label" for="spooky-question">Your question</label>
+              <textarea
+                id="spooky-question"
+                name="message"
+                rows="4"
+                maxlength="2000"
+                required
+                aria-describedby="spooky-question-help"
+                placeholder="For example: What is a tool in an agent system?"
+              ></textarea>
+              <div class="spooky-qa-form-footer">
+                <p class="spooky-qa-hint" id="spooky-question-help">
+                  Press <kbd>⌘</kbd> + <kbd>Enter</kbd> or <kbd>Ctrl</kbd> + <kbd>Enter</kbd> to submit.
+                </p>
+                <button class="spooky-qa-button" type="submit" data-spooky-submit disabled>
+                  Ask Spooky
+                </button>
+              </div>
+            </form>
+
+            <p class="spooky-qa-status" data-spooky-status role="status" aria-live="polite"></p>
+            <div class="spooky-qa-result" data-spooky-result tabindex="-1" hidden></div>
+          </div>
+        </section>
+
         <section class="content-section" id="project-boundary" aria-labelledby="boundary-heading">
           <h2 id="boundary-heading">Project boundary</h2>
           <p class="section-note">
@@ -225,5 +260,6 @@
         <footer class="footer"><a href="../">← Back to the study group home</a></footer>
       </main>
     </div>
+    <script src="qa.js" defer></script>
   </body>
 </html>
