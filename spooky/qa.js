@@ -50,12 +50,33 @@
     return node;
   }
 
+  function readableAnswerText(markdown) {
+    return markdown
+      .replace(/\[([^\]\n]+)\]\([^)\n]+\)/g, "$1")
+      .replace(/\*\*([^\n]+?)\*\*/g, "$1")
+      .replace(/__([^\n]+?)__/g, "$1")
+      .split("\n")
+      .map((line) => line
+        .replace(/^\s*#{1,6}\s+/, "")
+        .replace(/^\s*[-+*]\s+/, "• "))
+      .join("\n")
+      .replace(/\*([^*\n]+)\*/g, "$1")
+      .replace(/_([^_\n]+)_/g, "$1")
+      .replace(/`([^`\n]+)`/g, "$1")
+      .trim();
+  }
+
   function mockSuccess({ withSources = true } = {}) {
     return {
       status: 200,
       payload: {
         answer: withSources
-          ? "A tool is a callable capability an agent can use to interact with systems or retrieve information."
+          ? [
+              "A **[Tool](../glossary/#tool)** is a callable capability an agent can use to interact with systems.",
+              "",
+              "* It can retrieve information.",
+              "* It can perform an *action*.",
+            ].join("\n")
           : "I could not find a published glossary record that supports an answer to that question.",
         sources: withSources
           ? [{ title: "Tool", url: "../glossary/#tool" }]
@@ -247,7 +268,7 @@
     result.dataset.kind = kind;
     result.replaceChildren(
       element("h3", "", hasCoverage ? "Spooky says" : "Insufficient coverage"),
-      element("p", "", payload.answer),
+      element("p", "", readableAnswerText(payload.answer)),
     );
     if (hasCoverage) {
       result.append(...renderSources(payload.sources));
