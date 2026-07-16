@@ -1806,9 +1806,12 @@ code {
   }
 
   .spooky-launcher-dialog {
-    width: calc(100vw - 1.5rem);
+    width: auto;
     max-height: calc(100vh - 5.5rem);
+    position: fixed;
+    right: 0.75rem;
     bottom: 3.75rem;
+    left: 0.75rem;
   }
 
   .spooky-launcher-qa .spooky-qa-button,
