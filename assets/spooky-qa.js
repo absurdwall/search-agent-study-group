@@ -182,7 +182,7 @@
       } catch (_error) {
         throw clientError(
           "NETWORK_ERROR",
-          "The local Spooky API could not be reached. Make sure it is running and try again.",
+          "The Spooky service could not be reached. Check your connection and try again.",
         );
       }
 
