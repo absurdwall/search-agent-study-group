@@ -1,6 +1,7 @@
 (() => {
   "use strict";
 
+  const chatEndpoint = "https://spooky-api-jcysmpnqda-ue.a.run.app/v1/chat";
   const localHostnames = new Set(["localhost", "127.0.0.1"]);
   const mockScenarios = new Set([
     "answer",
@@ -167,16 +168,13 @@
         const mockResponse = selectedMockResponse();
         return parseApiResponse(mockResponse.status, mockResponse.payload);
       }
-      if (!isLocalhost) {
-        throw clientError("LOCAL_ONLY", "Spooky is available only from the local study-group site.");
-      }
       if (requestedMock !== null) {
         throw clientError("INVALID_MOCK", "That local mock scenario is not available.");
       }
 
       let response;
       try {
-        response = await fetch("http://127.0.0.1:8001/v1/chat", {
+        response = await fetch(chatEndpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message }),
