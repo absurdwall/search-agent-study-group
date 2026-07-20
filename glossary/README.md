@@ -27,7 +27,8 @@ small YAML-compatible subset:
 - Only the documented metadata fields are accepted, so typos fail validation.
 
 Required metadata fields are `id`, `term`, `aliases`, `category`, `status`,
-`introduced_in`, `last_reviewed`, `relations`, and `sources`.
+`last_reviewed`, `relations`, and `sources`. `introduced_in` is optional; add it
+only when a term has been covered in a study-group week.
 
 Allowed statuses are `draft`, `published`, `needs-review`, and `deprecated`.
 Allowed relationship types are `broader`, `narrower`, `related`, `uses`,

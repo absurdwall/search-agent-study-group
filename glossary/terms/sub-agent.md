@@ -4,7 +4,6 @@ term: Sub-agent
 aliases: ["child agent", "ADK sub-agent"]
 category: agent-systems
 status: published
-introduced_in: week-01
 last_reviewed: 2026-07-12
 relations: [
   {"type": "broader", "target": "agent"},

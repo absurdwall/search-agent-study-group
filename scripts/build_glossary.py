@@ -24,11 +24,11 @@ REQUIRED_METADATA = (
     "aliases",
     "category",
     "status",
-    "introduced_in",
     "last_reviewed",
     "relations",
     "sources",
 )
+OPTIONAL_METADATA = ("introduced_in",)
 REQUIRED_SECTIONS = (
     "Simple definition",
     "Working definition",
@@ -163,7 +163,7 @@ def validate_record(path: Path, metadata: dict[str, Any], sections: dict[str, st
     missing = [key for key in REQUIRED_METADATA if key not in metadata]
     if missing:
         raise GlossaryError(path, "missing metadata field(s): " + ", ".join(missing))
-    extra = sorted(set(metadata) - set(REQUIRED_METADATA))
+    extra = sorted(set(metadata) - set(REQUIRED_METADATA) - set(OPTIONAL_METADATA))
     if extra:
         raise GlossaryError(path, "unsupported metadata field(s): " + ", ".join(extra))
 
@@ -177,7 +177,11 @@ def validate_record(path: Path, metadata: dict[str, Any], sections: dict[str, st
     status = require_string(path, metadata, "status")
     if status not in ALLOWED_STATUSES:
         raise GlossaryError(path, f"metadata 'status' must be one of: {', '.join(sorted(ALLOWED_STATUSES))}")
-    introduced_in = require_string(path, metadata, "introduced_in")
+    introduced_in = (
+        require_string(path, metadata, "introduced_in")
+        if "introduced_in" in metadata
+        else None
+    )
     last_reviewed = require_string(path, metadata, "last_reviewed")
     if not DATE_PATTERN.fullmatch(last_reviewed):
         raise GlossaryError(path, "metadata 'last_reviewed' must use YYYY-MM-DD")
@@ -234,18 +238,20 @@ def validate_record(path: Path, metadata: dict[str, Any], sections: dict[str, st
         source_urls.add(url)
         clean_sources.append({"title": title.strip(), "url": url.strip(), "note": note.strip()})
 
-    return {
+    record = {
         "id": term_id,
         "term": term,
         "aliases": [item.strip() for item in aliases],
         "category": category,
         "status": status,
-        "introduced_in": introduced_in,
         "last_reviewed": last_reviewed,
         "relations": sorted(clean_relations, key=lambda item: (item["type"], item["target"])),
         "sources": clean_sources,
         "sections": {heading: sections[heading] for heading in ALL_SECTIONS},
     }
+    if introduced_in is not None:
+        record["introduced_in"] = introduced_in
+    return record
 
 
 def build_payload() -> dict[str, Any]:

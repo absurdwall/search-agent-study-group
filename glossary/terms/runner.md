@@ -4,7 +4,6 @@ term: Runner
 aliases: ["ADK Runner", "agent runner"]
 category: frameworks-and-protocols
 status: published
-introduced_in: week-01
 last_reviewed: 2026-07-12
 relations: [
   {"type": "related", "target": "callback"},

@@ -169,11 +169,12 @@
     content.id = `${term.id}-content`;
 
     const meta = element("div", "term-meta");
-    meta.append(
-      element("span", "term-category", labelForSlug(term.category)),
-      element("span", "term-week", weekLabel(term.introduced_in)),
-      element("span", "term-aliases", `Also: ${term.aliases.join(" · ")}`),
-    );
+    const metadata = [element("span", "term-category", labelForSlug(term.category))];
+    if (term.introduced_in) {
+      metadata.push(element("span", "term-week", weekLabel(term.introduced_in)));
+    }
+    metadata.push(element("span", "term-aliases", `Also: ${term.aliases.join(" · ")}`));
+    meta.append(...metadata);
 
     const overview = element("div", "term-overview");
     overview.append(

@@ -4,7 +4,6 @@ term: Callback
 aliases: ["lifecycle callback", "agent callback", "hook"]
 category: control-and-quality
 status: published
-introduced_in: week-01
 last_reviewed: 2026-07-12
 relations: [
   {"type": "related", "target": "guardrail"},
