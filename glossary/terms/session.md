@@ -4,7 +4,6 @@ term: Session
 aliases: ["ADK session", "conversation session"]
 category: frameworks-and-protocols
 status: published
-introduced_in: week-01
 last_reviewed: 2026-07-12
 relations: [
   {"type": "related", "target": "context-window"},

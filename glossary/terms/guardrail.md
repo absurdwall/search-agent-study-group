@@ -4,7 +4,6 @@ term: Guardrail
 aliases: ["agent guardrail", "safety guardrail", "action gate"]
 category: control-and-quality
 status: published
-introduced_in: week-01
 last_reviewed: 2026-07-12
 relations: [
   {"type": "related", "target": "callback"},

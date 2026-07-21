@@ -4,7 +4,6 @@ term: LlmAgent
 aliases: ["ADK Agent", "model-driven agent"]
 category: frameworks-and-protocols
 status: published
-introduced_in: week-01
 last_reviewed: 2026-07-12
 relations: [
   {"type": "broader", "target": "agent"},
