@@ -39,6 +39,7 @@
           <nav aria-label="Spooky project links">
             <a href="https://github.com/absurdwall/search-agent-lab">Learner lab repo</a>
             <a href="../weeks/2026-07-14/#assignment">Week 1 assignment</a>
+            <a href="assignments/week-02/">Week 2 assignment</a>
             <a href="../glossary/">Concept glossary</a>
           </nav>
         </section>
@@ -59,11 +60,11 @@
           <dl class="project-facts">
             <div>
               <dt>Now</dt>
-              <dd>Spooky v0 · Glossary QA notebook available</dd>
+              <dd>Public glossary Q&amp;A and Week 2 assignment available</dd>
             </div>
             <div>
               <dt>Next</dt>
-              <dd>Walk through the agent-and-tool loop in a future session</dd>
+              <dd>Continue the capability roadmap in later sessions</dd>
             </div>
             <div>
               <dt>Implementation</dt>
@@ -71,8 +72,8 @@
             </div>
           </dl>
           <p class="section-note project-status-note">
-            The first Spooky teaching demo is implemented. Its study-group
-            session and related assignment will be added when the schedule is confirmed.
+            Learners can ask Spooky about the public glossary and use Assignment 2
+            to inspect and repair an ADK tool contract.
           </p>
         </section>
 
@@ -84,7 +85,7 @@
           </p>
 
           <ol class="project-roadmap">
-            <li class="roadmap-phase roadmap-phase-current">
+            <li class="roadmap-phase">
               <div class="phase-heading">
                 <span class="phase-number">Foundation</span>
                 <div>
@@ -100,7 +101,7 @@
               </dl>
             </li>
 
-            <li class="roadmap-phase">
+            <li class="roadmap-phase roadmap-phase-current">
               <div class="phase-heading">
                 <span class="phase-number">Phase 1</span>
                 <div>
@@ -109,9 +110,9 @@
                 </div>
               </div>
               <dl class="phase-links">
-                <div><dt>Session</dt><dd><span class="coming-later">Coming later</span></dd></div>
-                <div><dt>Notebook</dt><dd><a href="https://github.com/absurdwall/search-agent-lab/blob/main/notebooks/01_glossary_qa.ipynb"><code>01_glossary_qa.ipynb</code></a></dd></div>
-                <div><dt>Assignment</dt><dd><span class="coming-later">Coming later</span></dd></div>
+                <div><dt>Session</dt><dd><a href="../weeks/2026-07-21/">Week 2</a></dd></div>
+                <div><dt>Notebook</dt><dd><a href="https://github.com/absurdwall/search-agent-lab/blob/week-02/notebooks/01_glossary_qa.ipynb"><code>01_glossary_qa.ipynb</code></a></dd></div>
+                <div><dt>Assignment</dt><dd><a href="assignments/week-02/">Build and debug an ADK tool</a></dd></div>
                 <div class="phase-concepts"><dt>Concepts</dt><dd><a href="../glossary/#agent">Agent</a>, <a href="../glossary/#tool">Tool</a>, <a href="../glossary/#llm-agent">LlmAgent</a>, <a href="../glossary/#session">Session</a>, <a href="../glossary/#runner">Runner</a> <span class="coming-later">· Event definition coming later</span></dd></div>
               </dl>
             </li>
@@ -235,25 +236,25 @@
         <section class="content-section" id="project-boundary" aria-labelledby="boundary-heading">
           <h2 id="boundary-heading">Project boundary</h2>
           <p class="section-note">
-            The two repositories have separate responsibilities now and a clear
-            integration direction for later deployment.
+            The two repositories have separate responsibilities in the live
+            Spooky experience.
           </p>
           <dl class="project-facts">
             <div>
               <dt>Website repo</dt>
-              <dd>Owns the published site pages, glossary, and weekly materials.</dd>
+              <dd>Owns the published pages, glossary, weekly materials, and browser interface.</dd>
             </div>
             <div>
               <dt>Learner lab</dt>
-              <dd>Owns notebooks, the Agent package, tests, and assignments.</dd>
+              <dd>Owns the Agent and API implementation, tests, and learner notebooks.</dd>
             </div>
             <div>
-              <dt>Later</dt>
-              <dd>The website will publish study-group content data for an Agent backend, and the website chat widget will call that backend over HTTPS.</dd>
+              <dt>Connection</dt>
+              <dd>The public site calls the deployed Spooky API over HTTPS.</dd>
             </div>
           </dl>
           <p class="section-note project-status-note">
-            No content API, backend, or chat widget is part of the first version.
+            The public interface answers from published study-group material only.
           </p>
         </section>
 

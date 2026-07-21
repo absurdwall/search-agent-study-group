@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Week 2 optional assignment — build and debug a Google ADK tool."
+    />
+    <title>Build and debug an ADK tool · Search Agent Study Group</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../../../assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-name" href="../../../">Search Agent Study Group</a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="../../">Spooky</a>
+          <a href="../../../weeks/2026-07-21/">Week 2</a>
+          <a href="https://github.com/absurdwall/search-agent-study-group">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page standalone-page">
+      <section class="page-intro" aria-labelledby="page-title">
+        <p class="eyebrow">Spooky · Week 2 assignment</p>
+        <h1 id="page-title">Build and debug an ADK tool</h1>
+        <p class="week-meta">Optional assignment</p>
+        <p class="lede">
+          This public learner-lab exercise is separate from the internal Sparky
+          walkthrough in the Week 2 session.
+        </p>
+      </section>
+
+      <section class="content-section" aria-labelledby="practice-heading">
+        <h2 id="practice-heading">What you will practice</h2>
+        <ul class="plain-list">
+          <li>Separate Agent instructions from registered tool capability.</li>
+          <li>Read the function-tool contract generated from a Python function.</li>
+          <li>Use ADK Web events and traces to find and verify a problem.</li>
+        </ul>
+      </section>
+
+      <section class="content-section" aria-labelledby="steps-heading">
+        <h2 id="steps-heading">Complete the assignment</h2>
+        <div class="notice notice-important">
+          <p class="notice-title">Before you run the notebook</p>
+          <p>
+            Pull the current <code>week-02</code> state of your local Search
+            Agent Lab checkout. Then activate its <code>.venv</code> and run
+            <code>python -m pip install --upgrade pip</code>, followed by
+            <code>python -m pip install --require-hashes -r requirements.lock</code>.
+            The lock now includes <code>google-adk[eval]</code> for the optional
+            post-checkpoint eval.
+          </p>
+        </div>
+        <ol class="plain-list">
+          <li>Run the baseline, same-instruction <code>tools=[]</code>, and glossary-backed Agents.</li>
+          <li>Compare all three runs in ADK Web.</li>
+          <li>Diagnose the missing tool and the weak tool contract.</li>
+          <li>Repair the function-tool contract.</li>
+          <li>Run the repaired Agent and verify the result.</li>
+          <li>Complete the Week 2 checkpoint.</li>
+        </ol>
+
+        <div class="project-callout">
+          <div>
+            <p class="project-status">Learner notebook</p>
+            <p>Follow the notebook instructions from top to bottom.</p>
+          </div>
+          <a
+            class="project-link"
+            href="https://github.com/absurdwall/search-agent-lab/blob/week-02/notebooks/01_glossary_qa.ipynb"
+          >Open Assignment 2 →</a>
+        </div>
+
+        <div class="notice notice-important">
+          <p class="notice-title">Optional eval setup</p>
+          <p>
+            The notebook's final eval is optional and does not block the Week 2
+            checkpoint. If ADK Web reports that eval is not installed, rerun the
+            two setup commands above, then restart the notebook kernel and
+            server.
+          </p>
+        </div>
+
+        <div class="notice notice-free">
+          <p class="notice-title">Complete and submit</p>
+          <p>
+            Follow the notebook's validation, then submit the generated Week 2
+            checkpoint. Never paste an API key, raw trace, or private data into
+            the submission.
+          </p>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="references-heading">
+        <h2 id="references-heading">Optional further reading</h2>
+        <p class="section-note">
+          These references are useful follow-ups, not completion requirements.
+        </p>
+        <ul class="source-list">
+          <li><a href="https://adk.dev/agents/llm-agents/">LLM Agents</a></li>
+          <li><a href="https://adk.dev/tools/function-tools/">Function tools</a></li>
+          <li><a href="https://adk.dev/callbacks/">Callbacks</a></li>
+          <li><a href="https://adk.dev/safety/">Safety and guardrails</a></li>
+          <li><a href="https://adk.dev/evaluate/">Evaluation</a></li>
+        </ul>
+      </section>
+
+      <footer class="footer">
+        <a href="../../">← Spooky roadmap</a> ·
+        <a href="../../../weeks/2026-07-21/">Week 2</a> ·
+        <a href="../../../">Study group home</a>
+      </footer>
+    </main>
+    <script src="../../../assets/spooky-qa.js" defer></script>
+    <script src="../../../assets/spooky-launcher.js" defer></script>
+  </body>
+</html>
