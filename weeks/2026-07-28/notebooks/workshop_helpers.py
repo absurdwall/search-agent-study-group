@@ -14,7 +14,7 @@ from openinference.instrumentation.google_genai import GoogleGenAIInstrumentor
 from opentelemetry import trace
 from phoenix.otel import register
 
-from .tools_order import get_order, list_orders
+from tools_order import get_order, list_orders
 
 
 __all__ = [
@@ -29,8 +29,8 @@ __all__ = [
 ]
 
 
-repository_root = Path(__file__).resolve().parents[2]
-if not (repository_root / "notebooks/orders_workshop/tools_order.py").is_file():
+repository_root = Path(__file__).resolve().parents[1]
+if not (repository_root / "notebooks/tools_order.py").is_file():
     raise RuntimeError("The Orders workshop tool files are missing.")
 
 load_dotenv(repository_root / ".env")
