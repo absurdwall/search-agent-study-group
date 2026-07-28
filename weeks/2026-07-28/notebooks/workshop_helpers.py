@@ -33,7 +33,15 @@ repository_root = Path(__file__).resolve().parents[1]
 if not (repository_root / "notebooks/tools_order.py").is_file():
     raise RuntimeError("The Orders workshop tool files are missing.")
 
-load_dotenv(repository_root / ".env")
+_env_candidates = (
+    repository_root / ".env",
+    *(parent / ".env" for parent in repository_root.parents),
+    Path.home() / "search-agent-study-group" / ".env",
+)
+for _env_path in _env_candidates:
+    if _env_path.is_file():
+        load_dotenv(_env_path)
+        break
 
 PROJECT_NAME = os.getenv("JUPYTERHUB_USER") or getuser()
 os.environ["PHOENIX_PROJECT_NAME"] = PROJECT_NAME
