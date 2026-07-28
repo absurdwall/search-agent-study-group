@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Week 3 — map modern agent systems, then build an Orders Agent and inspect its Phoenix traces."
+      content="Week 3 — a short coding session followed by a review of The Minimal Agentic System."
     />
     <title>Week 3 · Search Agent Study Group</title>
     <link rel="icon" href="data:," />
@@ -27,40 +27,35 @@
     <main class="page standalone-page">
       <section class="page-intro" aria-labelledby="page-title">
         <p class="eyebrow">Week 3</p>
-        <h1 id="page-title">Modern agent systems</h1>
-        <p class="week-topic">A durable systems map and an Orders Agent workshop</p>
+        <h1 id="page-title">Coding session and the minimal agentic system</h1>
+        <p class="week-topic">Hands-on coding followed by a Chapter 1 review</p>
         <p class="week-meta">July 28, 2026</p>
         <p class="lede week-lede">
-          In Weeks 1 and 2, we built an ADK agent, gave it tools, and inspected
-          what happened during a run. This week, we step back and connect that
-          experience to the larger systems that make an agent useful in real
-          work, then use an Orders Agent workshop to inspect those ideas in
-          concrete Phoenix traces.
+          This week has two parts. We will begin with a 20–30 minute coding
+          session, then review Chapter 1 of the Agent Systems Guide to connect
+          the code with the model, tools, runtime, and agentic loop.
         </p>
       </section>
 
-      <section class="content-section" id="learning-path" aria-labelledby="learning-path-heading">
-        <h2 id="learning-path-heading">Our learning path</h2>
-        <p class="section-note">
-          We will move from the core runtime behavior to the layers that extend it.
-          These ideas appear across agent products, even when the names and loading
-          rules differ.
-        </p>
+      <section class="content-section" id="session-plan" aria-labelledby="session-plan-heading">
+        <h2 id="session-plan-heading">Session plan</h2>
         <ol class="learning-path">
-          <li><strong>Agentic loop</strong><span>How an agent gathers context, acts, observes the result, and continues.</span></li>
-          <li><strong>Tools</strong><span>How the model gains actions beyond producing text.</span></li>
-          <li><strong>Context, instructions, and memory</strong><span>What the agent can see now, what guidance persists, and what state is retained.</span></li>
-          <li><strong>MCP</strong><span>A standard way to connect an agent host to external tools, resources, and prompts.</span></li>
-          <li><strong>Skills</strong><span>Reusable instructions, workflows, scripts, and references loaded when relevant.</span></li>
+          <li>
+            <strong>20–30 min · Coding session</strong>
+            <span>Use the Orders Agent workshop materials for a short hands-on exercise.</span>
+          </li>
+          <li>
+            <strong>Review · The Minimal Agentic System</strong>
+            <span>Connect the code to the model, tools, runtime execution, context, and agentic loop.</span>
+          </li>
         </ol>
         <div class="project-callout week-guide-callout">
           <div>
-            <p class="project-status">Durable background reading</p>
-            <p>Use the first chapter to separate the minimal agentic system from its runtime, then use the second chapter for the broader systems map.</p>
+            <p class="project-status">Chapter 1 review</p>
+            <p>The Minimal Agentic System is the durable background reading for this session.</p>
           </div>
           <div class="project-link-group">
-            <a class="project-link" href="../../book/minimal-agentic-system/">Chapter 1: The minimal system →</a>
-            <a class="project-link" href="../../book/modern-agent-systems/">Chapter 2: The systems map →</a>
+            <a class="project-link" href="../../book/minimal-agentic-system/">Read Chapter 1 →</a>
           </div>
         </div>
       </section>
@@ -78,7 +73,7 @@
           </li>
           <li>
             <a href="notebooks/04_orders_agent_exercise_phoenix.ipynb">Orders Agent learner notebook</a>
-            <small>Build the agent, call its tools, and answer the numbered Phoenix concept checks.</small>
+            <small>Live coding material for the session; this is not a Week 3 assignment.</small>
           </li>
           <li>
             <a href="notebooks/04_orders_agent_solution_phoenix.ipynb">Orders Agent solution notebook</a>
@@ -87,8 +82,8 @@
         </ul>
       </section>
 
-      <section class="content-section" id="workshop-goals" aria-labelledby="workshop-goals-heading">
-        <h2 id="workshop-goals-heading">Workshop goals</h2>
+      <section class="content-section" id="coding-goals" aria-labelledby="coding-goals-heading">
+        <h2 id="coding-goals-heading">Coding session goals</h2>
         <ol class="plain-list">
           <li>Register normal Python functions as agent tools.</li>
           <li>Use one tool to list orders, then two tools to inspect the latest order.</li>
@@ -97,35 +92,30 @@
         <p class="section-note">
           The workshop begins with a small simulated weather tool before moving
           to the Orders Agent. It uses synthetic classroom data, so learners can
-          inspect the traces safely. It complements the durable book chapters;
-          it does not add a new learner release to the Search Agent Lab repository.
+          inspect the traces safely.
         </p>
       </section>
 
-      <section class="content-section" id="later" aria-labelledby="later-heading">
-        <h2 id="later-heading">Introduced briefly, expanded later</h2>
+      <section class="content-section" id="chapter-review" aria-labelledby="chapter-review-heading">
+        <h2 id="chapter-review-heading">Chapter 1 review</h2>
         <p class="section-note">
-          We will locate <strong>subagents</strong>, <strong>permissions</strong>,
-          <strong>guardrails</strong>, and <strong>hooks</strong> on the map, but we
-          will not try to master them this week. They become easier to reason about
-          after the loop, context, and capability layers are clear.
+          We will use the coding session to review the smallest useful agentic
+          system: a model, tools, and a runtime-controlled loop. The runtime
+          maintains context, calls the model, executes tool requests, returns
+          results, and decides whether the loop should continue or terminate.
         </p>
       </section>
 
-      <section class="content-section" id="readings" aria-labelledby="readings-heading">
-        <h2 id="readings-heading">Selected reading</h2>
+      <section class="content-section" id="assignment" aria-labelledby="assignment-heading">
+        <h2 id="assignment-heading">Reading assignment</h2>
         <ul class="source-list">
           <li>
             <a href="https://code.claude.com/docs/en/how-claude-code-works">Claude Code — How Claude Code works</a>
-            <small>Product documentation · a concrete explanation of the agentic loop, tools, context, and verification.</small>
-          </li>
-          <li>
-            <a href="https://learn.chatgpt.com/docs/customization/overview">OpenAI — Customization</a>
-            <small>Product documentation · how AGENTS.md, Skills, MCP, memory, and subagents fit together.</small>
-          </li>
-          <li>
-            <a href="https://medium.com/data-science-collective/what-i-learnt-using-claude-code-to-build-production-ready-apps-a27272af0c48">Farhad Malik — What I Learnt Using Claude Code to Build Production-Ready Apps</a>
-            <small>Practitioner guide · a production-oriented view of workflows, controls, and verification.</small>
+            <small>
+              A product-level map of models, tools, the agentic loop, context,
+              and the surrounding harness. Use it to review the chapter and see
+              how the same ideas appear in a coding agent.
+            </small>
           </li>
         </ul>
       </section>
