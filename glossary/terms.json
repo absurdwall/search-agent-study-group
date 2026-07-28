@@ -57,6 +57,117 @@
       "introduced_in": "week-01"
     },
     {
+      "id": "agentic-harness",
+      "term": "Agentic harness",
+      "aliases": [
+        "agent harness",
+        "AI agent harness"
+      ],
+      "category": "agent-systems",
+      "status": "published",
+      "last_reviewed": "2026-07-27",
+      "relations": [
+        {
+          "type": "related",
+          "target": "agentic-loop"
+        },
+        {
+          "type": "related",
+          "target": "context-window"
+        },
+        {
+          "type": "related",
+          "target": "runtime"
+        },
+        {
+          "type": "uses",
+          "target": "large-language-model"
+        },
+        {
+          "type": "uses",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Claude Code Glossary — Agentic harness",
+          "url": "https://code.claude.com/docs/en/glossary#agentic-harness",
+          "note": "Defines the Claude Code harness as the tools, context management, and execution environment around the model."
+        },
+        {
+          "title": "Claude Code — How Claude Code works",
+          "url": "https://code.claude.com/docs/en/how-claude-code-works",
+          "note": "Explains how Claude Code surrounds the Claude model with tools, context handling, and a recurring agentic loop."
+        }
+      ],
+      "sections": {
+        "Simple definition": "The complete system around a model that supplies tools, manages context, provides an execution environment, and keeps work moving.",
+        "Working definition": "An agentic harness is this book's term for the complete surrounding system that turns a language model into a usable agent. It can include tools, context assembly, the execution environment, persistence, permissions, and the machinery that invokes the model and keeps a run moving. Claude Code uses the same term for the product surrounding the Claude model.",
+        "Why it matters": "Separating the harness from the model makes responsibility visible. Model output can propose an action, but the harness decides what capabilities are available, supplies relevant information, executes or routes operations, carries results forward, and manages the larger run.",
+        "Example": "In a coding agent, the harness may expose file and shell tools, load project instructions, invoke the model, execute approved commands, return command output, and keep the task running until it stops.",
+        "Common confusion": "The harness is not the model, and it is broader than the runtime. In this book, runtime names the active execution-coordination layer inside the complete harness. Other products may divide or name these responsibilities differently.",
+        "Study-group notes": "Chapter 1 uses agentic harness as a teaching convention and notes that Claude Code independently uses the same product term."
+      }
+    },
+    {
+      "id": "agentic-loop",
+      "term": "Agentic loop",
+      "aliases": [
+        "agent loop",
+        "model-tool loop"
+      ],
+      "category": "agent-systems",
+      "status": "published",
+      "last_reviewed": "2026-07-27",
+      "relations": [
+        {
+          "type": "related",
+          "target": "context-window"
+        },
+        {
+          "type": "related",
+          "target": "react"
+        },
+        {
+          "type": "related",
+          "target": "runtime"
+        },
+        {
+          "type": "uses",
+          "target": "large-language-model"
+        },
+        {
+          "type": "uses",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Claude Code Glossary — Agentic loop",
+          "url": "https://code.claude.com/docs/en/glossary#agentic-loop",
+          "note": "Defines Claude Code's product-specific loop as gathering context, taking action, verifying results, and repeating until done."
+        },
+        {
+          "title": "Claude Agent SDK — How the agent loop works",
+          "url": "https://code.claude.com/docs/en/agent-sdk/agent-loop",
+          "note": "Shows model evaluation, tool execution, returned results, repetition, and the final-answer exit."
+        },
+        {
+          "title": "OpenAI Agents SDK — Running agents",
+          "url": "https://openai.github.io/openai-agents-python/running_agents/",
+          "note": "Documents a framework loop that invokes a model, executes tool calls, appends results, and stops at configured final output."
+        }
+      ],
+      "sections": {
+        "Simple definition": "The recurring cycle in which a model produces output, tools may run, results return as context, and the system repeats until it stops.",
+        "Working definition": "An agentic loop is the conceptual model–tool–result cycle that lets a system adapt across multiple model calls. The model produces text, a proposed tool call, or both; surrounding software executes or routes requested tools, supplies their results to a later call, and continues until a stopping condition is satisfied.",
+        "Why it matters": "The loop turns a one-shot model call into an adaptive process. Each new observation can change the model's next action, allowing the system to gather information, act, check results, recover from errors, and decide when to return.",
+        "Example": "A weather agent receives a location, requests a weather tool, receives the current conditions in a later call, and then produces a final answer without requesting another tool.",
+        "Common confusion": "An agentic loop is not the same as an event loop or ReAct. It describes the conceptual alternation among model output, actions, and observations; software may implement that cycle in different ways, and it does not require explicit reasoning traces.",
+        "Study-group notes": "Chapter 1 uses `LLM + tools + agentic loop` as its minimal three-part teaching map."
+      }
+    },
+    {
       "id": "callback",
       "term": "Callback",
       "aliases": [
@@ -155,6 +266,46 @@
         "Study-group notes": "Week 1 emphasized the engineering tradeoff: give the model everything it needs while keeping the request focused enough to control cost, latency, and distraction."
       },
       "introduced_in": "week-01"
+    },
+    {
+      "id": "event-loop",
+      "term": "Event loop",
+      "aliases": [
+        "agent runtime event loop",
+        "execution event loop"
+      ],
+      "category": "frameworks-and-protocols",
+      "status": "published",
+      "last_reviewed": "2026-07-27",
+      "relations": [
+        {
+          "type": "related",
+          "target": "agentic-loop"
+        },
+        {
+          "type": "related",
+          "target": "runner"
+        },
+        {
+          "type": "related",
+          "target": "runtime"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Google ADK — Runtime event loop",
+          "url": "https://adk.dev/runtime/event-loop/",
+          "note": "Explains how ADK's Runner processes execution logic, events, state changes, tool activity, callbacks, and resumptions during an invocation."
+        }
+      ],
+      "sections": {
+        "Simple definition": "A software mechanism that processes execution events, state changes, and resumptions during an active run.",
+        "Working definition": "An event loop is an implementation mechanism that a runtime may use to drive execution. It processes events and state changes, invokes the appropriate logic, and resumes work as model responses, tool calls, tool results, callbacks, or other execution events arrive.",
+        "Why it matters": "An event loop turns separate execution events into a continuing software process. It can help a runtime coordinate asynchronous operations, persist state changes, expose intermediate events, and resume a run after a tool or external system responds.",
+        "Example": "In Google ADK, a Runner begins an invocation and yields events as agent logic runs, tools are called, state changes are recorded, and execution continues or pauses.",
+        "Common confusion": "An event loop is not the same as an agentic loop. The agentic loop describes the conceptual model–tool–result cycle; an event loop is one software mechanism a runtime may use to implement and coordinate execution.",
+        "Study-group notes": "Chapter 1 distinguishes the conceptual agentic loop from the implementation-level event loop."
+      }
     },
     {
       "id": "google-adk",
@@ -529,6 +680,59 @@
       }
     },
     {
+      "id": "runtime",
+      "term": "Runtime",
+      "aliases": [
+        "agent runtime",
+        "execution runtime"
+      ],
+      "category": "frameworks-and-protocols",
+      "status": "published",
+      "last_reviewed": "2026-07-27",
+      "relations": [
+        {
+          "type": "related",
+          "target": "agentic-harness"
+        },
+        {
+          "type": "related",
+          "target": "agentic-loop"
+        },
+        {
+          "type": "related",
+          "target": "context-window"
+        },
+        {
+          "type": "related",
+          "target": "runner"
+        },
+        {
+          "type": "uses",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "OpenAI Agents SDK — Running agents",
+          "url": "https://openai.github.io/openai-agents-python/running_agents/",
+          "note": "Shows a framework-specific Runner that invokes models, executes tool calls, appends results, and returns final output."
+        },
+        {
+          "title": "Google ADK — Runtime event loop",
+          "url": "https://adk.dev/runtime/event-loop/",
+          "note": "Documents ADK's broader Runtime, Runner, execution logic, services, events, state changes, callbacks, and resumptions."
+        }
+      ],
+      "sections": {
+        "Simple definition": "The part of an agentic harness that coordinates an active run by invoking models, routing tool calls, carrying results forward, and stopping.",
+        "Working definition": "Runtime is this book's label for the software inside an agentic harness that coordinates an active run. It invokes the model, routes requested tools, carries observations into later calls, and determines whether execution continues or stops. Frameworks distribute these responsibilities differently and do not share one standardized Runtime interface.",
+        "Why it matters": "The runtime connects model output to actual execution. It is where a proposed tool call becomes a routed operation, where returned results become later context, and where framework-specific completion rules determine whether another model call is needed.",
+        "Example": "After a model requests `get_weather(location=\"Boston\")`, the runtime routes the request, receives the tool result, adds that observation to the next model call, and returns the later answer when no required tool calls remain.",
+        "Common confusion": "Runtime does not mean the complete system around the model in this book; that broader system is the agentic harness. A Runner is a framework-specific entry point or object, and an event loop is one implementation pattern a runtime may use.",
+        "Study-group notes": "Chapter 1 explicitly treats runtime, Runner, event loop, and agentic harness as overlapping but non-identical terms."
+      }
+    },
+    {
       "id": "session",
       "term": "Session",
       "aliases": [
@@ -749,6 +953,50 @@
         "Study-group notes": "Week 1 emphasized the full protocol: schema shown to the model → structured tool request → framework execution → result returned as a new observation."
       },
       "introduced_in": "week-01"
+    },
+    {
+      "id": "workflow",
+      "term": "Workflow",
+      "aliases": [
+        "LLM workflow",
+        "agentic workflow"
+      ],
+      "category": "agent-systems",
+      "status": "published",
+      "last_reviewed": "2026-07-27",
+      "relations": [
+        {
+          "type": "contrasts_with",
+          "target": "agentic-loop"
+        },
+        {
+          "type": "related",
+          "target": "agent"
+        },
+        {
+          "type": "uses",
+          "target": "large-language-model"
+        },
+        {
+          "type": "uses",
+          "target": "tool"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Anthropic — Building effective agents",
+          "url": "https://www.anthropic.com/engineering/building-effective-agents",
+          "note": "Defines workflows as systems where LLMs and tools are orchestrated through predefined code paths and presents five common workflow patterns."
+        }
+      ],
+      "sections": {
+        "Simple definition": "A software-defined arrangement of model calls, tools, stages, branches, roles, or feedback paths.",
+        "Working definition": "A workflow arranges LLM calls and tools through an overall control structure defined in software. Individual steps can still ask a model to classify, generate, evaluate, route, or decompose a task; what remains predefined is the larger arrangement of stages, branches, roles, or feedback paths.",
+        "Why it matters": "Workflows provide predictable structure for tasks whose overall topology is known in advance. They can combine deterministic code with model judgments and can contain an agentic step, while an agent can also invoke a deterministic workflow as one capability.",
+        "Example": "A routing workflow first classifies a customer request, sends it to a billing, technical-support, or general-information path, and then returns the selected path's response.",
+        "Common confusion": "Workflow does not mean that every step is fixed or non-intelligent. Anthropic categorizes orchestrator-workers as a workflow even though the orchestrator dynamically chooses subtasks, because the overall delegation-and-synthesis topology is predefined.",
+        "Study-group notes": "Chapter 1 compares prompt chaining, routing, parallelization, orchestrator-workers, and evaluator-optimizer as five workflow patterns."
+      }
     }
   ]
 }

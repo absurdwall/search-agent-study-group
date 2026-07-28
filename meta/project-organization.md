@@ -14,6 +14,19 @@ The project borrows the `raw / wiki / meta` style from the LLM-wiki pattern, but
 - Keep source, synthesis, and presentation separate inside each week: raw captures in `raw/`, study synthesis in weekly markdown files, published HTML in the week’s `slides/` folder.
 - Prefer stable GitHub Pages URLs that can be attached to Notion.
 
+## Visual-First Documentation Drafting
+
+- When drafting a reader-facing guide or lesson, identify the explanatory visual
+  opportunities alongside the prose rather than treating visuals as decoration.
+- Search for accurate, reusable existing sources before proposing generation; record
+  the creator, source, license, and embedding requirements for anything selected.
+- Keep each visual placeholder specific enough to serve as a search brief, prompt,
+  animation brief, or designer/developer handoff: purpose, medium, exact states or
+  relationships, concepts, exclusions, teaching payoff, placement, and reuse plan.
+- Prefer animation, video, or interaction when it materially explains repeated
+  state changes; do not substitute generic cards, text boxes, or diagrams for an
+  image-based visual layer without an explicit teaching reason.
+
 ## Top-Level Folders
 
 ### `weeks/`
