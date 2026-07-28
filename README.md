@@ -14,10 +14,18 @@ agentic AI systems.
 - `raw/`: immutable source captures, assets, and external-repository snapshots
 - `meta/`: project organization, publishing workflow, indexes, and logs
 - `templates/`: reusable weekly and HTML-deck starters
+- `presentations/`: standalone presentation decks that can be downloaded and opened directly
 - `scripts/`: small dependency-free maintenance and validation tools
 
 See [`meta/project-organization.md`](meta/project-organization.md) for the full
 working agreement.
+
+## Presentations
+
+- [Agent Foundations](presentations/agent-foundations.html)
+- [Animal Orders exercise intro](presentations/orders-agent-intro.html)
+
+Both decks are self-contained HTML files and work offline in a modern browser.
 
 ## Local preview
 
