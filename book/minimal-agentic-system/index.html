@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Chapter 1 of the Agent Systems Guide: a minimal model-directed loop with an LLM, tools, execution, observations, and a final response."
+    />
+    <title>Chapter 1: The Minimal Agentic System · Search Agent Study Group</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../../assets/site.css?v=20260727-ch1-final-release" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-name" href="../../">Search Agent Study Group</a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="../" aria-current="location">Book</a>
+          <a href="../../#resources">Resources</a>
+          <a href="../../#weekly-schedule">Weeks</a>
+          <a href="../../glossary/">Glossary</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="site-layout guide-layout">
+      <aside class="side-toc" aria-label="Chapter contents">
+        <section class="side-toc-section">
+          <h2>In this chapter</h2>
+          <nav aria-label="Chapter sections">
+            <a href="#llm">1. The LLM</a>
+            <a href="#tools">2. Tools</a>
+            <a href="#agentic-loop">3. The agentic loop</a>
+            <a href="#context">4. Context</a>
+            <a href="#beyond-minimal-loop">5. Beyond the minimal loop</a>
+            <a href="#summary">6. Summary</a>
+            <a href="#chapter-glossary">Chapter glossary</a>
+            <a href="#check-understanding">Check your understanding</a>
+            <a href="#references">References</a>
+          </nav>
+        </section>
+        <section class="side-toc-section">
+          <h2>Book</h2>
+          <nav aria-label="Book navigation">
+            <a href="../">Book home</a>
+            <a href="../from-language-models-to-assistants/">Chapter 0</a>
+            <a href="../modern-agent-systems/">Chapter 2</a>
+            <a href="../prompting-and-context/">Chapter 3</a>
+            <a href="../writing-great-skills/">Chapter 4</a>
+            <a href="../extended-reading/">Extended Reading</a>
+            <a href="../../weeks/2026-07-28/">Week 3</a>
+          </nav>
+        </section>
+      </aside>
+
+      <main class="page guide-page minimal-system-page" id="main-content" tabindex="-1">
+        <section class="page-intro chapter-opening" aria-labelledby="page-title">
+          <p class="eyebrow">
+            <a href="../">Study group guide</a> · Chapter 1
+          </p>
+          <h1 id="page-title">The Minimal Agentic System</h1>
+          <p class="lede">
+            This chapter explains the smallest useful agentic system: an
+            <strong>LLM, tools, and an agentic loop</strong>. The LLM produces
+            text or proposed tool calls, tools provide capabilities beyond text
+            generation, and the loop carries tool results into later model calls
+            until the system returns a final response.
+          </p>
+          <p>
+            <strong>Context</strong> is the information available to each model
+            call. The <strong>agentic harness</strong> is the surrounding system
+            that supplies tools, manages context, and provides an execution
+            environment; within it, the <strong>runtime</strong> coordinates an
+            active run.
+          </p>
+          <p>
+            <a href="../from-language-models-to-assistants/">Chapter 0</a>
+            explains how an LLM produces output. Here we treat one model call as
+            a system boundary, then add tools, the agentic loop, context, and the
+            surrounding harness that makes the process run.
+          </p>
+
+          <aside class="chapter-reading-shortcut" aria-label="Primary companion reading">
+            <p class="chapter-reading-label">Primary companion reading</p>
+            <p>
+              If you do not want to work through the full chapter, these two
+              official guides are the best alternative reading:
+            </p>
+            <ul class="source-list">
+              <li>
+                <a href="https://code.claude.com/docs/en/how-claude-code-works" target="_blank" rel="noopener noreferrer">Claude Code — How Claude Code works</a>
+                <small>A product-level map of models, tools, the agentic loop, context, and the surrounding harness.</small>
+              </li>
+              <li>
+                <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop" target="_blank" rel="noopener noreferrer">Claude Agent SDK — How the agent loop works</a>
+                <small>A mechanism-level walkthrough of model responses, tool execution, returned results, repetition, and stopping.</small>
+              </li>
+            </ul>
+            <p class="chapter-reading-note">
+              Chapter 1 distills their core mechanisms into a smaller,
+              provider-neutral teaching map. It does not cover everything in
+              either guide.
+            </p>
+          </aside>
+        </section>
+
+        <nav class="mobile-guide-toc" aria-label="Chapter contents on small screens">
+          <p>In this chapter</p>
+          <ol class="mobile-guide-toc-primary">
+            <li><a href="#llm">The LLM</a></li>
+            <li><a href="#tools">Tools</a></li>
+            <li><a href="#agentic-loop">The agentic loop</a></li>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#beyond-minimal-loop">Beyond the minimal loop</a></li>
+            <li><a href="#summary">Summary</a></li>
+          </ol>
+          <ul class="mobile-guide-toc-supplemental">
+            <li><a href="#chapter-glossary">Chapter glossary</a></li>
+            <li><a href="#check-understanding">Check your understanding</a></li>
+            <li><a href="#references">References</a></li>
+          </ul>
+        </nav>
+
+        <section class="content-section" id="llm" aria-labelledby="llm-heading">
+          <h2 id="llm-heading">1. The LLM: the brain</h2>
+          <p>
+            <a href="../from-language-models-to-assistants/">Chapter 0</a>
+            covered how LLMs are pretrained and post-trained into useful
+            assistants. For this chapter, we will mostly leave those internals
+            behind and treat the LLM as a black box.
+          </p>
+          <p>
+            At this level, treat the LLM as a capable black-box component. It
+            receives a structured input containing the information and
+            capabilities relevant to the current task, and returns a structured
+            output containing text, proposed tool calls, or both.
+            <cite class="claim-citation">
+              <a href="https://platform.claude.com/docs/en/api/messages/create" target="_blank" rel="noopener noreferrer">Anthropic: Messages API</a>
+            </cite>
+          </p>
+          <p>
+            The interface boundary matters: the model does not execute the tools
+            or run the larger system around itself.
+          </p>
+
+          <figure class="source-image-figure llm-call-figure">
+            <img
+              src="assets/one-llm-call-black-box.png"
+              width="1698"
+              height="926"
+              loading="lazy"
+              decoding="async"
+              alt="Diagram of one LLM call as a black box. Structured input includes instructions, a user request, tool definitions, and optional prior interaction history such as messages, tool calls, and tool results. The LLM returns structured output that may include a text response, tool calls containing a tool name and arguments, and optional reasoning or thinking."
+            />
+            <figcaption>
+              One model call from an application perspective: structured input
+              enters the LLM, and structured output returns.
+              <a href="assets/one-llm-call-black-box.png" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+            </figcaption>
+          </figure>
+
+          <h3>Structured input</h3>
+          <p>
+            Application or API code commonly packages a model call as a structured,
+            JSON-like request. That structure is the application-level container;
+            it is not a claim that JSON is the model’s internal representation.
+            <cite class="claim-citation">
+              <a href="https://platform.claude.com/docs/en/api/messages/create" target="_blank" rel="noopener noreferrer">Anthropic: Messages API</a>
+            </cite>
+          </p>
+          <p>
+            The input can include instructions, the user request, available tool
+            definitions, and prior interaction history when relevant. That history
+            can contain messages, earlier tool calls, and their tool results.
+            Applications may send those earlier items again or use a provider’s
+            conversation-state mechanism to carry them forward.
+            <cite class="claim-citation">
+              <a href="https://platform.claude.com/docs/en/api/messages/create" target="_blank" rel="noopener noreferrer">Anthropic: Messages API</a>;
+              <a href="https://developers.openai.com/api/docs/guides/conversation-state" target="_blank" rel="noopener noreferrer">OpenAI: Conversation state</a>
+            </cite>
+          </p>
+
+          <h3>Structured output</h3>
+          <p>
+            The returned response is also structured at the application boundary.
+            Depending on the request, model, and provider, it may contain a
+            <strong>text response</strong>, one or more
+            <strong>tool calls</strong>, optional
+            <strong>reasoning / thinking</strong> information, or a combination
+            of these. Not every response contains every category. A text response
+            is model-generated text: it may be a user-facing answer or other text
+            produced during the interaction. A tool call contains a tool name and
+            the arguments for one proposed use.
+            <cite class="claim-citation">
+              <a href="https://platform.claude.com/docs/en/api/messages/create" target="_blank" rel="noopener noreferrer">Anthropic: Messages API</a>;
+              <a href="https://developers.openai.com/api/docs/guides/function-calling" target="_blank" rel="noopener noreferrer">OpenAI: Function calling</a>;
+              <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls" target="_blank" rel="noopener noreferrer">Anthropic: Handle tool calls</a>
+            </cite>
+          </p>
+          <p>
+            Reasoning or thinking information is optional and provider-dependent.
+            An API may expose a thinking block, a summary, or no readable thinking
+            content. This category does not imply that every model reveals all of
+            its internal reasoning.
+            <cite class="claim-citation">
+              <a href="https://platform.claude.com/docs/en/build-with-claude/thinking" target="_blank" rel="noopener noreferrer">Anthropic: Thinking</a>
+            </cite>
+          </p>
+
+          <h3>Why this boundary matters</h3>
+          <p>
+            One model call ends when it returns its output; by itself, it is not
+            the full agentic system. The next sections explain how surrounding
+            software interprets tool calls, performs the requested operations,
+            supplies results to another call, and thereby forms an agentic loop.
+          </p>
+        </section>
+
+        <section class="content-section" id="tools" aria-labelledby="tools-heading">
+          <h2 id="tools-heading">2. Tools: the hands and senses</h2>
+
+          <p>
+            A tool is a capability that the surrounding system makes available to
+            the model, such as inspecting files, running a command, or accessing
+            an external service. Tools let the surrounding system retrieve
+            information and perform operations beyond the LLM’s own text
+            generation.
+            <cite class="claim-citation">
+              <a href="https://developers.openai.com/api/docs/guides/function-calling" target="_blank" rel="noopener noreferrer">OpenAI: Function calling</a>
+            </cite>
+          </p>
+
+          <h3>A coding-agent example</h3>
+          <p>
+            Claude Code is one concrete example of the capabilities a coding
+            agent can expose. Its documentation groups the built-in capabilities
+            into five broad categories:
+            <cite class="claim-citation">
+              <a href="https://code.claude.com/docs/en/how-claude-code-works" target="_blank" rel="noopener noreferrer">Claude Code: How Claude Code works</a>;
+              <a href="https://code.claude.com/docs/en/tools-reference" target="_blank" rel="noopener noreferrer">Claude Code: Tools reference</a>
+            </cite>
+          </p>
+
+          <div
+            class="table-wrap guide-table-wrap"
+            role="region"
+            tabindex="0"
+            aria-label="Five categories of Claude Code capabilities"
+          >
+            <table class="guide-table guide-table-two-column">
+              <caption>Claude Code capability categories</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Capability</th>
+                  <th scope="col">What it enables</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">File operations</th>
+                  <td>Read, edit, create, and reorganize files</td>
+                </tr>
+                <tr>
+                  <th scope="row">Search</th>
+                  <td>Find files and search or explore a codebase</td>
+                </tr>
+                <tr>
+                  <th scope="row">Execution</th>
+                  <td>Run shell commands, servers, tests, and Git</td>
+                </tr>
+                <tr>
+                  <th scope="row">Web</th>
+                  <td>Search for and retrieve documentation or other information</td>
+                </tr>
+                <tr>
+                  <th scope="row">Code intelligence</th>
+                  <td>With a language-specific plugin installed, surface errors and navigate definitions or references</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Other coding agents may package similar capabilities differently.
+            These five rows describe one product, not a universal taxonomy.
+          </p>
+
+          <h3>How the model requests a tool</h3>
+          <p>
+            Before a model can request a tool, the surrounding software supplies
+            a description of the available capability. That description typically
+            includes a name, its purpose, and the inputs it accepts. The model
+            receives this description—not the executable implementation.
+            <cite class="claim-citation">
+              <a href="https://developers.openai.com/api/docs/guides/function-calling" target="_blank" rel="noopener noreferrer">OpenAI: Function calling</a>;
+              <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools" target="_blank" rel="noopener noreferrer">Anthropic: Define tools</a>
+            </cite>
+          </p>
+
+          <p>
+            In simplified notation, an available tool and one concrete request
+            might look like this:
+          </p>
+
+          <div
+            class="table-wrap guide-table-wrap"
+            role="region"
+            tabindex="0"
+            aria-label="Tool definition and proposed call"
+          >
+            <table class="guide-table guide-table-two-column">
+              <caption>Tool definition and proposed call</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Artifact</th>
+                  <th scope="col">Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Description supplied to the model</th>
+                  <td><code>search_files(query: string)</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Structured request returned by the model</th>
+                  <td><code>search_files(query="parser")</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            The second line is structured model output requesting one use of the
+            capability with a concrete argument. Producing that request does not
+            itself search the repository.
+            <cite class="claim-citation">
+              <a href="https://developers.openai.com/api/docs/guides/function-calling" target="_blank" rel="noopener noreferrer">OpenAI: Function calling</a>
+            </cite>
+          </p>
+
+          <h3>Who executes the tool</h3>
+          <p>
+            <strong>The LLM does not execute the tool.</strong> The model proposes
+            an operation by returning a structured request. Surrounding software
+            handles and routes that request, while executable application code or
+            a hosted service performs the actual work.
+            <cite class="claim-citation">
+              <a href="https://developers.openai.com/api/docs/guides/function-calling" target="_blank" rel="noopener noreferrer">OpenAI: Function calling</a>;
+              <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works" target="_blank" rel="noopener noreferrer">Anthropic: How tool use works</a>
+            </cite>
+          </p>
+          <p>
+            The surrounding application—or, in an agentic harness, its
+            runtime—coordinates this handoff; the tool implementation performs
+            the operation. In a small application, both responsibilities may
+            live in the same process. Provider-hosted tools can instead execute
+            on provider infrastructure.
+          </p>
+
+          <h3>What comes back after execution</h3>
+          <p>
+            Execution returns a tool result. Depending on the capability, that
+            result may contain data, a status, a confirmation, or an error. A
+            repository search might return:
+            <code>["src/parser.py", "tests/test_parser.py"]</code>
+            <cite class="claim-citation">
+              <a href="https://developers.openai.com/api/docs/guides/function-calling" target="_blank" rel="noopener noreferrer">OpenAI: Function calling</a>
+            </cite>
+          </p>
+
+          <p>
+            In the following OpenAI diagram, <strong>Developer</strong> means the
+            software on the application side of the model boundary—not necessarily
+            a human developer acting during the call.
+          </p>
+
+          <figure class="source-image-figure function-calling-figure">
+            <img
+              src="assets/openai-function-calling-round-trip.png"
+              width="3024"
+              height="4352"
+              loading="lazy"
+              decoding="async"
+              alt="Five-step OpenAI function-calling diagram divided between Developer and Model. Application-side software first sends tool definitions and a weather question to the model. The model returns a get_weather tool call. Software executes the function and obtains a temperature result, then sends the prior messages and result to the model. The model returns a final text response."
+            />
+            <figcaption>
+              <strong>One function-calling round trip.</strong> The model proposes
+              a tool call; application-side software executes the function, sends
+              the result back, and receives the model’s final response. Source:
+              <a href="https://developers.openai.com/api/docs/guides/function-calling" target="_blank" rel="noopener noreferrer">OpenAI Function Calling</a>.
+              <a href="assets/openai-function-calling-round-trip.png" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+            </figcaption>
+          </figure>
+
+          <p>
+            This figure shows one completed tool-calling round trip. The next
+            section broadens the view to the agentic loop, where tool use may
+            repeat before the system returns a final response.
+          </p>
+        </section>
+
+        <section class="content-section" id="agentic-loop" aria-labelledby="agentic-loop-heading">
+          <h2 id="agentic-loop-heading">3. The agentic loop: the heartbeat</h2>
+          <p>
+            A single model call ends when the LLM returns an output. An agentic
+            loop connects that output to what happens next. If the output
+            contains a tool call, surrounding software executes or routes the
+            requested operation, supplies the result to another model call, and
+            repeats the process. If the model returns a response with no further
+            tool calls, the ordinary path is to return it and stop.
+          </p>
+          <p>
+            Different frameworks describe and implement this process
+            differently. In this chapter, <strong>agentic loop</strong> means
+            this minimal recurring model–tool–result cycle.
+          </p>
+
+          <figure class="source-image-figure agent-loop-figure">
+            <img
+              src="assets/claude-agent-loop.svg"
+              width="720"
+              height="212"
+              loading="lazy"
+              decoding="async"
+              alt="Diagram of an agent loop. A prompt enters a model evaluation. The model may request tools, the SDK executes them, and the results return for another evaluation. The cycle repeats until the model produces a final answer with no tool calls."
+            />
+            <figcaption>
+              <strong>One representation of an agent loop.</strong> The model may
+              request tools, receive their results in a later evaluation, and
+              repeat until it produces a final answer without another tool call.
+              Source:
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop" target="_blank" rel="noopener noreferrer">Claude Agent SDK</a>.
+              <a href="assets/claude-agent-loop.svg" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+            </figcaption>
+          </figure>
+
+          <h3>The loop at a glance</h3>
+          <p>
+            The Claude Agent SDK describes this cycle in five steps:
+            <cite class="claim-citation">
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop" target="_blank" rel="noopener noreferrer">Claude Agent SDK: How the agent loop works</a>
+            </cite>
+          </p>
+          <ol class="phase-explanation">
+            <li>
+              <strong>Receive the current input.</strong> The model receives the
+              request together with relevant instructions, available tool
+              definitions, and prior interaction.
+            </li>
+            <li>
+              <strong>Evaluate and respond.</strong> The model produces text, one
+              or more tool calls, or both.
+            </li>
+            <li>
+              <strong>Execute tools.</strong> Surrounding software executes or
+              routes the requested tools and collects their results.
+            </li>
+            <li>
+              <strong>Repeat.</strong> The results are supplied to another model
+              call. The model may request additional tools, and the cycle
+              continues.
+            </li>
+            <li>
+              <strong>Return the result.</strong> When the model produces a
+              response with no further tool calls, the SDK returns it as the
+              final result.
+            </li>
+          </ol>
+          <p>
+            That is the Claude Agent SDK’s ordinary completion path. Other
+            runtimes can apply an application-specific final-output condition.
+            The OpenAI Agents SDK, for example, treats output as final when it
+            contains text of the desired type and no tool calls.
+            <cite class="claim-citation">
+              <a href="https://openai.github.io/openai-agents-python/running_agents/#the-agent-loop" target="_blank" rel="noopener noreferrer">OpenAI Agents SDK: The agent loop</a>
+            </cite>
+          </p>
+          <p>
+            Each tool result adds information that was not available during the
+            preceding model call. The next call is therefore not merely the same
+            call repeated: it can use the new observation to choose a different
+            action or prepare an answer.
+          </p>
+          <p>
+            The model’s output directs what happens next. Surrounding software
+            keeps the cycle running by invoking the model, handling tool
+            requests, supplying results, and returning the final response.
+          </p>
+          <p>
+            For coding agents, this same adaptive process often appears as
+            <strong>gather context, take action, and verify results</strong>. The
+            phases can blend together and repeat as each operation reveals new
+            information.
+            <cite class="claim-citation">
+              <a href="https://code.claude.com/docs/en/how-claude-code-works" target="_blank" rel="noopener noreferrer">Claude Code: How Claude Code works</a>
+            </cite>
+          </p>
+          <p>
+            The loop explains how the system continues from one model call to the
+            next. The following section examines the information available to
+            each call: <strong>context</strong>.
+          </p>
+        </section>
+
+        <section class="content-section" id="context" aria-labelledby="context-heading">
+          <h2 id="context-heading">4. Context: the working memory</h2>
+          <p>
+            “Working memory” is a teaching metaphor. In this chapter,
+            <strong>context</strong> means the information the model can refer to
+            while generating the current output. The <strong>context
+            window</strong> is the limited capacity in which that information—and
+            the output being generated—must fit.
+          </p>
+          <p>
+            From this system-level view, context is the model-visible part of the
+            current input. It is not everything the surrounding application knows
+            or stores. The surrounding application or harness may have access to
+            databases, files, session records, or persistent memory, but that
+            information cannot directly influence the current model output unless
+            it is made available in the current context.
+          </p>
+          <p>
+            This is also how context supports the agentic loop. A later model call
+            may receive the original request together with earlier model
+            responses, tool calls, and returned tool results. The tool result
+            changes the next call because it becomes new model-visible
+            information—not because the model has been retrained or independently
+            remembered the earlier execution.
+            <cite class="claim-citation">
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#the-context-window" target="_blank" rel="noopener noreferrer">Claude Agent SDK: The context window</a>
+            </cite>
+          </p>
+
+          <!-- Preview image supplied and approved for this project by the project author on 2026-07-27. -->
+          <a
+            class="context-walkthrough-preview"
+            href="https://code.claude.com/docs/en/context-window"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Explore how a context window changes during a session on the official Claude Code documentation site"
+          >
+            <img
+              class="context-preview-image"
+              src="assets/claude-context-window-preview.png"
+              width="1632"
+              height="1298"
+              loading="lazy"
+              decoding="async"
+              alt="Screenshot of Anthropic’s Explore the context window walkthrough, showing a simulated Claude Code session, context categories and usage bar, startup items, a user prompt, and the compaction takeaway panel."
+            />
+            <span class="context-preview-copy">
+              <span class="context-preview-label">Official interactive walkthrough</span>
+              <strong>Explore how a context window changes during a session.</strong>
+              <span>
+                Anthropic’s interactive walkthrough shows what loads at startup,
+                how file reads and tool activity add context, and what happens
+                when the session is compacted.
+              </span>
+              <span class="context-preview-action">Open the interactive walkthrough ↗</span>
+            </span>
+          </a>
+
+          <h3>What can be in context</h3>
+          <div
+            class="guide-table-wrap context-contents-table-wrap"
+            role="region"
+            aria-label="Examples of information that can be in context"
+            tabindex="0"
+          >
+            <table class="guide-table context-contents-table">
+              <caption class="visually-hidden">Examples of information that can be in context</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Context source</th>
+                  <th scope="col">Examples</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Instructions</th>
+                  <td>System prompts and project instructions</td>
+                </tr>
+                <tr>
+                  <th scope="row">Available capabilities</th>
+                  <td>Tool names, descriptions, and input schemas</td>
+                </tr>
+                <tr>
+                  <th scope="row">Interaction history</th>
+                  <td>User requests and earlier model responses</td>
+                </tr>
+                <tr>
+                  <th scope="row">Actions and observations</th>
+                  <td>Tool calls, tool results, file contents, and command output</td>
+                </tr>
+                <tr>
+                  <th scope="row">Dynamically loaded information</th>
+                  <td>Rules, skills, memories, or retrieved material supplied when relevant</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            The Claude Agent SDK gives one concrete product example: it lists the
+            system prompt, tool definitions, conversation history, tool inputs,
+            and tool outputs. Claude Code may also load
+            <code>CLAUDE.md</code>, auto memory, and Skill information. These are
+            product examples, not a universal list.
+            <cite class="claim-citation">
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#what-consumes-context" target="_blank" rel="noopener noreferrer">Claude Agent SDK: What consumes context</a>;
+              <a href="https://code.claude.com/docs/en/context-window" target="_blank" rel="noopener noreferrer">Claude Code: Explore the context window</a>
+            </cite>
+          </p>
+          <p>
+            Large file reads and verbose command outputs can consume substantial
+            context. Longer sessions with many tool calls therefore tend to
+            accumulate more model-visible information than short ones.
+          </p>
+          <p>
+            Context is therefore selected and assembled, not simply identical to
+            stored history. Two calls in the same application can receive
+            different context even when the application still retains all earlier
+            records. The difference is what the system makes available to the
+            model for that particular call.
+          </p>
+
+          <h3>When the context window fills</h3>
+          <p>
+            Context grows as messages, calls, results, files, and command outputs
+            accumulate, but the context window is finite. A system must eventually
+            remove, replace, or summarize some earlier information to make room
+            for later work. The window must also leave capacity for the output
+            currently being generated, so managing accumulated input is part of
+            keeping later responses possible.
+          </p>
+          <p>
+            Claude Code provides one product-specific strategy. Where possible,
+            it clears older tool outputs first. If more space is needed,
+            compaction replaces older conversation history with a shorter summary
+            while attempting to retain recent exchanges and important decisions.
+            Compaction is lossy: earlier details may not survive verbatim. Some
+            Claude Code instructions stored outside the conversation can be
+            loaded again after compaction.
+            <cite class="claim-citation">
+              <a href="https://code.claude.com/docs/en/how-claude-code-works#when-context-fills-up" target="_blank" rel="noopener noreferrer">Claude Code: When context fills up</a>;
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#automatic-compaction" target="_blank" rel="noopener noreferrer">Claude Agent SDK: Automatic compaction</a>;
+              <a href="https://code.claude.com/docs/en/context-window#what-survives-compaction" target="_blank" rel="noopener noreferrer">Claude Code: What survives compaction</a>
+            </cite>
+          </p>
+          <p>
+            This is why a context window is better understood as finite working
+            information than as a perfect, permanent record.
+          </p>
+
+          <h3>Keep context efficient</h3>
+          <p>
+            Claude’s product documentation offers several strategies. Three
+            relevant here are:
+            <cite class="claim-citation">
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#keep-context-efficient" target="_blank" rel="noopener noreferrer">Claude Agent SDK: Keep context efficient</a>
+            </cite>
+          </p>
+          <ul>
+            <li>
+              <strong>Use subagents for large subtasks.</strong> A subagent works
+              in a separate context; only its final response returns to the parent
+              instead of the full transcript.
+            </li>
+            <li>
+              <strong>Be selective with tools.</strong> Every tool definition
+              consumes context.
+            </li>
+            <li>
+              <strong>Load large tool catalogs on demand.</strong> Tool search can
+              defer detailed MCP schemas until needed.
+            </li>
+          </ul>
+          <p>
+            <strong>Context is limited. Good agent systems decide what to load,
+            what to keep separate, and what to summarize.</strong>
+          </p>
+        </section>
+
+        <section class="content-section" id="beyond-minimal-loop" aria-labelledby="beyond-minimal-loop-heading">
+          <h2 id="beyond-minimal-loop-heading">5. Beyond the minimal loop</h2>
+          <p>
+            The minimal loop explains a recurring mechanism: the model receives
+            context and produces an output; surrounding software may execute
+            requested tools, return their results, and invoke the model again
+            until the run stops. A usable agent also needs a surrounding system
+            that makes this mechanism operate.
+          </p>
+
+          <h3>The agentic harness and its runtime</h3>
+          <p>
+            An LLM does not invoke itself, execute tools, preserve tool results,
+            or keep a run moving. The surrounding system that supplies tools,
+            manages context, and provides an execution environment is what this
+            book calls an <strong>agentic harness</strong>. Claude Code uses the
+            same term: Claude is the model, and Claude Code is the harness around
+            it.
+            <cite class="claim-citation">
+              <a href="https://code.claude.com/docs/en/glossary#agentic-harness" target="_blank" rel="noopener noreferrer">Claude Code Glossary: Agentic harness</a>;
+              <a href="https://code.claude.com/docs/en/how-claude-code-works" target="_blank" rel="noopener noreferrer">Claude Code: How Claude Code works</a>
+            </cite>
+          </p>
+          <p>
+            This book uses <strong>agentic harness</strong> for that complete
+            surrounding system. Within the harness, we use
+            <strong>runtime</strong> for the software that coordinates an active
+            run: invoking the model, routing tool requests, carrying observations
+            forward, and determining whether execution continues or stops.
+          </p>
+          <p>
+            This is a teaching convention rather than standardized industry
+            terminology. Different frameworks divide and name these
+            responsibilities differently.
+          </p>
+
+          <div
+            class="guide-table-wrap terminology-table-wrap"
+            role="region"
+            aria-label="Chapter terminology for systems around the agentic loop"
+            tabindex="0"
+          >
+            <table class="guide-table terminology-table">
+              <thead>
+                <tr>
+                  <th scope="col">Term</th>
+                  <th scope="col">Meaning in this book</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Agentic harness</th>
+                  <td>The complete system around the model, including tools, context management, the execution environment, and the machinery that keeps work moving</td>
+                </tr>
+                <tr>
+                  <th scope="row">Runtime</th>
+                  <td>The part of the harness that coordinates an active run</td>
+                </tr>
+                <tr>
+                  <th scope="row">Runner</th>
+                  <td>A framework-specific object or entry point that starts and drives a run</td>
+                </tr>
+                <tr>
+                  <th scope="row">Event loop</th>
+                  <td>An implementation mechanism that processes events, state changes, and resumptions during execution</td>
+                </tr>
+                <tr>
+                  <th scope="row">Agentic loop</th>
+                  <td>The conceptual model–tool–result cycle described in this chapter</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            For example, the OpenAI Agents SDK exposes a
+            <code>Runner</code> that repeatedly invokes the model, executes tool
+            calls, appends results, and returns final output. Google ADK uses
+            <code>Runtime</code> for a broader engine that coordinates agents,
+            tools, callbacks, state, services, and a <code>Runner</code>
+            operating through an event loop. These terms overlap, but their
+            scopes are not identical.
+            <cite class="claim-citation">
+              <a href="https://openai.github.io/openai-agents-python/running_agents/" target="_blank" rel="noopener noreferrer">OpenAI Agents SDK: Running agents</a>;
+              <a href="https://adk.dev/runtime/event-loop/" target="_blank" rel="noopener noreferrer">Google ADK: Runtime event loop</a>
+            </cite>
+          </p>
+
+          <aside class="concept-callout">
+            <p>
+              <strong>Agentic loop and event loop describe different
+              levels.</strong> The agentic loop explains why the system
+              alternates among model output, actions, and observations. An event
+              loop is one software pattern that a runtime may use to drive
+              execution.
+            </p>
+          </aside>
+
+          <h3>Workflows: predefined orchestration</h3>
+          <p>
+            A <strong>workflow</strong> arranges LLM calls and tools through an
+            overall control structure defined in software. An agentic loop
+            instead allows model output and newly observed results to influence
+            which action happens next.
+            <cite class="claim-citation">
+              <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic: Building effective agents</a>
+            </cite>
+          </p>
+          <p>
+            This distinction is not simply “fixed versus intelligent.” A
+            workflow step can still ask an LLM to classify, evaluate, generate,
+            or decompose a task. What remains predefined is the larger
+            arrangement of stages, branches, roles, or feedback paths.
+          </p>
+
+          <div class="workflow-gallery" data-workflow-gallery>
+            <div
+              class="workflow-gallery-tabs"
+              role="tablist"
+              aria-label="Workflow patterns"
+              hidden
+            >
+              <button type="button" role="tab" id="workflow-tab-chaining" aria-controls="workflow-panel-chaining" aria-selected="true">Prompt chaining</button>
+              <button type="button" role="tab" id="workflow-tab-routing" aria-controls="workflow-panel-routing" aria-selected="false" tabindex="-1">Routing</button>
+              <button type="button" role="tab" id="workflow-tab-parallelization" aria-controls="workflow-panel-parallelization" aria-selected="false" tabindex="-1">Parallelization</button>
+              <button type="button" role="tab" id="workflow-tab-orchestrator" aria-controls="workflow-panel-orchestrator" aria-selected="false" tabindex="-1">Orchestrator-workers</button>
+              <button type="button" role="tab" id="workflow-tab-evaluator" aria-controls="workflow-panel-evaluator" aria-selected="false" tabindex="-1">Evaluator-optimizer</button>
+            </div>
+            <p class="visually-hidden" data-workflow-status aria-live="polite"></p>
+
+            <div class="workflow-gallery-panels">
+              <section class="workflow-pattern" id="workflow-panel-chaining" data-workflow-panel aria-labelledby="workflow-pattern-chaining-heading">
+                <div class="workflow-pattern-copy">
+                  <p class="workflow-pattern-count">Anthropic official diagram · 1 of 5</p>
+                  <h4 id="workflow-pattern-chaining-heading">Prompt chaining</h4>
+                  <p>A predefined sequence in which each stage uses the previous stage’s output.</p>
+                </div>
+                <figure class="workflow-diagram workflow-source-figure">
+                  <a href="assets/anthropic-workflow-prompt-chaining.png?v=20260727-official" target="_blank" rel="noopener noreferrer">
+                    <img
+                      src="assets/anthropic-workflow-prompt-chaining.png?v=20260727-official"
+                      width="2401"
+                      height="1000"
+                      loading="lazy"
+                      decoding="async"
+                      alt="Anthropic prompt-chaining diagram. Input enters LLM Call 1, whose first output reaches a gate. A failed gate exits; a passed gate continues through LLM Call 2 and LLM Call 3 before producing output."
+                    />
+                  </a>
+                  <figcaption>
+                    <strong>Prompt chaining.</strong> Each LLM call uses the
+                    previous stage’s output, with an optional gate controlling
+                    whether the sequence continues. Source:
+                    <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic, <em>Building effective agents</em></a>.
+                    <a href="assets/anthropic-workflow-prompt-chaining.png?v=20260727-official" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+                  </figcaption>
+                </figure>
+              </section>
+
+              <section class="workflow-pattern" id="workflow-panel-routing" data-workflow-panel aria-labelledby="workflow-pattern-routing-heading">
+                <div class="workflow-pattern-copy">
+                  <p class="workflow-pattern-count">Anthropic official diagram · 2 of 5</p>
+                  <h4 id="workflow-pattern-routing-heading">Routing</h4>
+                  <p>A classifier directs the input to an appropriate downstream path.</p>
+                </div>
+                <figure class="workflow-diagram workflow-source-figure">
+                  <a href="assets/anthropic-workflow-routing.png?v=20260727-official" target="_blank" rel="noopener noreferrer">
+                    <img
+                      src="assets/anthropic-workflow-routing.png?v=20260727-official"
+                      width="2401"
+                      height="1000"
+                      loading="lazy"
+                      decoding="async"
+                      alt="Anthropic routing diagram. Input enters an LLM router, which directs it to one of three specialized LLM calls before their paths converge on output."
+                    />
+                  </a>
+                  <figcaption>
+                    <strong>Routing.</strong> An LLM router classifies the input
+                    and directs it to an appropriate specialized path. Source:
+                    <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic, <em>Building effective agents</em></a>.
+                    <a href="assets/anthropic-workflow-routing.png?v=20260727-official" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+                  </figcaption>
+                </figure>
+              </section>
+
+              <section class="workflow-pattern" id="workflow-panel-parallelization" data-workflow-panel aria-labelledby="workflow-pattern-parallelization-heading">
+                <div class="workflow-pattern-copy">
+                  <p class="workflow-pattern-count">Anthropic official diagram · 3 of 5</p>
+                  <h4 id="workflow-pattern-parallelization-heading">Parallelization</h4>
+                  <p>Independent calls run concurrently and their outputs are combined.</p>
+                </div>
+                <figure class="workflow-diagram workflow-source-figure">
+                  <a href="assets/anthropic-workflow-parallelization.png?v=20260727-official" target="_blank" rel="noopener noreferrer">
+                    <img
+                      src="assets/anthropic-workflow-parallelization.png?v=20260727-official"
+                      width="2401"
+                      height="1000"
+                      loading="lazy"
+                      decoding="async"
+                      alt="Anthropic parallelization diagram. Input fans out to three simultaneous LLM calls, whose results flow into an aggregator before producing output."
+                    />
+                  </a>
+                  <figcaption>
+                    <strong>Parallelization.</strong> Independent LLM calls run
+                    concurrently and an aggregator combines their outputs.
+                    Source:
+                    <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic, <em>Building effective agents</em></a>.
+                    <a href="assets/anthropic-workflow-parallelization.png?v=20260727-official" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+                  </figcaption>
+                </figure>
+              </section>
+
+              <section class="workflow-pattern" id="workflow-panel-orchestrator" data-workflow-panel aria-labelledby="workflow-pattern-orchestrator-heading">
+                <div class="workflow-pattern-copy">
+                  <p class="workflow-pattern-count">Anthropic official diagram · 4 of 5</p>
+                  <h4 id="workflow-pattern-orchestrator-heading">Orchestrator-workers</h4>
+                  <p>A central model chooses subtasks, delegates them, and combines the results.</p>
+                </div>
+                <figure class="workflow-diagram workflow-source-figure">
+                  <a href="assets/anthropic-workflow-orchestrator-workers.png?v=20260727-official" target="_blank" rel="noopener noreferrer">
+                    <img
+                      src="assets/anthropic-workflow-orchestrator-workers.png?v=20260727-official"
+                      width="2401"
+                      height="1000"
+                      loading="lazy"
+                      decoding="async"
+                      alt="Anthropic orchestrator-workers diagram. Input enters an orchestrator, which dynamically delegates work to three LLM calls. Their results flow to a synthesizer and then to output."
+                    />
+                  </a>
+                  <figcaption>
+                    <strong>Orchestrator-workers.</strong> A central orchestrator
+                    chooses subtasks, delegates them to worker LLMs, and sends
+                    their results to a synthesizer. Source:
+                    <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic, <em>Building effective agents</em></a>.
+                    <a href="assets/anthropic-workflow-orchestrator-workers.png?v=20260727-official" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+                  </figcaption>
+                </figure>
+              </section>
+
+              <section class="workflow-pattern" id="workflow-panel-evaluator" data-workflow-panel aria-labelledby="workflow-pattern-evaluator-heading">
+                <div class="workflow-pattern-copy">
+                  <p class="workflow-pattern-count">Anthropic official diagram · 5 of 5</p>
+                  <h4 id="workflow-pattern-evaluator-heading">Evaluator-optimizer</h4>
+                  <p>One model generates while another evaluates and provides feedback for another iteration.</p>
+                </div>
+                <figure class="workflow-diagram workflow-source-figure">
+                  <a href="assets/anthropic-workflow-evaluator-optimizer.png?v=20260727-official" target="_blank" rel="noopener noreferrer">
+                    <img
+                      src="assets/anthropic-workflow-evaluator-optimizer.png?v=20260727-official"
+                      width="2401"
+                      height="1000"
+                      loading="lazy"
+                      decoding="async"
+                      alt="Anthropic evaluator-optimizer diagram. Input enters an LLM generator and its solution moves to an LLM evaluator. Accepted work proceeds to output; rejected work and feedback loop back to the generator."
+                    />
+                  </a>
+                  <figcaption>
+                    <strong>Evaluator-optimizer.</strong> An evaluator accepts the
+                    generated solution or returns feedback for another generator
+                    iteration. Source:
+                    <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic, <em>Building effective agents</em></a>.
+                    <a href="assets/anthropic-workflow-evaluator-optimizer.png?v=20260727-official" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+                  </figcaption>
+                </figure>
+              </section>
+            </div>
+
+            <div class="workflow-gallery-nav" data-workflow-nav hidden>
+              <button type="button" data-workflow-previous>
+                <span aria-hidden="true">←</span> Previous pattern
+              </button>
+              <span class="workflow-gallery-position" data-workflow-position>1 of 5</span>
+              <button type="button" data-workflow-next>
+                Next pattern <span aria-hidden="true">→</span>
+              </button>
+            </div>
+
+            <p class="workflow-gallery-source">
+              Workflow figures reproduced from
+              <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic, <em>Building effective agents</em></a>.
+            </p>
+          </div>
+
+          <p>
+            Anthropic categorizes orchestrator–workers as a workflow even though
+            the orchestrator dynamically chooses its subtasks. The surrounding
+            topology—an orchestrator delegating to workers and synthesizing their
+            results—remains predefined.
+            <cite class="claim-citation">
+              <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic: Building effective agents</a>
+            </cite>
+          </p>
+          <p>
+            Workflows and agents can also be combined. A workflow may contain an
+            agentic step, while an agent may invoke a deterministic workflow as
+            one available capability.
+          </p>
+
+          <h3>Thinking: optional model-side reasoning</h3>
+          <p>
+            Some models can spend additional reasoning effort before producing
+            text or a tool call. Thinking is optional and provider-dependent—not
+            a required stage of the agentic loop—and any exposed thinking may be
+            summarized or omitted.
+            <cite class="claim-citation">
+              <a href="https://platform.claude.com/docs/en/build-with-claude/thinking" target="_blank" rel="noopener noreferrer">Anthropic: Thinking</a>
+            </cite>
+          </p>
+
+          <h3>A related historical pattern: ReAct</h3>
+          <p>
+            <strong>ReAct</strong>, introduced in 2022, is a prompting approach
+            that interleaves model-generated reasoning traces with task-specific
+            actions. Observations from the environment then inform later
+            reasoning and action.
+          </p>
+          <p>
+            ReAct is an influential example of the pattern of reasoning, acting,
+            observing, and repeating. It is related to the agentic loop
+            described here, but the terms are not interchangeable: the general
+            loop does not require explicit reasoning traces to be exposed.
+            <cite class="claim-citation">
+              <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">Yao et al.: ReAct</a>
+            </cite>
+          </p>
+        </section>
+
+        <section class="content-section boundary-note" id="summary" aria-labelledby="summary-heading">
+          <h2 id="summary-heading">6. Summary</h2>
+          <p>
+            The minimal agentic system in this chapter consists of an
+            <strong>LLM, tools, and an agentic loop</strong>. The model produces
+            text or proposed tool calls; software outside the model performs
+            requested operations, returns their results in later context, and
+            continues the loop until the system produces a final response.
+          </p>
+          <p>
+            Context is the finite information available to each model call. The
+            agentic harness is the complete surrounding system, while its
+            runtime coordinates an active run. Workflows can arrange model calls
+            and tools through predefined control structures. These terms form
+            this chapter’s teaching map rather than a standardized industry
+            taxonomy.
+          </p>
+        </section>
+
+        <section class="content-section chapter-glossary" id="chapter-glossary" aria-labelledby="chapter-glossary-heading">
+          <h2 id="chapter-glossary-heading">Chapter glossary</h2>
+          <p>
+            Review the glossary entries for the concepts used most directly in
+            this chapter.
+          </p>
+          <ul class="chapter-glossary-list">
+            <li>
+              <a href="../../glossary/#large-language-model">Large language model (LLM)</a>
+              <span>The model-side black box that produces structured output such as text and proposed tool calls.</span>
+            </li>
+            <li>
+              <a href="../../glossary/#tool">Tool</a>
+              <span>A capability the model can request but does not execute itself.</span>
+            </li>
+            <li>
+              <a href="../../glossary/#agentic-loop">Agentic loop</a>
+              <span>The recurring model–tool–result cycle.</span>
+            </li>
+            <li>
+              <a href="../../glossary/#context-window">Context window</a>
+              <span>The finite capacity shared by current input and generated output.</span>
+            </li>
+            <li>
+              <a href="../../glossary/#agentic-harness">Agentic harness</a>
+              <span>The complete surrounding system that turns a model into a usable agent.</span>
+            </li>
+            <li>
+              <a href="../../glossary/#runtime">Runtime</a>
+              <span>The part of the harness that coordinates an active run.</span>
+            </li>
+            <li>
+              <a href="../../glossary/#runner">Runner</a>
+              <span>A framework-specific object or entry point that starts and drives a run.</span>
+            </li>
+            <li>
+              <a href="../../glossary/#event-loop">Event loop</a>
+              <span>An implementation mechanism that processes events and resumptions during execution.</span>
+            </li>
+            <li>
+              <a href="../../glossary/#workflow">Workflow</a>
+              <span>A predefined arrangement of model calls, tools, branches, or feedback paths.</span>
+            </li>
+            <li>
+              <a href="../../glossary/#react">ReAct</a>
+              <span>An influential reasoning, acting, and observing pattern.</span>
+            </li>
+          </ul>
+        </section>
+
+        <section class="content-section" id="check-understanding" aria-labelledby="check-understanding-heading">
+          <h2 id="check-understanding-heading">Check your understanding</h2>
+          <div class="knowledge-checks">
+            <details>
+              <summary>Why can making more tools available make an agent less efficient?</summary>
+              <p>
+                Every tool definition consumes context, even when the tool is
+                irrelevant to the current task. A larger tool catalog leaves less
+                room for task-specific information and gives the model more
+                capabilities to distinguish among. Systems can therefore benefit
+                from exposing only relevant tools or loading large tool catalogs
+                on demand.
+                <cite class="claim-citation">
+                  <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#keep-context-efficient" target="_blank" rel="noopener noreferrer">Claude Agent SDK: Keep context efficient</a>
+                </cite>
+              </p>
+            </details>
+            <details>
+              <summary>What should the runtime check before treating a model output as the final result?</summary>
+              <p>
+                In the ordinary completion path described in this chapter, the
+                output must satisfy the application’s configured final-output
+                condition and contain no further tool calls that need to be
+                executed. If a required tool call remains, the runtime should
+                execute or route it and continue the loop rather than returning
+                the accompanying text as the final answer.
+                <cite class="claim-citation">
+                  <a href="https://openai.github.io/openai-agents-python/running_agents/#the-agent-loop" target="_blank" rel="noopener noreferrer">OpenAI Agents SDK: The agent loop</a>
+                </cite>
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <section class="content-section" id="references" aria-labelledby="references-heading">
+          <h2 id="references-heading">References</h2>
+          <p>
+            Every external resource cited in this chapter is listed below using
+            the same direct URL, including links to specific sections within a
+            longer guide. <strong>Extended references</strong> is reserved for
+            related resources that are not cited in the chapter itself.
+          </p>
+
+          <h3>Core system and interfaces</h3>
+          <p class="section-note">
+            <strong>Start here:</strong> the first two guides provide the
+            chapter’s main product-level and mechanism-level companion reading.
+          </p>
+          <ul class="source-list">
+            <li id="ref-claude-works">
+              <a href="https://code.claude.com/docs/en/how-claude-code-works" target="_blank" rel="noopener noreferrer">Claude Code — How Claude Code works</a>
+              <small>A concrete coding-agent account of models, tools, results, and the product-specific harness.</small>
+            </li>
+            <li id="ref-claude-agent-loop">
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop" target="_blank" rel="noopener noreferrer">Claude Agent SDK — How the agent loop works</a>
+              <small>A focused walkthrough of model responses, tool execution, returned results, repetition, and stopping.</small>
+            </li>
+            <li id="ref-anthropic-messages">
+              <a href="https://platform.claude.com/docs/en/api/messages/create" target="_blank" rel="noopener noreferrer">Anthropic — Messages API</a>
+              <small>Structured input messages and application-visible response content blocks.</small>
+            </li>
+            <li id="ref-anthropic-thinking">
+              <a href="https://platform.claude.com/docs/en/build-with-claude/thinking" target="_blank" rel="noopener noreferrer">Anthropic — Thinking</a>
+              <small>Provider-specific thinking output, summaries, omission, and model-dependent behavior.</small>
+            </li>
+            <li id="ref-openai-functions">
+              <a href="https://developers.openai.com/api/docs/guides/function-calling" target="_blank" rel="noopener noreferrer">OpenAI — Function Calling</a>
+              <small>Tool definitions, model-produced calls, application execution, matched results, later requests, and final output.</small>
+            </li>
+            <li id="ref-anthropic-handle">
+              <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls" target="_blank" rel="noopener noreferrer">Anthropic — Handle tool calls</a>
+              <small>Call/result association, returned content, and error results for client tools.</small>
+            </li>
+            <li id="ref-claude-tools">
+              <a href="https://code.claude.com/docs/en/tools-reference" target="_blank" rel="noopener noreferrer">Claude Code — Tools reference</a>
+              <small>A current product-specific inventory of the tools available in Claude Code.</small>
+            </li>
+            <li id="ref-anthropic-definitions">
+              <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools" target="_blank" rel="noopener noreferrer">Anthropic — Define tools</a>
+              <small>Names, descriptions, and input schemas supplied in tool definitions.</small>
+            </li>
+            <li id="ref-anthropic-how-tools">
+              <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/how-tool-use-works" target="_blank" rel="noopener noreferrer">Anthropic — How tool use works</a>
+              <small>The model/application contract and the distinction between client- and server-executed tools.</small>
+            </li>
+          </ul>
+
+          <h3>Loop, runtime, and context</h3>
+          <ul class="source-list">
+            <li id="ref-agents-sdk">
+              <a href="https://openai.github.io/openai-agents-python/running_agents/" target="_blank" rel="noopener noreferrer">OpenAI Agents SDK — Running agents</a>
+              <small>A framework-specific Runner loop that executes calls, appends results, repeats, and returns final output.</small>
+            </li>
+            <li id="ref-agents-sdk-loop">
+              <a href="https://openai.github.io/openai-agents-python/running_agents/#the-agent-loop" target="_blank" rel="noopener noreferrer">OpenAI Agents SDK — The agent loop</a>
+              <small>The ordinary loop path, including tool execution, configured final output, and stopping.</small>
+            </li>
+            <li id="ref-adk-loop">
+              <a href="https://adk.dev/runtime/event-loop/" target="_blank" rel="noopener noreferrer">Google ADK — Runtime event loop</a>
+              <small>A product-specific Runtime containing a Runner, execution logic, events, and services.</small>
+            </li>
+            <li id="ref-conversation-state">
+              <a href="https://developers.openai.com/api/docs/guides/conversation-state" target="_blank" rel="noopener noreferrer">OpenAI — Conversation state</a>
+              <small>How prior messages and outputs can be supplied to later model requests.</small>
+            </li>
+            <li id="ref-claude-agent-context-window">
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#the-context-window" target="_blank" rel="noopener noreferrer">Claude Agent SDK — The context window</a>
+              <small>The information carried across model calls during an agent run.</small>
+            </li>
+            <li id="ref-claude-context">
+              <a href="https://code.claude.com/docs/en/context-window" target="_blank" rel="noopener noreferrer">Claude Code — Context window</a>
+              <small>A concrete account of instructions, messages, files, and tool outputs sharing a model’s working context.</small>
+            </li>
+            <li id="ref-claude-agent-context-cost">
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#what-consumes-context" target="_blank" rel="noopener noreferrer">Claude Agent SDK — What consumes context</a>
+              <small>Messages, tool definitions, tool results, and other inputs that occupy context.</small>
+            </li>
+            <li id="ref-claude-when-context-fills">
+              <a href="https://code.claude.com/docs/en/how-claude-code-works#when-context-fills-up" target="_blank" rel="noopener noreferrer">Claude Code — When context fills up</a>
+              <small>Automatic compaction and the behavior of a long-running session near its context limit.</small>
+            </li>
+            <li id="ref-claude-agent-compaction">
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#automatic-compaction" target="_blank" rel="noopener noreferrer">Claude Agent SDK — Automatic compaction</a>
+              <small>How the SDK summarizes earlier context when a session approaches its limit.</small>
+            </li>
+            <li id="ref-claude-context-survives">
+              <a href="https://code.claude.com/docs/en/context-window#what-survives-compaction" target="_blank" rel="noopener noreferrer">Claude Code — What survives compaction</a>
+              <small>Which context mechanisms persist, reload, or disappear after compaction.</small>
+            </li>
+            <li id="ref-claude-agent-context-efficient">
+              <a href="https://code.claude.com/docs/en/agent-sdk/agent-loop#keep-context-efficient" target="_blank" rel="noopener noreferrer">Claude Agent SDK — Keep context efficient</a>
+              <small>Selective tool exposure and on-demand loading for preserving useful context space.</small>
+            </li>
+          </ul>
+
+          <h3>Related architectures and patterns</h3>
+          <ul class="source-list">
+            <li id="ref-claude-glossary">
+              <a href="https://code.claude.com/docs/en/glossary#agentic-harness" target="_blank" rel="noopener noreferrer">Claude Code Glossary — Agentic harness</a>
+              <small>Claude Code’s product-specific definition of the harness surrounding the model.</small>
+            </li>
+            <li id="ref-building-agents">
+              <a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Anthropic — Building effective agents</a>
+              <small>The workflow/agent distinction and five common workflow structures.</small>
+            </li>
+            <li id="ref-react">
+              <a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">Yao et al. — ReAct: Synergizing Reasoning and Acting in Language Models</a>
+              <small>The original paper’s approach to interleaving reasoning traces and task-specific actions.</small>
+            </li>
+          </ul>
+
+          <h3>Extended references</h3>
+          <ul class="source-list">
+            <li id="ref-extended-manage-tool-context">
+              <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/manage-tool-context" target="_blank" rel="noopener noreferrer">Anthropic — Manage tool context</a>
+              <small>Tool search, programmatic tool calling, prompt caching, and context editing as responses to different sources of tool-related context pressure.</small>
+            </li>
+            <li id="ref-extended-build-tool-agent">
+              <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/build-a-tool-using-agent" target="_blank" rel="noopener noreferrer">Anthropic — Tutorial: Build a tool-using agent</a>
+              <small>A runnable progression from one tool call to a hand-written agentic loop and then an SDK-managed runner.</small>
+            </li>
+            <li id="ref-extended-tool-runner">
+              <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-runner" target="_blank" rel="noopener noreferrer">Anthropic — Tool Runner SDK (beta)</a>
+              <small>A beta provider-specific runner that automates tool execution, request/response cycling, conversation state, validation, and loop termination.</small>
+            </li>
+            <li id="ref-extended-copilot-agent-loop">
+              <a href="https://docs.github.com/en/copilot/how-tos/copilot-sdk/features/agent-loop" target="_blank" rel="noopener noreferrer">GitHub Copilot SDK — The agent loop</a>
+              <small>An end-to-end account of the Copilot CLI loop, responsibility boundaries, model turns, accumulated context, and completion signals.</small>
+            </li>
+            <li id="ref-extended-langgraph-workflows">
+              <a href="https://docs.langchain.com/oss/python/langgraph/workflows-agents" target="_blank" rel="noopener noreferrer">LangGraph — Workflows and agents</a>
+              <small>Runnable implementations of prompt chaining, parallelization, routing, orchestrator–worker, evaluator–optimizer, and agent patterns.</small>
+            </li>
+          </ul>
+        </section>
+
+        <footer class="footer book-chapter-nav" aria-label="Book navigation">
+          <a href="../from-language-models-to-assistants/">← Previous: Chapter 0</a>
+          <a href="../">Book home</a>
+          <a href="../modern-agent-systems/">Next: Chapter 2 →</a>
+        </footer>
+      </main>
+    </div>
+    <script src="workflow-gallery.js?v=20260727-navigation" defer></script>
+    <script src="../../assets/spooky-qa.js" defer></script>
+    <script src="../../assets/spooky-launcher.js" defer></script>
+  </body>
+</html>

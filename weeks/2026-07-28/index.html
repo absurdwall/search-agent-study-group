@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Week 3 — build an Orders Agent and read Phoenix traces, Search Agent Study Group."
+      content="Week 3 — map modern agent systems, then build an Orders Agent and inspect its Phoenix traces."
     />
     <title>Week 3 · Search Agent Study Group</title>
     <link rel="icon" href="data:," />
@@ -16,6 +16,7 @@
       <div class="header-inner">
         <a class="site-name" href="../../">Search Agent Study Group</a>
         <nav class="site-nav" aria-label="Primary navigation">
+          <a href="../../book/">Book</a>
           <a href="../../#resources">Resources</a>
           <a href="../../#weekly-schedule">Weeks</a>
           <a href="https://github.com/absurdwall/search-agent-study-group">GitHub</a>
@@ -25,21 +26,59 @@
 
     <main class="page standalone-page">
       <section class="page-intro" aria-labelledby="page-title">
-        <h1 id="page-title">Week 3</h1>
-        <p class="week-topic">Build an Orders Agent and read Phoenix traces</p>
-        <p class="week-meta">July 28, 2026 · Search Agent Study Group</p>
+        <p class="eyebrow">Week 3</p>
+        <h1 id="page-title">Modern agent systems</h1>
+        <p class="week-topic">A durable systems map and an Orders Agent workshop</p>
+        <p class="week-meta">July 28, 2026</p>
+        <p class="lede week-lede">
+          In Weeks 1 and 2, we built an ADK agent, gave it tools, and inspected
+          what happened during a run. This week, we step back and connect that
+          experience to the larger systems that make an agent useful in real
+          work, then use an Orders Agent workshop to inspect those ideas in
+          concrete Phoenix traces.
+        </p>
       </section>
 
-      <section class="content-section" aria-labelledby="materials-heading">
-        <h2 id="materials-heading">Materials</h2>
+      <section class="content-section" id="learning-path" aria-labelledby="learning-path-heading">
+        <h2 id="learning-path-heading">Our learning path</h2>
+        <p class="section-note">
+          We will move from the core runtime behavior to the layers that extend it.
+          These ideas appear across agent products, even when the names and loading
+          rules differ.
+        </p>
+        <ol class="learning-path">
+          <li><strong>Agentic loop</strong><span>How an agent gathers context, acts, observes the result, and continues.</span></li>
+          <li><strong>Tools</strong><span>How the model gains actions beyond producing text.</span></li>
+          <li><strong>Context, instructions, and memory</strong><span>What the agent can see now, what guidance persists, and what state is retained.</span></li>
+          <li><strong>MCP</strong><span>A standard way to connect an agent host to external tools, resources, and prompts.</span></li>
+          <li><strong>Skills</strong><span>Reusable instructions, workflows, scripts, and references loaded when relevant.</span></li>
+        </ol>
+        <div class="project-callout week-guide-callout">
+          <div>
+            <p class="project-status">Durable background reading</p>
+            <p>Use the first chapter to separate the minimal agentic system from its runtime, then use the second chapter for the broader systems map.</p>
+          </div>
+          <div class="project-link-group">
+            <a class="project-link" href="../../book/minimal-agentic-system/">Chapter 1: The minimal system →</a>
+            <a class="project-link" href="../../book/modern-agent-systems/">Chapter 2: The systems map →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" id="materials" aria-labelledby="materials-heading">
+        <h2 id="materials-heading">Session materials</h2>
         <ul class="source-list">
           <li>
+            <a href="../../presentations/orders-agent-intro.html">Orders Agent introduction</a>
+            <small>HTML presentation · a short introduction to the workshop and its tools.</small>
+          </li>
+          <li>
             <a href="materials.md">Workshop materials and setup</a>
-            <small>Goals, environment notes, and the learning path for the session.</small>
+            <small>Goals, environment notes, and the learning path for the hands-on session.</small>
           </li>
           <li>
             <a href="notebooks/04_orders_agent_exercise_phoenix.ipynb">Orders Agent learner notebook</a>
-            <small>Build the Agent, call its tools, and answer the numbered Phoenix concept checks.</small>
+            <small>Build the agent, call its tools, and answer the numbered Phoenix concept checks.</small>
           </li>
           <li>
             <a href="notebooks/04_orders_agent_solution_phoenix.ipynb">Orders Agent solution notebook</a>
@@ -48,22 +87,47 @@
         </ul>
       </section>
 
-      <section class="content-section" aria-labelledby="goals-heading">
-        <h2 id="goals-heading">Goals</h2>
+      <section class="content-section" id="workshop-goals" aria-labelledby="workshop-goals-heading">
+        <h2 id="workshop-goals-heading">Workshop goals</h2>
         <ol class="plain-list">
-          <li>Register normal Python functions as Agent tools.</li>
+          <li>Register normal Python functions as agent tools.</li>
           <li>Use one tool to list orders, then two tools to inspect the latest order.</li>
           <li>Read Phoenix traces for model calls, tool calls, arguments, and token totals.</li>
         </ol>
+        <p class="section-note">
+          The workshop begins with a small simulated weather tool before moving
+          to the Orders Agent. It uses synthetic classroom data, so learners can
+          inspect the traces safely. It complements the durable book chapters;
+          it does not add a new learner release to the Search Agent Lab repository.
+        </p>
       </section>
 
-      <section class="content-section" aria-labelledby="flow-heading">
-        <h2 id="flow-heading">Session flow</h2>
+      <section class="content-section" id="later" aria-labelledby="later-heading">
+        <h2 id="later-heading">Introduced briefly, expanded later</h2>
         <p class="section-note">
-          We start with a tiny simulated weather tool, then build the Orders Agent
-          in small steps. The data is synthetic classroom data, so everyone can
-          explore the traces safely.
+          We will locate <strong>subagents</strong>, <strong>permissions</strong>,
+          <strong>guardrails</strong>, and <strong>hooks</strong> on the map, but we
+          will not try to master them this week. They become easier to reason about
+          after the loop, context, and capability layers are clear.
         </p>
+      </section>
+
+      <section class="content-section" id="readings" aria-labelledby="readings-heading">
+        <h2 id="readings-heading">Selected reading</h2>
+        <ul class="source-list">
+          <li>
+            <a href="https://code.claude.com/docs/en/how-claude-code-works">Claude Code — How Claude Code works</a>
+            <small>Product documentation · a concrete explanation of the agentic loop, tools, context, and verification.</small>
+          </li>
+          <li>
+            <a href="https://learn.chatgpt.com/docs/customization/overview">OpenAI — Customization</a>
+            <small>Product documentation · how AGENTS.md, Skills, MCP, memory, and subagents fit together.</small>
+          </li>
+          <li>
+            <a href="https://medium.com/data-science-collective/what-i-learnt-using-claude-code-to-build-production-ready-apps-a27272af0c48">Farhad Malik — What I Learnt Using Claude Code to Build Production-Ready Apps</a>
+            <small>Practitioner guide · a production-oriented view of workflows, controls, and verification.</small>
+          </li>
+        </ul>
       </section>
 
       <footer class="footer"><a href="../../">← Back to the study group home</a></footer>
