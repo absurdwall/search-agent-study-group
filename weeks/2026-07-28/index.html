@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Week 3 — build an Orders Agent and read Phoenix traces, Search Agent Study Group."
+    />
+    <title>Week 3 · Search Agent Study Group</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../../assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-name" href="../../">Search Agent Study Group</a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="../../#resources">Resources</a>
+          <a href="../../#weekly-schedule">Weeks</a>
+          <a href="https://github.com/absurdwall/search-agent-study-group">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page standalone-page">
+      <section class="page-intro" aria-labelledby="page-title">
+        <h1 id="page-title">Week 3</h1>
+        <p class="week-topic">Build an Orders Agent and read Phoenix traces</p>
+        <p class="week-meta">July 28, 2026 · Search Agent Study Group</p>
+      </section>
+
+      <section class="content-section" aria-labelledby="materials-heading">
+        <h2 id="materials-heading">Materials</h2>
+        <ul class="source-list">
+          <li>
+            <a href="materials.md">Workshop materials and setup</a>
+            <small>Goals, environment notes, and the learning path for the session.</small>
+          </li>
+          <li>
+            <a href="notebooks/04_orders_agent_exercise_phoenix.ipynb">Orders Agent learner notebook</a>
+            <small>Build the Agent, call its tools, and answer the numbered Phoenix concept checks.</small>
+          </li>
+          <li>
+            <a href="notebooks/04_orders_agent_solution_phoenix.ipynb">Orders Agent solution notebook</a>
+            <small>Answer key for facilitators and learners who want a reference.</small>
+          </li>
+        </ul>
+      </section>
+
+      <section class="content-section" aria-labelledby="goals-heading">
+        <h2 id="goals-heading">Goals</h2>
+        <ol class="plain-list">
+          <li>Register normal Python functions as Agent tools.</li>
+          <li>Use one tool to list orders, then two tools to inspect the latest order.</li>
+          <li>Read Phoenix traces for model calls, tool calls, arguments, and token totals.</li>
+        </ol>
+      </section>
+
+      <section class="content-section" aria-labelledby="flow-heading">
+        <h2 id="flow-heading">Session flow</h2>
+        <p class="section-note">
+          We start with a tiny simulated weather tool, then build the Orders Agent
+          in small steps. The data is synthetic classroom data, so everyone can
+          explore the traces safely.
+        </p>
+      </section>
+
+      <footer class="footer"><a href="../../">← Back to the study group home</a></footer>
+    </main>
+    <script src="../../assets/spooky-qa.js" defer></script>
+    <script src="../../assets/spooky-launcher.js" defer></script>
+  </body>
+</html>
