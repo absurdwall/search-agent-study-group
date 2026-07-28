@@ -3328,7 +3328,7 @@ code {
   }
 
   .table-wrap {
-    overflow: visible;
+    overflow-x: auto;
   }
 
   .mechanism-table-wrap {
