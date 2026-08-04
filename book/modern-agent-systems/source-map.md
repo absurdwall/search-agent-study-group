@@ -15,20 +15,20 @@ work:
   information; and
 - Skills package reusable procedural knowledge and supporting resources.
 
-Subagents and plugins remain short planned sections. The chapter does not teach
-memory, controls, broad multi-agent orchestration, MCP server implementation, or
-Skill authoring.
+Memory, subagents, and plugins remain short planned sections. The chapter does
+not yet teach long-term memory, controls, broad multi-agent orchestration, MCP
+server implementation, or Skill authoring.
 
 ## Teaching sequence
 
 | Section | Teaching job | Primary sources | Boundary |
 |---|---|---|---|
 | Introduction | Reconnect to Chapter 1 and separate the three jobs | OpenAI Customization; Anthropic Extend Claude Code | Product maps are orientation, not a universal taxonomy |
-| 1. Instruction files | Explain known locations, host discovery, scoping, composition, and product-specific loading | AGENTS.md; OpenAI AGENTS.md; Claude memory; GitHub custom instructions | Markdown can travel; loading behavior belongs to the host |
-| 2. MCP | Explain why the protocol appeared, the host–client–server boundary, a concrete exchange, limits, and the evolving frontier | Versioned MCP Architecture; OpenAI MCP; Anthropic launch; Simon Willison; Anthropic code execution; MCP Apps; Registry | MCP is not the agentic loop, a trust guarantee, or a reusable method |
-| 3. Skills | Explain why capability is insufficient, progressive disclosure, one reusable workflow, implementations, and distribution | Anthropic Agent Skills; Agent Skills Overview; OpenAI; Claude; Google ADK; Vercel; skills.sh | Client activation differs; authoring belongs to Chapter 4 |
+| 1. Instruction files | Teach durable content selection; Codex global, project, merge, fallback, and size behavior; Claude scopes and writing guidance; Claude and GitHub path rules; a complete example; interoperability; and the memory/Skills boundaries | OpenAI AGENTS.md (tutorial spine); Claude memory; AGENTS.md; GitHub custom instructions | Markdown can travel; loading behavior belongs to the host; memory is deferred |
+| 2. MCP | Teach the stable protocol first: participants, layers, primitives, a complete exchange, one host implementation, fit and non-goals; then statelessness, code execution, Apps, and Registry | Versioned MCP Architecture (tutorial spine); OpenAI MCP; Anthropic launch; Simon Willison; Anthropic code execution; MCP Apps; Registry | MCP is not the agentic loop, a trust guarantee, or a reusable method |
+| 3. Skills | Teach package anatomy, discovery, activation, progressive disclosure, an end-to-end workflow, component roles, portability, product implementations, selection guidance, and distribution frontier | Anthropic Agent Skills (teaching spine); Agent Skills Overview (format); OpenAI (host implementation); Claude; Google ADK; Vercel; skills.sh | Client activation differs; authoring belongs to Chapter 4 |
 | 4. How the pieces relate | Combine the mechanisms around one neutral Week 3 task and identify live boundary questions | Vercel evaluation; Skills Over MCP Working Group | MCP and Skills stay optional |
-| 5–6. Planned | Mark subagents and plugins without pretending the teaching is ready | None assigned | No definition or reading is frozen |
+| 5–7. Planned | Mark memory, subagents, and plugins without pretending the teaching is ready | None assigned | No cross-product definition or reading is frozen |
 
 ## Approved reference architecture
 
@@ -104,3 +104,58 @@ Skill authoring.
   registry.
 - The Vercel evaluation is not generalized beyond its tested task and harness.
 - The Skills Over MCP Working Group is active work, not settled behavior.
+
+## Tutorial coverage audit
+
+### Instruction files
+
+- Problem: durable repository knowledge should not be repeated in each prompt.
+- Stable mechanism: a compatible host discovers, selects, composes, and loads
+  file-based guidance into active context.
+- Walkthrough: root and `book/` guidance apply to the Chapter 2 path while
+  frontend and backend sibling guidance does not.
+- Content: project overview, commands, standards, security, review requirements,
+  deployment and data handling, and repository gotchas are curated as examples
+  rather than a mandatory schema.
+- Product detail: Codex global and project discovery, override and fallback
+  order, root-to-working-directory concatenation, and the Codex-specific 32 KiB
+  default cap; Claude managed, user, project, local, imported, nested, and
+  path-scoped guidance; GitHub `applyTo` path-specific instructions and
+  `excludeAgent`.
+- Writing: Claude's under-200-lines recommendation is labeled product-specific
+  and separated from the Codex byte cap; structure, specificity, conflict
+  removal, and lack of hard enforcement are explicit.
+- Example: the official sample `AGENTS.md` is available in a collapsed,
+  JavaScript-free disclosure with source attribution.
+- Boundary: Claude auto memory is distinguished from team-authored instructions
+  and deferred to the planned Memory section; path rules sit between broadly
+  loaded instructions and on-demand Skills.
+- Frontier: shared conventions, richer native loaders, and always-loaded versus
+  on-demand guidance.
+
+### MCP
+
+- Problem: one-off host/provider adapters do not scale across an ecosystem.
+- Stable mechanism: host, one client per server, local or remote server, data
+  and transport layers, discovery, tools, resources, prompts, and notifications.
+- Walkthrough: configuration through selected result entering the next Chapter
+  1 loop, with protocol actions separated from host policy.
+- Product detail: OpenAI remote configuration, tool import, `allowed_tools`,
+  approvals, OAuth, and server trust as one implementation.
+- Frontier: 2026-07-28 stateless requests, bounded code composition, MCP Apps,
+  and the preview Registry.
+
+### Skills
+
+- Problem: broad capabilities do not supply a consistent domain procedure, and
+  permanent playbooks do not scale in context.
+- Stable mechanism: `SKILL.md`, references, scripts, assets, discovery,
+  implicit or explicit activation, and progressive disclosure.
+- Walkthrough: documentation review from metadata match through selective
+  references, deterministic validation, template-based evidence, and the normal
+  Chapter 1 loop.
+- Product detail: portable package center plus OpenAI, Claude Code, and
+  experimental Google ADK runtime differences.
+- Frontier: open-format adoption, installer and directory infrastructure,
+  `skills` CLI, `skills.sh` telemetry limits, non-coding uses, activation risk,
+  and Skills Over MCP work.

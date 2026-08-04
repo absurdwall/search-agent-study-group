@@ -9,6 +9,10 @@ The chapter reuses three owner-supplied source visuals. No image was generated,
 redrawn, cropped, or adapted. Prose, semantic tables, code blocks, captions, and
 alt text carry the complete teaching argument when an image is unavailable.
 
+The tutorial-expansion pass retains exactly these three visuals. New teaching
+depth is carried by semantic process lists, directory trees, comparison tables,
+code examples, and native disclosure elements rather than additional imagery.
+
 The approved direct-MCP-calls-versus-code-execution figure is deliberately not
 used: the prose contrast is sufficient, and a fourth visual would over-weight an
 implementation pattern that is not part of the protocol.

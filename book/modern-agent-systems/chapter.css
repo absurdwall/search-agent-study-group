@@ -11,6 +11,67 @@
   display: none;
 }
 
+.modern-agent-systems-page .section-key-resources {
+  margin-top: 0.62rem;
+}
+
+.modern-agent-systems-page .content-section > h4 {
+  max-width: 43rem;
+  margin: 0.92rem 0 0.3rem;
+  color: #3b464f;
+  font-size: 0.89rem;
+  font-weight: 730;
+  letter-spacing: -0.008em;
+  line-height: 1.35;
+}
+
+.modern-agent-systems-page .content-section > h3 + h4 {
+  margin-top: 0.62rem;
+}
+
+.modern-agent-systems-page .chapter-details {
+  max-width: 43rem;
+  margin: 0.82rem 0 1rem;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+
+.modern-agent-systems-page .chapter-details summary {
+  padding: 0.62rem 0;
+  color: #303a43;
+  font-size: 0.86rem;
+  font-weight: 690;
+  cursor: pointer;
+}
+
+.modern-agent-systems-page .chapter-details summary:focus-visible {
+  border-radius: 2px;
+  outline: 3px solid rgba(83, 122, 114, 0.3);
+  outline-offset: 3px;
+}
+
+.modern-agent-systems-page .chapter-details[open] summary {
+  padding-bottom: 0.42rem;
+}
+
+.modern-agent-systems-page .chapter-details-body {
+  padding: 0 0 0.72rem 1rem;
+}
+
+.modern-agent-systems-page .chapter-details-body > :last-child,
+.modern-agent-systems-page .chapter-details-body .command-block:last-child {
+  margin-bottom: 0;
+}
+
+.modern-agent-systems-page .sample-instructions .command-block {
+  margin-top: 0.25rem;
+}
+
+.modern-agent-systems-page .sample-instructions pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .modern-agent-systems-page .planned-label {
   display: inline-block;
   margin-inline-start: 0.4rem;
