@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Chapter 2 of the Agent Systems Guide: a practical map of agentic loops, tools, context, MCP, Skills, and related controls."
+      content="Chapter 2 of the Agent Systems Guide: how instruction files, MCP, and Skills extend a minimal agent, with subagents and plugins marked as planned topics."
     />
     <title>Chapter 2: A Map of Modern Agent Systems · Search Agent Study Group</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="../../assets/site.css" />
+    <link rel="stylesheet" href="chapter.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <div class="header-inner">
         <a class="site-name" href="../../">Search Agent Study Group</a>
@@ -29,16 +31,13 @@
         <section class="side-toc-section">
           <h2>In this chapter</h2>
           <nav aria-label="Chapter sections">
-            <a href="#agentic-loop">Agentic loop</a>
-            <a href="#tools">Tools</a>
-            <a href="#context">Context and memory</a>
-            <a href="#mcp">MCP</a>
-            <a href="#skills">Skills</a>
-            <a href="#subagents">Subagents</a>
-            <a href="#controls">Controls</a>
-            <a href="#together">Putting it together</a>
-            <a href="#scope">Scope</a>
-            <a href="#references">References</a>
+            <a href="#instruction-files">1. Instruction files</a>
+            <a href="#mcp">2. MCP</a>
+            <a href="#skills">3. Skills</a>
+            <a href="#how-the-pieces-relate">4. How the pieces relate</a>
+            <a href="#subagents">5. Subagents — planned</a>
+            <a href="#plugins">6. Plugins — planned</a>
+            <a href="#references">7. References</a>
           </nav>
         </section>
         <section class="side-toc-section">
@@ -51,486 +50,874 @@
             <a href="../writing-great-skills/">Chapter 4</a>
             <a href="../extended-reading/">Extended Reading</a>
             <a href="../../weeks/2026-07-28/">Week 3</a>
-            <a href="../../glossary/">Concept glossary</a>
-            <a href="../../spooky/">Spooky roadmap</a>
           </nav>
         </section>
       </aside>
 
-      <main class="page guide-page">
-        <section class="page-intro" aria-labelledby="page-title">
-          <p class="eyebrow"><a href="../">Study group guide</a> · Chapter 2 <span class="book-status">Work in progress</span></p>
+      <main class="page guide-page modern-agent-systems-page" id="main-content" tabindex="-1">
+        <section class="page-intro chapter-opening" aria-labelledby="page-title">
+          <p class="eyebrow">
+            <a href="../">Study group guide</a> · Chapter 2
+            <span class="book-status">Work in progress</span>
+          </p>
           <h1 id="page-title">A Map of Modern Agent Systems</h1>
+          <p class="chapter-subtitle">Instruction files, MCP, and Skills</p>
           <div class="notice notice-important">
             <p class="notice-title">Work in progress</p>
             <p>
-              This chapter is still being developed and reviewed. Its structure,
-              explanations, and examples may change before it is ready as a
-              published chapter.
+              This chapter is still being developed and reviewed. Its
+              explanations, examples, and visuals may change before the chapter
+              is ready for publication.
             </p>
           </div>
           <p class="lede">
-            A model can generate an answer. An agent system adds a repeatable way
-            to gather information, take actions, inspect results, and continue
-            toward a goal. This guide maps the main pieces without treating any
-            one product as the universal architecture.
+            Chapter 1 explained a minimal agentic system: an LLM can propose
+            tool calls, surrounding software executes them, and the loop carries
+            results into later model calls. Modern products add several ways to
+            make that system fit a project. This chapter focuses on three:
+            <strong>instruction files</strong>, <strong>MCP</strong>, and
+            <strong>Skills</strong>.
           </p>
+          <p>
+            Imagine asking a coding agent to update the Week 3 page in this
+            study-group repository, verify every external reference, and explain
+            what changed. The minimal loop can inspect files, call tools, observe
+            results, and continue. Three practical questions remain:
+          </p>
+          <ul>
+            <li>How does it learn the durable rules of this repository?</li>
+            <li>How can it connect to an approved external system in a reusable way?</li>
+            <li>How can it follow a repeatable chapter-review method without loading that entire method into every task?</li>
+          </ul>
+
+          <div
+            class="guide-table-wrap"
+            role="region"
+            tabindex="0"
+            aria-label="Three extension mechanisms and their primary jobs"
+          >
+            <table class="guide-table">
+              <caption>Three different jobs around the minimal agent</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Mechanism</th>
+                  <th scope="col">Primary job</th>
+                  <th scope="col">A useful question</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Instruction file</th>
+                  <td>Durable guidance for a project or path.</td>
+                  <td>“What rules apply while I work here?”</td>
+                </tr>
+                <tr>
+                  <th scope="row">MCP</th>
+                  <td>A shared connection protocol for external capabilities and information.</td>
+                  <td>“How can this host connect to that provider?”</td>
+                </tr>
+                <tr>
+                  <th scope="row">Skill</th>
+                  <td>A reusable method with instructions and optional supporting resources.</td>
+                  <td>“How should this kind of task be carried out?”</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            This is a teaching map, not a universal product taxonomy. The three
+            mechanisms can work together, but none is a required stage of the
+            Chapter 1 loop. OpenAI and Anthropic place them beside other
+            features, while their filenames, discovery rules, activation
+            behavior, and interfaces remain product-specific.
+            <cite class="claim-citation">
+              <a href="https://learn.chatgpt.com/docs/customization/overview" target="_blank" rel="noopener noreferrer">OpenAI: Customization</a>;
+              <a href="https://code.claude.com/docs/en/features-overview" target="_blank" rel="noopener noreferrer">Anthropic: Extend Claude Code</a>
+            </cite>
+          </p>
+
+          <aside class="chapter-reading-shortcut" aria-label="Primary companion reading">
+            <p class="chapter-reading-label">Primary companion reading</p>
+            <p>
+              These two product guides provide the broadest current maps of the
+              extension mechanisms discussed here:
+            </p>
+            <ul class="source-list">
+              <li>
+                <a href="https://learn.chatgpt.com/docs/customization/overview" target="_blank" rel="noopener noreferrer">OpenAI — Customization</a>
+                <small>An OpenAI map of project guidance, Skills, MCP, memory, subagents, and related Codex customization layers.</small>
+              </li>
+              <li>
+                <a href="https://code.claude.com/docs/en/features-overview" target="_blank" rel="noopener noreferrer">Anthropic — Extend Claude Code</a>
+                <small>An Anthropic map of <code>CLAUDE.md</code>, Skills, MCP, subagents, hooks, plugins, and how those features combine.</small>
+              </li>
+            </ul>
+            <p class="chapter-reading-note">
+              Both maps are product-specific. This chapter uses them for
+              orientation, then checks each mechanism against its own official
+              documentation or format source.
+            </p>
+          </aside>
         </section>
 
         <nav class="mobile-guide-toc" aria-label="Chapter contents on small screens">
           <p>In this chapter</p>
-          <ol>
-            <li><a href="#agentic-loop">Agentic loop</a></li>
-            <li><a href="#tools">Tools</a></li>
-            <li><a href="#context">Context, instructions, and memory</a></li>
+          <ol class="mobile-guide-toc-primary">
+            <li><a href="#instruction-files">Instruction files</a></li>
             <li><a href="#mcp">MCP</a></li>
             <li><a href="#skills">Skills</a></li>
-            <li><a href="#subagents">Subagents</a></li>
-            <li><a href="#controls">Permissions, guardrails, and hooks</a></li>
-            <li><a href="#together">How the pieces work together</a></li>
-            <li><a href="#scope">What this chapter does not cover</a></li>
+            <li><a href="#how-the-pieces-relate">How the pieces relate</a></li>
+            <li><a href="#subagents">Subagents — planned</a></li>
+            <li><a href="#plugins">Plugins — planned</a></li>
             <li><a href="#references">References</a></li>
           </ol>
         </nav>
 
-        <section class="content-section" id="orientation" aria-labelledby="orientation-heading">
-          <h2 id="orientation-heading">Start with a map, not a stack</h2>
+        <section class="content-section" id="instruction-files" aria-labelledby="instruction-files-heading">
+          <h2 id="instruction-files-heading">1. Instruction files</h2>
           <p>
-            The terms on this page describe different jobs. Some belong to the
-            agent’s runtime cycle. Some provide capabilities or information. Some
-            organize reusable work. Others control what may happen. A real system
-            may implement them with different names, combine them, or omit them.
+            A user request explains the current task. A repository also has
+            guidance that should survive across tasks: where content belongs,
+            which commands validate a change, what style the team follows, and
+            which decisions remain with a human. Repeating those rules in every
+            request is fragile. An instruction file gives a compatible host a
+            known place to discover them.
           </p>
+
+          <h3>How instruction files work</h3>
+          <p>
+            The basic pattern is simple: place ordinary Markdown at a known
+            path; the host discovers relevant files; the host applies its own
+            scope, composition, and precedence rules; and the resulting guidance
+            becomes part of the active model context. The Markdown may be easy
+            to share, but the loading behavior is a product feature—not a
+            property of Markdown itself.
+          </p>
+          <p>
+            <code>AGENTS.md</code> is an open convention for repository guidance.
+            Its format site describes root and nested files, but individual
+            products decide how they search for and combine them.
+            <cite class="claim-citation">
+              <a href="https://agents.md/" target="_blank" rel="noopener noreferrer">AGENTS.md: Official format site</a>
+            </cite>
+          </p>
+
+          <div class="command-block" aria-label="Example hierarchy of project instruction files">
+            <div class="command-label">Example repository</div>
+            <pre><code>study-group/
+├── AGENTS.md                 # rules for the whole repository
+├── book/
+│   └── AGENTS.md             # rules for book chapters
+├── frontend/
+│   └── AGENTS.md             # frontend-specific guidance
+└── backend/
+    └── AGENTS.md             # backend-specific guidance</code></pre>
+          </div>
+          <p>
+            If work happens under <code>book/</code>, a compatible host may use
+            both the root guidance and the closer book guidance. It should not
+            load <code>frontend/AGENTS.md</code> merely because that file exists.
+            The exact resolution rule still depends on the host.
+          </p>
+
+          <h3>One convention, several product loaders</h3>
           <div
-            class="table-wrap guide-table-wrap"
+            class="guide-table-wrap"
             role="region"
             tabindex="0"
-            aria-label="Core jobs in an agent system"
+            aria-label="Comparison of project instruction systems"
           >
-            <table class="guide-table guide-table-two-column">
-              <caption>Core jobs in an agent system</caption>
+            <table class="guide-table">
+              <caption>Repository guidance is portable only up to the host boundary</caption>
               <thead>
                 <tr>
-                  <th scope="col">Concept</th>
-                  <th scope="col">Primary job</th>
+                  <th scope="col">System</th>
+                  <th scope="col">Typical files</th>
+                  <th scope="col">Loading behavior to remember</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><th scope="row">Loop</th><td>Decides what to do next from the information currently available.</td></tr>
-                <tr><th scope="row">Tools</th><td>Provide actions and return observations to the loop.</td></tr>
-                <tr><th scope="row">Context</th><td>Supplies the information and instructions available for the next decision.</td></tr>
-                <tr><th scope="row">MCP</th><td>Standardizes connections to external capabilities and data.</td></tr>
-                <tr><th scope="row">Skills</th><td>Package reusable methods and supporting resources.</td></tr>
+                <tr>
+                  <th scope="row">Open convention</th>
+                  <td><code>AGENTS.md</code></td>
+                  <td>Defines a readable repository convention and broad nesting idea; it does not force every product to load files identically.</td>
+                </tr>
+                <tr>
+                  <th scope="row">OpenAI Codex</th>
+                  <td><code>AGENTS.md</code>, <code>AGENTS.override.md</code>, configured fallbacks</td>
+                  <td>Builds a chain from global guidance and the project root down to the working directory, with closer files later in the combined prompt.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Claude Code</th>
+                  <td><code>CLAUDE.md</code>, <code>CLAUDE.local.md</code>, <code>.claude/rules/</code></td>
+                  <td>Uses its own additive hierarchy, imports, path-scoped rules, and managed locations. <code>CLAUDE.md</code> is a native system, not merely a renamed <code>AGENTS.md</code>.</td>
+                </tr>
+                <tr>
+                  <th scope="row">GitHub Copilot</th>
+                  <td><code>.github/copilot-instructions.md</code>, path-specific instruction files, and supported agent-instruction filenames</td>
+                  <td>Supports repository-wide and path-specific instructions with product-specific precedence and feature coverage.</td>
+                </tr>
               </tbody>
             </table>
           </div>
-          <div class="notice notice-important">
-            <p class="notice-title">One useful test</p>
+          <p>
+            Claude Code reads <code>CLAUDE.md</code>, not
+            <code>AGENTS.md</code> directly. A repository that wants one shared
+            source can import <code>@AGENTS.md</code> from
+            <code>CLAUDE.md</code>, keeping Claude-specific guidance below the
+            import, or use a symbolic link when no additions are needed. These
+            choices can share guidance; they do not make the loaders identical.
+            Codex, Claude Code, and GitHub Copilot still apply their own
+            discovery, scope, and precedence rules.
+            <cite class="claim-citation">
+              <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener noreferrer">OpenAI: Custom instructions with AGENTS.md</a>;
+              <a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener noreferrer">Anthropic: How Claude remembers your project</a>;
+              <a href="https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions" target="_blank" rel="noopener noreferrer">GitHub: Repository custom instructions</a>
+            </cite>
+          </p>
+
+          <h3>What belongs in an instruction file?</h3>
+          <p>
+            Put durable, frequently relevant guidance close to the work it
+            governs: validation commands, architecture boundaries, ownership
+            rules, and links that route the agent to deeper documentation. Do
+            not turn an always-loaded file into an encyclopedia of every
+            procedure the project might ever use.
+          </p>
+          <aside class="concept-callout">
             <p>
-              Ask what job a feature performs. “MCP,” “tool,” and “Skill” may all
-              appear near one task, but they are not three names for the same thing.
+              <strong>Boundary with Skills:</strong> an instruction file answers
+              “what should remain true while I work here?” A Skill answers “how
+              should I perform this particular kind of task?” A short rule can
+              point to a Skill when a detailed, reusable procedure is needed.
             </p>
-          </div>
-        </section>
-
-        <section class="content-section" id="agentic-loop" aria-labelledby="loop-heading">
-          <h2 id="loop-heading">1. The agentic loop</h2>
-          <p>
-            The agentic loop is the core behavior: gather relevant context, choose
-            an action, observe what happened, and decide whether to continue.
-            <a href="https://code.claude.com/docs/en/how-claude-code-works">Claude Code’s documentation</a>
-            presents this as gathering context, taking action, and verifying
-            results. The phases blend together in practice. A failed test may send
-            the agent back to inspect a file; a tool result may reveal the next
-            question; a user may redirect the work at any time.
-          </p>
-          <ol class="process-list">
-            <li><strong>Gather context.</strong> Read the request, instructions, relevant files, conversation state, and available capability descriptions.</li>
-            <li><strong>Decide.</strong> Select a next step: answer, inspect, call a tool, ask a question, or stop.</li>
-            <li><strong>Act.</strong> Produce text or request an available action.</li>
-            <li><strong>Observe.</strong> Receive the tool result, error, file change, or user response.</li>
-            <li><strong>Verify and continue.</strong> Check progress against the goal, then repeat or finish.</li>
-          </ol>
-          <p>
-            The loop does not mean “keep going forever.” A useful host gives the
-            agent stopping conditions, a limited capability set, and opportunities
-            for the user to approve or redirect consequential work. The agent can
-            also decide that it lacks required information and ask a focused
-            question. These exit paths are part of reliable loop behavior, not
-            exceptions to it.
-          </p>
-          <p>
-            Verification deserves its own place in the cycle. Seeing a successful
-            tool response only proves that the action ran. It may not prove that the
-            original goal was met. A coding agent can run tests after an edit; a
-            research agent can check whether each claim has a source; a support
-            agent can confirm that the retrieved record actually matches the user.
-            The appropriate check depends on the task.
-          </p>
-          <p>
-            This conceptual loop is broader than a particular framework’s runtime.
-            For example, the
-            <a href="https://adk.dev/runtime/event-loop/">Google ADK event loop</a>
-            describes how ADK coordinates agents, runners, events, and services.
-            That is one concrete implementation of runtime orchestration; it does
-            not redefine the general idea of an agentic loop.
-          </p>
-          <!-- Visual opportunity: C2-V01. See visual-notes.md. -->
-        </section>
-
-        <section class="content-section" id="tools" aria-labelledby="tools-heading">
-          <h2 id="tools-heading">2. Tools</h2>
-          <p>
-            A tool gives the agent an action it can request: search a catalog,
-            read a page, run a test, query a service, or update a file. The model
-            does not execute the function by merely mentioning its name. The host
-            exposes a callable contract, the model selects it with arguments, the
-            host runs it, and the result returns as a new observation.
-          </p>
-          <p>
-            Week 2’s <code>find_terms_by_week</code> example made this boundary
-            visible. Its name, description, argument schema, and return shape help
-            the model decide whether and how to call it. Registering the tool gives
-            the agent the capability to execute it. The agent’s instruction then
-            helps set the policy for when the capability should be used. A clear
-            tool contract improves selection and argument construction; it does not
-            guarantee that every output is correct.
-          </p>
-          <div class="table-wrap guide-table-wrap" role="region" tabindex="0" aria-label="Tool contract responsibilities">
-            <table class="guide-table">
-              <thead>
-                <tr><th scope="col">Part</th><th scope="col">Question it answers</th><th scope="col">Why it matters</th></tr>
-              </thead>
-              <tbody>
-                <tr><th scope="row">Name</th><td>What action is this?</td><td>Helps distinguish it from neighboring actions.</td></tr>
-                <tr><th scope="row">Description</th><td>When should it be used?</td><td>Gives the model selection cues and boundaries.</td></tr>
-                <tr><th scope="row">Input schema</th><td>What arguments are valid?</td><td>Constrains the call and makes errors inspectable.</td></tr>
-                <tr><th scope="row">Result</th><td>What observation comes back?</td><td>Provides evidence for the next loop decision.</td></tr>
-                <tr><th scope="row">Runtime</th><td>Who actually performs the action?</td><td>Enforces authentication, permissions, timeouts, and failures.</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="notice">
-            <p class="notice-title">Tool does not imply MCP</p>
-            <p>
-              A tool may be a local function, a built-in host action, or a remote
-              service adapter. MCP is one connection standard for exposing
-              capabilities; not every tool uses it.
-            </p>
-          </div>
-          <h3>Tool results become context</h3>
-          <p>
-            The return value is not merely a success receipt. It becomes evidence
-            for the next decision. A small, structured result is often easier to
-            use than a large unfiltered dump. Errors should also be explicit: “term
-            not found” and “service unavailable” call for different next steps.
-            The host may shorten or summarize very large results before adding them
-            to the context window, so tool designers should not assume that every
-            returned byte will remain visible indefinitely.
-          </p>
-        </section>
-
-        <section class="content-section" id="context" aria-labelledby="context-heading">
-          <h2 id="context-heading">3. Context, instructions, and memory</h2>
-          <p>
-            “The agent knows this” can hide several different mechanisms. The
-            clearest way to reason about them is to ask where the information lives,
-            when it is loaded, and how long it lasts.
-          </p>
-          <p>
-            <strong>Context</strong> is the information supplied to the model for
-            its current decision. It can include instructions, recent conversation
-            history, tool results, and retrieved material. Instructions guide the
-            run; history records earlier turns; a tool result is a new observation;
-            retrieval selects external material; memory keeps information available
-            for possible later retrieval; and a Skill is a reusable method whose
-            selected contents may be loaded into context. These are related layers,
-            not interchangeable names for the same thing.
-          </p>
-          <div class="table-wrap guide-table-wrap" role="region" tabindex="0" aria-label="Context, instructions, session state, and memory comparison">
-            <table class="guide-table context-table">
-              <thead>
-                <tr><th scope="col">Layer</th><th scope="col">What it contains</th><th scope="col">Typical lifetime</th><th scope="col">Important limit</th></tr>
-              </thead>
-              <tbody>
-                <tr><th scope="row">Context window</th><td>The information available to the model for its current decision.</td><td>One model call, assembled repeatedly by the host.</td><td>Finite; inclusion is not the same as durable storage.</td></tr>
-                <tr><th scope="row">Persistent project instructions</th><td>Repository conventions, commands, boundaries, and working agreements.</td><td>Across sessions when the product loads the file.</td><td>Loading and precedence rules are product-specific.</td></tr>
-                <tr><th scope="row">Session state and history</th><td>Messages, events, intermediate state, and artifacts from a conversation.</td><td>Usually one session or thread.</td><td>A long history may be summarized or selectively loaded.</td></tr>
-                <tr><th scope="row">Longer-term memory</th><td>Selected facts or preferences retained beyond one session.</td><td>Across sessions, depending on the system.</td><td>Storage does not guarantee retrieval into the current context.</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Project instructions: AGENTS.md and CLAUDE.md</h3>
-          <p>
-            <a href="https://agents.md/">AGENTS.md</a> is an open convention for
-            repository guidance such as build commands, test steps, code style,
-            and scoped instructions. OpenAI’s
-            <a href="https://learn.chatgpt.com/docs/customization/overview">Customization guide</a>
-            describes it as persistent guidance for Codex, with more specific files
-            applying closer to the working directory.
-          </p>
-          <p>
-            <a href="https://code.claude.com/docs/en/memory">CLAUDE.md</a> serves a
-            similar purpose in Claude Code: it supplies persistent project or user
-            instructions according to Claude Code’s own discovery and loading rules.
-            Similar purpose does not mean interchangeable loader. Claude Code does
-            not natively discover <code>AGENTS.md</code>; a team that wants one source
-            of guidance must explicitly import, reference, or link it from the
-            convention its product loads.
-          </p>
-          <h3>Context is assembled, not simply accumulated</h3>
-          <p>
-            At each model call, the host assembles a working context from several
-            possible sources: the current request, system instructions, recent
-            conversation, project files, tool descriptions, tool results, loaded
-            Skills, and retrieved memory. The full archive of a project or session
-            is usually larger than the active context window. The system therefore
-            has to select, summarize, or retrieve what matters now.
-          </p>
-          <p>
-            This distinction explains two common surprises. First, saving something
-            to memory does not guarantee that it will be retrieved for the next
-            task. Second, a file that exists in the repository does not influence
-            the model unless the host or agent reads it. When behavior is confusing,
-            inspect the actual context and event trace before assuming that a rule
-            was ignored.
-          </p>
-          <div class="notice notice-free">
-            <p class="notice-title">Keep durable instructions durable</p>
-            <p>
-              Put stable commands, conventions, and boundaries in project
-              instructions. Put task-specific goals in the request. This keeps the
-              always-loaded layer short enough to remain useful.
-            </p>
-          </div>
-          <!-- Visual opportunity: C2-V02. See visual-notes.md. -->
+          </aside>
         </section>
 
         <section class="content-section" id="mcp" aria-labelledby="mcp-heading">
-          <h2 id="mcp-heading">4. Model Context Protocol (MCP)</h2>
+          <h2 id="mcp-heading">2. Model Context Protocol (MCP)</h2>
           <p>
-            MCP is an open client–server protocol for connecting an AI application
-            to external capabilities and information. In the
-            <a href="https://modelcontextprotocol.io/docs/learn/architecture">official architecture</a>,
-            a host application creates a client connection to each local or remote
-            MCP server. Servers can expose three main primitives: <strong>tools</strong>
-            the model can invoke, <strong>resources</strong> the application can read,
-            and <strong>prompts</strong> that package reusable interaction templates.
+            Chapter 1 treated a tool as a capability the model can request. That
+            leaves an integration problem: without a shared protocol, each AI
+            host and each external provider may need a custom adapter. Anthropic
+            introduced MCP in November 2024 as an open response to those
+            fragmented one-off connections.
+            <cite class="claim-citation">
+              <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener noreferrer">Anthropic: Introducing MCP</a>
+            </cite>
           </p>
           <p>
-            MCP standardizes the connection and discovery boundary. It is not an
-            agent, a reasoning loop, or a complete application framework. The host
-            still decides which servers to trust, which primitives to surface, how
-            to request approval, and how results enter the model’s context.
+            MCP standardizes the connection and exchange boundary. It does not
+            replace the agentic loop, define the model's judgment, or turn every
+            connected operation into the same tool.
           </p>
+
+          <h3>Host, client, and server</h3>
+          <p>
+            In the versioned 2026-07-28 architecture, an
+            <strong>MCP host</strong> is the AI application. It creates an
+            <strong>MCP client</strong> for each connected
+            <strong>MCP server</strong>. A server may run locally or remotely.
+            The protocol separates a data layer from the transport layer and
+            defines primitives such as <strong>tools</strong>,
+            <strong>resources</strong>, and <strong>prompts</strong>.
+            <cite class="claim-citation">
+              <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noopener noreferrer">MCP: Architecture overview, 2026-07-28</a>
+            </cite>
+          </p>
+
           <div
-            class="table-wrap guide-table-wrap"
+            class="guide-table-wrap"
             role="region"
             tabindex="0"
-            aria-label="Roles in an MCP connection"
+            aria-label="MCP participants and their responsibilities"
           >
-            <table class="guide-table guide-table-two-column">
-              <caption>Roles in an MCP connection</caption>
+            <table class="guide-table">
+              <caption>The protocol participants are not the agentic loop</caption>
               <thead>
                 <tr>
-                  <th scope="col">Role</th>
+                  <th scope="col">Participant</th>
                   <th scope="col">Responsibility</th>
+                  <th scope="col">Not automatically responsible for</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><th scope="row">Host</th><td>The AI application that manages the user experience, policy, and one or more connections.</td></tr>
-                <tr><th scope="row">Client</th><td>The protocol component inside the host that maintains a connection to one server.</td></tr>
-                <tr><th scope="row">Server</th><td>A local process or remote service that exposes selected tools, resources, or prompts.</td></tr>
+                <tr>
+                  <th scope="row">Host</th>
+                  <td>Coordinates clients and decides how the AI application uses connected capabilities.</td>
+                  <td>Trusting every server or approving every action.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Client</th>
+                  <td>Maintains the protocol connection to one server for the host.</td>
+                  <td>Choosing the agent's overall task strategy.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Server</th>
+                  <td>Provides protocol-accessible tools, resources, prompts, or extension capabilities.</td>
+                  <td>Being an agent, model, or complete workflow.</td>
+                </tr>
               </tbody>
             </table>
           </div>
+
+          <h3>A concrete connection</h3>
           <p>
-            Google ADK illustrates both directions of the boundary. Its
-            <a href="https://adk.dev/tools-custom/mcp-tools/">MCP documentation</a>
-            shows how an ADK agent can consume tools from an MCP server and how ADK
-            tools can be exposed through an MCP server. The protocol handles the
-            connection shape; ADK still supplies the agent runtime around it.
+            Suppose the Week 3 update needs issue data from an approved remote
+            system. One simplified run looks like this:
           </p>
-          <h3>What the standard buys you</h3>
+          <ol class="process-list">
+            <li><strong>Connect.</strong> The host establishes an authenticated client connection to the approved server.</li>
+            <li><strong>Discover.</strong> The client asks what the server currently provides.</li>
+            <li><strong>Select.</strong> The host filters that catalog and makes only relevant capabilities available to the model.</li>
+            <li><strong>Propose.</strong> Inside the existing Chapter 1 loop, the model proposes a call to one exposed tool.</li>
+            <li><strong>Execute.</strong> The host routes the request through the client; the server performs the operation.</li>
+            <li><strong>Observe.</strong> The result returns to the host, which decides what enters the next model context.</li>
+          </ol>
           <p>
-            A shared protocol lets a capability provider describe itself once and
-            lets compatible hosts discover it through a common interface. That can
-            reduce one-off integrations and make local and remote connections feel
-            similar to the agent. It does not remove operational decisions. Someone
-            still owns authentication, transport security, server lifecycle,
-            capability filtering, consent, and error handling. Connecting a server
-            should be treated as granting access to the specific capabilities it
-            exposes, not as installing a harmless description file.
+            This is one host's implementation pattern, not the whole protocol.
+            OpenAI's current MCP integration, for example, supports remote
+            servers, imported tool lists, allowed-tool filters, approvals, and
+            OAuth while warning developers to treat remote servers as a trust
+            boundary.
+            <cite class="claim-citation">
+              <a href="https://developers.openai.com/api/docs/guides/tools-connectors-mcp" target="_blank" rel="noopener noreferrer">OpenAI: MCP and Connectors</a>
+            </cite>
           </p>
-          <!-- Visual opportunity: C2-V03. See visual-notes.md. -->
+
+          <div
+            class="guide-table-wrap"
+            role="region"
+            tabindex="0"
+            aria-label="Difference between tools and MCP"
+          >
+            <table class="guide-table guide-table-two-column">
+              <caption>Tool and MCP are different levels</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Tool</th>
+                  <th scope="col">MCP</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Describes an operation the model can request.</td>
+                  <td>Defines how a host and external provider connect, discover capabilities, and exchange messages.</td>
+                </tr>
+                <tr>
+                  <td>May be built into the host, local code, or exposed through another integration.</td>
+                  <td>May carry tools, but also resources, prompts, and extension capabilities.</td>
+                </tr>
+                <tr>
+                  <td>Does not imply MCP.</td>
+                  <td>Does not imply that every server capability is exposed to the model at once.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>What MCP does not solve</h3>
+          <p>
+            Interoperability does not determine whether a server is trustworthy,
+            which actions require approval, or how authentication, prompt
+            injection, context selection, execution safety, and stopping are
+            handled. Those responsibilities remain with the host, application
+            policy, execution environment, and human reviewers.
+          </p>
+
+          <h3>MCP's evolving frontier</h3>
+          <h4>Stateless MCP</h4>
+          <p>
+            In the 2026-07-28 protocol, each request carries its protocol version
+            and relevant capabilities, so a server does not need a protocol-level
+            MCP session to interpret the request. Removing earlier
+            protocol-session management burdens simplifies clients and servers,
+            avoids requiring sticky routing to a specific backend, and fits
+            horizontally scaled remote services more naturally. Transport
+            connections and notification streams can still remain open, and an
+            application may still maintain explicit task or domain state. The
+            official architecture defines the behavior; Simon Willison supplies
+            a practitioner interpretation of its operational consequences.
+            <cite class="claim-citation">
+              <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noopener noreferrer">MCP: Architecture overview</a>;
+              <a href="https://simonwillison.net/2026/Jul/31/stateless-mcp/" target="_blank" rel="noopener noreferrer">Simon Willison: Stateless MCP</a>
+            </cite>
+          </p>
+
+          <h4>Code execution with MCP</h4>
+          <p>
+            Direct tool calling works well for a small relevant catalog: the
+            model sees a tool definition, proposes a call, and receives the
+            result. At larger scales, eagerly loading many schemas and sending
+            every intermediate result through the model can waste context. A
+            code-execution pattern instead lets the model write a bounded
+            program that discovers selected operations, composes several calls,
+            filters or joins results, and returns only the useful subset.
+          </p>
+          <p>
+            This is an architectural pattern layered around MCP, not part of the
+            MCP protocol. It also introduces requirements for sandboxing,
+            resource limits, monitoring, and safe data handling.
+            <cite class="claim-citation">
+              <a href="https://www.anthropic.com/engineering/code-execution-with-mcp" target="_blank" rel="noopener noreferrer">Anthropic: Code execution with MCP</a>
+            </cite>
+          </p>
+
+          <h4>MCP Apps</h4>
+          <p>
+            MCP Apps is an official extension that lets a tool return an
+            interactive interface to a supporting client. A form, dashboard,
+            chart, or multi-step control can appear inside the conversation
+            instead of reducing every interaction to text or raw JSON. It is an
+            extension, not part of the minimal core protocol.
+            <cite class="claim-citation">
+              <a href="https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/" target="_blank" rel="noopener noreferrer">MCP Apps: Bringing UI capabilities to MCP clients</a>
+            </cite>
+          </p>
+          <figure class="source-image-figure">
+            <a href="assets/claude-colorpicker-apps.gif" target="_blank" rel="noopener noreferrer">
+              <img
+                class="motion-asset"
+                src="assets/claude-colorpicker-apps.gif"
+                width="1080"
+                height="836"
+                loading="lazy"
+                decoding="async"
+                alt="Animated demonstration in Claude: a user asks for a color picker, an MCP tool returns an interactive color-picker interface in the conversation, the user adjusts the color, and the interface sends the selected value back."
+              />
+            </a>
+            <p class="motion-fallback">
+              In the demonstration, an MCP tool returns an interactive color
+              picker inside the conversation. The user changes the color and
+              sends the selected value back through the interface.
+            </p>
+            <figcaption>
+              <strong>MCP Apps demonstration.</strong> An MCP tool can return a
+              sandboxed interactive interface to a client that supports the
+              extension. Source visual:
+              <a href="https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/" target="_blank" rel="noopener noreferrer">MCP Apps — Bringing UI capabilities to MCP clients</a>.
+              <a href="assets/claude-colorpicker-apps.gif" target="_blank" rel="noopener noreferrer">Open full-size animation</a>.
+            </figcaption>
+          </figure>
+
+          <h4>The official MCP Registry</h4>
+          <p>
+            The Registry addresses another emerging need: how people and hosts
+            discover metadata about published MCP servers. It is preview
+            infrastructure for an ecosystem, not a completed universal
+            marketplace and not a guarantee that a listed server is safe or
+            appropriate for a particular user.
+            <cite class="claim-citation">
+              <a href="https://modelcontextprotocol.io/registry/about" target="_blank" rel="noopener noreferrer">MCP: Official Registry</a>
+            </cite>
+          </p>
+          <figure class="source-image-figure">
+            <a href="assets/ecosystem-diagram.excalidraw.svg" target="_blank" rel="noopener noreferrer">
+              <img
+                src="assets/ecosystem-diagram.excalidraw.svg"
+                width="1393"
+                height="905"
+                loading="lazy"
+                decoding="async"
+                alt="Ecosystem diagram with the official MCP Registry in the center. MCP server maintainers publish metadata to it; downstream marketplaces and aggregators consume that metadata; MCP hosts and clients discover servers through those channels."
+              />
+            </a>
+            <figcaption>
+              <strong>Registry ecosystem.</strong> The official Registry is an
+              upstream metadata source that can feed downstream discovery
+              experiences; it is not the only interface through which users may
+              find servers. Source visual:
+              <a href="https://modelcontextprotocol.io/registry/about" target="_blank" rel="noopener noreferrer">The MCP Registry</a>.
+              <a href="assets/ecosystem-diagram.excalidraw.svg" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+            </figcaption>
+          </figure>
         </section>
 
         <section class="content-section" id="skills" aria-labelledby="skills-heading">
-          <h2 id="skills-heading">5. Skills</h2>
+          <h2 id="skills-heading">3. Skills</h2>
           <p>
-            A Skill packages reusable know-how for an agent. The open
-            <a href="https://agentskills.io/home">Agent Skills</a> format starts with
-            a <code>SKILL.md</code> file and may include scripts, references, and
-            assets. Instead of placing every workflow in the always-loaded project
-            instructions, the host can discover a short description and load the
-            full Skill only when it is relevant.
+            A capable agent may have a filesystem, a browser, shell commands,
+            and external connections and still perform a specialized task
+            inconsistently. Capability answers “what can the system do?” It does
+            not supply a team's preferred method, reference material, templates,
+            or deterministic helpers.
           </p>
-          <div class="command-block" aria-label="Example Skill directory">
-            <div class="command-label">Example directory</div>
-            <pre><code>release-audit/
-├── SKILL.md          # purpose, trigger cues, and procedure
-├── scripts/          # deterministic helpers
-├── references/       # detailed guidance loaded when needed
-└── assets/           # templates or reusable inputs</code></pre>
+          <p>
+            A <strong>Skill</strong> packages that reusable procedural knowledge
+            in a folder. Anthropic introduced Agent Skills in October 2025 and
+            published the format as an open standard for cross-platform
+            portability in December 2025. In the open format, the folder
+            contains a required <code>SKILL.md</code> and may include scripts,
+            references, assets, or other supporting files.
+            <cite class="claim-citation">
+              <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer">Anthropic: Equipping agents for the real world with Agent Skills</a>;
+              <a href="https://agentskills.io/home" target="_blank" rel="noopener noreferrer">Agent Skills: Overview</a>
+            </cite>
+          </p>
+
+          <div class="command-block" aria-label="Example documentation review Skill directory">
+            <div class="command-label">documentation-review/</div>
+            <pre><code>documentation-review/
+├── SKILL.md              # trigger description and core procedure
+├── references/
+│   ├── source-policy.md  # approved source and citation rules
+│   └── review-rubric.md  # checks for scope, claims, and pedagogy
+├── scripts/
+│   └── check-links.py    # deterministic link validation
+└── assets/
+    └── review-note.md    # reusable review template</code></pre>
           </div>
+
+          <h3>Progressive disclosure</h3>
           <p>
-            This staged loading is often called <strong>progressive disclosure</strong>:
-            first the host sees enough metadata to identify a relevant Skill; then
-            it loads <code>SKILL.md</code>; finally it opens supporting files or runs
-            scripts only when the procedure calls for them. The
-            <a href="https://agentskills.io/specification">format specification</a>
-            defines the portable core, while individual products decide discovery,
-            activation, and permission behavior.
+            A Skill can keep a large body of procedural knowledge available
+            without loading every file into every model call. The common
+            three-level explanation is:
           </p>
-          <div class="table-wrap guide-table-wrap" role="region" tabindex="0" aria-label="Skills and tools comparison">
+          <ol class="process-list">
+            <li><strong>Metadata.</strong> A compatible client exposes a short name and description so the model can recognize when the Skill may be relevant.</li>
+            <li><strong>Core instructions.</strong> The full <code>SKILL.md</code> loads when the Skill is activated.</li>
+            <li><strong>Supporting resources.</strong> References, scripts, templates, and other files are opened or executed only when the method calls for them.</li>
+          </ol>
+          <p>
+            The open format describes this staged structure. Exact discovery,
+            automatic activation, manual invocation, and execution controls
+            still belong to the client.
+          </p>
+          <figure class="source-image-figure">
+            <a href="assets/Skills%20and%20the%20context%20window.webp" target="_blank" rel="noopener noreferrer">
+              <img
+                src="assets/Skills%20and%20the%20context%20window.webp"
+                width="1650"
+                height="929"
+                loading="lazy"
+                decoding="async"
+                alt="Claude-oriented diagram of Skills and the context window. Short metadata for many Skills is present first. A user asks to fill a PDF, Claude reads the PDF Skill's SKILL.md, then follows a reference to the forms guide only when needed."
+              />
+            </a>
+            <figcaption>
+              <strong>Skills and the context window.</strong> Metadata supports
+              discovery; the main instructions and a referenced file load later
+              as the PDF task requires them. This is a Claude-oriented example;
+              exact activation behavior differs by client. Source visual:
+              <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer">Anthropic — Equipping agents for the real world with Agent Skills</a>.
+              <a href="assets/Skills%20and%20the%20context%20window.webp" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+            </figcaption>
+          </figure>
+
+          <h3>A concrete workflow</h3>
+          <p>
+            Return to the request: “Update the Week 3 page, verify references,
+            and summarize the change.” A documentation-review Skill could guide
+            the existing agent through a repeatable method:
+          </p>
+          <ol class="process-list">
+            <li><strong>Confirm scope.</strong> Identify the named page and read the repository's durable instructions.</li>
+            <li><strong>Inspect before editing.</strong> Read the whole page and its local navigation, references, and neighboring boundaries.</li>
+            <li><strong>Classify claims.</strong> Separate sourced factual claims, teaching synthesis, and product-specific examples.</li>
+            <li><strong>Load only needed guidance.</strong> Open the source policy when adding citations and the review rubric before final verification.</li>
+            <li><strong>Run deterministic checks.</strong> Use the bundled link checker after editing rather than asking the model to simulate HTTP validation.</li>
+            <li><strong>Report evidence.</strong> Summarize what changed, which checks ran, and which decisions remain with the user.</li>
+          </ol>
+          <p>
+            The Skill supplies the method. File and browser tools perform the
+            work. An MCP connection may provide approved external data. Project
+            instructions still supply local rules that apply beyond this one
+            workflow.
+          </p>
+
+          <h3>Skills versus neighboring concepts</h3>
+          <div
+            class="guide-table-wrap"
+            role="region"
+            tabindex="0"
+            aria-label="Comparison of instructions, tools, MCP, and Skills"
+          >
             <table class="guide-table">
+              <caption>Do not collapse method, capability, and connection</caption>
               <thead>
-                <tr><th scope="col">Question</th><th scope="col">Tool</th><th scope="col">Skill</th></tr>
+                <tr>
+                  <th scope="col">Mechanism</th>
+                  <th scope="col">Supplies</th>
+                  <th scope="col">Does not automatically supply</th>
+                </tr>
               </thead>
               <tbody>
-                <tr><th scope="row">Primary job</th><td>Perform an action and return a result.</td><td>Explain and support a reusable way of working.</td></tr>
-                <tr><th scope="row">Typical contents</th><td>Callable schema plus runtime implementation.</td><td>Instructions, decision rules, scripts, references, and assets.</td></tr>
-                <tr><th scope="row">Relationship</th><td>A Skill may tell the agent when and how to use tools.</td><td>A Skill may include helper scripts, but it is more than one callable action.</td></tr>
+                <tr>
+                  <th scope="row">Instruction file</th>
+                  <td>Durable project and path guidance.</td>
+                  <td>A complete task-specific procedure.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Tool</th>
+                  <td>One callable operation or retrieval capability.</td>
+                  <td>The team's method for combining operations.</td>
+                </tr>
+                <tr>
+                  <th scope="row">MCP</th>
+                  <td>A compatible connection to external capabilities and information.</td>
+                  <td>A reusable task method.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Skill</th>
+                  <td>A reusable method plus optional references, scripts, and assets.</td>
+                  <td>The external connection or every operation it names.</td>
+                </tr>
               </tbody>
             </table>
           </div>
+
+          <h3>One format, different product behavior</h3>
           <p>
-            OpenAI’s customization model treats Skills as one layer beside
-            <code>AGENTS.md</code>, MCP, memory, and subagents. Claude Code also
-            supports Skills as on-demand capabilities in its
-            <a href="https://code.claude.com/docs/en/features-overview">extension model</a>.
-            Google ADK now documents <a href="https://adk.dev/skills/">Skills support</a>,
-            but labels it experimental; use that implementation with the caution
-            expected for an evolving API.
+            OpenAI documents Skills with project and user scopes, implicit or
+            explicit activation, progressive disclosure, distribution, and
+            optional MCP dependencies. Claude Code adds its own invocation and
+            loading controls. Google ADK provides a framework implementation
+            based on the Agent Skills format, but currently labels that feature
+            <strong>experimental</strong>. These examples show adoption, not
+            identical client behavior.
+            <cite class="claim-citation">
+              <a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">OpenAI: Build Skills</a>;
+              <a href="https://code.claude.com/docs/en/slash-commands" target="_blank" rel="noopener noreferrer">Claude Code: Extend Claude with Skills</a>;
+              <a href="https://adk.dev/skills/" target="_blank" rel="noopener noreferrer">Google ADK: Skills for agents</a>
+            </cite>
           </p>
-          <!-- Visual opportunity: C2-V04. See visual-notes.md. -->
-          <h3>Choose a Skill when the method is reusable</h3>
+
+          <h3>Skills' evolving frontier</h3>
           <p>
-            A good Skill has a recognizable job and a procedure worth applying more
-            than once: preparing a release audit, reviewing a notebook, or creating
-            a source-backed lesson. It should state when it applies, the expected
-            inputs and outputs, and any important safety boundary. Deterministic
-            steps can live in scripts, while judgment and sequencing stay in the
-            instructions. A vague “do everything well” Skill gives the host little
-            help deciding when to load it and gives the agent little operational
-            guidance after activation.
+            The next frontier is not only writing local Skill folders, but
+            finding, installing, updating, and sharing them. Vercel describes
+            that distribution direction from its own ecosystem perspective, and
+            <code>skills.sh</code> is one concrete searchable directory. Neither
+            source is the Agent Skills specification or an authoritative
+            universal registry.
+            <cite class="claim-citation">
+              <a href="https://vercel.com/blog/agent-skills-explained-an-faq" target="_blank" rel="noopener noreferrer">Vercel: Agent skills explained</a>;
+              <a href="https://skills.sh/" target="_blank" rel="noopener noreferrer">skills.sh</a>
+            </cite>
           </p>
         </section>
 
-        <section class="content-section deferred-section" id="subagents" aria-labelledby="subagents-heading">
-          <p class="deferred-label">Brief orientation · to be expanded</p>
-          <h2 id="subagents-heading">6. Subagents</h2>
+        <section class="content-section" id="how-the-pieces-relate" aria-labelledby="how-the-pieces-relate-heading">
+          <h2 id="how-the-pieces-relate-heading">4. How the pieces relate</h2>
           <p>
-            A subagent is a separate agent invocation given a bounded task. It can
-            use its own context, instructions, and tools, then return a result to a
-            coordinating agent or user. This helps isolate research or parallelize
-            independent work, but it also adds coordination cost. A subagent is not
-            automatically better than a direct tool call: use it when the delegated
-            work needs its own reasoning loop, not merely one deterministic action.
+            The mechanisms surround the Chapter 1 loop; they do not replace it.
+            For the Week 3 update, repository instruction files provide the
+            durable publishing and ownership rules. A documentation-review Skill
+            can provide the optional review method. An approved MCP connection
+            can supply external issue, document, or reference data when needed.
+            The model, tools, and runtime still perform the actual cycles of
+            inspection, editing, execution, observation, and stopping.
+          </p>
+          <p>
+            MCP and Skills are therefore optional. If all sources are public web
+            pages and the task is one-off, ordinary web access and the user's
+            request may be enough. If the same review process recurs, a Skill may
+            earn its maintenance cost. If approved external systems must expose
+            capabilities across several hosts, MCP may earn its integration
+            cost.
+          </p>
+
+          <h3>Instruction files and Skills</h3>
+          <p>
+            Always-loaded guidance is more likely to be present when the model
+            needs it; on-demand Skills preserve context but depend on the host or
+            model recognizing when to activate them. A Vercel evaluation found
+            that <code>AGENTS.md</code> outperformed Skills for its own tested
+            task and harness. That result illustrates an activation tradeoff. It
+            does not prove that instruction files universally outperform Skills
+            or that large procedures should always be loaded.
+            <cite class="claim-citation">
+              <a href="https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals" target="_blank" rel="noopener noreferrer">Vercel: AGENTS.md outperforms Skills in our agent evals</a>
+            </cite>
+          </p>
+
+          <h3>MCP and Skills</h3>
+          <p>
+            Today, MCP connects external capabilities and information, while a
+            Skill packages a reusable method. The boundary is active rather than
+            frozen: the MCP Skills Over MCP Working Group is exploring how
+            Skills could be discovered, distributed, or consumed through MCP
+            infrastructure. Its charter and in-review work are emerging
+            direction, not settled protocol behavior.
+            <cite class="claim-citation">
+              <a href="https://modelcontextprotocol.io/community/working-groups/skills-over-mcp" target="_blank" rel="noopener noreferrer">MCP: Skills Over MCP Working Group</a>
+            </cite>
+          </p>
+
+          <div
+            class="guide-table-wrap"
+            role="region"
+            tabindex="0"
+            aria-label="Summary of instruction files, MCP, and Skills"
+          >
+            <table class="guide-table">
+              <caption>A compact responsibility map</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Mechanism</th>
+                  <th scope="col">Primary responsibility</th>
+                  <th scope="col">Typical loading or access path</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Instruction files</th>
+                  <td>Durable guidance.</td>
+                  <td>Loaded through host-specific scope rules.</td>
+                </tr>
+                <tr>
+                  <th scope="row">MCP</th>
+                  <td>External capabilities and information.</td>
+                  <td>Reached through configured client–server connections.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Skills</th>
+                  <td>Reusable procedural knowledge.</td>
+                  <td>Discovered and loaded on demand by a compatible client.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="content-section boundary-note" id="subagents" aria-labelledby="subagents-heading">
+          <h2 id="subagents-heading">5. Subagents <span class="planned-label">Planned</span></h2>
+          <p>
+            Some products let a main agent delegate a bounded task to another
+            agent invocation with separate instructions, context, or tools. A
+            later revision will compare that execution pattern with tools and
+            Skills, including when isolation or parallel work helps and why the
+            main agent must still integrate the result. This section is planned;
+            it does not yet assign a cross-product definition or reading.
           </p>
         </section>
 
-        <section class="content-section deferred-section" id="controls" aria-labelledby="controls-heading">
-          <p class="deferred-label">Brief orientation · to be expanded</p>
-          <h2 id="controls-heading">7. Permissions, guardrails, and hooks</h2>
+        <section class="content-section boundary-note" id="plugins" aria-labelledby="plugins-heading">
+          <h2 id="plugins-heading">6. Plugins <span class="planned-label">Planned</span></h2>
           <p>
-            These controls answer different questions. <strong>Permissions</strong>
-            decide whether an action is allowed, often using approval rules or a
-            sandbox. <strong>Guardrails</strong> check or constrain inputs, outputs,
-            or behavior against a policy. <strong>Hooks</strong> run deterministic
-            automation at lifecycle points such as before a tool call or after a
-            change. Frameworks may use “callbacks” for related interception and
-            observation points; see ADK’s
-            <a href="https://adk.dev/callbacks/">callbacks</a> and
-            <a href="https://adk.dev/safety/">safety guidance</a>.
-            These mechanisms may cooperate, but they are not synonyms.
-          </p>
-        </section>
-
-        <section class="content-section" id="together" aria-labelledby="together-heading">
-          <h2 id="together-heading">8. How the pieces work together</h2>
-          <p>
-            Consider a generic request: “Update the Week 3 page, verify its links,
-            and summarize what changed.” One possible system flow is:
-          </p>
-          <ol class="process-list connected-example">
-            <li><strong>Load guidance.</strong> The host supplies the request and relevant project instructions such as an <code>AGENTS.md</code> or <code>CLAUDE.md</code>.</li>
-            <li><strong>Gather context.</strong> The agent inspects the existing page, styles, and repository state using available file tools.</li>
-            <li><strong>Select a method.</strong> A documentation-editing Skill may be discovered and loaded because its description matches the task.</li>
-            <li><strong>Reach an external system.</strong> If current issue data is needed, the host may connect through an approved MCP server and expose its tools or resources.</li>
-            <li><strong>Act.</strong> The agent edits the page with a tool. The runtime applies permissions before the action.</li>
-            <li><strong>Observe and verify.</strong> Tool results, link checks, and rendered-page evidence return to the loop as new context.</li>
-            <li><strong>Respond to controls.</strong> A hook may run a formatter; a guardrail may reject unsafe public content; a failed check sends the loop back to revise.</li>
-            <li><strong>Finish.</strong> The agent reports the changed files and remaining uncertainty. Session history retains the exchange according to the host’s policy.</li>
-          </ol>
-          <p>
-            This is a teaching example, not a required stack. The same task might
-            use no MCP server, no Skill, and no subagent. The stable idea is the
-            division of responsibilities: the loop decides, capabilities act,
-            context informs, reusable guidance shapes the method, and controls bound
-            execution.
-          </p>
-          <!-- Visual opportunity: C2-V05. See visual-notes.md. -->
-        </section>
-
-        <section class="content-section" id="scope" aria-labelledby="scope-heading">
-          <h2 id="scope-heading">9. What this chapter does not cover</h2>
-          <p>
-            This chapter establishes vocabulary and relationships. It deliberately
-            leaves the following topics for focused sessions where we can treat them
-            with enough depth:
-          </p>
-          <ul class="plain-list scope-list">
-            <li><a href="../prompting-and-context/">prompting techniques and context engineering</a>;</li>
-            <li>retrieval design;</li>
-            <li>harness engineering and loop engineering;</li>
-            <li>evaluation, tracing, and production observability;</li>
-            <li>deployment, scaling, identity, and cost controls;</li>
-            <li>detailed multi-agent orchestration;</li>
-            <li>how to implement an MCP server; and</li>
-            <li><a href="../writing-great-skills/">how to author and validate a focused Skill</a>; and</li>
-            <li>how to distribute and operate production Skills.</li>
-          </ul>
-          <p>
-            Deferring these topics from this chapter is a sequencing choice, not a
-            judgment that they are unimportant. The map on this page gives us shared
-            language for those later discussions.
+            Several products use plugins as installable packages for extensions
+            such as Skills and MCP connections. Exact contents and behavior
+            differ by product, so this chapter defers plugin packaging and
+            distribution to a later iteration.
           </p>
         </section>
 
         <section class="content-section" id="references" aria-labelledby="references-heading">
-          <h2 id="references-heading">10. References</h2>
-          <h3>Core product documentation</h3>
+          <h2 id="references-heading">7. References</h2>
+          <p>
+            Every external resource cited in this chapter appears once below,
+            grouped by its teaching role. Product documentation describes that
+            product's implementation unless the entry is an official protocol
+            or format source.
+          </p>
+
+          <h3>Must read</h3>
           <ul class="source-list">
-            <li><a href="https://code.claude.com/docs/en/how-claude-code-works">Claude Code — How Claude Code works</a><small>Agentic loop, tools, context, verification, and user steering.</small></li>
-            <li><a href="https://learn.chatgpt.com/docs/customization/overview">OpenAI — Customization</a><small>AGENTS.md, memory, Skills, MCP, and subagents as complementary layers.</small></li>
-            <li><a href="https://code.claude.com/docs/en/memory">Claude Code — Manage Claude’s memory</a><small>CLAUDE.md loading and persistent instructions.</small></li>
-            <li><a href="https://code.claude.com/docs/en/features-overview">Claude Code — Extend Claude Code</a><small>Comparison of persistent instructions, Skills, subagents, MCP, and hooks.</small></li>
-            <li><a href="https://adk.dev/runtime/event-loop/">Google ADK — The event loop</a><small>A concrete agent-runtime loop.</small></li>
-            <li><a href="https://adk.dev/tools-custom/mcp-tools/">Google ADK — MCP tools</a><small>Using and exposing MCP tools with ADK.</small></li>
-            <li><a href="https://adk.dev/sessions/">Google ADK — Sessions</a><small>Session, state, and memory boundaries in ADK.</small></li>
-            <li><a href="https://adk.dev/skills/">Google ADK — Skills</a><small>Experimental Agent Skills support in ADK.</small></li>
+            <li>
+              <a href="https://learn.chatgpt.com/docs/customization/overview" target="_blank" rel="noopener noreferrer">OpenAI — Customization</a>
+              <small>An OpenAI product map connecting persistent instructions, Skills, MCP, memory, subagents, and other customization layers.</small>
+            </li>
+            <li>
+              <a href="https://code.claude.com/docs/en/features-overview" target="_blank" rel="noopener noreferrer">Anthropic — Extend Claude Code</a>
+              <small>An Anthropic product map distinguishing persistent instructions, Skills, MCP, subagents, hooks, plugins, and related extension mechanisms.</small>
+            </li>
           </ul>
-          <h3>Open specifications and conventions</h3>
+
+          <h3>Instruction files</h3>
           <ul class="source-list">
-            <li><a href="https://modelcontextprotocol.io/docs/learn/architecture">Model Context Protocol — Architecture</a><small>Host, client, server, protocol layers, and primitives.</small></li>
-            <li><a href="https://agentskills.io/home">Agent Skills — Overview</a> and <a href="https://agentskills.io/specification">Specification</a><small>Portable Skill structure and progressive disclosure.</small></li>
-            <li><a href="https://agents.md/">AGENTS.md</a><small>Open repository-instruction convention.</small></li>
+            <li>
+              <a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener noreferrer">OpenAI — Custom instructions with AGENTS.md</a>
+              <small>Codex-specific discovery, hierarchy, scope, overrides, concatenation, and loading behavior for <code>AGENTS.md</code>.</small>
+            </li>
+            <li>
+              <a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener noreferrer">Anthropic — How Claude remembers your project</a>
+              <small>Claude-specific <code>CLAUDE.md</code>, local and nested instructions, imports, scoped rules, managed instructions, and auto memory.</small>
+            </li>
+            <li>
+              <a href="https://agents.md/" target="_blank" rel="noopener noreferrer">AGENTS.md — Official format site</a>
+              <small>The open <code>AGENTS.md</code> convention, its purpose, ordinary Markdown format, and broad nesting model.</small>
+            </li>
+            <li>
+              <a href="https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions" target="_blank" rel="noopener noreferrer">GitHub — Adding repository custom instructions</a>
+              <small>A third product's repository-wide, path-specific, and shared-filename instruction support; not a universal loading model.</small>
+            </li>
           </ul>
-          <h3>Practitioner perspective</h3>
+
+          <h3>MCP</h3>
           <ul class="source-list">
-            <li><a href="https://medium.com/data-science-collective/what-i-learnt-using-claude-code-to-build-production-ready-apps-a27272af0c48">Farhad Malik — What I Learnt Using Claude Code to Build Production-Ready Apps</a><small>A practitioner’s workflow and production lessons; useful experience, not the canonical source for definitions.</small></li>
+            <li>
+              <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noopener noreferrer">Model Context Protocol — Architecture overview, version 2026-07-28</a>
+              <small>The authoritative current architecture: hosts, clients, servers, local and remote connections, primitives, layers, and stateless discovery.</small>
+            </li>
+            <li>
+              <a href="https://developers.openai.com/api/docs/guides/tools-connectors-mcp" target="_blank" rel="noopener noreferrer">OpenAI — MCP and Connectors</a>
+              <small>OpenAI's current remote-MCP implementation, including tool import, filtering, approval, OAuth, and server-risk guidance.</small>
+            </li>
+            <li>
+              <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener noreferrer">Anthropic — Introducing the Model Context Protocol</a>
+              <small>The November 2024 introduction and the fragmented one-off integration problem that motivated MCP.</small>
+            </li>
+          </ul>
+
+          <h3>Skills</h3>
+          <ul class="source-list">
+            <li>
+              <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer">Anthropic — Equipping agents for the real world with Agent Skills</a>
+              <small>The primary explanation of why Skills exist, progressive disclosure, reusable procedural knowledge, and bundled scripts, references, and assets.</small>
+            </li>
+            <li>
+              <a href="https://agentskills.io/home" target="_blank" rel="noopener noreferrer">Agent Skills — Overview</a>
+              <small>The canonical learner-facing overview of the open folder format and its progressive-disclosure model.</small>
+            </li>
+            <li>
+              <a href="https://learn.chatgpt.com/docs/build-skills" target="_blank" rel="noopener noreferrer">OpenAI — Build Skills</a>
+              <small>OpenAI's Skill creation, discovery, activation, progressive disclosure, scopes, distribution, and MCP dependencies.</small>
+            </li>
+            <li>
+              <a href="https://code.claude.com/docs/en/slash-commands" target="_blank" rel="noopener noreferrer">Claude Code — Extend Claude with Skills</a>
+              <small>Claude-specific loading, invocation controls, supporting resources, scripts, and product extensions.</small>
+            </li>
+            <li>
+              <a href="https://adk.dev/skills/" target="_blank" rel="noopener noreferrer">Google ADK — Skills for ADK agents</a>
+              <small>An experimental framework implementation of Agent Skills, currently labeled experimental by Google.</small>
+            </li>
+          </ul>
+
+          <h3>Frontier and emerging directions</h3>
+          <ul class="source-list">
+            <li>
+              <a href="https://simonwillison.net/2026/Jul/31/stateless-mcp/" target="_blank" rel="noopener noreferrer">Simon Willison — Stateless MCP has recaptured my interest</a>
+              <small>A practitioner interpretation of why the official 2026 stateless protocol behavior simplifies implementation and scalable remote deployment.</small>
+            </li>
+            <li>
+              <a href="https://www.anthropic.com/engineering/code-execution-with-mcp" target="_blank" rel="noopener noreferrer">Anthropic — Code execution with MCP</a>
+              <small>An architectural pattern for discovering, composing, filtering, and processing MCP operations through code execution; not part of the protocol itself.</small>
+            </li>
+            <li>
+              <a href="https://blog.modelcontextprotocol.io/posts/2026-01-26-mcp-apps/" target="_blank" rel="noopener noreferrer">MCP Apps — Bringing UI capabilities to MCP clients</a>
+              <small>An official extension that lets tools return sandboxed interactive interfaces to supporting clients.</small>
+            </li>
+            <li>
+              <a href="https://modelcontextprotocol.io/registry/about" target="_blank" rel="noopener noreferrer">Model Context Protocol — Official MCP Registry</a>
+              <small>Preview discovery and distribution infrastructure for MCP server metadata, not a completed universal marketplace.</small>
+            </li>
+            <li>
+              <a href="https://vercel.com/blog/agent-skills-explained-an-faq" target="_blank" rel="noopener noreferrer">Vercel — Agent skills explained: An FAQ</a>
+              <small>Vercel's perspective on Skills moving toward searchable, installable, and updateable distribution; not the Agent Skills standard.</small>
+            </li>
+            <li>
+              <a href="https://skills.sh/" target="_blank" rel="noopener noreferrer">skills.sh</a>
+              <small>An emerging searchable directory and cross-agent installation ecosystem, not the specification or an authoritative universal registry.</small>
+            </li>
+            <li>
+              <a href="https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals" target="_blank" rel="noopener noreferrer">Vercel — AGENTS.md outperforms Skills in our agent evals</a>
+              <small>A product-specific experiment about always-loaded instructions and on-demand Skill activation; not evidence that instructions universally outperform Skills.</small>
+            </li>
+            <li>
+              <a href="https://modelcontextprotocol.io/community/working-groups/skills-over-mcp" target="_blank" rel="noopener noreferrer">Model Context Protocol — Skills Over MCP Working Group</a>
+              <small>Active work on discovering, distributing, or consuming Skills through MCP infrastructure; not settled protocol behavior.</small>
+            </li>
           </ul>
         </section>
 
@@ -541,6 +928,7 @@
         </footer>
       </main>
     </div>
+
     <script src="../../assets/spooky-qa.js" defer></script>
     <script src="../../assets/spooky-launcher.js" defer></script>
   </body>

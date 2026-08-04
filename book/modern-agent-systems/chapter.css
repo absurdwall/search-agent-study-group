@@ -1,0 +1,35 @@
+.modern-agent-systems-page .chapter-subtitle {
+  max-width: 43rem;
+  margin: -0.32rem 0 0.72rem;
+  color: #59646d;
+  font-size: 0.92rem;
+  font-weight: 680;
+  letter-spacing: 0.01em;
+}
+
+.modern-agent-systems-page .motion-fallback {
+  display: none;
+}
+
+.modern-agent-systems-page .planned-label {
+  display: inline-block;
+  margin-inline-start: 0.4rem;
+  padding: 0.14rem 0.48rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: 0.12em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modern-agent-systems-page .motion-asset {
+    display: none;
+  }
+
+  .modern-agent-systems-page .motion-fallback {
+    display: block;
+  }
+}
