@@ -734,41 +734,10 @@ Run the relevant type checks after editing.</code></pre>
             and route the agent to a Skill without copying the whole method into
             always-loaded context.
           </p>
-
-          <h3>Instruction files at the frontier</h3>
-          <h4>Convergence around shared conventions</h4>
           <p>
-            <code>AGENTS.md</code> is becoming a portable cross-agent convention:
-            one checked-in file can now be recognized by several coding agents.
-            That lowers the cost of maintaining basic repository guidance and
-            gives teams a common review surface. Product-specific files remain
-            useful when a host offers richer composition or controls.
-            <cite class="claim-citation">
-              <a href="https://agents.md/" target="_blank" rel="noopener noreferrer">AGENTS.md: Official format site</a>;
-              <a href="https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions" target="_blank" rel="noopener noreferrer">GitHub: Repository custom instructions</a>
-            </cite>
-          </p>
-
-          <h4>Portability versus richer native behavior</h4>
-          <p>
-            A common file favors reuse. A native system can add imports, managed
-            policy, conditional rules, local private files, or lazy loading.
-            Teams therefore do not have to choose one filename for every kind of
-            guidance: they can keep a portable core and layer host-specific
-            instructions where the additional behavior is valuable.
-          </p>
-
-          <h4>Always loaded versus loaded on demand</h4>
-          <p>
-            Persistent guidance is dependable because the host places it in
-            context before the task begins, but every loaded line consumes
-            context and competes for attention. Detailed, recognizable
-            procedures are often better packaged as Skills that load only when
-            needed. An instruction file can keep the short invariant and point
-            to the Skill. Section 4 returns to the reliability-versus-activation
-            tradeoff with an evaluation example. First, the next section turns
-            from persistent guidance to a different job: connecting a host to
-            external capabilities through MCP.
+            Instruction files keep durable guidance close to the work. The next
+            mechanism solves a different problem: connecting the agentic system
+            to external capabilities through a shared protocol.
           </p>
         </section>
 
@@ -778,34 +747,126 @@ Run the relevant type checks after editing.</code></pre>
             <p class="chapter-reading-label">Key resources</p>
             <ul class="source-list">
               <li>
+                <a href="https://huggingface.co/learn/mcp-course/en/unit1/introduction" target="_blank" rel="noopener noreferrer">Hugging Face — MCP Course, Unit 1</a>
+                <small>The clearest selected tutorial for the USB-C analogy, the M×N integration problem, Host/Client/Server terminology, communication concepts, capabilities, and existing educational visuals.</small>
+              </li>
+              <li>
                 <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noopener noreferrer">Model Context Protocol — Architecture overview, version 2026-07-28</a>
-                <small>The authoritative current source for the host/client/server model, protocol layers, local and remote servers, primitives, capability exchange, and stateless request model.</small>
+                <small>The authoritative source used to verify current protocol behavior and filter version-sensitive course material.</small>
               </li>
               <li>
                 <a href="https://developers.openai.com/api/docs/guides/tools-connectors-mcp" target="_blank" rel="noopener noreferrer">OpenAI — MCP and Connectors</a>
-                <small>A concrete current implementation showing remote MCP configuration, tool import, filtering, approvals, OAuth, and remote-server risk.</small>
+                <small>One current host implementation showing remote MCP configuration, tool import, filtering, approvals, OAuth, and remote-server risk.</small>
               </li>
               <li>
                 <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener noreferrer">Anthropic — Introducing the Model Context Protocol</a>
-                <small>The short historical source for MCP's November 2024 introduction and the fragmented-integration problem it was intended to address.</small>
+                <small>The original historical motivation for replacing fragmented one-off integrations with a shared protocol.</small>
               </li>
             </ul>
           </aside>
 
-          <h3>From one-off adapters to a shared boundary</h3>
+          <h3>Why MCP exists: a tool definition is not an integration</h3>
           <p>
-            Chapter 1 treated a tool as a capability the model can request. That
-            leaves an integration problem: without a shared protocol, each AI
-            host and each external provider may need a custom adapter. Anthropic
-            introduced MCP in November 2024 as an open response to those
-            fragmented one-off connections. A provider had to build against
-            every host, or each host had to maintain its own adapter for every
-            external system. MCP proposed a shared protocol boundary between
-            those two sides.
+            Why not simply define the same tool again for every agent? Because
+            a tool definition describes an operation, but it is only one part of
+            connecting an application to a provider. Without a shared protocol,
+            every application still needs its own way to connect, discover
+            available operations, serialize requests, return results and errors,
+            handle local or remote communication, carry authorization or
+            connection metadata, and stay compatible as the provider changes.
+          </p>
+          <p>
+            <strong>MCP avoids requiring every agent application and every
+            external system to build and maintain a unique pairwise
+            integration.</strong> A provider can expose its capabilities through
+            one MCP server, while multiple compatible hosts connect through
+            their MCP clients. Host-specific policy and server implementation
+            work remain; the shared boundary reduces duplicated adapter work.
+            Anthropic introduced MCP in November 2024 to address this fragmented
+            integration problem.
             <cite class="claim-citation">
               <a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener noreferrer">Anthropic: Introducing MCP</a>
             </cite>
           </p>
+
+          <h4>The USB-C analogy</h4>
+          <p>
+            The Hugging Face MCP Course uses USB-C as a useful analogy. A laptop
+            does not need a newly invented connector for every keyboard, storage
+            drive, monitor, or phone. Those devices still do different things,
+            but they meet through a shared connection standard. MCP plays a
+            similar role for AI applications and external capability providers.
+            <cite class="claim-citation">
+              <a href="https://huggingface.co/learn/mcp-course/unit1/key-concepts" target="_blank" rel="noopener noreferrer">Hugging Face MCP Course: Key Concepts and Terminology</a>
+            </cite>
+          </p>
+          <p>
+            The analogy stops at the connection boundary. MCP does not make
+            every server identical, decide which capabilities are trusted, grant
+            approval, or determine what an agent should do next.
+          </p>
+
+          <h4>Without MCP: the M×N integration problem</h4>
+          <p>
+            Suppose an ecosystem has <var>M</var> AI applications and
+            <var>N</var> external systems. If every application needs a custom
+            adapter for every provider, the ecosystem may require up to
+            <var>M</var> × <var>N</var> pairwise integrations. Each pair can
+            repeat connection, discovery, message-shaping, error, authentication,
+            and compatibility work.
+          </p>
+
+          <h4>With MCP: a shared client–server boundary</h4>
+          <p>
+            With MCP, each application implements the client side of the shared
+            protocol and each provider implements the server side. The course
+            describes this as moving conceptually toward <var>M</var> +
+            <var>N</var> implementations. That is an architectural
+            simplification, not a literal cost guarantee: hosts still differ,
+            servers still wrap real systems, and feature support can vary.
+          </p>
+
+          <figure class="source-image-figure mcp-integration-comparison">
+            <div class="mcp-integration-panels">
+              <div class="mcp-integration-panel">
+                <p>Without MCP: pairwise adapters</p>
+                <a href="assets/without%20mcp.png" target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="assets/without%20mcp.png"
+                    width="897"
+                    height="373"
+                    loading="lazy"
+                    decoding="async"
+                    alt="Three AI models on the left connect separately to a database, filesystem, and calculator on the right, forming nine colored pairwise integration lines."
+                  />
+                </a>
+              </div>
+              <div class="mcp-integration-panel">
+                <p>With MCP: a shared boundary</p>
+                <a href="assets/with%20mcp.png" target="_blank" rel="noopener noreferrer">
+                  <img
+                    src="assets/with%20mcp.png"
+                    width="1114"
+                    height="373"
+                    loading="lazy"
+                    decoding="async"
+                    alt="An AI model connects to a central MCP boundary, which connects through standardized interfaces to a database, filesystem, and calculator."
+                  />
+                </a>
+              </div>
+            </div>
+            <figcaption>
+              <strong>Without and with MCP.</strong> Without a shared protocol,
+              every application–provider pair may require a custom adapter. MCP
+              introduces a common client–server boundary so each side can
+              implement the protocol once. The M+N framing is an architectural
+              simplification, not a literal implementation-cost formula. Source visuals:
+              <a href="https://huggingface.co/learn/mcp-course/unit1/key-concepts" target="_blank" rel="noopener noreferrer">Hugging Face MCP Course — Key Concepts and Terminology</a>.
+              <a href="assets/without%20mcp.png" target="_blank" rel="noopener noreferrer">Open the without-MCP image</a>;
+              <a href="assets/with%20mcp.png" target="_blank" rel="noopener noreferrer">open the with-MCP image</a>.
+            </figcaption>
+          </figure>
+
           <aside class="concept-callout">
             <p>
               <strong>Working definition.</strong> MCP is an open protocol that
@@ -815,23 +876,23 @@ Run the relevant type checks after editing.</code></pre>
             </p>
           </aside>
           <p>
-            MCP is not an agent, a model, or the Chapter 1 agentic loop. It does
-            not decide which goal to pursue, and a connection does not
-            automatically place every server capability in front of the model.
-            The host still selects what its application will expose and how
-            returned information enters later context.
+            MCP is not an agent, an LLM, a tool, or the Chapter 1 agentic loop.
+            It does not decide which goal to pursue, and an MCP connection does
+            not automatically expose every server capability to the model. The
+            host still decides what its application will expose and how returned
+            information enters the broader workflow.
           </p>
 
           <h3>Host, client, and server</h3>
           <p>
-            In the versioned 2026-07-28 architecture, an
-            <strong>MCP host</strong> is the AI application. It creates an
-            <strong>MCP client</strong> for each connected
-            <strong>MCP server</strong>. A server may run locally or remotely.
-            The protocol separates a data layer from the transport layer and
-            defines primitives such as <strong>tools</strong>,
-            <strong>resources</strong>, and <strong>prompts</strong>.
+            MCP uses three participant roles. The <strong>host</strong> is the
+            user-facing AI application; a <strong>client</strong> is the
+            protocol component inside that host; and a <strong>server</strong>
+            exposes capabilities from an underlying program, API, dataset, or
+            service. These roles describe responsibility, not three separate
+            agents.
             <cite class="claim-citation">
+              <a href="https://huggingface.co/learn/mcp-course/unit1/architectural-components" target="_blank" rel="noopener noreferrer">Hugging Face MCP Course: Architectural Components</a>;
               <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noopener noreferrer">MCP: Architecture overview, 2026-07-28</a>
             </cite>
           </p>
@@ -854,74 +915,137 @@ Run the relevant type checks after editing.</code></pre>
               <tbody>
                 <tr>
                   <th scope="row">Host</th>
-                  <td>Coordinates clients and decides how the AI application uses connected capabilities.</td>
-                  <td>Trusting every server or approving every action.</td>
+                  <td>The user-facing coding agent, AI-enabled editor, desktop assistant, or custom application. It receives the request, coordinates model calls and MCP clients, applies policy, and integrates results into the workflow.</td>
+                  <td>The protocol itself; MCP does not control the host's full agentic loop.</td>
                 </tr>
                 <tr>
                   <th scope="row">Client</th>
-                  <td>Maintains the protocol connection to one server for the host.</td>
-                  <td>Choosing the agent's overall task strategy.</td>
+                  <td>A component inside the host that communicates with one server, handles MCP messages and transport details, discovers support, sends requests, and receives results.</td>
+                  <td>Another agent or the user-facing application.</td>
                 </tr>
                 <tr>
                   <th scope="row">Server</th>
-                  <td>Provides protocol-accessible tools, resources, prompts, or extension capabilities.</td>
-                  <td>Being an agent, model, or complete workflow.</td>
+                  <td>A local program or remote service that wraps existing functions, APIs, data, or services; advertises capabilities; handles requests; and returns results or errors.</td>
+                  <td>Necessarily a remote machine. A filesystem server can run locally through stdio.</td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-          <h3>Two protocol layers</h3>
           <p>
-            MCP separates the meaning of an exchange from the channel carrying
-            it. The <strong>data layer</strong> defines the JSON-RPC-based
-            messages, version and capability discovery, requests, responses,
-            notifications, and primitives. The <strong>transport layer</strong>
-            handles connection establishment, message framing, and
-            authentication. The current architecture describes standard input
-            and output for local processes and Streamable HTTP for remote
-            servers.
+            One host can connect to several servers, normally by creating one
+            dedicated client for each server. That 1:1 client–server
+            relationship isolates protocol communication while the host
+            coordinates the wider user and model experience.
+          </p>
+
+          <h3>What the protocol standardizes</h3>
+          <p>
+            MCP is easier to understand as a small stack. Participants tell us
+            who communicates. The transport layer carries messages. The data
+            layer defines what those messages mean. Primitives define the useful
+            capabilities that servers can expose. Discovery and notifications
+            let implementations learn and track what is available.
             <cite class="claim-citation">
+              <a href="https://huggingface.co/learn/mcp-course/en/unit1/communication-protocol" target="_blank" rel="noopener noreferrer">Hugging Face MCP Course: The Communication Protocol</a>;
               <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noopener noreferrer">MCP: Architecture overview, 2026-07-28</a>
             </cite>
           </p>
+
+          <div
+            class="guide-table-wrap"
+            role="region"
+            tabindex="0"
+            aria-label="Conceptual stack of the Model Context Protocol"
+          >
+            <table class="guide-table">
+              <caption>MCP as participants, layers, primitives, and discovery</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Part</th>
+                  <th scope="col">Question it answers</th>
+                  <th scope="col">Current beginner-level contents</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Participants</th>
+                  <td>Who is communicating?</td>
+                  <td>Host, one client per connected server, and local or remote servers.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Transport layer</th>
+                  <td>How do messages travel?</td>
+                  <td>Stdio for local process communication; Streamable HTTP for remote communication.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Data layer</th>
+                  <td>What do messages mean?</td>
+                  <td>JSON-RPC-based requests, responses, errors, notifications, version and capability information, and primitive-specific methods.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Server primitives</th>
+                  <td>What useful capability can a server provide?</td>
+                  <td>Tools, Resources, and Prompts.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Utility behavior</th>
+                  <td>How does the connection stay usable as support changes?</td>
+                  <td>Discovery, dynamic lists, version and capability information, and optional change notifications.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <p>
-            This separation matters because the same data-layer concepts can
-            travel over different transports. A local filesystem server and a
-            remote issue-tracker server may differ greatly in deployment and
-            authentication while still exposing capabilities through the same
-            protocol model.
+            Separating the two layers lets the same data-layer concepts travel
+            over different channels. A local filesystem server can communicate
+            through standard input and output, while a remote issue-tracker
+            server can use Streamable HTTP; both can expose the same kinds of
+            protocol primitives. Detailed 2026 stateless request mechanics stay
+            in the later frontier subsection.
           </p>
 
           <h3>What a server can expose</h3>
           <p>
             The three core server primitives are related, but they are not
-            interchangeable. A host may support only a subset, and it decides
-            how each primitive appears in its user and model experience.
+            interchangeable. The Hugging Face course supplies the accessible
+            teaching structure; the current official architecture verifies
+            Tools, Resources, and Prompts as the three core primitives that
+            servers expose. A host may support only a subset and decides how
+            each primitive appears in its user and model experience.
+            <cite class="claim-citation">
+              <a href="https://huggingface.co/learn/mcp-course/en/unit1/capabilities" target="_blank" rel="noopener noreferrer">Hugging Face MCP Course: Understanding MCP Capabilities</a>;
+              <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noopener noreferrer">MCP: Architecture overview, 2026-07-28</a>
+            </cite>
           </p>
           <h4>Tools: operations</h4>
           <p>
-            A tool is an executable function with a name, description, input
-            schema, and result or error. The server advertises the operation;
-            the host decides whether to list it, filter it, require approval,
-            and make it model-invocable. A server tool therefore supplies an
-            operation, not permission to run it in every situation.
+            A Tool is an executable function that may perform an action or
+            retrieve computed data. The server advertises it with structured
+            arguments; the host decides whether to list it, filter it, require
+            approval, and make it model-invocable. A Tool supplies an operation,
+            not permission to run it in every situation.
+            <strong>Ask: “What can this server do for me?”</strong>
           </p>
 
-          <h4>Resources: readable information</h4>
+          <h4>Resources: contextual information</h4>
           <p>
-            A resource is URI-addressed data or content that an application can
-            read: a document, schema, file, record, or API response. It can
-            provide context without pretending that reading data is an action
-            the model must autonomously call as a tool.
+            A Resource is data or content the application can read, such as a
+            file, schema, record, documentation page, or API response.
+            Resources are commonly identified through URIs. The host decides
+            whether and how that information enters model context; the label
+            does not by itself guarantee safety.
+            <strong>Ask: “What information can this server give me?”</strong>
           </p>
 
           <h4>Prompts: reusable interaction templates</h4>
           <p>
-            A prompt is a reusable template supplied by the server to structure
-            an interaction. It may be selected by a user or surfaced by a host.
-            A prompt is not a Skill: it does not by itself package a folder of
-            procedural instructions, scripts, references, and assets.
+            A Prompt is a reusable template supplied by the server. It may
+            contain instructions, examples, or structured messages and is
+            commonly surfaced for user or host selection.
+            <strong>Ask: “What reusable interaction template does this server
+            offer?”</strong> An MCP Prompt is not an Agent Skill: it does not by
+            itself package a folder of procedural instructions, scripts,
+            references, and assets.
           </p>
           <p>
             All three primitives are discoverable and can change over time. The
@@ -932,6 +1056,27 @@ Run the relevant type checks after editing.</code></pre>
             </cite>
           </p>
 
+          <figure class="source-image-figure mcp-primitives-figure">
+            <a href="assets/mcp%20component.png" target="_blank" rel="noopener noreferrer">
+              <img
+                src="assets/mcp%20component.png"
+                width="786"
+                height="283"
+                loading="lazy"
+                decoding="async"
+                alt="Course diagram showing an LLM connecting through MCP to three distinct server primitive examples: a code-interpreter Tool, software-documentation Resource, and code-style Prompt."
+              />
+            </a>
+            <figcaption>
+              <strong>Three server primitives.</strong> Tools expose operations,
+              Resources expose contextual information, and Prompts expose
+              reusable interaction templates. This concept map does not depict
+              the separate Host, Client, and Server roles. Source visual:
+              <a href="https://huggingface.co/learn/mcp-course/unit1/key-concepts" target="_blank" rel="noopener noreferrer">Hugging Face MCP Course — Key Concepts and Terminology</a>.
+              <a href="assets/mcp%20component.png" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+            </figcaption>
+          </figure>
+
           <h3>A complete connection walkthrough</h3>
           <p>
             Suppose the Week 3 update needs issue data from an approved remote
@@ -941,7 +1086,7 @@ Run the relevant type checks after editing.</code></pre>
             <li><strong>Configure or discover the server.</strong> The application receives an approved local command, remote URL, connector, or registry-derived configuration.</li>
             <li><strong>Create one client for that server.</strong> The host keeps the connection and protocol exchange isolated from its other servers.</li>
             <li><strong>Establish the transport.</strong> It starts the local process or opens the authenticated remote channel.</li>
-            <li><strong>Discover protocol support.</strong> Client and server exchange the current version, identity, and relevant capability information.</li>
+            <li><strong>Discover protocol support.</strong> The client may query what the server supports; current requests also carry the applicable version, identity, and capability metadata.</li>
             <li><strong>List primitives.</strong> The client discovers the tools, resources, or prompts the server currently advertises.</li>
             <li><strong>Apply host policy.</strong> The application filters the catalog, checks trust and permissions, and selects what the user or model may access.</li>
             <li><strong>Expose relevant definitions.</strong> When tools are involved, the host gives the model only the definitions needed for this run.</li>
@@ -1279,6 +1424,28 @@ return broken;</code></pre>
 └── assets/
     └── review-note.md    # reusable review template</code></pre>
           </div>
+
+          <figure class="source-image-figure">
+            <a href="assets/agent%20skill%20vm.jpeg" target="_blank" rel="noopener noreferrer">
+              <img
+                src="assets/agent%20skill%20vm.jpeg"
+                width="1650"
+                height="929"
+                loading="lazy"
+                decoding="async"
+                alt="Anthropic diagram connecting an agent configuration to a virtual-machine filesystem. Equipped Skills correspond to folders such as bigquery, docx, nda-review, and pdf; the PDF folder contains SKILL.md, forms.md, reference.md, and extract_fields.py. Configured MCP servers connect separately."
+              />
+            </a>
+            <figcaption>
+              <strong>Skills as filesystem packages.</strong> In this
+              Anthropic-oriented runtime example, each equipped Skill
+              corresponds to a directory; the PDF package combines core
+              instructions, supporting Markdown, and executable code. Exact
+              installation and runtime wiring differ by client. Source visual:
+              <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer">Anthropic — Equipping agents for the real world with Agent Skills</a>.
+              <a href="assets/agent%20skill%20vm.jpeg" target="_blank" rel="noopener noreferrer">Open full-size image</a>.
+            </figcaption>
+          </figure>
 
           <h4><code>SKILL.md</code>: metadata and the core method</h4>
           <p>
@@ -1631,123 +1798,69 @@ return broken;</code></pre>
           </div>
 
           <h3>Skills' evolving frontier</h3>
-          <h4>From Anthropic feature to open format</h4>
+          <h4>From local folders to an installable, updateable ecosystem</h4>
           <p>
-            Skills began in Anthropic's ecosystem, but the folder format was
-            published for cross-platform use. That changes the unit of reuse: a
-            team can version procedural knowledge as files that more than one
-            compatible client understands. Portability applies to the package;
-            it does not guarantee identical activation, permissions, or runtime
-            behavior.
-            <cite class="claim-citation">
-              <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer">Anthropic: Equipping agents for the real world with Agent Skills</a>;
-              <a href="https://agentskills.io/home" target="_blank" rel="noopener noreferrer">Agent Skills: Overview</a>
-            </cite>
+            In the simplest model, a Skill is a folder containing
+            <code>SKILL.md</code> plus optional references, scripts, and assets.
+            A user can create it locally, copy it by hand, clone a repository,
+            or place it in the directory one agent client expects. That works,
+            but discovery, installation across clients, updates, removal,
+            sharing, and provenance become cumbersome as use grows.
           </p>
-
-          <h4>From local folders to distribution infrastructure</h4>
           <p>
-            A folder is easy to copy manually, but an ecosystem needs more:
-            discoverable sources, installation into client-specific locations,
-            updates, removal, version history, and a way to inspect provenance.
-            Git repositories are a natural source because they already provide
-            versioned files and review history. Installers and directories add
-            convenience, but they also introduce trust questions: which commit
-            was installed, what changed, and whether bundled code was reviewed.
-          </p>
-
-          <h4>The Vercel <code>skills</code> CLI</h4>
-          <p>
-            Vercel's ecosystem provides one cross-agent installation path. The
-            <code>skills</code> CLI can add Skills from a GitHub repository,
-            select one or more supported agent clients, and place the package in
-            the locations those clients expect. It normally links client
-            locations to one project copy and also offers a copy mode. Separate
-            commands list, update, and remove installed Skills.
+            Distribution infrastructure is beginning to form around that folder.
+            In Vercel's ecosystem, the <code>skills</code> CLI installs Skills
+            from repositories into supported agent locations and provides list,
+            update, and removal workflows. <code>skills.sh</code> adds a
+            searchable public directory and installation entry point.
             <cite class="claim-citation">
               <a href="https://vercel.com/blog/agent-skills-explained-an-faq" target="_blank" rel="noopener noreferrer">Vercel: Agent skills explained</a>;
               <a href="https://skills.sh/" target="_blank" rel="noopener noreferrer">skills.sh</a>
             </cite>
           </p>
           <p>
-            This reduces friction when several coding agents use the same open
-            package, but it is not the official package manager for the Agent
-            Skills format and it is not universally adopted. Clients can still
-            provide native installers, plugin systems, managed distribution, or
-            direct folder discovery.
+            Skills are therefore beginning to behave less like folders people
+            copy manually and more like packages that can be discovered,
+            installed, shared, and updated. Vercel's CLI is one ecosystem
+            implementation, and <code>skills.sh</code> is neither the Agent
+            Skills specification nor a universal package manager. Installation
+            popularity does not prove quality or safety; easier installation
+            makes source, version, bundled scripts, and trust more important.
           </p>
 
-          <h4><code>skills.sh</code>: a directory, not the standard</h4>
+          <h4>From hand-written procedures to captured and generated workflows</h4>
           <p>
-            <code>skills.sh</code> is a Vercel-operated searchable directory for
-            public Skill repositories. It displays source repositories, agent
-            compatibility filters, install counts and rankings, and security
-            audit information where available. The leaderboard is based on
-            anonymous aggregate installation telemetry from the
-            <code>skills</code> CLI.
+            Most Skills are deliberately authored: someone identifies a recurring
+            task, writes the procedure in <code>SKILL.md</code>, gathers useful
+            references, adds scripts and assets, and then tests and revises the
+            package. The next step is not necessarily starting every Skill from
+            a blank file. After completing a task, an agent can help capture the
+            successful approach, repeated steps, feedback, and common mistakes,
+            then propose reusable instructions and deterministic helpers.
             <cite class="claim-citation">
-              <a href="https://skills.sh/" target="_blank" rel="noopener noreferrer">skills.sh</a>
+              <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer">Anthropic: Equipping agents for the real world with Agent Skills</a>
             </cite>
           </p>
           <p>
-            That makes the directory useful evidence of one distribution
-            ecosystem, not a census of all Skills. Private packages, manual
-            copies, native-client installs, and telemetry opt-outs may not
-            appear. An install count is an aggregate installation event, not a
-            unique-user count or proof of quality. The directory is neither the
-            Agent Skills specification nor an official universal registry.
+            For this chapter's documentation-review workflow, several successful
+            reviews might reveal a stable sequence: read the whole page, identify
+            claims, verify sources, evaluate existing visuals, render desktop and
+            mobile, and report unresolved issues. The agent could draft a
+            <code>SKILL.md</code> for that sequence, a source-policy reference, a
+            link-checking script, and a review-report template. A person would
+            still review, test, edit, and approve the package before reuse.
           </p>
-
-          <h4>Influence beyond one coding client</h4>
           <p>
-            The ecosystem matters because the same folder convention now appears
-            across several coding-agent clients and public repositories from
-            multiple organizations. A common installer and directory are
-            becoming one practical cross-agent path, even though they represent
-            only part of the wider ecosystem and do not control the format.
-            <cite class="claim-citation">
-              <a href="https://vercel.com/blog/agent-skills-explained-an-faq" target="_blank" rel="noopener noreferrer">Vercel: Agent skills explained</a>;
-              <a href="https://skills.sh/" target="_blank" rel="noopener noreferrer">skills.sh</a>
-            </cite>
-          </p>
-
-          <h4>Beyond coding</h4>
-          <p>
-            A Skill packages a method, so the format is not inherently about
-            source code. The same structure can carry research procedures,
-            document review, spreadsheet checks, presentation production,
-            design analysis, customer-support routines, or organizational
-            knowledge. The documentation-review example in this chapter uses
-            exactly that broader pattern: judgment in instructions, policy in
-            references, deterministic validation in a script, and a reporting
-            template in assets.
-            <cite class="claim-citation">
-              <a href="https://vercel.com/blog/agent-skills-explained-an-faq" target="_blank" rel="noopener noreferrer">Vercel: Agent skills explained</a>
-            </cite>
-          </p>
-
-          <h4>Activation remains an open problem</h4>
-          <p>
-            Progressive disclosure saves context only if the right Skill loads.
-            Implicit activation can fail; explicit invocation improves
-            reliability but adds user effort. Description quality, catalog size,
-            host selection logic, and task wording all influence the decision.
-            Always-loaded guidance costs more context but avoids that activation
-            point. The Vercel evaluation in Section 4 makes this tradeoff
-            concrete without turning one result into a universal rule.
-          </p>
-
-          <h4>Skills and MCP may converge</h4>
-          <p>
-            The current teaching boundary is method versus connection, but the
-            MCP Skills Over MCP Working Group is exploring how Skills might be
-            represented, discovered, distributed, and consumed through MCP
-            infrastructure. Its current direction uses an extension track and
-            coordinates with registry, SDK, and client work. This is active
-            design work, not settled core protocol behavior.
-            <cite class="claim-citation">
-              <a href="https://modelcontextprotocol.io/community/working-groups/skills-over-mcp" target="_blank" rel="noopener noreferrer">MCP: Skills Over MCP Working Group</a>
-            </cite>
+            <strong>Capture</strong> begins with observed work, feedback,
+            mistakes, and existing organizational practice;
+            <strong>generation</strong> turns that evidence into a proposed Skill
+            package. This is agent-assisted Skill creation, not automatic
+            self-improvement: one successful run is not proof, conversation
+            history should not silently become permanent guidance, and generated
+            scripts still require inspection, evaluation, versioning, correction,
+            and human ownership. Skills may become not only a format for storing
+            known procedures, but also a way to turn successful work and human
+            feedback into reusable organizational practice.
           </p>
         </section>
 
@@ -1914,6 +2027,16 @@ return broken;</code></pre>
 
           <h3>MCP</h3>
           <ul class="source-list">
+            <li>
+              <a href="https://huggingface.co/learn/mcp-course/en/unit1/introduction" target="_blank" rel="noopener noreferrer">Hugging Face — MCP Course, Unit 1</a>
+              <small>The main teaching resource for MCP's motivation, USB-C analogy, M×N integration problem, Host/Client/Server architecture, communication model, and capabilities.</small>
+              <ul class="source-sublist">
+                <li><a href="https://huggingface.co/learn/mcp-course/unit1/key-concepts" target="_blank" rel="noopener noreferrer">Key Concepts and Terminology</a></li>
+                <li><a href="https://huggingface.co/learn/mcp-course/unit1/architectural-components" target="_blank" rel="noopener noreferrer">Architectural Components</a></li>
+                <li><a href="https://huggingface.co/learn/mcp-course/en/unit1/communication-protocol" target="_blank" rel="noopener noreferrer">The Communication Protocol</a></li>
+                <li><a href="https://huggingface.co/learn/mcp-course/en/unit1/capabilities" target="_blank" rel="noopener noreferrer">Understanding MCP Capabilities</a></li>
+              </ul>
+            </li>
             <li>
               <a href="https://modelcontextprotocol.io/docs/2026-07-28/learn/architecture" target="_blank" rel="noopener noreferrer">Model Context Protocol — Architecture overview, version 2026-07-28</a>
               <small>The authoritative current architecture: hosts, clients, servers, local and remote connections, primitives, layers, and stateless discovery.</small>
