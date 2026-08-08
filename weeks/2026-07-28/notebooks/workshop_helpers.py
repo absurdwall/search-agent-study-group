@@ -37,6 +37,7 @@ _env_candidates = (
     repository_root / ".env",
     *(parent / ".env" for parent in repository_root.parents),
     Path.home() / "search-agent-study-group" / ".env",
+    Path( "/etc/skel/.env")
 )
 for _env_path in _env_candidates:
     if _env_path.is_file():
