@@ -1,0 +1,156 @@
+.modern-agent-systems-page .chapter-subtitle {
+  max-width: 43rem;
+  margin: -0.32rem 0 0.72rem;
+  color: #59646d;
+  font-size: 0.92rem;
+  font-weight: 680;
+  letter-spacing: 0.01em;
+}
+
+.modern-agent-systems-page .motion-fallback {
+  display: none;
+}
+
+.modern-agent-systems-page .section-key-resources {
+  margin-top: 0.62rem;
+}
+
+.modern-agent-systems-page .content-section > h4 {
+  max-width: 43rem;
+  margin: 0.92rem 0 0.3rem;
+  color: #3b464f;
+  font-size: 0.89rem;
+  font-weight: 730;
+  letter-spacing: -0.008em;
+  line-height: 1.35;
+}
+
+.modern-agent-systems-page .content-section > h3 + h4 {
+  margin-top: 0.62rem;
+}
+
+.modern-agent-systems-page .chapter-details {
+  max-width: 43rem;
+  margin: 0.82rem 0 1rem;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+}
+
+.modern-agent-systems-page .chapter-details summary {
+  padding: 0.62rem 0;
+  color: #303a43;
+  font-size: 0.86rem;
+  font-weight: 690;
+  cursor: pointer;
+}
+
+.modern-agent-systems-page .chapter-details summary:focus-visible {
+  border-radius: 2px;
+  outline: 3px solid rgba(83, 122, 114, 0.3);
+  outline-offset: 3px;
+}
+
+.modern-agent-systems-page .chapter-details[open] summary {
+  padding-bottom: 0.42rem;
+}
+
+.modern-agent-systems-page .chapter-details-body {
+  padding: 0 0 0.72rem 1rem;
+}
+
+.modern-agent-systems-page .chapter-details-body > :last-child,
+.modern-agent-systems-page .chapter-details-body .command-block:last-child {
+  margin-bottom: 0;
+}
+
+.modern-agent-systems-page .sample-instructions .command-block {
+  margin-top: 0.25rem;
+}
+
+.modern-agent-systems-page .sample-instructions pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.modern-agent-systems-page .mcp-integration-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.modern-agent-systems-page .mcp-integration-panel {
+  min-width: 0;
+}
+
+.modern-agent-systems-page .mcp-integration-panel + .mcp-integration-panel {
+  border-left: 1px solid var(--line);
+}
+
+.modern-agent-systems-page .mcp-integration-panel > p {
+  margin: 0;
+  padding: 0.42rem 0.62rem;
+  border-bottom: 1px solid var(--line);
+  color: #4b565f;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.modern-agent-systems-page .mcp-integration-panel > a {
+  display: flex;
+  min-height: 9rem;
+  align-items: center;
+  background: #fff;
+}
+
+.modern-agent-systems-page .mcp-primitives-figure > a {
+  display: block;
+  background: #fff;
+}
+
+.modern-agent-systems-page .source-sublist {
+  margin: 0.34rem 0 0.5rem;
+  padding-left: 1rem;
+  color: #59646d;
+  font-size: 0.82rem;
+}
+
+.modern-agent-systems-page .source-sublist li {
+  margin-bottom: 0.2rem;
+}
+
+.modern-agent-systems-page .planned-label {
+  display: inline-block;
+  margin-inline-start: 0.4rem;
+  padding: 0.14rem 0.48rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: 0.12em;
+}
+
+@media (max-width: 720px) {
+  .modern-agent-systems-page .mcp-integration-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .modern-agent-systems-page .mcp-integration-panel + .mcp-integration-panel {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .modern-agent-systems-page .mcp-integration-panel > a {
+    min-height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modern-agent-systems-page .motion-asset {
+    display: none;
+  }
+
+  .modern-agent-systems-page .motion-fallback {
+    display: block;
+  }
+}

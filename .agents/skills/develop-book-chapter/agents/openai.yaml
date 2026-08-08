@@ -1,0 +1,4 @@
+interface:
+  display_name: "Develop Book Chapter"
+  short_description: "Build source-led, visually planned book chapters"
+  default_prompt: "Use $develop-book-chapter to develop this book chapter from selected teaching resources with accurate source placement and in-page visual planning."
