@@ -1,6 +1,6 @@
 # Chapter 2 source map: A Map of Modern Agent Systems
 
-Status: internal drafting map. The chapter remains **Work in progress**.
+Status: internal source map for the user-declared complete Chapter 2 v1.
 
 Current-state documentation checked: 2026-08-04.
 

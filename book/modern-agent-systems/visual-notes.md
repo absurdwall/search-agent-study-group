@@ -1,7 +1,7 @@
 # Chapter 2 visual notes: A Map of Modern Agent Systems
 
-Status: internal visual and provenance record. The chapter remains **Work in
-progress**.
+Status: internal visual and provenance record for the user-declared complete
+Chapter 2 v1.
 
 ## Visual strategy
 
