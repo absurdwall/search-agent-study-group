@@ -24,6 +24,7 @@ working agreement.
 
 - [Agent Foundations](presentations/agent-foundations.html)
 - [Animal Orders exercise intro](presentations/orders-agent-intro.html)
+- [MCP, Skills, and Subagents](presentations/mcp-skills-subagents-intro.html)
 
 Both decks are self-contained HTML files and work offline in a modern browser.
 
