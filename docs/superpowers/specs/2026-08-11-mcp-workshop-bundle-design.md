@@ -77,11 +77,12 @@ No `pip install` cells will be added to notebooks because participants use hoste
 Before opening the pull request:
 
 1. Validate every notebook with `nbformat` and confirm source code cells contain no execution outputs.
-2. Execute all six notebooks top-to-bottom from the destination layout using Python 3.12 and the project-level runtime environment, while keeping executed copies outside the repository.
-3. Confirm the expected MCP, Skill, subagent, and Phoenix behaviors and zero notebook errors.
-4. Open the standalone deck through both a local HTTP server and a direct `file://` browser load; verify keyboard navigation, slide count, offline assets, and no console errors.
-5. Scan all added files for credentials, private source paths, legacy Walmart names, and raw event dumps.
-6. Confirm a fresh clone can install `notebooks/requirements.txt` and import both helper packages from the dated notebook directory.
+2. Execute the four completed/instructor notebooks top-to-bottom from the destination layout using Python 3.12 and the project-level runtime environment, while keeping executed copies outside the repository.
+3. Execute each participant exercise through its first learner-owned assertion; confirm all setup imports and dependencies work and that execution stops for the expected `YOUR TURN` checkpoint rather than an environment failure.
+4. Confirm the completed notebooks show the expected MCP, Skill, subagent, and Phoenix behaviors with zero notebook errors.
+5. Open the standalone deck through both a local HTTP server and a direct `file://` browser load; verify keyboard navigation, slide count, offline assets, and no console errors.
+6. Scan all added files for credentials, private source paths, legacy Walmart names, and raw event dumps.
+7. Confirm a fresh clone can install `notebooks/requirements.txt` and import both helper packages from the dated notebook directory.
 
 ## Pull request
 
