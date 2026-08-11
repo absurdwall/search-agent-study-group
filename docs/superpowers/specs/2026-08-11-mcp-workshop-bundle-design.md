@@ -18,6 +18,13 @@ presentations/
 weeks/2026-08-11/
   .env.example
   materials.md
+  skills/
+    order-support/
+      SKILL.md
+    product-shopping-mcp/
+      SKILL.md
+    store-information/
+      SKILL.md
   notebooks/
     .python-version
     requirements.txt
@@ -49,7 +56,7 @@ Copy the generated `mcp-skills-subagents-intro.html` artifact, not its React/Vit
 
 ### Notebooks
 
-Copy the generated source notebooks, not executed copies. Preserve their current relative imports and embedded image attachments. Include only runtime support files referenced by these notebooks; exclude notebook builders, deck source code, tests, temporary environments, and unrelated earlier-week helpers.
+Copy the generated source notebooks, not executed copies. Preserve their current relative imports and embedded image attachments. Include only runtime support files referenced by these notebooks, including the prepared Order, Store, and Product Skills resolved from the dated week root. Exclude notebook builders, deck source code, tests, temporary environments, and unrelated earlier-week helpers.
 
 ### Configuration
 
