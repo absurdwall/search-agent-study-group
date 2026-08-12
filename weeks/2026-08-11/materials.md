@@ -6,7 +6,7 @@ These materials use Python 3.12 in hosted JupyterLab. Install the environment ou
 python -m pip install -r notebooks/requirements.txt
 ```
 
-Copy `.env.example` to `.env`, then add your Google and Phoenix credentials. The notebooks connect to the public ecommerce teaching MCP service and send traces to Phoenix.
+Copy `notebooks/.env.example` to `notebooks/.env`, then add your Google and Phoenix credentials. This location works when JupyterLab starts its kernel from the notebook directory. The shared helper also searches the dated week root and repository root for compatibility. The notebooks connect to the public ecommerce teaching MCP service and send traces to Phoenix.
 
 ## Recommended order
 
