@@ -9,7 +9,6 @@ from importlib.metadata import version
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.runners import InMemoryRunner
 from google.adk.skills import load_skill_from_dir
@@ -19,6 +18,8 @@ from openinference.instrumentation.google_adk import GoogleADKInstrumentor
 from openinference.instrumentation.google_genai import GoogleGenAIInstrumentor
 from opentelemetry import trace
 from phoenix.otel import register
+
+from .env import load_workshop_env
 
 if TYPE_CHECKING:
     from google.adk.tools.mcp_tool.mcp_session_manager import (
@@ -32,6 +33,7 @@ else:
 
 __all__ = [
     "Agent",
+    "ENV_FILE",
     "GOOGLE_MODEL",
     "InMemoryRunner",
     "MCP_ENDPOINT",
@@ -61,15 +63,7 @@ repository_root = Path(__file__).resolve().parents[2]
 if not (repository_root / "skills" / "order-support" / "SKILL.md").is_file():
     raise RuntimeError("The MCP workshop repository files are missing.")
 
-_env_candidates = (
-    repository_root / ".env",
-    *(parent / ".env" for parent in repository_root.parents),
-    Path.home() / "search-agent-study-group" / ".env",
-)
-for _env_path in _env_candidates:
-    if _env_path.is_file():
-        load_dotenv(_env_path)
-        break
+ENV_FILE = load_workshop_env(repository_root=repository_root)
 
 PROJECT_NAME = os.getenv("JUPYTERHUB_USER") or getuser()
 GOOGLE_MODEL = os.getenv("GOOGLE_MODEL", "gemini-3.1-flash-lite")
