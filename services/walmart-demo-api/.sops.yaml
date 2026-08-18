@@ -1,0 +1,4 @@
+creation_rules:
+  - path_regex: \.env\.deploy\.enc\.yaml$
+    encrypted_regex: ^BRIGHTDATA_API_KEY$
+    gcp_kms: projects/np-public-training/locations/us-east1/keyRings/walmart-demo-sops/cryptoKeys/deployment-secrets
