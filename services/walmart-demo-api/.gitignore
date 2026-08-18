@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+!.env.deploy.example
+!.env.deploy.enc.yaml
+.pytest_cache/
+.venv/
+uv.lock
+**/__pycache__/
+**/*.py[cod]
