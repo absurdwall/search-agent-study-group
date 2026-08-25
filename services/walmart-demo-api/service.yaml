@@ -1,0 +1,32 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: ${SERVICE}
+  annotations:
+    run.googleapis.com/minScale: "0"
+    run.googleapis.com/maxScale: "1"
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "1"
+        run.googleapis.com/startup-cpu-boost: "true"
+    spec:
+      containerConcurrency: 80
+      timeoutSeconds: 240
+      containers:
+        - image: ${IMAGE}
+          env:
+            - name: GCP_PROJECT
+              value: ${GCP_PROJECT}
+            - name: FIRESTORE_DATABASE
+              value: ${FIRESTORE_DATABASE}
+            - name: QUOTA_LIMIT
+              value: "${QUOTA_LIMIT}"
+            - name: PROVIDER_TIMEOUT_SECONDS
+              value: "${PROVIDER_TIMEOUT_SECONDS}"
+            - name: USE_MEMORY_STORE
+              value: "${USE_MEMORY_STORE}"
+            - name: BRIGHTDATA_API_KEY
+              value: "${BRIGHTDATA_API_KEY}"
