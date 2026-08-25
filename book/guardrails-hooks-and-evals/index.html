@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Planned Chapter 5 of the Agent Systems Guide: guardrails, hooks, evals, and operational evidence."
+    />
+    <title>Chapter 5: Guardrails, Hooks, and Evals · Search Agent Study Group</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../../assets/site.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="site-name" href="../../">Search Agent Study Group</a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="../" aria-current="location">Book</a>
+          <a href="../../#resources">Resources</a>
+          <a href="../../#weekly-schedule">Weeks</a>
+          <a href="../../glossary/">Glossary</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page standalone-page book-home-page">
+      <section class="page-intro" aria-labelledby="page-title">
+        <p class="eyebrow">
+          <a href="../">Study group guide</a> · Chapter 5
+          <span class="book-status">Planned</span>
+        </p>
+        <h1 id="page-title">Guardrails, Hooks, and Evals</h1>
+        <p class="lede">
+          A planned chapter on the evidence and intervention points needed to
+          rely on agent runs repeatedly—not only make one run work once.
+        </p>
+      </section>
+
+      <section class="content-section" aria-labelledby="scope-heading">
+        <h2 id="scope-heading">Provisional scope</h2>
+        <p>
+          The core topics are guardrails that constrain behavior, hooks that
+          observe or intervene at meaningful lifecycle points, and evals that
+          turn expected behavior into repeatable evidence.
+        </p>
+        <p>
+          Closely related topics to confirm include observability and tracing,
+          human approval and escalation, failure recovery, and operational
+          budgets such as timeouts, retry limits, and stopping conditions. The
+          final chapter contract and source spine have not been selected.
+        </p>
+      </section>
+
+      <section class="content-section" aria-labelledby="questions-heading">
+        <h2 id="questions-heading">Questions for the chapter contract</h2>
+        <ul>
+          <li>Which failures should be prevented, detected, contained, or escalated?</li>
+          <li>Where can hooks observe state without silently changing control flow?</li>
+          <li>What separates a structural check from a behavioral eval and an executed result?</li>
+          <li>How should traces, approvals, recovery paths, and budgets shape production confidence?</li>
+        </ul>
+      </section>
+
+      <footer class="footer book-chapter-nav" aria-label="Book navigation">
+        <a href="../writing-great-skills/">← Previous: Chapter 4</a>
+        <a href="../">Book home</a>
+      </footer>
+    </main>
+
+    <script src="../../assets/spooky-qa.js" defer></script>
+    <script src="../../assets/spooky-launcher.js" defer></script>
+  </body>
+</html>
