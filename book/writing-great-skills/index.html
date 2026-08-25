@@ -10,6 +10,7 @@
     <title>Chapter 4: Writing Great Skills · Search Agent Study Group</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="../../assets/site.css" />
+    <link rel="stylesheet" href="chapter.css" />
   </head>
   <body>
     <header class="site-header">
@@ -54,11 +55,305 @@
         </p>
       </section>
 
+      <section class="content-section" aria-labelledby="workflow-heading">
+        <h2 id="workflow-heading">A practical path from a fuzzy idea to reviewed code</h2>
+        <p>
+          Matt Pocock's repository contains a group of Skills that can be read as
+          one delivery path:
+          <strong><code>wayfinder</code> → <code>grill-with-docs</code> →
+          <code>prototype</code> → <code>to-spec</code> → <code>to-tickets</code> →
+          <code>implement</code> → <code>code-review</code></strong>.
+          The repository presents these as composable Skills rather than declaring
+          this sequence as the only canonical pipeline, and smaller work may skip
+          stages it does not need.
+          <cite class="claim-citation">
+            <a href="https://github.com/mattpocock/skills/tree/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/engineering" target="_blank" rel="noopener noreferrer">Matt Pocock — Engineering Skills, pinned commit</a>
+          </cite>
+        </p>
+
+        <figure class="delivery-flow" aria-labelledby="delivery-flow-caption">
+          <p class="delivery-flow-label">Seven composable Skills · left to right</p>
+          <p class="delivery-flow-hint">Scroll horizontally to follow the complete path.</p>
+          <div
+            class="delivery-flow-scroll"
+            tabindex="0"
+            aria-label="Seven-stage path from wayfinding to code review"
+          >
+            <ol class="delivery-flow-list">
+              <li class="delivery-flow-stage">
+                <span class="delivery-flow-number">01</span>
+                <code>wayfinder</code>
+                <span class="delivery-flow-output">Map the route</span>
+              </li>
+              <li class="delivery-flow-stage">
+                <span class="delivery-flow-number">02</span>
+                <code>grill-with-docs</code>
+                <span class="delivery-flow-output">Resolve decisions</span>
+              </li>
+              <li class="delivery-flow-stage">
+                <span class="delivery-flow-number">03</span>
+                <code>prototype</code>
+                <span class="delivery-flow-output">Test the feel</span>
+              </li>
+              <li class="delivery-flow-stage">
+                <span class="delivery-flow-number">04</span>
+                <code>to-spec</code>
+                <span class="delivery-flow-output">Capture the design</span>
+              </li>
+              <li class="delivery-flow-stage">
+                <span class="delivery-flow-number">05</span>
+                <code>to-tickets</code>
+                <span class="delivery-flow-output">Slice the work</span>
+              </li>
+              <li class="delivery-flow-stage">
+                <span class="delivery-flow-number">06</span>
+                <code>implement</code>
+                <span class="delivery-flow-output">Build and verify</span>
+              </li>
+              <li class="delivery-flow-stage">
+                <span class="delivery-flow-number">07</span>
+                <code>code-review</code>
+                <span class="delivery-flow-output">Check both promises</span>
+              </li>
+            </ol>
+          </div>
+          <figcaption id="delivery-flow-caption">
+            The path converts a fuzzy destination into progressively more concrete
+            artifacts, ending with a review against both repository standards and
+            the agreed specification.
+          </figcaption>
+        </figure>
+
+        <ol class="process-list">
+          <li>
+            <strong><a href="https://github.com/mattpocock/skills/blob/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/engineering/wayfinder/SKILL.md" target="_blank" rel="noopener noreferrer"><code>wayfinder</code></a> — find the route.</strong>
+            For work too large or foggy for one session, name the destination and
+            maintain a shared map of decision tickets. Resolve the visible
+            frontier until the way is clear; planning, not implementation, is the
+            default outcome. If the whole route is already visible and small,
+            Wayfinder says a map is unnecessary.
+          </li>
+          <li>
+            <strong><a href="https://github.com/mattpocock/skills/blob/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/engineering/grill-with-docs/SKILL.md" target="_blank" rel="noopener noreferrer"><code>grill-with-docs</code></a> — resolve the hard questions.</strong>
+            Run a detailed interview with domain modeling, recording important
+            terminology and architectural decisions as the discussion converges.
+            This turns the follow-up conversation into durable shared context
+            instead of leaving the decisions only in chat.
+          </li>
+          <li>
+            <strong><a href="https://github.com/mattpocock/skills/blob/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/engineering/prototype/SKILL.md" target="_blank" rel="noopener noreferrer"><code>prototype</code></a> — make the open question tangible.</strong>
+            Before the specification hardens, build throwaway code to answer one
+            unresolved design question. For UI work, compare distinct visual
+            directions; for logic, make state changes driveable and visible. Keep
+            it easy to run and deliberately unpolished, then carry the validated
+            decision—not the prototype code—into the spec.
+          </li>
+          <li>
+            <strong><a href="https://github.com/mattpocock/skills/blob/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/engineering/to-spec/SKILL.md" target="_blank" rel="noopener noreferrer"><code>to-spec</code></a> — synthesize the agreed design.</strong>
+            Turn the conversation and codebase understanding into a specification.
+            It does not restart the interview: it captures the problem, solution,
+            user stories, implementation and testing decisions, and scope already
+            established, then publishes the spec for later work.
+          </li>
+          <li>
+            <strong><a href="https://github.com/mattpocock/skills/blob/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/engineering/to-tickets/SKILL.md" target="_blank" rel="noopener noreferrer"><code>to-tickets</code></a> — cut the spec into executable slices.</strong>
+            Produce tracer-bullet tickets that each deliver a narrow, complete,
+            verifiable path through the system. Make blocking edges explicit,
+            review the granularity with the user, and publish the approved tickets
+            in dependency order.
+          </li>
+          <li>
+            <strong><a href="https://github.com/mattpocock/skills/blob/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/engineering/implement/SKILL.md" target="_blank" rel="noopener noreferrer"><code>implement</code></a> — build from the agreed artifact.</strong>
+            Implement a spec or ticket, using TDD where possible at the seams
+            agreed during planning. Run focused checks throughout and the full
+            suite at the end, then hand the finished change to
+            <code>code-review</code>.
+          </li>
+          <li>
+            <strong><a href="https://github.com/mattpocock/skills/blob/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/engineering/code-review/SKILL.md" target="_blank" rel="noopener noreferrer"><code>code-review</code></a> — compare the result with both promises.</strong>
+            Review the diff from a fixed point on two separate axes:
+            <em>Standards</em> asks whether the change follows the repository's
+            engineering rules; <em>Spec</em> asks whether it implements what the
+            originating issue or specification required. The Skill keeps the two
+            reports separate so one kind of success cannot hide the other kind of
+            failure.
+          </li>
+        </ol>
+
+        <aside class="concept-callout" aria-label="How this workflow relates to Chapter 3">
+          <p>
+            <strong>Connection to Chapter 3.</strong> The workflow turns iterative
+            prompting into explicit handoff artifacts: questions become decisions,
+            unresolved design choices become a throwaway prototype, validated
+            decisions become a spec, the spec becomes bounded tickets, and
+            implementation ends against visible checks. The prompt still matters,
+            but it no longer has to carry the whole project history by itself.
+          </p>
+        </aside>
+      </section>
+
+      <section class="content-section writing-for-agents-section" aria-labelledby="writing-for-agents-heading">
+        <h2 id="writing-for-agents-heading">Writing for Agents</h2>
+        <p>
+          Matt Pocock's <code>writing-for-agents</code> Skill is a review reference
+          for any document an agent reads: a Skill, an <code>AGENTS.md</code> or
+          <code>CLAUDE.md</code> file, a spec, a ticket, a runtime prompt, or a
+          document reached through a pointer. Its target is a predictable
+          <em>process</em>—the agent taking the same kind of route each run—not
+          identical output. The packaging changes; the writing problem does not.
+          <cite class="claim-citation">
+            <a href="https://www.aihero.dev/skills-writing-for-agents" target="_blank" rel="noopener noreferrer">Matt Pocock — The /writing-for-agents Skill</a>
+          </cite>
+        </p>
+        <p>
+          The guide's default editing move is subtraction. Agent-facing drafts
+          often explain facts the model already knows, adding context load without
+          changing behavior. The more useful question is behavioral: if a sentence
+          disappears, does the agent take a different route? This makes the Skill
+          at least as useful for reviewing an existing document as for drafting a
+          new one.
+        </p>
+
+        <aside class="concept-callout" aria-label="When to use Writing for Agents">
+          <p>
+            <strong>When to use it.</strong> Reach for this reference whenever an
+            agent will read the artifact. <code>grill-with-docs</code> helps decide
+            what the document must know; <code>writing-for-agents</code> helps shape
+            how the document is found, read, and followed.
+          </p>
+        </aside>
+
+        <h3>The two loads</h3>
+        <p>
+          Most authoring decisions become easier when treated as a trade between
+          two budgets:
+        </p>
+
+        <dl class="project-facts">
+          <div>
+            <dt>Context load</dt>
+            <dd>
+              The cost of material loaded on every turn: an instruction-file line,
+              a Skill description, or anything else that occupies tokens and
+              attention whether or not the current task needs it.
+            </dd>
+          </div>
+          <div>
+            <dt>Cognitive load</dt>
+            <dd>
+              The cost paid by the human who must remember which documents exist
+              and when to invoke them. It preserves human judgment, but makes the
+              human the index.
+            </dd>
+          </div>
+        </dl>
+
+        <p>
+          A model-invoked Skill pays permanent context load for autonomous
+          discovery. A user-invoked Skill pays no discovery load, but the human
+          must remember to call it. Splitting, inlining, and progressive disclosure
+          are versions of the same trade.
+        </p>
+
+        <h3>Five levers for more predictable documents</h3>
+        <dl class="project-facts">
+          <div>
+            <dt>Context pointers</dt>
+            <dd>
+              A pointer must say what material exists and name each distinct branch
+              that should cause the agent to load it. The wording of the pointer,
+              not merely the quality of its target, controls reliable discovery.
+            </dd>
+          </div>
+          <div>
+            <dt>Information hierarchy</dt>
+            <dd>
+              Keep immediate steps at the top, reference needed by every branch in
+              the file, and branch-specific depth behind pointers. Progressive
+              disclosure protects this hierarchy; it is not only a token-saving
+              technique.
+            </dd>
+          </div>
+          <div>
+            <dt>Completion criteria</dt>
+            <dd>
+              End each step with a clear and demanding definition of done. The
+              strongest criteria are both checkable and exhaustive, resisting
+              premature completion while requiring the necessary legwork.
+            </dd>
+          </div>
+          <div>
+            <dt>Leading words</dt>
+            <dd>
+              Reuse compact concepts already familiar to the model—such as
+              <em>tracer bullet</em> or <em>red</em>—to anchor a larger behavior in
+              fewer words. Prefer a strong existing concept over a newly invented
+              label that needs its own explanation.
+            </dd>
+          </div>
+          <div>
+            <dt>Pruning</dt>
+            <dd>
+              Keep one source of truth, leave easy lookups to the environment,
+              remove stale sediment and duplication, and delete instructions that
+              do not change behavior rather than merely shortening their wording.
+            </dd>
+          </div>
+        </dl>
+
+        <h3>A practical review pass</h3>
+        <ol class="process-list">
+          <li>
+            <strong>Choose invocation.</strong> Decide whether the agent must find
+            the document autonomously or whether a human should deliberately call
+            it.
+          </li>
+          <li>
+            <strong>Sharpen the pointer.</strong> Name the material and the genuine
+            trigger branches without repeating synonyms for the same case.
+          </li>
+          <li>
+            <strong>Protect the hierarchy.</strong> Keep the active sequence visible
+            and move branch-only reference behind a pointer; co-locate related
+            definitions, rules, and caveats.
+          </li>
+          <li>
+            <strong>Tighten every finish line.</strong> Make each completion
+            criterion observable and demanding enough to require the full job.
+          </li>
+          <li>
+            <strong>Prune, then run it.</strong> Remove duplication, stale facts,
+            environmental caches, and no-ops. Judge the result by agent behavior,
+            not by document length alone.
+          </li>
+        </ol>
+
+        <aside class="concept-callout" aria-label="Signs that Writing for Agents is working">
+          <p>
+            <strong>It is working if</strong> the document becomes shorter without
+            losing behavior, important meanings appear only once, leading words do
+            visible work, and reference needed by only one branch sits behind a
+            pointer instead of crowding the main path.
+          </p>
+        </aside>
+
+        <p>
+          For the Skill-specific mechanics, the pinned
+          <a href="https://github.com/mattpocock/skills/blob/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/productivity/writing-for-agents/SKILL.md" target="_blank" rel="noopener noreferrer"><code>SKILL.md</code></a>
+          and
+          <a href="https://github.com/mattpocock/skills/blob/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/productivity/writing-for-agents/SKILL-MECHANICS.md" target="_blank" rel="noopener noreferrer"><code>SKILL-MECHANICS.md</code></a>
+          preserve the frozen source used to verify frontmatter, invocation, and
+          router-Skill details. The model above remains a practitioner perspective,
+          not the Agent Skills specification.
+        </p>
+      </section>
+
       <section class="content-section" aria-labelledby="resources-heading">
         <h2 id="resources-heading">Starting resources</h2>
         <p>
-          These are reference-only planning materials. The source spine and
-          teardown examples still require editorial confirmation before drafting.
+          The two Matt Pocock sections above are approved bounded examples. The
+          rest of the source spine and teardown set still require editorial
+          confirmation before the full chapter is drafted.
           See the <a href="reference-material.md">editorial reference packet</a>
           for the frozen artifacts and open decisions.
         </p>
@@ -81,12 +376,18 @@
             </small>
           </li>
           <li>
-            <a href="https://github.com/mattpocock/skills/blob/1fc6573e0e300118ce342fb9365521c9c34eefd4/skills/productivity/writing-for-agents/SKILL.md" target="_blank" rel="noopener noreferrer">Matt Pocock — Writing for Agents</a>
+            <a href="https://www.aihero.dev/skills-writing-for-agents" target="_blank" rel="noopener noreferrer">Matt Pocock — The /writing-for-agents Skill</a>
             <small>
-              A practitioner perspective on invocation, descriptions,
-              information hierarchy, completion criteria, and progressive
-              disclosure. Treat its recommendations as a point of view, not a
-              specification.
+              The primary teaching reference for what the Skill does, when to use
+              it, the two loads, its five levers, common failures, and observable
+              signs that the document is improving.
+            </small>
+          </li>
+          <li>
+            <a href="https://github.com/mattpocock/skills/tree/84fdeffd12f2ee307994d1eb6feb48173b6e0502/skills/productivity/writing-for-agents" target="_blank" rel="noopener noreferrer">Matt Pocock — Writing for Agents, pinned source files</a>
+            <small>
+              The frozen verification source for the practitioner model and its
+              Skill-specific invocation mechanics.
             </small>
           </li>
           <li>

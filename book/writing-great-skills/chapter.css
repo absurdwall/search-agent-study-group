@@ -1,0 +1,130 @@
+.delivery-flow {
+  max-width: 47rem;
+  margin: 1.15rem 0 1.35rem;
+}
+
+.delivery-flow-label {
+  margin: 0 0 0.38rem;
+  color: #50616e;
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.delivery-flow-hint {
+  display: none;
+  margin: -0.1rem 0 0.42rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.delivery-flow-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--line-strong);
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.46);
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+}
+
+.delivery-flow-scroll:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.delivery-flow-list {
+  min-width: 740px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0.9rem;
+  list-style: none;
+}
+
+.delivery-flow-stage {
+  position: relative;
+  min-width: 0;
+  min-height: 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.55rem;
+  padding: 0.62rem 0.58rem 0.66rem;
+  border: 1px solid var(--line);
+  border-top: 3px solid #537a72;
+  border-radius: 0.24rem;
+  background: var(--paper);
+}
+
+.delivery-flow-stage:not(:last-child)::after {
+  position: absolute;
+  top: 50%;
+  right: -0.86rem;
+  z-index: 1;
+  color: #708078;
+  font-size: 1rem;
+  font-weight: 760;
+  line-height: 1;
+  content: "→";
+  transform: translate(50%, -50%);
+}
+
+.delivery-flow-number {
+  color: #5f6f77;
+  font-size: 0.64rem;
+  font-weight: 780;
+  letter-spacing: 0.06em;
+}
+
+.delivery-flow-stage code {
+  max-width: 100%;
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 720;
+  line-height: 1.28;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.delivery-flow-output {
+  color: #59646d;
+  font-size: 0.7rem;
+  line-height: 1.32;
+}
+
+.delivery-flow figcaption {
+  max-width: 43rem;
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.48;
+}
+
+.writing-for-agents-section > h3 {
+  max-width: 43rem;
+  margin: 1.2rem 0 0.48rem;
+  color: #303a43;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.014em;
+  line-height: 1.3;
+}
+
+.writing-for-agents-section > p,
+.writing-for-agents-section > ol,
+.writing-for-agents-section > dl {
+  max-width: 43rem;
+}
+
+@media (max-width: 620px) {
+  .delivery-flow-hint {
+    display: block;
+  }
+
+  .delivery-flow-scroll {
+    scroll-padding-inline: 0.9rem;
+  }
+}

@@ -3,10 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Draft Chapter 3 of the Agent Systems Guide: how a prompt becomes a bounded, observable, and controlled agent run."
-    />
+    <meta name="description" content="Draft Chapter 3 of the Agent Systems Guide: a companion guide to prompting, context, verification, and steering for agentic work." />
     <title>Chapter 3: From a Prompt to a Controlled Agent Run · Search Agent Study Group</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="../../assets/site.css" />
@@ -31,13 +28,14 @@
         <section class="side-toc-section">
           <h2>In this chapter</h2>
           <nav aria-label="Chapter sections">
-            <a href="#task-specification">1. Make the task concrete</a>
-            <a href="#context-selection">2. Decide what this call sees</a>
-            <a href="#progressive-disclosure">3. Start with a map</a>
-            <a href="#guides-and-sensors">4. Guide, then observe</a>
-            <a href="#loop-control">5. Continue, stop, or escalate</a>
-            <a href="#graph-adoption">6. Decide whether to draw the flow</a>
-            <a href="#reconstruction-test">7. Reconstruct the run</a>
+            <a href="#result-first">1. Start with the result</a>
+            <a href="#useful-context">2. Add useful context</a>
+            <a href="#boundaries-verification">3. Boundaries and verification</a>
+            <a href="#explore-first">4. Explore before committing</a>
+            <a href="#during-the-run">5. Prompt during the run</a>
+            <a href="#put-together">6. Put the pieces together</a>
+            <a href="#beyond-prompting">7. Beyond prompting</a>
+            <a href="#practice">Practice</a>
             <a href="#references">References</a>
           </nav>
         </section>
@@ -51,1281 +49,300 @@
             <a href="../writing-great-skills/">Chapter 4</a>
             <a href="../guardrails-hooks-and-evals/">Chapter 5</a>
             <a href="../extended-reading/">Extended Reading</a>
-            <a href="../../weeks/2026-07-28/">Week 3</a>
           </nav>
         </section>
       </aside>
 
       <main class="page guide-page prompting-context-page" id="main-content" tabindex="-1">
         <section class="page-intro chapter-opening" aria-labelledby="page-title">
-          <p class="eyebrow">
-            <a href="../">Study group guide</a> · Chapter 3
-            <span class="book-status">Draft</span>
-          </p>
+          <p class="eyebrow"><a href="../">Study group guide</a> · Chapter 3 <span class="book-status">Draft</span></p>
           <h1 id="page-title">From a Prompt to a Controlled Agent Run</h1>
-          <p class="chapter-subtitle">One research request, progressively made observable and controllable</p>
+          <p class="chapter-subtitle">A companion guide to three current resources</p>
           <p class="lede">
-            A study-group member asks an agent to compare current guidance from
-            OpenAI and Anthropic for keeping agent context focused. The request
-            sounds concrete, but it leaves consequential questions unanswered:
-            Which sources count? What evidence is enough? What may the agent do,
-            and how will it know when the comparison is finished?
+            Good prompting for agentic work is not about discovering a magic phrase. It is about making the desired result legible, supplying the context that can change that result, naming the few boundaries that matter, and staying in the conversation while the work develops.
           </p>
           <p>
-            A useful answer requires more than better wording. The system must
-            decide what information reaches each model call, make its operating
-            rules and observations usable, and control when research continues,
-            stops, or returns to a person. This chapter follows that one request
-            as those responsibilities become visible.
+            This chapter does not introduce a new prompting framework. It follows three selected resources and connects the parts that are easiest to miss when they are read separately. OpenAI supplies the practical sequence. Claude Code adds the working habits of verification, investigation, and course correction. Anthropic's Claude 5 article asks what should change when a more capable model needs fewer rules and can discover more context for itself.
           </p>
 
-          <aside class="concept-callout prerequisite-recap" aria-label="Prerequisite recap">
-            <p>
-              <strong>Prerequisite recap.</strong> One model call receives
-              structured input and returns structured output. Of the
-              task-specific information assembled during a run, only what enters
-              model-visible context can directly shape that call's inference;
-              surrounding code can still constrain what happens before and after it.
-            </p>
-          </aside>
-
-          <p>
-            By the end, you should be able to reconstruct a bounded research-agent
-            run: distinguish the current task prompt from selected context and
-            harness controls, explain one responsibility overlap, and judge
-            whether an explicit workflow graph would earn its complexity. No
-            coding or framework experience is required.
-          </p>
-          <p>
-            <strong>Prompt, context, harness, loop, and graph are useful
-            engineering lenses, not standardized layers.</strong> They can
-            describe overlapping responsibilities in the same run. They are not
-            a nesting order, and this chapter will not turn them into one.
-          </p>
-
-          <aside class="chapter-reading-shortcut" aria-label="Primary companion reading">
-            <p class="chapter-reading-label">Primary companion reading</p>
-            <ul class="source-list">
+          <aside class="chapter-reading-shortcut" aria-label="Main companion readings">
+            <p class="chapter-reading-label">Read alongside this chapter</p>
+            <ol class="companion-reading-list">
               <li>
                 <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI — Prompting</a>
-                <small>The practical teaching baseline for describing a result, adding useful context, setting meaningful boundaries, and refining a result. Its checklist is guidance for OpenAI products, not a standard prompt schema.</small>
+                <small>Living documentation. The chapter follows its result → context → output → boundaries → follow-up sequence.</small>
               </li>
               <li>
-                <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Anthropic — Effective context engineering for AI agents</a>
-                <small>The chapter's stable explanatory source for curating finite model-visible context across an agent run. Anthropic presents context engineering as an emerging practice, not a standardized layer.</small>
+                <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener noreferrer">Anthropic — Best practices for Claude Code</a>
+                <small>Living documentation. Use it for verification, exploration, concrete references, communication, and session management.</small>
               </li>
-            </ul>
+              <li>
+                <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic — The new rules of context engineering for Claude 5 generation models</a>
+                <small>July 24, 2026. A model- and product-specific corrective lens on rules, judgment, progressive disclosure, and references.</small>
+              </li>
+            </ol>
           </aside>
+
+          <aside class="concept-callout" aria-label="How to use the terminology in this chapter">
+            <p><strong>One practical boundary.</strong> A <em>prompt</em> asks for something in the current interaction. <em>Context</em> is the wider material the model receives with that request. A <em>harness</em> surrounds the model with tools, state, and controls. A <em>loop</em> decides whether and how work runs again. These are useful working terms, not standardized layers.</p>
+          </aside>
+          <p>By the end, you should be able to revise one of your own important prompts, decide what supporting material belongs with it, add a readable check, steer the work as it unfolds, and explain when the problem has moved beyond prompting.</p>
         </section>
 
         <nav class="mobile-guide-toc" aria-label="Chapter contents on small screens">
           <p>In this chapter</p>
           <ol class="mobile-guide-toc-primary">
-            <li><a href="#task-specification">Make the task concrete</a></li>
-            <li><a href="#context-selection">Decide what this call sees</a></li>
-            <li><a href="#progressive-disclosure">Start with a map</a></li>
-            <li><a href="#guides-and-sensors">Guide, then observe</a></li>
-            <li><a href="#loop-control">Continue, stop, or escalate</a></li>
-            <li><a href="#graph-adoption">Decide whether to draw the flow</a></li>
-            <li><a href="#reconstruction-test">Reconstruct the run</a></li>
+            <li><a href="#result-first">Start with the result</a></li>
+            <li><a href="#useful-context">Add useful context</a></li>
+            <li><a href="#boundaries-verification">Boundaries and verification</a></li>
+            <li><a href="#explore-first">Explore before committing</a></li>
+            <li><a href="#during-the-run">Prompt during the run</a></li>
+            <li><a href="#put-together">Put the pieces together</a></li>
+            <li><a href="#beyond-prompting">Beyond prompting</a></li>
+            <li><a href="#practice">Practice</a></li>
             <li><a href="#references">References</a></li>
           </ol>
         </nav>
 
-        <section class="content-section" id="task-specification" aria-labelledby="task-specification-heading">
-          <h2 id="task-specification-heading">1. Make the research task concrete</h2>
-          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key resource for making the research task concrete">
-            <p class="chapter-reading-label">Key resource</p>
-            <ul class="source-list">
-              <li>
-                <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI — Prompting</a>
-                <small>Use “Prompting overview,” “Describe the result you need,” “Add useful context,” “Set boundaries that prevent real problems,” and “Improve the result with follow-up messages.”</small>
-              </li>
-            </ul>
+        <section class="content-section" id="result-first" aria-labelledby="result-first-heading">
+          <h2 id="result-first-heading">1. Start with the result</h2>
+          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key reading for starting with the result">
+            <p class="chapter-reading-label">Follow in the main reading</p>
+            <p>OpenAI — <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">“Prompting overview” and “Describe the result you need”</a></p>
           </aside>
-
           <p>
-            Start with the request that initiates this run:
+            OpenAI begins with a deliberately undramatic idea: a prompt can be a question, an instruction, or a goal, and it does not need technical syntax or a rigid formula. For larger or more consequential work, four components may help.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Prompting overview</a></cite>
           </p>
-          <blockquote class="scenario-request">
-            <p>Compare current guidance from OpenAI and Anthropic for keeping agent context focused.</p>
-          </blockquote>
-          <p>
-            The topic is visible, but the intended result is not. The agent does
-            not yet know the audience, the comparison dimensions, the evidence
-            standard, the source limit, or which actions require restraint. A
-            longer prompt is not automatically better; the useful additions are
-            the ones that change what a successful result looks like.
-          </p>
-
-          <h3>A practical checklist, not a required schema</h3>
-          <p>
-            OpenAI's current Prompting guide suggests four useful questions for
-            larger or important tasks: the goal, the context that will help, the
-            desired output, and the boundaries that prevent real problems. It
-            also says to use only the parts that help rather than treating the
-            list as a rigid formula.
-            <cite class="claim-citation">
-              <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Prompting overview</a>
-            </cite>
-          </p>
-
-          <dl class="run-specification-parts">
-            <div>
-              <dt>Goal</dt>
-              <dd>Help a study-group reader understand where the guidance agrees, where it differs, and what remains product-specific.</dd>
-            </div>
-            <div>
-              <dt>Useful context</dt>
-              <dd>The comparison dimensions, approved official source map, current source metadata, and any evidence already accepted or rejected.</dd>
-            </div>
-            <div>
-              <dt>Output</dt>
-              <dd>A short comparison with direct links, claim-level support, and explicit labels for product-specific conclusions.</dd>
-            </div>
-            <div>
-              <dt>Boundaries</dt>
-              <dd>Use no more than four approved official sources, do not generalize a product practice into a universal rule, and prepare a draft without writing or publishing to any external system.</dd>
-            </div>
+          <dl class="prompt-parts">
+            <div><dt>Goal</dt><dd>What should the agent know, make, change, or decide?</dd></div>
+            <div><dt>Context</dt><dd>Which facts, sources, files, or circumstances could change the result?</dd></div>
+            <div><dt>Output</dt><dd>How will the result be used, and what form will make it usable?</dd></div>
+            <div><dt>Boundaries</dt><dd>What must remain unchanged, be avoided, or return for approval?</dd></div>
           </dl>
-
           <p>
-            This ordering matters. OpenAI recommends describing the result
-            rather than prescribing every step, adding only information that can
-            change the result, and focusing boundaries on the few mistakes that
-            would make the work unusable. That leaves the agent room to search
-            and compare while still making the result reviewable.
-            <cite class="claim-citation">
-              <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Describe the result, add useful context, and set boundaries</a>
-            </cite>
-          </p>
-          <p>
-            In this checklist, <em>useful context</em> names information the user
-            knows will matter. It does not mean that every named source or every
-            retrieved page must be placed into the next model call. Section 2
-            will separate the request's source direction from the context the
-            surrounding system actually assembles for each call.
+            This is a checklist, not a form. A short question may need only a goal. A consequential task may need all four. The useful test is not “Did I fill every field?” but “Would this detail change the work or prevent a costly mistake?” OpenAI explicitly advises using only the components that help.
           </p>
 
-          <h3>Turn the request into a current-run specification</h3>
-          <div class="bounded-run-spec" aria-label="Bounded research-agent run specification">
-            <p class="bounded-run-spec-label">Current run specification</p>
-            <p>
-              Compare current guidance from OpenAI and Anthropic for keeping
-              agent context focused. Use no more than four sources from the approved
-              official-source list. Produce a concise comparison with direct
-              links; support each substantive claim and label product-specific
-              conclusions. Prepare a draft only—do not write or publish to an
-              external system. Before finishing, check that each comparison
-              dimension has sufficient evidence and flag any unresolved conflict
-              instead of guessing.
-            </p>
-          </div>
-
-          <aside class="concept-callout" aria-label="Task boundary and harness enforcement">
-            <p>
-              <strong>Same safety goal, different responsibilities.</strong>
-              “Do not write or publish externally” is a user-requested boundary
-              in this task prompt. The harness enforces a stronger capability
-              boundary by exposing only read-only search and page-reading tools,
-              while withholding or blocking tools that could write to external
-              systems. The prompt states the user's intent; the harness controls
-              what the run can actually do.
-            </p>
+          <h3>Describe the outcome before prescribing the route</h3>
+          <p>
+            The guide's next move is to describe the result rather than dictate a long sequence of steps. Audience and format belong in the prompt when they change the deliverable. Process belongs there when the process itself is part of the requirement. Otherwise, a capable agent benefits from room to inspect, compare, and adjust its approach.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Describe the result you need</a></cite>
+          </p>
+          <aside class="concept-callout" aria-label="Outcome versus steps">
+            <p><strong>Prefer an observable result.</strong> “Produce a one-page update for leadership with decisions and next steps first” tells the agent what success should look like. Add a required method only if following that method is itself part of success.</p>
           </aside>
-
-          <figure class="chapter-figure run-spec-figure" aria-labelledby="run-spec-figure-caption">
-            <figcaption id="run-spec-figure-caption">From a topic request to a bounded run</figcaption>
-            <div class="run-spec-compare">
-              <section aria-labelledby="vague-request-heading">
-                <p class="figure-step-label">Before</p>
-                <h3 id="vague-request-heading">A topic, with hidden decisions</h3>
-                <p>Compare current guidance from OpenAI and Anthropic for keeping agent context focused.</p>
-                <ul>
-                  <li>Which sources count?</li>
-                  <li>What evidence is enough?</li>
-                  <li>What may the run do?</li>
-                </ul>
-              </section>
-              <section aria-labelledby="bounded-request-heading">
-                <p class="figure-step-label">After</p>
-                <h3 id="bounded-request-heading">A result the run can check</h3>
-                <dl>
-                  <div><dt>Goal</dt><dd>Explain agreement, difference, and product-specific practice.</dd></div>
-                  <div><dt>Useful context</dt><dd>Approved source map and evidence state.</dd></div>
-                  <div><dt>Output</dt><dd>Concise comparison with direct support.</dd></div>
-                  <div><dt>Boundaries</dt><dd>Four official sources; draft only; flag unresolved conflict.</dd></div>
-                </dl>
-              </section>
-            </div>
-            <p class="figure-responsibility-note"><strong>Prompt:</strong> requests no external write. <strong>Harness:</strong> enforces it by exposing read-only tools.</p>
-          </figure>
-
-          <h3>Iterate without reopening the whole task</h3>
           <p>
-            A first prompt does not need to anticipate every problem. OpenAI's
-            guide recommends reviewing the result and using a specific follow-up
-            to add a missing source, correct the direction, or change the level
-            of detail without starting over.
-            <cite class="claim-citation">
-              <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Improve the result with follow-up messages</a>
-            </cite>
-          </p>
-          <p>
-            For this run, a bounded follow-up might say: “Keep the approved
-            sources and comparison dimensions. Revise only the claims that lack
-            direct support, and preserve the product-specific labels.” That is a
-            correction to the current task, not permission to add new providers,
-            broaden the research question, or keep iterating indefinitely.
-          </p>
-          <p>
-            The incoming request is the <strong>start trigger</strong> for this
-            research run. That observation is enough for now. Section 5 will
-            later distinguish a start trigger from the conditions that continue,
-            retry, stop, or escalate a run already in progress.
+            Claude Code's guide reaches the same conclusion from coding work. It recommends a separate plan when the approach is uncertain or the change crosses several files, but says to skip that overhead when the diff is obvious and small. Planning is a response to uncertainty, not a ceremony.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#explore-first-then-plan-then-code" target="_blank" rel="noopener noreferrer">Claude Code: Explore first, then plan, then code</a></cite>
           </p>
         </section>
 
-        <section class="content-section" id="context-selection" aria-labelledby="context-selection-heading">
-          <h2 id="context-selection-heading">2. Decide what this model call should see</h2>
-          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key resource for context selection">
-            <p class="chapter-reading-label">Key resource</p>
+        <section class="content-section" id="useful-context" aria-labelledby="useful-context-heading">
+          <h2 id="useful-context-heading">2. Add useful context, not all available context</h2>
+          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key readings for useful context">
+            <p class="chapter-reading-label">Read these sections together</p>
             <ul class="source-list">
-              <li>
-                <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Anthropic — Effective context engineering for AI agents</a>
-                <small>Use “Context engineering vs. prompt engineering,” “The anatomy of effective context,” and “Context retrieval and agentic search.”</small>
-              </li>
+              <li><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI — “Add useful context”</a></li>
+              <li><a href="https://code.claude.com/docs/en/best-practices#provide-specific-context-in-your-prompts" target="_blank" rel="noopener noreferrer">Claude Code — “Provide specific context in your prompts”</a></li>
+              <li><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Claude 5 — “Then and now” and “Applying this to your context”</a></li>
             </ul>
           </aside>
-
           <p>
-            Section 1 bounded the run. That specification is one candidate for
-            the next model call, but it is not the whole context. Anthropic uses
-            <em>context</em> for the set of tokens included when a language model
-            produces an output. Those tokens can include instructions, tool
-            definitions, selected source material, prior messages, and tool
-            results—not just the user's latest prompt.
-            <cite class="claim-citation">
-              <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Anthropic: Context engineering vs. prompt engineering</a>
-            </cite>
+            OpenAI defines useful context as information that could change the result. That may be a document, spreadsheet, screenshot, current web source, project folder, or connected source. It also recommends naming what the agent should find rather than spelling out every search it should run.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Add useful context</a></cite>
           </p>
           <p>
-            Context is therefore a <strong>model-call property</strong>. A page in
-            storage, a search result the agent could open, and a passage actually
-            placed before the model are three different states. Only the third
-            is model-visible now.
+            Claude Code makes this concrete for a codebase: identify the relevant file or scenario, state the constraint, point to an existing pattern, describe the symptom, and provide a checkable version of “fixed.” Rich context can arrive as referenced files, images, documentation URLs, command output, or material the agent retrieves itself.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#provide-specific-context-in-your-prompts" target="_blank" rel="noopener noreferrer">Claude Code: Provide specific and rich context</a></cite>
           </p>
 
-          <h3>Retrieval proposes; context selection admits</h3>
+          <h3>A prompt is only part of what the model receives</h3>
           <p>
-            Three sets help make the decision visible:
+            Anthropic's Claude 5 article widens the lens. In Claude Code, the user message is assembled with a system prompt, repository guidance, Skills, memory, tool definitions, and references. The exact mixture is product-specific, but the practical lesson travels: do not assume the current message is the entire context, and do not repeat everything in every message.
+            <cite class="claim-citation"><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic: The prompt is only a small part of context</a></cite>
           </p>
-          <dl class="context-selection-stages">
-            <div>
-              <dt>Source universe</dt>
-              <dd>Everything the run could potentially inspect: the approved official pages, their sections, earlier notes, and any stored artifacts.</dd>
-            </div>
-            <div>
-              <dt>Retrieved candidates</dt>
-              <dd>The titles, snippets, metadata, or passages surfaced by search and reading tools because they might help with the current question.</dd>
-            </div>
-            <div>
-              <dt>Model-visible context</dt>
-              <dd>The smaller packet selected for this inference step: enough evidence and state for the model to make the next sound decision.</dd>
-            </div>
+          <dl class="context-placement-list">
+            <div><dt>Current request</dt><dd>Task-specific goal, sources, desired output, and immediate boundaries.</dd></div>
+            <div><dt>Persistent guidance</dt><dd>Stable project conventions or non-obvious gotchas that should apply across relevant work.</dd></div>
+            <div><dt>On-demand references</dt><dd>Detailed specs, examples, mockups, tests, or procedures that are useful only when the task reaches them.</dd></div>
           </dl>
-          <p>
-            Retrieval can narrow the universe, but it does not settle what the
-            model should see. A search may return five plausible passages. The
-            system may admit two, retain one as a link for later, and reject two
-            as duplicate or off-topic. Treating every retrieval result as context
-            would make the retrieval ranking—not the task—decide how the model's
-            limited attention is spent.
-          </p>
-          <p>
-            Anthropic describes context as finite and recommends the smallest
-            high-signal set that still supports the desired outcome. “Smallest”
-            does not mean mechanically short; it means every included item has a
-            job in this call.
-            <cite class="claim-citation">
-              <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Anthropic: The anatomy of effective context</a>
-            </cite>
-          </p>
+          <p>Chapters 2 and 4 explain the mechanisms that can store and load this material. Here the important editorial decision is simpler: put specific task information close to the task; keep durable guidance small; make deep material easy to find instead of forcing all of it into every call.</p>
 
-          <h3>A packet for one comparison decision</h3>
+          <h3>Progressive disclosure changes what “provide context” means</h3>
           <p>
-            Suppose the agent has already found candidate passages about
-            progressive disclosure. The next call only needs to decide whether
-            OpenAI and Anthropic are describing the same mechanism. Its packet
-            can be compact and explicit:
+            The Claude 5 article reports that Anthropic removed more than 80% of Claude Code's system prompt for its newer models without a measurable loss on its coding evaluations. Its recommended shift is from putting all guidance upfront to making the right detail discoverable at the right time. It applies that idea to tools, Skills, persistent project guidance, and references.
+            <cite class="claim-citation"><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic: Progressive disclosure and simplifying context</a></cite>
           </p>
-          <div class="model-call-packet" aria-label="Example model-call packet">
-            <p class="model-call-packet-label">Visible in this call</p>
-            <ul>
-              <li>the bounded research question and the comparison dimension: <em>when detail becomes visible</em>;</li>
-              <li>one directly relevant passage from each approved provider;</li>
-              <li>source title, date, URL, and product-specific labels;</li>
-              <li>accepted evidence, unresolved differences, and the remaining two-source budget;</li>
-              <li>the required output: decide whether the two passages support a shared principle or only parallel product examples.</li>
-            </ul>
-            <p class="model-call-packet-label">Available, but excluded for now</p>
-            <ul>
-              <li>pricing, installation, model benchmarks, and unrelated product features;</li>
-              <li>full navigation, repeated boilerplate, and duplicate snippets;</li>
-              <li>the complete text of pages whose relevant passages are already present.</li>
-            </ul>
-          </div>
-          <p>
-            The exclusions are not lost facts. They remain in the source universe
-            and can be retrieved later if the question changes. Selection is a
-            reversible focus decision, not deletion.
-          </p>
+          <p>“Rich references” can be more precise than more prose. A test suite can specify behavior; an existing function can specify a porting target; an HTML mockup can specify a design. This does not mean examples are generally bad. Anthropic's narrower warning is that tool-use examples can confine exploration when a clear, expressive interface would carry the requirement better.</p>
 
-          <figure class="chapter-figure context-funnel-figure" aria-labelledby="context-funnel-caption">
-            <figcaption id="context-funnel-caption">Retrieval proposes; context selection admits</figcaption>
-            <ol class="context-funnel">
-              <li>
-                <span class="figure-step-label">Source universe</span>
-                <strong>4 approved pages</strong>
-                <small>Full articles, headings, metadata, and stored notes</small>
-              </li>
-              <li>
-                <span class="figure-step-label">Retrieved candidates</span>
-                <strong>5 plausible passages</strong>
-                <small>Search surfaced them; none is automatically visible</small>
-              </li>
-              <li>
-                <span class="figure-step-label">This model call</span>
-                <strong>2 passages + task + state</strong>
-                <small>Enough to compare when relevant detail should load</small>
-              </li>
-            </ol>
-            <aside class="figure-side-lane" aria-label="Information held outside the current call">
-              <strong>Reachable later, outside now</strong>
-              <span>pricing · installation · duplicate snippets · full page text</span>
-            </aside>
-          </figure>
-
-          <aside class="concept-callout" aria-label="Context selection rule of thumb">
-            <p>
-              <strong>Selection question.</strong> What is the smallest
-              high-signal packet that lets this model call make its next sound
-              decision? The answer can change on the next call.
-            </p>
-          </aside>
-        </section>
-
-        <section class="content-section" id="progressive-disclosure" aria-labelledby="progressive-disclosure-heading">
-          <h2 id="progressive-disclosure-heading">3. Start with a map, then load detail when needed</h2>
-          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key resources for progressive disclosure">
-            <p class="chapter-reading-label">Key resources</p>
-            <ul class="source-list">
-              <li>
-                <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Anthropic — Effective context engineering for AI agents</a>
-                <small>Use “Context retrieval and agentic search” and the supporting long-horizon techniques.</small>
-              </li>
-              <li>
-                <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Claude — The new rules of context engineering for Claude 5 generation models</a>
-                <small>Use “Then: Put it all upfront / Now: Use progressive disclosure” as a current Claude Code product example, not a universal rule.</small>
-              </li>
-              <li>
-                <a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener noreferrer">OpenAI — Harness engineering: leveraging Codex in an agent-first world</a>
-                <small>Use “We made repository knowledge the system of record” for the map-not-manual case.</small>
-              </li>
-            </ul>
-          </aside>
-
-          <p>
-            Section 2 selected a packet from information already surfaced. But a
-            long-running agent also needs a way to discover information without
-            loading every possible detail first. <strong>Progressive
-            disclosure</strong> starts with a compact map—titles, paths, dates,
-            section headings, short descriptions—and follows pointers only when
-            the current decision exposes an evidence gap.
-          </p>
-          <p>
-            Anthropic describes a just-in-time approach in which agents retain
-            lightweight references such as file paths, stored queries, and web
-            links, then load the referenced data at runtime. The metadata itself
-            helps the agent decide where to look next.
-            <cite class="claim-citation">
-              <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Anthropic: Context retrieval and agentic search</a>
-            </cite>
-          </p>
-
-          <h3>Watch one evidence gap open and close</h3>
-          <ol class="evidence-gap-sequence">
-            <li>
-              <strong>Read the map.</strong> The agent sees four approved source
-              records with provider, title, date, URL, product scope, and section
-              headings. It does not receive four full articles.
-            </li>
-            <li>
-              <strong>Notice the gap.</strong> The comparison state already
-              supports “keep context focused,” but lacks direct evidence about
-              <em>when</em> detailed guidance should be loaded.
-            </li>
-            <li>
-              <strong>Load targeted detail.</strong> The agent opens Anthropic's
-              “Context retrieval and agentic search” section and Claude's “Now:
-              Use progressive disclosure” subsection, rather than their entire
-              surrounding product pages.
-            </li>
-            <li>
-              <strong>Update the working state.</strong> It records a supported
-              shared principle—load relevant detail when needed—plus a caveat:
-              deferred tool definitions and selectively called Skills are Claude
-              Code examples, not requirements for every agent system.
-            </li>
-            <li>
-              <strong>Release bulky detail.</strong> Direct links and concise
-              claim notes remain; repeated navigation, unrelated sections, and
-              raw passages no longer needed for the next decision stay outside
-              the new context packet.
-            </li>
-          </ol>
-          <p>
-            Claude's 2026 article reports moving code-review and verification
-            guidance into selectively called Skills and deferring some tool
-            definitions until search finds them. That is strong evidence for how
-            one product implements staged loading, but the broader engineering
-            idea does not depend on Claude Code or Skills.
-            <cite class="claim-citation">
-              <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Claude: Then put it all upfront; now use progressive disclosure</a>
-            </cite>
-          </p>
-          <p>
-            OpenAI reports a related Codex case: a short <code>AGENTS.md</code>
-            acts as a table of contents pointing into a structured repository
-            knowledge base. The agent starts from a stable entry point and knows
-            where to look next instead of receiving one monolithic manual.
-            <cite class="claim-citation">
-              <a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener noreferrer">OpenAI: Give Codex a map, not a 1,000-page instruction manual</a>
-            </cite>
-          </p>
-
-          <h3>Keep a small state, not a second encyclopedia</h3>
-          <p>
-            Staged loading works only if the run remembers enough to avoid
-            repeating itself. For this scenario, the working state can stay
-            short: comparison dimensions, accepted claims with source pointers,
-            rejected evidence with reasons, unresolved questions, and the
-            remaining source budget. It is a navigation and decision record, not
-            a copy of every page read.
-          </p>
-          <dl class="context-maintenance-distinctions">
-            <div>
-              <dt>Progressive disclosure</dt>
-              <dd>Controls when and how much external detail is loaded. It begins from a map and follows a pointer when the current task needs more evidence.</dd>
-            </div>
-            <div>
-              <dt>Compaction</dt>
-              <dd>Compresses context that has already accumulated so the run can continue with a smaller representation. Anthropic presents it as a long-horizon technique; it is not another name for staged loading.</dd>
-            </div>
-            <div>
-              <dt>Memory</dt>
-              <dd>Persists notes outside the current context. A memory becomes model-visible context only if the system later retrieves and selects it for a call.</dd>
-            </div>
-          </dl>
-          <p>
-            Anthropic defines compaction as summarizing a conversation near its
-            context limit and starting a new context with the summary. It
-            describes structured note-taking, or agentic memory, as persisting
-            notes outside the context window and pulling them back later. Both
-            help long-horizon work, but neither collapses the distinction between
-            stored information and current model-visible context.
-            <cite class="claim-citation">
-              <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Anthropic: Compaction and structured note-taking</a>
-            </cite>
-          </p>
-
-          <figure class="chapter-figure evidence-path-figure" aria-labelledby="evidence-path-caption">
-            <figcaption id="evidence-path-caption">A just-in-time evidence path</figcaption>
-            <ol class="figure-sequence four-beat-sequence">
-              <li><span class="figure-step-label">1 · Map</span><strong>4 compact source records</strong><small>Provider, date, scope, URL, headings</small></li>
-              <li><span class="figure-step-label">2 · Gap</span><strong>When should detail load?</strong><small>One comparison dimension is still unsupported</small></li>
-              <li><span class="figure-step-label">3 · Fetch</span><strong>2 targeted sections</strong><small>Anthropic retrieval + Claude progressive disclosure</small></li>
-              <li><span class="figure-step-label">4 · State</span><strong>Claim, caveat, pointers</strong><small>Keep the decision record; release bulky detail</small></li>
-            </ol>
-            <dl class="figure-distinction-strip">
-              <div><dt>Progressive disclosure</dt><dd>loads new detail when needed</dd></div>
-              <div><dt>Compaction</dt><dd>compresses detail already accumulated</dd></div>
-              <div><dt>Memory</dt><dd>stores candidates outside the current call</dd></div>
+          <details class="draft-visual-placeholder" open>
+            <summary>Planned source visual · C3-V01 <span>Anthropic source figure; no adaptation</span></summary>
+            <dl class="draft-visual-brief">
+              <div><dt>Teaching job</dt><dd>Show the Claude 5 article's move from accumulated rules and upfront detail toward judgment, progressive disclosure, and rich references.</dd></div>
+              <div><dt>Placement</dt><dd>Here, after the text has established that a prompt is only part of assembled context.</dd></div>
+              <div><dt>Source visual</dt><dd>Exact figure from <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic's Claude 5 context-engineering article</a>; final figure and reuse path still require review.</dd></div>
+              <div><dt>Avoid</dt><dd>No redraw, relabeling, cropping, or claim that the product-specific “then/now” account is a universal standard.</dd></div>
+              <div><dt>Fallback</dt><dd>The preceding paragraphs and context-placement list carry the full lesson without the image.</dd></div>
             </dl>
-          </figure>
-
-          <p>
-            The run can now find and curate information, but a map does not
-            enforce permissions, make tools legible, or verify that an action
-            succeeded. Those surrounding guides and observable signals are the
-            next lens: the <strong>Harness</strong>.
-          </p>
-        </section>
-
-        <section class="content-section" id="guides-and-sensors" aria-labelledby="guides-and-sensors-heading">
-          <h2 id="guides-and-sensors-heading">4. Put rules before action and evidence after it</h2>
-          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key resources for harness engineering">
-            <p class="chapter-reading-label">Key resources</p>
-            <ul class="source-list">
-              <li>
-                <a href="https://martinfowler.com/articles/harness-engineering.html" target="_blank" rel="noopener noreferrer">Birgitta Böckeler — Harness engineering for coding agent users</a>
-                <small>The primary mental model for guides, sensors, computational and inferential controls, and an outer harness that users can shape.</small>
-              </li>
-              <li>
-                <a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener noreferrer">OpenAI — Harness engineering: leveraging Codex in an agent-first world</a>
-                <small>A concrete system case: tools, legible environments, repository knowledge, checks, observability, review, and recovery working together.</small>
-              </li>
-              <li>
-                <a href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" target="_blank" rel="noopener noreferrer">LangChain — The anatomy of an agent harness</a>
-                <small>A deliberately broad supporting definition. Use it to see why the term overlaps with Context and Loop Engineering, not to impose a standard boundary.</small>
-              </li>
-            </ul>
-          </aside>
-
-          <p>
-            The run now has a bounded task, a source map, and a way to load detail
-            on demand. Yet none of those alone answers practical questions such
-            as: Which tools can the agent call? How is a page read? What happens
-            when a source is unavailable? Who checks that a claim has evidence?
-            The <strong>Harness</strong> lens looks at the surrounding system that
-            turns model output into usable action and returns observations for
-            the next decision.
-          </p>
-          <p>
-            The term is still broad. LangChain uses <em>harness</em> for nearly
-            everything around the model, including tools, state, infrastructure,
-            orchestration, and hooks. Böckeler narrows the lens for coding-agent
-            users: part of the harness is built into the product, while users can
-            shape an outer harness for their own environment. These are useful
-            viewpoints, not a settled industry boundary.
-            <cite class="claim-citation">
-              <a href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" target="_blank" rel="noopener noreferrer">LangChain: The anatomy of an agent harness</a>
-            </cite>
-            <cite class="claim-citation">
-              <a href="https://martinfowler.com/articles/harness-engineering.html" target="_blank" rel="noopener noreferrer">Böckeler: A bounded user-harness view</a>
-            </cite>
-          </p>
-
-          <h3>Guide before action; sense after action</h3>
-          <p>
-            Böckeler's most useful distinction is directional. <strong>Guides</strong>
-            are feedforward controls: they anticipate unwanted output and steer
-            the agent before it acts. <strong>Sensors</strong> are feedback
-            controls: they observe what happened and produce signals that can
-            support correction. Guides without sensors cannot tell whether they
-            worked; sensors without guides repeatedly rediscover preventable
-            mistakes.
-            <cite class="claim-citation">
-              <a href="https://martinfowler.com/articles/harness-engineering.html" target="_blank" rel="noopener noreferrer">Böckeler: Feedforward and feedback</a>
-            </cite>
-          </p>
-
-          <div class="guides-sensors-comparison" role="group" aria-label="Guides and sensor signals in the research run">
-            <section aria-labelledby="guides-heading">
-              <h3 id="guides-heading">Guides before the research action</h3>
-              <ul>
-                <li>an allowlist of four official sources;</li>
-                <li>a source-record shape requiring provider, title, date, URL, scope, and retrieved section;</li>
-                <li>the comparison dimensions and the rule to label product-specific evidence;</li>
-                <li>a citation format and a coverage threshold for sufficient support.</li>
-              </ul>
-            </section>
-            <section aria-labelledby="sensors-heading">
-              <h3 id="sensors-heading">Sensor signals after the action</h3>
-              <ul>
-                <li>the page reader's HTTP status, final URL, publication date, and title;</li>
-                <li>allowlist pass or fail for every source used;</li>
-                <li>a citation-coverage result naming unsupported claims;</li>
-                <li>dimension-completeness status and a product-generalization flag.</li>
-              </ul>
-            </section>
-          </div>
-
-          <p>
-            Read-only search and page-reading tools are neither a Guide nor a
-            sensor signal. They define the <strong>capability boundary</strong>:
-            what actions the Harness makes possible. A check is the mechanism;
-            its observed pass, failure, measurement, or flag is the signal that
-            can guide a later decision.
-          </p>
-
-          <p>
-            Some controls are <strong>computational</strong>: deterministic checks
-            such as URL validation, allowlist enforcement, schema validation, and
-            link coverage. Others are <strong>inferential</strong>: model-based
-            judgments such as whether two claims genuinely agree or whether a
-            caveat is adequate. Böckeler recommends distinguishing the two
-            because they differ in speed, cost, and reliability.
-            <cite class="claim-citation">
-              <a href="https://martinfowler.com/articles/harness-engineering.html" target="_blank" rel="noopener noreferrer">Böckeler: Computational vs. inferential controls</a>
-            </cite>
-          </p>
-          <p>
-            Use a cheap deterministic check to produce the sensor signal wherever
-            the question is deterministic. “Is this URL on the allowlist?” should
-            not be left to model judgment. Use an inferential review where meaning
-            matters, and keep the resulting signal's uncertainty visible. “Does
-            this paragraph overgeneralize a Claude Code practice?” needs semantic
-            review, not a string match.
-          </p>
-
-          <h3>The overlap with context is a handoff, not an identity</h3>
-          <p>
-            A guide can become model-visible context: the harness may place the
-            source schema or comparison dimensions into a call. A sensor result
-            can also become context: the next call may receive “claim 3 lacks an
-            approved citation” and revise it. But the harness includes machinery
-            that never needs to appear as tokens—the code that withholds write
-            tools, executes the page reader, validates the allowlist, or routes a
-            failed check back for correction.
-          </p>
-          <aside class="concept-callout" aria-label="Harness and context overlap">
-            <p>
-              <strong>One overlap to remember.</strong> Context Engineering
-              decides which guide or sensor signals the model sees now. Harness
-              Engineering decides how those guides, capabilities, observations,
-              and checks are made available and enforced around the model.
-            </p>
-          </aside>
-
-          <h3>Why the OpenAI article feels larger than “how to build a harness”</h3>
-          <p>
-            OpenAI's Harness Engineering article is a case study, not a component
-            tutorial. It describes a whole agent-first development environment:
-            repository-local knowledge, browser access, logs and metrics, custom
-            linters, structural tests, review loops, and recovery. Its teaching
-            value is the interaction among those pieces. A task prompt alone did
-            not create reliable work; the environment made the application's
-            state legible and supplied feedback the agent could act on.
-            <cite class="claim-citation">
-              <a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener noreferrer">OpenAI: Increasing application legibility and enforcing invariants</a>
-            </cite>
-          </p>
-          <p>
-            That is also why the article can feel like it “doesn't teach harness
-            engineering.” It shows the accumulated result of engineering a
-            harness, while Böckeler supplies a smaller diagnostic vocabulary for
-            designing one control at a time: What should guide the agent before
-            action? What can sense the result afterward? Which signal should
-            trigger self-correction, and which still requires a person?
-          </p>
-
-          <figure class="chapter-figure harness-flow-figure" aria-labelledby="harness-flow-caption">
-            <figcaption id="harness-flow-caption">A research harness steers, acts, and senses</figcaption>
-            <div class="harness-flow">
-              <section aria-labelledby="figure-guides-heading">
-                <p class="figure-step-label">Feedforward · Guides</p>
-                <h3 id="figure-guides-heading">Before action</h3>
-                <p>Source allowlist · record shape · comparison dimensions</p>
-              </section>
-              <section class="harness-action" aria-labelledby="figure-action-heading">
-                <p class="figure-step-label">Capability boundary</p>
-                <h3 id="figure-action-heading">Read-only research</h3>
-                <p>Search and page reading available · external writes withheld</p>
-              </section>
-              <section aria-labelledby="figure-sensors-heading">
-                <p class="figure-step-label">Feedback · Sensors</p>
-                <h3 id="figure-sensors-heading">After action</h3>
-                <p>Metadata and allowlist checks · citation and meaning review</p>
-              </section>
-            </div>
-            <p class="figure-return-path"><strong>Selected feedback returns:</strong> “Claim 3 lacks an approved citation.” The Harness produced the signal; Context decides whether the next call sees it.</p>
-          </figure>
-
-          <p>
-            Sensors make correction possible, but they do not decide by
-            themselves how many times the system should try. That is the next
-            lens: the <strong>Loop</strong>—the run's explicit rules for
-            continuing, retrying, stopping, and escalating.
-          </p>
-        </section>
-
-        <section class="content-section" id="loop-control" aria-labelledby="loop-control-heading">
-          <h2 id="loop-control-heading">5. Let the run continue—and make it stop</h2>
-          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key resources for loop engineering">
-            <p class="chapter-reading-label">Key resources</p>
-            <ul class="source-list">
-              <li>
-                <a href="https://claude.com/blog/getting-started-with-loops" target="_blank" rel="noopener noreferrer">Claude — Loop engineering: Getting started with loops</a>
-                <small>A current Claude Code taxonomy organized by trigger, stop condition, product primitive, and task fit. Use the taxonomy as a product example.</small>
-              </li>
-              <li>
-                <a href="https://addyo.substack.com/p/loop-engineering" target="_blank" rel="noopener noreferrer">Addy Osmani — Loop Engineering</a>
-                <small>An emerging practitioner framing for designing the recurring system around agent work, durable state, verification, and human ownership.</small>
-              </li>
-            </ul>
-          </aside>
-
-          <p>
-            A Harness can provide tools and feedback, yet one unanswered control
-            question remains: after a sensor reports a gap, does the system try
-            again? <strong>Loop Engineering</strong> focuses on the repeated
-            cycle of work and the decisions that govern it. The Claude Code team
-            defines a loop as an agent repeating cycles of work until a stop
-            condition is met. That definition is useful, but the product commands
-            and four loop types in its article are Claude Code's current
-            taxonomy—not a standard that every system must copy.
-            <cite class="claim-citation">
-              <a href="https://claude.com/blog/getting-started-with-loops" target="_blank" rel="noopener noreferrer">Claude: Getting started with loops</a>
-            </cite>
-          </p>
-
-          <h3>Five decisions, not one circular arrow</h3>
-          <dl class="loop-control-decisions">
-            <div>
-              <dt>Start</dt>
-              <dd>The user's bounded comparison request creates a new run with an empty evidence record and a four-source budget.</dd>
-            </div>
-            <div>
-              <dt>Continue</dt>
-              <dd>A required comparison dimension still lacks evidence and there is a relevant approved source or section that has not been examined.</dd>
-            </div>
-            <div>
-              <dt>Retry</dt>
-              <dd>The intended action failed in a way that may be transient—for example, a page read timed out—so the same action may be attempted again under a retry cap.</dd>
-            </div>
-            <div>
-              <dt>Stop</dt>
-              <dd>Every required dimension is supported or explicitly marked “no comparable claim found,” citations and labels pass, and no unresolved conflict blocks a truthful draft.</dd>
-            </div>
-            <div>
-              <dt>Escalate</dt>
-              <dd>The source budget is exhausted, official sources conflict, a required page remains unavailable after retry, or resolving the issue needs a new source or broader authority.</dd>
-            </div>
-          </dl>
-          <p>
-            These decisions must remain separate. A missing claim is a reason to
-            <em>continue</em> research, not automatically to repeat the same
-            failed request. Exhausting the budget is not successful completion.
-            Needing a human judgment is not a failure to stop; it is a different
-            exit with a useful handoff.
-          </p>
-
-          <h3>The loop reads and writes explicit state</h3>
-          <p>
-            Repetition is only controlled when each pass can inspect what earlier
-            passes established. For this run, the durable state is deliberately
-            small:
-          </p>
-          <div class="loop-state-snapshot" aria-label="Research loop state snapshot">
-            <p class="model-call-packet-label">Research state after one pass</p>
-            <dl>
-              <div><dt>Dimensions</dt><dd>focus principle: supported · loading timing: partial · verification: unresolved</dd></div>
-              <div><dt>Evidence</dt><dd>2 accepted claims · 1 Claude-specific example · 1 rejected duplicate</dd></div>
-              <div><dt>Budget</dt><dd>2 of 4 sources used · first OpenAI read failed · one retry remains</dd></div>
-              <div><dt>Next decision</dt><dd>retry the same OpenAI verification-section read once; do not reopen context-window background</dd></div>
-            </dl>
-          </div>
-          <p>
-            The cycle is then concrete: select the next evidence gap, assemble a
-            focused context packet, act through the Harness, observe sensor
-            results, update state, and choose an exit or another pass. Prompt,
-            Context, and Harness responsibilities participate in the Loop; none
-            of them is replaced by it.
-          </p>
-
-          <h3>Completion needs a second boundary: cost</h3>
-          <p>
-            A success condition prevents premature stopping. A budget prevents
-            endless pursuit of that condition. This chapter's run has both: at
-            most four approved sources, at most one retry for a failed page read,
-            and no new provider or external write without human approval. If the
-            evidence standard cannot be met inside those limits, the correct
-            output is an escalation packet describing what is known, what was
-            tried, and which decision is needed.
-          </p>
-          <p>
-            Claude's loop guidance similarly recommends explicit success and stop
-            criteria, turn caps for goal-based loops, pilot runs before large
-            executions, and matching schedules to how often the observed system
-            changes. Those are current Claude Code recommendations; the general
-            lesson is to budget repeated work in the unit your system can
-            actually measure—turns, attempts, tokens, time, sources, or money.
-            <cite class="claim-citation">
-              <a href="https://claude.com/blog/getting-started-with-loops" target="_blank" rel="noopener noreferrer">Claude: Managing token usage</a>
-            </cite>
-          </p>
-
-          <h3>Choose the smallest loop that fits</h3>
-          <p>
-            Claude's product article distinguishes turn-based, goal-based,
-            time-based, and proactive loops by what triggers them, what stops
-            them, and what the user hands off. That comparison is helpful for
-            adoption decisions even outside Claude Code, as long as its commands
-            are not mistaken for universal mechanisms.
-            <cite class="claim-citation">
-              <a href="https://claude.com/blog/getting-started-with-loops" target="_blank" rel="noopener noreferrer">Claude: Loop types and handoff</a>
-            </cite>
-          </p>
-          <div class="loop-fit-table-wrap" role="region" aria-labelledby="loop-fit-caption" tabindex="0">
-            <table class="guide-table loop-fit-table">
-              <caption id="loop-fit-caption">Which loop fits this research task?</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Pattern</th>
-                  <th scope="col">What is handed off</th>
-                  <th scope="col">Fit here</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Turn-based</th>
-                  <td>The agent acts and checks; the person decides the next turn.</td>
-                  <td>Safe default while the comparison method is still being learned.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Bounded goal-based</th>
-                  <td>The stop decision, within explicit evidence and cost limits.</td>
-                  <td><strong>Best fit for this run</strong> once the completion checks are trusted.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Time-based</th>
-                  <td>The trigger repeats on an interval.</td>
-                  <td>Poor fit: this is a one-time comparison, not a monitoring task.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Proactive</th>
-                  <td>The recurring prompt or workflow runs without a person present.</td>
-                  <td>Unnecessary until there is a stable stream of updates to process.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p>
-            Addy Osmani's recent Loop Engineering essay pushes the same leverage
-            point further: design the system that repeatedly supplies work,
-            preserves state, separates making from checking, and returns anything
-            it cannot handle to a person. He also warns that a smooth loop can
-            accelerate mistakes and understanding loss. This is an emerging
-            practitioner framing, not a settled discipline; its most durable
-            contribution here is the insistence that the human still owns the
-            outcome.
-            <cite class="claim-citation">
-              <a href="https://addyo.substack.com/p/loop-engineering" target="_blank" rel="noopener noreferrer">Osmani: What one loop looks like and what it still does not do</a>
-            </cite>
-          </p>
-
-          <figure class="chapter-figure bounded-loop-figure" aria-labelledby="bounded-loop-caption">
-            <figcaption id="bounded-loop-caption">One pass through a bounded research loop</figcaption>
-            <ol class="figure-sequence loop-pass-sequence">
-              <li><span class="figure-step-label">Gap</span><strong>Select unresolved dimension</strong></li>
-              <li><span class="figure-step-label">Context</span><strong>Assemble focused packet</strong></li>
-              <li><span class="figure-step-label">Action</span><strong>Read through the Harness</strong></li>
-              <li><span class="figure-step-label">Evidence</span><strong>Run sensors; update state</strong></li>
-            </ol>
-            <p class="figure-budget"><strong>Budget:</strong> 4 official sources · 1 retry per failed read · no new authority</p>
-            <dl class="loop-exit-grid">
-              <div><dt>Continue</dt><dd>A different evidence gap remains.</dd></div>
-              <div><dt>Retry</dt><dd>The same action failed transiently and remains under cap.</dd></div>
-              <div><dt>Stop</dt><dd>Evidence, citations, and product labels pass.</dd></div>
-              <div><dt>Escalate</dt><dd>Conflict, exhausted budget, or new authority requires a person.</dd></div>
-            </dl>
-          </figure>
-
-          <p>
-            This run has one normal cycle and a handful of explicit exits. We can
-            still explain it without a framework. The next question is not “Can
-            it be drawn as a graph?”—almost any process can—but “Would an explicit
-            graph make its branching, state, recovery, or handoffs easier to
-            control?”
-          </p>
-        </section>
-
-        <section class="content-section" id="graph-adoption" aria-labelledby="graph-adoption-heading">
-          <h2 id="graph-adoption-heading">6. Decide whether the control flow needs a graph</h2>
-          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key resource for graph adoption">
-            <p class="chapter-reading-label">Technical anchor</p>
-            <ul class="source-list">
-              <li>
-                <a href="https://docs.langchain.com/oss/python/langgraph/graph-api" target="_blank" rel="noopener noreferrer">LangGraph — Graph API overview</a>
-                <small>A concrete implementation vocabulary for state, nodes, normal and conditional edges, start and end points, and explicit routing. This chapter uses the vocabulary for an adoption decision, not a framework tutorial.</small>
-              </li>
-            </ul>
-          </aside>
-
-          <p>
-            The Loop in Section 5 can already be drawn as circles and arrows.
-            That does not mean it needs a graph runtime. The <strong>Graph</strong>
-            lens becomes useful when naming steps, state, and routes makes a
-            complicated flow easier to inspect, resume, test, or hand off.
-          </p>
-          <p>
-            LangGraph's Graph API describes three core components: shared
-            <strong>state</strong> is the current application snapshot;
-            <strong>nodes</strong> perform work and update that state; and
-            <strong>edges</strong> choose what runs next, either through fixed
-            transitions or conditional branches. Nodes do not have to be model
-            calls; they can also be ordinary deterministic functions.
-            <cite class="claim-citation">
-              <a href="https://docs.langchain.com/oss/python/langgraph/graph-api" target="_blank" rel="noopener noreferrer">LangGraph: State, nodes, and edges</a>
-            </cite>
-          </p>
-          <p>
-            This vocabulary is valuable even if the final system is implemented
-            with a small loop and a few functions. It forces the design to name
-            where state changes and who owns each routing decision. But adopting
-            a graph framework also adds schemas, routing code, persistence
-            choices, debugging surfaces, and migration work. Explicitness must
-            repay that cost.
-          </p>
-
-          <h3>Ask what the graph would make safer or clearer</h3>
-          <div class="graph-adoption-table-wrap" role="region" aria-labelledby="graph-adoption-caption" tabindex="0">
-            <table class="guide-table graph-adoption-table">
-              <caption id="graph-adoption-caption">Signals that can justify an explicit workflow graph</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Signal</th>
-                  <th scope="col">What becomes explicit</th>
-                  <th scope="col">Present in this run?</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Several meaningful branches</th>
-                  <td>Different evidence types or failures route to different work, not merely “try again.”</td>
-                  <td>No. The next step is always the highest-priority unresolved dimension.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Persistent checkpoints</th>
-                  <td>The system can stop, resume, inspect, or recover from a named state boundary.</td>
-                  <td>Not required. The comparison is short enough for one bounded run.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Pause for human input</th>
-                  <td>A handoff node records the question and later resumes the correct path.</td>
-                  <td>Only as a terminal escalation; resuming inside the same run is optional.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Separate citation gates</th>
-                  <td>Drafting, claim verification, product-specificity review, and repair have distinct routes.</td>
-                  <td>One compact verification pass is sufficient at current scope.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Parallel work and join</th>
-                  <td>Provider-specific research branches can run separately and reconcile into shared state.</td>
-                  <td>Unnecessary for four sources; coordination would cost more than it saves.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>The decision for this chapter's run: no graph yet</h3>
-          <p>
-            Keep the current implementation as one bounded loop with an explicit
-            state record and four exits. It has one main work path, a tiny source
-            budget, one retry policy, and terminal human escalation. A graph
-            drawing may help teach the flow, but a graph runtime would not yet
-            remove meaningful ambiguity.
-          </p>
-          <aside class="concept-callout" aria-label="Graph adoption decision">
-            <p>
-              <strong>Adoption rule.</strong> Use a graph when named state
-              transitions, branching, pause-and-resume, recovery, parallel joins,
-              or human handoffs need to become first-class system behavior—not
-              because “Graph Engineering” sounds like the next layer.
-            </p>
-          </aside>
-
-          <p>
-            The decision would change if this one-time comparison became a
-            maintained guidance monitor. Imagine that provider updates arrive on
-            different schedules, each provider gets a separate research branch,
-            citation failures route to targeted repair, contradictory guidance
-            pauses for editorial judgment, and a checkpointed run resumes after
-            approval. Now named nodes and conditional edges clarify responsibility:
-          </p>
-          <ol class="candidate-graph-path">
-            <li><strong>Detect update</strong> records the changed official source.</li>
-            <li><strong>Research provider</strong> loads only the affected guidance and updates evidence state.</li>
-            <li><strong>Verify claims</strong> routes clean claims forward and citation failures back to repair.</li>
-            <li><strong>Resolve conflict</strong> interrupts for a person when providers cannot be compared truthfully without editorial judgment.</li>
-            <li><strong>Publish candidate</strong> prepares—but still does not automatically publish—the approved comparison.</li>
-          </ol>
-          <p>
-            LangGraph documents conditional edges for routing from current state,
-            checkpoint-based persistence for recovery, and interrupts that pause
-            execution and resume with external input. Those are examples of
-            capabilities that can justify graph adoption when the workflow truly
-            needs them; they are not evidence that every agent should use
-            LangGraph.
-            <cite class="claim-citation">
-              <a href="https://docs.langchain.com/oss/python/langgraph/graph-api" target="_blank" rel="noopener noreferrer">LangGraph: Conditional edges and resume commands</a>
-            </cite>
-            <cite class="claim-citation">
-              <a href="https://docs.langchain.com/oss/python/langgraph/interrupts" target="_blank" rel="noopener noreferrer">LangGraph: Interrupts and persisted resume</a>
-            </cite>
-          </p>
-
-          <figure class="chapter-figure graph-decision-figure" aria-labelledby="graph-decision-caption">
-            <figcaption id="graph-decision-caption">When a simple loop earns an explicit graph</figcaption>
-            <div class="graph-decision-compare">
-              <section aria-labelledby="simple-loop-heading">
-                <p class="figure-step-label">Current run · keep the loop</p>
-                <h3 id="simple-loop-heading">One main path</h3>
-                <p>Small state → one verification pass → continue, retry, stop, or terminal escalation</p>
-                <strong class="figure-verdict">No graph runtime</strong>
-              </section>
-              <section aria-labelledby="future-graph-heading">
-                <p class="figure-step-label">Maintained monitor · reconsider</p>
-                <h3 id="future-graph-heading">Branches need names</h3>
-                <ol>
-                  <li>Provider research branches</li>
-                  <li>Citation gate and repair edge</li>
-                  <li>Persisted human interrupt and resume</li>
-                  <li>Join into a publication candidate</li>
-                </ol>
-                <strong class="figure-verdict">Graph may repay its cost</strong>
-              </section>
-            </div>
-          </figure>
-
-          <p>
-            We now have five lenses and one explicit non-adoption decision. The
-            final test is whether the reader can assign every part of the actual
-            run without turning those lenses into a hierarchy.
-          </p>
-        </section>
-
-        <section class="content-section" id="reconstruction-test" aria-labelledby="reconstruction-test-heading">
-          <h2 id="reconstruction-test-heading">7. Reconstruct the complete research run</h2>
-          <p>
-            The five terms are useful only if they help diagnose a real system.
-            Rebuild this chapter's run from its responsibilities rather than from
-            a memorized stack diagram.
-          </p>
-
-          <h3>The run, end to end</h3>
-          <ol class="complete-run-sequence">
-            <li>
-              <strong>Specify.</strong> The user asks for a concise comparison of
-              current OpenAI and Anthropic guidance, limited to four approved
-              official sources, with direct support and product-specific labels.
-            </li>
-            <li>
-              <strong>Map.</strong> The system exposes a compact source record for
-              each approved page: provider, title, date, URL, scope, and section
-              headings—not every page in full.
-            </li>
-            <li>
-              <strong>Select.</strong> For the current comparison dimension, the
-              system admits the bounded task, two relevant passages, evidence
-              state, and remaining budget into the model call.
-            </li>
-            <li>
-              <strong>Act.</strong> The agent chooses a read-only page-reading tool
-              and opens the next relevant section. No external write capability
-              is available.
-            </li>
-            <li>
-              <strong>Observe.</strong> Deterministic checks return page metadata,
-              allowlist status, and citation coverage; semantic review flags any
-              unsupported generalization.
-            </li>
-            <li>
-              <strong>Update.</strong> The run records accepted and rejected
-              evidence, unresolved dimensions, retry count, and source budget.
-              Bulky page detail remains outside the next packet unless needed.
-            </li>
-            <li>
-              <strong>Decide.</strong> The controller continues to a new evidence
-              gap, retries one transient read failure, stops with a supported
-              draft, or escalates a conflict or exhausted budget to the user.
-            </li>
-            <li>
-              <strong>Keep it simple.</strong> Because those decisions form one
-              short path with small state and terminal escalation, the run does
-              not adopt a graph runtime.
-            </li>
-          </ol>
-
-          <h3>Assign each responsibility</h3>
-          <div class="reconstruction-table-wrap" role="region" aria-labelledby="reconstruction-caption" tabindex="0">
-            <table class="guide-table reconstruction-table">
-              <caption id="reconstruction-caption">A responsibility map for the controlled research run</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Lens</th>
-                  <th scope="col">Question it answers here</th>
-                  <th scope="col">Concrete responsibility</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Prompt</th>
-                  <td>What result is this run trying to produce?</td>
-                  <td>States the comparison goal, useful task context, output requirements, evidence boundary, and requested no-write restraint.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Context</th>
-                  <td>What does this model call see now?</td>
-                  <td>Selects the smallest high-signal packet from task, map, passages, prior observations, and working state.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Harness</th>
-                  <td>What surrounds the model so work is possible and observable?</td>
-                  <td>Exposes read-only tools, enforces the allowlist and capability boundary, runs checks, and returns sensor signals.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Loop</th>
-                  <td>Why does the run take another pass—or exit?</td>
-                  <td>Reads state and budget, then distinguishes continue, bounded retry, successful stop, and human escalation.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Graph</th>
-                  <td>Would explicit nodes, state transitions, and routes repay their complexity?</td>
-                  <td>Records a no-adoption decision now and names the future branching, persistence, recovery, and handoff signals that could change it.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Explain one overlap without inventing layers</h3>
-          <p>
-            After citation coverage fails, the Harness produces a deterministic
-            sensor signal: “comparison claim 3 has no approved source.” Context
-            Engineering selects that signal, the relevant claim, and the source
-            map for the next model call. The Loop reads the updated failure state
-            and chooses another evidence pass. One event crosses three lenses;
-            no lens contains the others.
-          </p>
-          <p>
-            The same is true of the Prompt's no-write boundary. It communicates
-            user intent inside the task. The Harness enforces the capability by
-            withholding write tools. The Loop escalates rather than inventing a
-            write path if external publication later becomes necessary. Shared
-            safety goal, different responsibilities.
-          </p>
-
-          <h3>Run the reconstruction test yourself</h3>
-          <div class="reconstruction-checkpoint">
-            <p class="reconstruction-checkpoint-label">Checkpoint</p>
-            <p>
-              Imagine the Anthropic page loads, but its relevant statement is a
-              Claude Code-specific practice; the OpenAI page times out once; two
-              sources remain in budget; and the “verification” comparison
-              dimension has no supported OpenAI claim yet.
-            </p>
-            <ol>
-              <li>What should be visible in the next model call, and what should remain outside it?</li>
-              <li>How should the source map support progressive disclosure at this evidence gap?</li>
-              <li>Which instruction is a Prompt responsibility, and which restriction must the Harness enforce?</li>
-              <li>Which Guide, capability boundary, checks, and sensor signals should the Harness provide?</li>
-              <li>Does the Loop continue, retry, stop, or escalate—and why? Explain one responsibility overlap along that path.</li>
-              <li>Does this new state justify a Graph? Name the specific adoption signal if you think it does.</li>
-            </ol>
-          </div>
-          <details class="checkpoint-answer">
-            <summary>Compare your reconstruction</summary>
-            <div>
-              <p>
-                The next call should see the bounded task, the unresolved
-                verification dimension, the Claude-specific passage and label,
-                the failed OpenAI URL with retry count, the compact source map,
-                accepted evidence, and the two-source budget. Unrelated page
-                sections and full prior tool output stay outside. The compact map
-                keeps those sections discoverable; progressive disclosure follows
-                only the OpenAI verification pointer exposed by this evidence gap.
-              </p>
-              <p>
-                The Prompt states the official-source, product-label, and no-write
-                requirements. The Harness enforces the official allowlist and
-                read-only capability boundary, runs the page and coverage checks,
-                and returns final URL, status, unsupported-claim, and
-                product-generalization signals. The Loop—not the Harness—takes
-                the bounded <strong>retry</strong> path for the transient OpenAI read.
-                If it fails again, it escalates rather than spending a new source
-                or claiming the dimension is complete.
-              </p>
-              <p>
-                One overlap crosses three lenses: the Harness returns the failed
-                read signal; Context selects that signal, retry count, source
-                pointer, and unresolved dimension for the next call; the Loop
-                reads that state and chooses the permitted retry.
-              </p>
-              <p>
-                This alone still does not justify a Graph: it is one known retry
-                edge and one terminal escalation. A persisted pause followed by
-                later human approval and resume, several provider-specific repair
-                branches, or parallel research that must join would be concrete
-                signals to reconsider.
-              </p>
-            </div>
           </details>
+        </section>
 
-          <figure class="chapter-figure synthesis-figure" aria-labelledby="synthesis-caption">
-            <figcaption id="synthesis-caption">One controlled run, viewed through five lenses</figcaption>
-            <ol class="synthesis-run-strip">
-              <li><span>Prompt</span><strong>Specify</strong><small>Goal, output, boundaries</small></li>
-              <li><span>Context</span><strong>Map + select</strong><small>Only what this call needs</small></li>
-              <li><span>Harness</span><strong>Act + observe</strong><small>Capabilities, guides, sensors</small></li>
-              <li><span>Loop</span><strong>Update + decide</strong><small>Continue, retry, stop, escalate</small></li>
-              <li><span>Graph</span><strong>Adopt—or not</strong><small>Explicit flow only when it earns its cost</small></li>
-            </ol>
-            <p class="figure-overlap-note"><strong>Overlap in motion:</strong> a Harness sensor reports a missing citation → Context selects that signal for the next call → the Loop chooses another evidence pass.</p>
-          </figure>
-
-          <aside class="concept-callout chapter-takeaway" aria-label="Chapter takeaway">
-            <p>
-              <strong>Chapter takeaway.</strong> Engineer the task-specific result
-              with the Prompt, the current decision surface with Context, the
-              surrounding capabilities and feedback with the Harness, repeated
-              progress and exits with the Loop, and explicit workflow structure
-              with a Graph only when its complexity earns its keep.
-            </p>
+        <section class="content-section" id="boundaries-verification" aria-labelledby="boundaries-verification-heading">
+          <h2 id="boundaries-verification-heading">3. Set meaningful boundaries—and give the work a check</h2>
+          <h3>Protect against the mistakes that would actually matter</h3>
+          <p>
+            OpenAI describes boundaries as the few instructions needed to prevent extra work or an unintended action: preserve approved facts, use only supplied sources, stay inside a budget, or draft without sending. It recommends focusing on the one or two boundaries that matter most instead of controlling every step.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Set boundaries that prevent real problems</a></cite>
+          </p>
+          <p>
+            This restraint matters more for stronger agents, not less. Anthropic found that rules accumulated across the system prompt, project files, Skills, and user requests could conflict. Its Claude 5 guidance shifts from absolute rules toward instructions that let the model use the surrounding evidence and match the work at hand.
+            <cite class="claim-citation"><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic: Unhobbling Claude and rules → judgment</a></cite>
+          </p>
+          <aside class="important-distinction" aria-label="Boundary and enforcement distinction">
+            <p><strong>Important distinction.</strong> “Prepare a draft; do not send it” is a prompt boundary. A system that does not expose a send action, requires approval, or blocks the action in code is enforcing that boundary. Prompting can request restraint; it does not by itself guarantee it.</p>
           </aside>
+
+          <h3>Make success observable</h3>
+          <p>
+            OpenAI recommends asking for a final check on important work and then reviewing the result yourself. Claude Code puts verification first: give the agent a test, build, lint result, fixture diff, or screenshot comparison it can read. Without such a signal, “looks done” is the agent's only stopping condition and the human becomes the whole verification loop.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Make the result ready to use</a></cite>
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#give-claude-a-way-to-verify-its-work" target="_blank" rel="noopener noreferrer">Claude Code: Give Claude a way to verify its work</a></cite>
+          </p>
+          <ul class="verification-signals">
+            <li><strong>For factual work:</strong> direct sources, reconciled numbers, and explicit unknowns.</li>
+            <li><strong>For code:</strong> a reproduced failure, the smallest relevant tests, and the build or lint command.</li>
+            <li><strong>For a visual change:</strong> a target reference, a rendered comparison, and a list of remaining differences.</li>
+            <li><strong>For a deliverable:</strong> a check that required sections agree and every named requirement is present.</li>
+          </ul>
+          <p>Verification is strongest when the signal can disagree with the agent. “Tell me you finished” asks for another assertion. “Run this check and show the result” creates evidence. Deterministic gates, independent reviewers, hooks, and eval systems go further, but their mechanics belong to Chapter 5.</p>
+        </section>
+
+        <section class="content-section" id="explore-first" aria-labelledby="explore-first-heading">
+          <h2 id="explore-first-heading">4. Explore before committing—when uncertainty earns it</h2>
+          <p>
+            Claude Code recommends separating exploration and planning from implementation when the approach is uncertain, the code is unfamiliar, or the change crosses several files. Its full coding workflow is explore, plan, implement, and commit, but the guide explicitly says that small, obvious changes should go directly to implementation.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#explore-first-then-plan-then-code" target="_blank" rel="noopener noreferrer">Claude Code: Explore first, then plan, then code</a></cite>
+          </p>
+          <p>
+            OpenAI expresses the same judgment in surface-neutral terms: ask for a plan when the approach matters, separate required work from optional polish, and require approval before the agent sends, publishes, or changes information that other people rely on. For Codex, a useful prompt points to the relevant code or reproduction steps and states how to verify the change.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Prompting for ChatGPT Work and Codex</a></cite>
+          </p>
+
+          <h3>Use questions, references, and prototypes to expose unknowns</h3>
+          <p>
+            An agent can investigate a codebase, ask the questions you would ask another engineer, or interview you before drafting a specification. Claude Code recommends a fresh implementation session after a large interview so execution begins with a self-contained spec and clean context. That is a product workflow, but the portable lesson is to surface consequential unknowns before an expensive commitment.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#communicate-effectively" target="_blank" rel="noopener noreferrer">Claude Code: Communicate effectively</a></cite>
+          </p>
+          <aside class="concept-callout optional-reading" aria-label="Optional reading on unknowns">
+            <p class="callout-label">Optional companion</p>
+            <p>Anthropic's <a href="https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns" target="_blank" rel="noopener noreferrer">Fable field guide</a> uses the familiar known/unknown matrix to suggest a blind-spot pass, interviews, references, brainstorming, and prototypes. Use these as discovery moves when uncertainty is material—not as required stages for every prompt.</p>
+          </aside>
+
+          <details class="draft-visual-placeholder" open>
+            <summary>Planned source visual · C3-V02 <span>Fable field-guide figure; no adaptation</span></summary>
+            <dl class="draft-visual-brief">
+              <div><dt>Teaching job</dt><dd>Make the difference between visible questions and unnoticed blind spots easier to discuss before implementation.</dd></div>
+              <div><dt>Placement</dt><dd>Inside this optional unknowns detour; it must not become the chapter's main framework.</dd></div>
+              <div><dt>Source visual</dt><dd>Exact knowns/unknowns figure from <a href="https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns" target="_blank" rel="noopener noreferrer">Anthropic's Fable field guide</a>; final figure and reuse path still require review.</dd></div>
+              <div><dt>Avoid</dt><dd>No redraw, relabeling, custom scenario, or implication that brainstorming and prototyping are mandatory.</dd></div>
+              <div><dt>Fallback</dt><dd>The callout names the practical discovery moves and remains complete without the image.</dd></div>
+            </dl>
+          </details>
+        </section>
+
+        <section class="content-section" id="during-the-run" aria-labelledby="during-the-run-heading">
+          <h2 id="during-the-run-heading">5. Prompting continues during the run</h2>
+          <p>
+            OpenAI says the first prompt does not need to be perfect. Review the result, then ask for the specific change you need: add a missing source, correct the direction, request another option, or change the level of detail. In Codex, a follow-up can <em>steer</em> the active run or be <em>queued</em> for the next run. Those controls are product-specific; the general lesson is that prompting is an iterative conversation, not a one-shot artifact.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Follow-up messages, steering, and queuing</a></cite>
+          </p>
+          <p>
+            Claude Code similarly recommends correcting direction as soon as you notice drift. It also advises starting fresh between unrelated tasks and clearing a session that has accumulated repeated failed approaches. For longer work, its product can compact, rewind, checkpoint, and resume conversations. These are different controls, but they serve one editorial goal: preserve the decisions that matter and release context that no longer helps.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#manage-your-session" target="_blank" rel="noopener noreferrer">Claude Code: Manage your session</a></cite>
+          </p>
+          <div class="steering-examples" aria-label="Three kinds of useful follow-up">
+            <p><strong>Correct:</strong> “The audience is new to this topic; define the terms before comparing them.”</p>
+            <p><strong>Add:</strong> “Use this source as the authority for the current behavior.”</p>
+            <p><strong>Narrow:</strong> “Stop the optional polish. Finish only the required sections and report what remains.”</p>
+          </div>
+          <p>A useful follow-up changes the work. Repeating the original request more loudly usually does not. If the agent has gone wrong several times, the better prompt may be a fresh one that incorporates what you learned, not another correction layered on top of the failed history.</p>
+        </section>
+
+        <section class="content-section" id="put-together" aria-labelledby="put-together-heading">
+          <h2 id="put-together-heading">6. Put the pieces together</h2>
+          <p>OpenAI's complete project-update example combines the four optional prompt components and ends with a final check, without dictating every intermediate step. Read the <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">full source example</a>, then notice what each sentence does.</p>
+          <ol class="source-example-anatomy">
+            <li><strong>Result:</strong> a one-page update for a named meeting and audience.</li>
+            <li><strong>Context:</strong> the latest plan and relevant decisions from connected sources.</li>
+            <li><strong>Output:</strong> decisions first, followed by progress, risks, owners, and dates.</li>
+            <li><strong>Boundaries:</strong> preserve approved facts, flag conflicts, and do not publish.</li>
+            <li><strong>Check:</strong> confirm that every next step has an owner and due date.</li>
+          </ol>
+          <p>Claude Code would deepen the same prompt for an agentic task by adding the exact files or symptoms, an existing pattern to follow, and a check the agent can run. The Claude 5 article would ask whether any accumulated rules can be removed, whether a reference carries the requirement better than prose, and whether detail can remain discoverable until it is needed.</p>
+          <aside class="concept-callout" aria-label="A compact prompt review">
+            <p class="callout-label">Before you send</p>
+            <ul>
+              <li>Is the result clear enough to recognize?</li>
+              <li>Did you include only context that can change it?</li>
+              <li>Would a file, test, mockup, or existing pattern communicate better than more explanation?</li>
+              <li>Which one or two mistakes justify explicit boundaries?</li>
+              <li>What evidence can the agent show before it stops?</li>
+              <li>Where will you intervene if the work changes direction?</li>
+            </ul>
+          </aside>
+          <h3>Do not solve every need by making the prompt longer</h3>
+          <p>A fact specific to this task belongs near this task. A stable project convention may belong in persistent guidance. A detailed method may belong in an on-demand Skill or reference. A safety-critical action may need permissions or deterministic enforcement. A repeated job may need a loop. The prompt remains important, but it should not carry the entire system by itself.</p>
+        </section>
+
+        <section class="content-section" id="beyond-prompting" aria-labelledby="beyond-prompting-heading">
+          <h2 id="beyond-prompting-heading">7. Two short steps beyond prompting</h2>
+          <h3>Harness engineering</h3>
+          <p>
+            LangChain's broad formulation is <q>Agent = Model + Harness</q>: the harness is the surrounding code, configuration, and execution logic that gives the model state, tools, a filesystem or sandbox, feedback, and enforceable constraints. In that framing, harness engineering works backward from a behavior the agent needs and designs the surrounding system that makes the behavior possible or dependable.
+            <cite class="claim-citation"><a href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" target="_blank" rel="noopener noreferrer">LangChain: The Anatomy of an Agent Harness</a></cite>
+          </p>
+          <p>This is a useful, deliberately wide perspective—not a standard boundary accepted by every agent framework. For this chapter, the key transition is that a prompt can request verification or restraint, while a harness can provide the tool, environment, state, approval, or deterministic check that makes it operational.</p>
+
+          <h3>Loop engineering</h3>
+          <p>
+            Addy Osmani uses <em>loop engineering</em> for a system that repeatedly finds work, assigns it, checks it, records what happened, and decides what comes next—effectively designing the system that prompts the agent. He places that system “one floor above” the single-run harness and emphasizes durable memory outside one conversation.
+            <cite class="claim-citation"><a href="https://addyo.substack.com/p/loop-engineering" target="_blank" rel="noopener noreferrer">Addy Osmani: Loop Engineering</a></cite>
+          </p>
+          <p>Treat this as an emerging practitioner framing. The article is intentionally speculative, warns about token cost, and names a product-specific collection of automations, worktrees, Skills, connectors, subagents, and memory. Direct prompting remains the right tool for many bounded tasks; a loop earns its machinery only when work truly needs to recur and can be checked safely.</p>
+        </section>
+
+        <section class="content-section practice-section" id="practice" aria-labelledby="practice-heading">
+          <h2 id="practice-heading">Practice: reconstruct one prompt you actually need</h2>
+          <p>Choose a consequential prompt you expect to use next week. Do not make it longer yet. First annotate what is already there.</p>
+          <ol class="practice-steps">
+            <li>Underline the requested result. Is the audience or use visible?</li>
+            <li>Circle the context that could change the result. Remove context that cannot.</li>
+            <li>Name the expected output and the one or two boundaries that prevent real problems.</li>
+            <li>Write one check whose evidence the agent can show you.</li>
+            <li>List the material the agent should inspect on demand instead of receiving upfront.</li>
+            <li>Write one follow-up that would correct direction without restarting the task.</li>
+            <li>Mark anything that cannot be made reliable by wording alone. Does it require persistent guidance, a reference or Skill, harness enforcement, or a recurring loop?</li>
+          </ol>
+          <p>If you can explain those choices, you have reconstructed the central argument of all three companion readings without turning any one product's advice into a universal formula.</p>
         </section>
 
         <section class="content-section" id="references" aria-labelledby="references-heading">
           <h2 id="references-heading">References</h2>
-          <p>
-            The chapter uses a small source spine rather than treating every new
-            engineering label as settled terminology. Each source below has a
-            bounded role: teaching baseline, conceptual model, product case, or
-            technical anchor.
-          </p>
-          <ul class="source-list">
-            <li>
-              <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI — Prompting</a>
-              <small>The practical teaching spine for describing the result, adding useful context, setting meaningful boundaries, using follow-up messages, and asking for a final check.</small>
-            </li>
-            <li>
-              <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener noreferrer">Anthropic — Effective context engineering for AI agents</a>
-              <small>The stable explanatory source for model-visible context, high-signal selection, just-in-time retrieval, progressive disclosure, compaction, and structured note-taking.</small>
-            </li>
-            <li>
-              <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Claude — The new rules of context engineering for Claude 5 generation models</a>
-              <small>A July 2026 product-specific account of simplifying Claude Code guidance and loading Skills or tool definitions when needed.</small>
-            </li>
-            <li>
-              <a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener noreferrer">OpenAI — Harness engineering: leveraging Codex in an agent-first world</a>
-              <small>The Codex product case for a legible agent environment: repository knowledge, tools, browser access, observability, checks, review, and recovery.</small>
-            </li>
-            <li>
-              <a href="https://martinfowler.com/articles/harness-engineering.html" target="_blank" rel="noopener noreferrer">Birgitta Böckeler — Harness engineering for coding agent users</a>
-              <small>The primary Harness lens for this chapter: user-shapeable outer harnesses, feedforward guides, feedback sensors, and computational versus inferential controls.</small>
-            </li>
-            <li>
-              <a href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" target="_blank" rel="noopener noreferrer">LangChain — The anatomy of an agent harness</a>
-              <small>A broad supporting definition that includes state, tools, infrastructure, orchestration, and hooks around a model.</small>
-            </li>
-            <li>
-              <a href="https://claude.com/blog/getting-started-with-loops" target="_blank" rel="noopener noreferrer">Claude — Loop engineering: Getting started with loops</a>
-              <small>A June 2026 Claude Code taxonomy of turn-based, goal-based, time-based, and proactive loops, with trigger, stop, task-fit, quality, and usage guidance.</small>
-            </li>
-            <li>
-              <a href="https://addyo.substack.com/p/loop-engineering" target="_blank" rel="noopener noreferrer">Addy Osmani — Loop Engineering</a>
-              <small>An emerging practitioner framing for recurring agent systems, durable state, separate verification, and continued human ownership.</small>
-            </li>
-            <li>
-              <a href="https://docs.langchain.com/oss/python/langgraph/graph-api" target="_blank" rel="noopener noreferrer">LangGraph — Graph API overview</a>
-              <small>The technical anchor for explicit graph state, work nodes, fixed and conditional edges, start and end points, and routing.</small>
-            </li>
-            <li>
-              <a href="https://docs.langchain.com/oss/python/langgraph/interrupts" target="_blank" rel="noopener noreferrer">LangGraph — Interrupts</a>
-              <small>Supporting documentation for persisted pause, external input, and resumed execution in human-in-the-loop graph workflows.</small>
-            </li>
+          <h3>Main companion readings</h3>
+          <ul class="source-list reference-list">
+            <li><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI — Prompting</a><small>Living documentation; checked August 25, 2026. Main teaching sequence for results, useful context, output, boundaries, final checks, follow-ups, steering, and product examples.</small></li>
+            <li><a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener noreferrer">Anthropic — Best practices for Claude Code</a><small>Living documentation; checked August 25, 2026. Agentic coding guidance for verification, exploration, concrete context, communication, session management, and product-specific extensions.</small></li>
+            <li><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Thariq Shihipar, Anthropic — The new rules of context engineering for Claude 5 generation models</a><small>July 24, 2026. Product- and model-generation-specific guidance on simplifying instructions, judgment, interface design, progressive disclosure, tool descriptions, memory, and rich references.</small></li>
           </ul>
+          <h3>Supporting and closing references</h3>
+          <ul class="source-list reference-list">
+            <li><a href="https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns" target="_blank" rel="noopener noreferrer">Anthropic — A field guide to Claude Fable: Finding your unknowns</a><small>July 6, 2026. Optional product field guide for blind-spot passes, interviews, references, brainstorming, and prototypes.</small></li>
+            <li><a href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" target="_blank" rel="noopener noreferrer">Vivek Trivedy, LangChain — The Anatomy of an Agent Harness</a><small>March 10, 2026. A deliberately broad practitioner definition of the system surrounding a model.</small></li>
+            <li><a href="https://addyo.substack.com/p/loop-engineering" target="_blank" rel="noopener noreferrer">Addy Osmani — Loop Engineering</a><small>June 8, 2026. An early practitioner account of systems that repeatedly discover, assign, check, and record agent work.</small></li>
+          </ul>
+          <h3>Extended references</h3>
+          <p>Earlier Chapter 3 sources on context engineering, harness case studies, and workflow graphs are no longer part of the teaching spine. They can remain useful for readers who want to go further, but they are intentionally not used to structure this chapter. See the book's <a href="../extended-reading/">Extended Reading</a> page.</p>
         </section>
 
         <footer class="footer book-chapter-nav" aria-label="Book navigation">
@@ -1335,7 +352,6 @@
         </footer>
       </main>
     </div>
-
     <script src="../../assets/spooky-qa.js" defer></script>
     <script src="../../assets/spooky-launcher.js" defer></script>
   </body>
