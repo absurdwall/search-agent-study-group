@@ -3,15 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="Planned Chapter 3 of the Agent Systems Guide: prompting and context engineering."
-    />
-    <title>Chapter 3: Prompting and Context Engineering · Search Agent Study Group</title>
+    <meta name="description" content="Draft Chapter 3 of the Agent Systems Guide: a companion guide to prompting, context, verification, and steering for agentic work." />
+    <title>Chapter 3: From a Prompt to a Controlled Agent Run · Search Agent Study Group</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="../../assets/site.css" />
+    <link rel="stylesheet" href="chapter.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <header class="site-header">
       <div class="header-inner">
         <a class="site-name" href="../../">Search Agent Study Group</a>
@@ -24,71 +23,335 @@
       </div>
     </header>
 
-    <main class="page standalone-page book-home-page">
-      <section class="page-intro" aria-labelledby="page-title">
-        <p class="eyebrow">
-          <a href="../">Study group guide</a> · Chapter 3
-          <span class="book-status">Planned</span>
-        </p>
-        <h1 id="page-title">Prompting and Context Engineering</h1>
-        <p class="lede">
-          A planned chapter on communicating the result we need, assembling the
-          information that can change that result, and improving instructions
-          without turning them into a brittle wall of rules.
-        </p>
-      </section>
+    <div class="site-layout guide-layout">
+      <aside class="side-toc" aria-label="Chapter contents">
+        <section class="side-toc-section">
+          <h2>In this chapter</h2>
+          <nav aria-label="Chapter sections">
+            <a href="#result-first">1. Start with the result</a>
+            <a href="#useful-context">2. Add useful context</a>
+            <a href="#boundaries-verification">3. Boundaries and verification</a>
+            <a href="#explore-first">4. Explore before committing</a>
+            <a href="#during-the-run">5. Prompt during the run</a>
+            <a href="#put-together">6. Put the pieces together</a>
+            <a href="#beyond-prompting">7. Beyond prompting</a>
+            <a href="#practice">Practice</a>
+            <a href="#references">References</a>
+          </nav>
+        </section>
+        <section class="side-toc-section">
+          <h2>Book</h2>
+          <nav aria-label="Book navigation">
+            <a href="../">Book home</a>
+            <a href="../from-language-models-to-assistants/">Chapter 0</a>
+            <a href="../minimal-agentic-system/">Chapter 1</a>
+            <a href="../modern-agent-systems/">Chapter 2</a>
+            <a href="../writing-great-skills/">Chapter 4</a>
+            <a href="../guardrails-hooks-and-evals/">Chapter 5</a>
+            <a href="../extended-reading/">Extended Reading</a>
+          </nav>
+        </section>
+      </aside>
 
-      <section class="content-section" aria-labelledby="scope-heading">
-        <h2 id="scope-heading">Planned scope</h2>
-        <p>
-          This chapter will distinguish the immediate prompt from the wider
-          context around a model call. It will explore goals, useful context,
-          output requirements, meaningful boundaries, follow-up steering,
-          conflicting instructions, progressive disclosure, and the tradeoff
-          between helpful guidance and overconstraint.
-        </p>
-        <p>
-          The final structure is intentionally open. The chapter number may
-          change as the book develops.
-        </p>
-      </section>
+      <main class="page guide-page prompting-context-page" id="main-content" tabindex="-1">
+        <section class="page-intro chapter-opening" aria-labelledby="page-title">
+          <p class="eyebrow"><a href="../">Study group guide</a> · Chapter 3 <span class="book-status">Draft</span></p>
+          <h1 id="page-title">From a Prompt to a Controlled Agent Run</h1>
+          <p class="chapter-subtitle">A companion guide to three current resources</p>
+          <p class="lede">
+            Good prompting for agentic work is not about discovering a magic phrase. It is about making the desired result legible, supplying the context that can change that result, naming the few boundaries that matter, and staying in the conversation while the work develops.
+          </p>
+          <p>
+            This chapter does not introduce a new prompting framework. It follows three selected resources and connects the parts that are easiest to miss when they are read separately. OpenAI supplies the practical sequence. Claude Code adds the working habits of verification, investigation, and course correction. Anthropic's Claude 5 article asks what should change when a more capable model needs fewer rules and can discover more context for itself.
+          </p>
 
-      <section class="content-section" aria-labelledby="resources-heading">
-        <h2 id="resources-heading">Starting resources</h2>
-        <ul class="source-list">
-          <li>
-            <a href="https://learn.chatgpt.com/docs/prompting">OpenAI — Prompting</a>
-            <small>
-              A practical foundation organized around goal, context, output, and
-              boundaries, followed by iteration and verification.
-            </small>
-          </li>
-          <li>
-            <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models">Anthropic — The new rules of context engineering for Claude 5 generation models</a>
-            <small>
-              A model-generation-specific perspective on simplifying guidance,
-              avoiding conflicting rules, designing interfaces, and using
-              progressive disclosure.
-            </small>
-          </li>
-          <li>
-            <a href="https://claude.ai/public/artifacts/f498a4cc-4c45-481c-a6dd-8e1d196dadb0">Claude public artifact — Complete Context Engineering Guide</a>
-            <small>
-              Optional supplementary material. Treat it as an example collection,
-              not an authoritative specification; individual claims should be
-              checked before they enter the chapter.
-            </small>
-          </li>
-        </ul>
-      </section>
+          <aside class="chapter-reading-shortcut" aria-label="Main companion readings">
+            <p class="chapter-reading-label">Read alongside this chapter</p>
+            <ol class="companion-reading-list">
+              <li>
+                <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI — Prompting</a>
+                <small>Living documentation. The chapter follows its result → context → output → boundaries → follow-up sequence.</small>
+              </li>
+              <li>
+                <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener noreferrer">Anthropic — Best practices for Claude Code</a>
+                <small>Living documentation. Use it for verification, exploration, concrete references, communication, and session management.</small>
+              </li>
+              <li>
+                <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic — The new rules of context engineering for Claude 5 generation models</a>
+                <small>July 24, 2026. A model- and product-specific corrective lens on rules, judgment, progressive disclosure, and references.</small>
+              </li>
+            </ol>
+          </aside>
 
-      <footer class="footer book-chapter-nav" aria-label="Book navigation">
-        <a href="../modern-agent-systems/">← Previous: Chapter 2</a>
-        <a href="../">Book home</a>
-        <a href="../writing-great-skills/">Next: Chapter 4 →</a>
-      </footer>
-    </main>
+          <aside class="concept-callout" aria-label="How to use the terminology in this chapter">
+            <p><strong>One practical boundary.</strong> A <em>prompt</em> asks for something in the current interaction. <em>Context</em> is the wider material the model receives with that request. A <em>harness</em> surrounds the model with tools, state, and controls. A <em>loop</em> decides whether and how work runs again. These are useful working terms, not standardized layers.</p>
+          </aside>
+          <p>By the end, you should be able to revise one of your own important prompts, decide what supporting material belongs with it, add a readable check, steer the work as it unfolds, and explain when the problem has moved beyond prompting.</p>
+        </section>
 
+        <nav class="mobile-guide-toc" aria-label="Chapter contents on small screens">
+          <p>In this chapter</p>
+          <ol class="mobile-guide-toc-primary">
+            <li><a href="#result-first">Start with the result</a></li>
+            <li><a href="#useful-context">Add useful context</a></li>
+            <li><a href="#boundaries-verification">Boundaries and verification</a></li>
+            <li><a href="#explore-first">Explore before committing</a></li>
+            <li><a href="#during-the-run">Prompt during the run</a></li>
+            <li><a href="#put-together">Put the pieces together</a></li>
+            <li><a href="#beyond-prompting">Beyond prompting</a></li>
+            <li><a href="#practice">Practice</a></li>
+            <li><a href="#references">References</a></li>
+          </ol>
+        </nav>
+
+        <section class="content-section" id="result-first" aria-labelledby="result-first-heading">
+          <h2 id="result-first-heading">1. Start with the result</h2>
+          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key reading for starting with the result">
+            <p class="chapter-reading-label">Follow in the main reading</p>
+            <p>OpenAI — <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">“Prompting overview” and “Describe the result you need”</a></p>
+          </aside>
+          <p>
+            OpenAI begins with a deliberately undramatic idea: a prompt can be a question, an instruction, or a goal, and it does not need technical syntax or a rigid formula. For larger or more consequential work, four components may help.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Prompting overview</a></cite>
+          </p>
+          <dl class="prompt-parts">
+            <div><dt>Goal</dt><dd>What should the agent know, make, change, or decide?</dd></div>
+            <div><dt>Context</dt><dd>Which facts, sources, files, or circumstances could change the result?</dd></div>
+            <div><dt>Output</dt><dd>How will the result be used, and what form will make it usable?</dd></div>
+            <div><dt>Boundaries</dt><dd>What must remain unchanged, be avoided, or return for approval?</dd></div>
+          </dl>
+          <p>
+            This is a checklist, not a form. A short question may need only a goal. A consequential task may need all four. The useful test is not “Did I fill every field?” but “Would this detail change the work or prevent a costly mistake?” OpenAI explicitly advises using only the components that help.
+          </p>
+
+          <h3>Describe the outcome before prescribing the route</h3>
+          <p>
+            The guide's next move is to describe the result rather than dictate a long sequence of steps. Audience and format belong in the prompt when they change the deliverable. Process belongs there when the process itself is part of the requirement. Otherwise, a capable agent benefits from room to inspect, compare, and adjust its approach.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Describe the result you need</a></cite>
+          </p>
+          <aside class="concept-callout" aria-label="Outcome versus steps">
+            <p><strong>Prefer an observable result.</strong> “Produce a one-page update for leadership with decisions and next steps first” tells the agent what success should look like. Add a required method only if following that method is itself part of success.</p>
+          </aside>
+          <p>
+            Claude Code's guide reaches the same conclusion from coding work. It recommends a separate plan when the approach is uncertain or the change crosses several files, but says to skip that overhead when the diff is obvious and small. Planning is a response to uncertainty, not a ceremony.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#explore-first-then-plan-then-code" target="_blank" rel="noopener noreferrer">Claude Code: Explore first, then plan, then code</a></cite>
+          </p>
+        </section>
+
+        <section class="content-section" id="useful-context" aria-labelledby="useful-context-heading">
+          <h2 id="useful-context-heading">2. Add useful context, not all available context</h2>
+          <aside class="chapter-reading-shortcut section-key-resources" aria-label="Key readings for useful context">
+            <p class="chapter-reading-label">Read these sections together</p>
+            <ul class="source-list">
+              <li><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI — “Add useful context”</a></li>
+              <li><a href="https://code.claude.com/docs/en/best-practices#provide-specific-context-in-your-prompts" target="_blank" rel="noopener noreferrer">Claude Code — “Provide specific context in your prompts”</a></li>
+              <li><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Claude 5 — “Then and now” and “Applying this to your context”</a></li>
+            </ul>
+          </aside>
+          <p>
+            OpenAI defines useful context as information that could change the result. That may be a document, spreadsheet, screenshot, current web source, project folder, or connected source. It also recommends naming what the agent should find rather than spelling out every search it should run.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Add useful context</a></cite>
+          </p>
+          <p>
+            Claude Code makes this concrete for a codebase: identify the relevant file or scenario, state the constraint, point to an existing pattern, describe the symptom, and provide a checkable version of “fixed.” Rich context can arrive as referenced files, images, documentation URLs, command output, or material the agent retrieves itself.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#provide-specific-context-in-your-prompts" target="_blank" rel="noopener noreferrer">Claude Code: Provide specific and rich context</a></cite>
+          </p>
+
+          <h3>A prompt is only part of what the model receives</h3>
+          <p>
+            Anthropic's Claude 5 article widens the lens. In Claude Code, the user message is assembled with a system prompt, repository guidance, Skills, memory, tool definitions, and references. The exact mixture is product-specific, but the practical lesson travels: do not assume the current message is the entire context, and do not repeat everything in every message.
+            <cite class="claim-citation"><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic: The prompt is only a small part of context</a></cite>
+          </p>
+          <dl class="context-placement-list">
+            <div><dt>Current request</dt><dd>Task-specific goal, sources, desired output, and immediate boundaries.</dd></div>
+            <div><dt>Persistent guidance</dt><dd>Stable project conventions or non-obvious gotchas that should apply across relevant work.</dd></div>
+            <div><dt>On-demand references</dt><dd>Detailed specs, examples, mockups, tests, or procedures that are useful only when the task reaches them.</dd></div>
+          </dl>
+          <p>Chapters 2 and 4 explain the mechanisms that can store and load this material. Here the important editorial decision is simpler: put specific task information close to the task; keep durable guidance small; make deep material easy to find instead of forcing all of it into every call.</p>
+
+          <h3>Progressive disclosure changes what “provide context” means</h3>
+          <p>
+            The Claude 5 article reports that Anthropic removed more than 80% of Claude Code's system prompt for its newer models without a measurable loss on its coding evaluations. Its recommended shift is from putting all guidance upfront to making the right detail discoverable at the right time. It applies that idea to tools, Skills, persistent project guidance, and references.
+            <cite class="claim-citation"><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic: Progressive disclosure and simplifying context</a></cite>
+          </p>
+          <p>“Rich references” can be more precise than more prose. A test suite can specify behavior; an existing function can specify a porting target; an HTML mockup can specify a design. This does not mean examples are generally bad. Anthropic's narrower warning is that tool-use examples can confine exploration when a clear, expressive interface would carry the requirement better.</p>
+
+          <details class="draft-visual-placeholder" open>
+            <summary>Planned source visual · C3-V01 <span>Anthropic source figure; no adaptation</span></summary>
+            <dl class="draft-visual-brief">
+              <div><dt>Teaching job</dt><dd>Show the Claude 5 article's move from accumulated rules and upfront detail toward judgment, progressive disclosure, and rich references.</dd></div>
+              <div><dt>Placement</dt><dd>Here, after the text has established that a prompt is only part of assembled context.</dd></div>
+              <div><dt>Source visual</dt><dd>Exact figure from <a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic's Claude 5 context-engineering article</a>; final figure and reuse path still require review.</dd></div>
+              <div><dt>Avoid</dt><dd>No redraw, relabeling, cropping, or claim that the product-specific “then/now” account is a universal standard.</dd></div>
+              <div><dt>Fallback</dt><dd>The preceding paragraphs and context-placement list carry the full lesson without the image.</dd></div>
+            </dl>
+          </details>
+        </section>
+
+        <section class="content-section" id="boundaries-verification" aria-labelledby="boundaries-verification-heading">
+          <h2 id="boundaries-verification-heading">3. Set meaningful boundaries—and give the work a check</h2>
+          <h3>Protect against the mistakes that would actually matter</h3>
+          <p>
+            OpenAI describes boundaries as the few instructions needed to prevent extra work or an unintended action: preserve approved facts, use only supplied sources, stay inside a budget, or draft without sending. It recommends focusing on the one or two boundaries that matter most instead of controlling every step.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Set boundaries that prevent real problems</a></cite>
+          </p>
+          <p>
+            This restraint matters more for stronger agents, not less. Anthropic found that rules accumulated across the system prompt, project files, Skills, and user requests could conflict. Its Claude 5 guidance shifts from absolute rules toward instructions that let the model use the surrounding evidence and match the work at hand.
+            <cite class="claim-citation"><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Anthropic: Unhobbling Claude and rules → judgment</a></cite>
+          </p>
+          <aside class="important-distinction" aria-label="Boundary and enforcement distinction">
+            <p><strong>Important distinction.</strong> “Prepare a draft; do not send it” is a prompt boundary. A system that does not expose a send action, requires approval, or blocks the action in code is enforcing that boundary. Prompting can request restraint; it does not by itself guarantee it.</p>
+          </aside>
+
+          <h3>Make success observable</h3>
+          <p>
+            OpenAI recommends asking for a final check on important work and then reviewing the result yourself. Claude Code puts verification first: give the agent a test, build, lint result, fixture diff, or screenshot comparison it can read. Without such a signal, “looks done” is the agent's only stopping condition and the human becomes the whole verification loop.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Make the result ready to use</a></cite>
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#give-claude-a-way-to-verify-its-work" target="_blank" rel="noopener noreferrer">Claude Code: Give Claude a way to verify its work</a></cite>
+          </p>
+          <ul class="verification-signals">
+            <li><strong>For factual work:</strong> direct sources, reconciled numbers, and explicit unknowns.</li>
+            <li><strong>For code:</strong> a reproduced failure, the smallest relevant tests, and the build or lint command.</li>
+            <li><strong>For a visual change:</strong> a target reference, a rendered comparison, and a list of remaining differences.</li>
+            <li><strong>For a deliverable:</strong> a check that required sections agree and every named requirement is present.</li>
+          </ul>
+          <p>Verification is strongest when the signal can disagree with the agent. “Tell me you finished” asks for another assertion. “Run this check and show the result” creates evidence. Deterministic gates, independent reviewers, hooks, and eval systems go further, but their mechanics belong to Chapter 5.</p>
+        </section>
+
+        <section class="content-section" id="explore-first" aria-labelledby="explore-first-heading">
+          <h2 id="explore-first-heading">4. Explore before committing—when uncertainty earns it</h2>
+          <p>
+            Claude Code recommends separating exploration and planning from implementation when the approach is uncertain, the code is unfamiliar, or the change crosses several files. Its full coding workflow is explore, plan, implement, and commit, but the guide explicitly says that small, obvious changes should go directly to implementation.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#explore-first-then-plan-then-code" target="_blank" rel="noopener noreferrer">Claude Code: Explore first, then plan, then code</a></cite>
+          </p>
+          <p>
+            OpenAI expresses the same judgment in surface-neutral terms: ask for a plan when the approach matters, separate required work from optional polish, and require approval before the agent sends, publishes, or changes information that other people rely on. For Codex, a useful prompt points to the relevant code or reproduction steps and states how to verify the change.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Prompting for ChatGPT Work and Codex</a></cite>
+          </p>
+
+          <h3>Use questions, references, and prototypes to expose unknowns</h3>
+          <p>
+            An agent can investigate a codebase, ask the questions you would ask another engineer, or interview you before drafting a specification. Claude Code recommends a fresh implementation session after a large interview so execution begins with a self-contained spec and clean context. That is a product workflow, but the portable lesson is to surface consequential unknowns before an expensive commitment.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#communicate-effectively" target="_blank" rel="noopener noreferrer">Claude Code: Communicate effectively</a></cite>
+          </p>
+          <aside class="concept-callout optional-reading" aria-label="Optional reading on unknowns">
+            <p class="callout-label">Optional companion</p>
+            <p>Anthropic's <a href="https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns" target="_blank" rel="noopener noreferrer">Fable field guide</a> uses the familiar known/unknown matrix to suggest a blind-spot pass, interviews, references, brainstorming, and prototypes. Use these as discovery moves when uncertainty is material—not as required stages for every prompt.</p>
+          </aside>
+
+          <details class="draft-visual-placeholder" open>
+            <summary>Planned source visual · C3-V02 <span>Fable field-guide figure; no adaptation</span></summary>
+            <dl class="draft-visual-brief">
+              <div><dt>Teaching job</dt><dd>Make the difference between visible questions and unnoticed blind spots easier to discuss before implementation.</dd></div>
+              <div><dt>Placement</dt><dd>Inside this optional unknowns detour; it must not become the chapter's main framework.</dd></div>
+              <div><dt>Source visual</dt><dd>Exact knowns/unknowns figure from <a href="https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns" target="_blank" rel="noopener noreferrer">Anthropic's Fable field guide</a>; final figure and reuse path still require review.</dd></div>
+              <div><dt>Avoid</dt><dd>No redraw, relabeling, custom scenario, or implication that brainstorming and prototyping are mandatory.</dd></div>
+              <div><dt>Fallback</dt><dd>The callout names the practical discovery moves and remains complete without the image.</dd></div>
+            </dl>
+          </details>
+        </section>
+
+        <section class="content-section" id="during-the-run" aria-labelledby="during-the-run-heading">
+          <h2 id="during-the-run-heading">5. Prompting continues during the run</h2>
+          <p>
+            OpenAI says the first prompt does not need to be perfect. Review the result, then ask for the specific change you need: add a missing source, correct the direction, request another option, or change the level of detail. In Codex, a follow-up can <em>steer</em> the active run or be <em>queued</em> for the next run. Those controls are product-specific; the general lesson is that prompting is an iterative conversation, not a one-shot artifact.
+            <cite class="claim-citation"><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI: Follow-up messages, steering, and queuing</a></cite>
+          </p>
+          <p>
+            Claude Code similarly recommends correcting direction as soon as you notice drift. It also advises starting fresh between unrelated tasks and clearing a session that has accumulated repeated failed approaches. For longer work, its product can compact, rewind, checkpoint, and resume conversations. These are different controls, but they serve one editorial goal: preserve the decisions that matter and release context that no longer helps.
+            <cite class="claim-citation"><a href="https://code.claude.com/docs/en/best-practices#manage-your-session" target="_blank" rel="noopener noreferrer">Claude Code: Manage your session</a></cite>
+          </p>
+          <div class="steering-examples" aria-label="Three kinds of useful follow-up">
+            <p><strong>Correct:</strong> “The audience is new to this topic; define the terms before comparing them.”</p>
+            <p><strong>Add:</strong> “Use this source as the authority for the current behavior.”</p>
+            <p><strong>Narrow:</strong> “Stop the optional polish. Finish only the required sections and report what remains.”</p>
+          </div>
+          <p>A useful follow-up changes the work. Repeating the original request more loudly usually does not. If the agent has gone wrong several times, the better prompt may be a fresh one that incorporates what you learned, not another correction layered on top of the failed history.</p>
+        </section>
+
+        <section class="content-section" id="put-together" aria-labelledby="put-together-heading">
+          <h2 id="put-together-heading">6. Put the pieces together</h2>
+          <p>OpenAI's complete project-update example combines the four optional prompt components and ends with a final check, without dictating every intermediate step. Read the <a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">full source example</a>, then notice what each sentence does.</p>
+          <ol class="source-example-anatomy">
+            <li><strong>Result:</strong> a one-page update for a named meeting and audience.</li>
+            <li><strong>Context:</strong> the latest plan and relevant decisions from connected sources.</li>
+            <li><strong>Output:</strong> decisions first, followed by progress, risks, owners, and dates.</li>
+            <li><strong>Boundaries:</strong> preserve approved facts, flag conflicts, and do not publish.</li>
+            <li><strong>Check:</strong> confirm that every next step has an owner and due date.</li>
+          </ol>
+          <p>Claude Code would deepen the same prompt for an agentic task by adding the exact files or symptoms, an existing pattern to follow, and a check the agent can run. The Claude 5 article would ask whether any accumulated rules can be removed, whether a reference carries the requirement better than prose, and whether detail can remain discoverable until it is needed.</p>
+          <aside class="concept-callout" aria-label="A compact prompt review">
+            <p class="callout-label">Before you send</p>
+            <ul>
+              <li>Is the result clear enough to recognize?</li>
+              <li>Did you include only context that can change it?</li>
+              <li>Would a file, test, mockup, or existing pattern communicate better than more explanation?</li>
+              <li>Which one or two mistakes justify explicit boundaries?</li>
+              <li>What evidence can the agent show before it stops?</li>
+              <li>Where will you intervene if the work changes direction?</li>
+            </ul>
+          </aside>
+          <h3>Do not solve every need by making the prompt longer</h3>
+          <p>A fact specific to this task belongs near this task. A stable project convention may belong in persistent guidance. A detailed method may belong in an on-demand Skill or reference. A safety-critical action may need permissions or deterministic enforcement. A repeated job may need a loop. The prompt remains important, but it should not carry the entire system by itself.</p>
+        </section>
+
+        <section class="content-section" id="beyond-prompting" aria-labelledby="beyond-prompting-heading">
+          <h2 id="beyond-prompting-heading">7. Two short steps beyond prompting</h2>
+          <h3>Harness engineering</h3>
+          <p>
+            LangChain's broad formulation is <q>Agent = Model + Harness</q>: the harness is the surrounding code, configuration, and execution logic that gives the model state, tools, a filesystem or sandbox, feedback, and enforceable constraints. In that framing, harness engineering works backward from a behavior the agent needs and designs the surrounding system that makes the behavior possible or dependable.
+            <cite class="claim-citation"><a href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" target="_blank" rel="noopener noreferrer">LangChain: The Anatomy of an Agent Harness</a></cite>
+          </p>
+          <p>This is a useful, deliberately wide perspective—not a standard boundary accepted by every agent framework. For this chapter, the key transition is that a prompt can request verification or restraint, while a harness can provide the tool, environment, state, approval, or deterministic check that makes it operational.</p>
+
+          <h3>Loop engineering</h3>
+          <p>
+            Addy Osmani uses <em>loop engineering</em> for a system that repeatedly finds work, assigns it, checks it, records what happened, and decides what comes next—effectively designing the system that prompts the agent. He places that system “one floor above” the single-run harness and emphasizes durable memory outside one conversation.
+            <cite class="claim-citation"><a href="https://addyo.substack.com/p/loop-engineering" target="_blank" rel="noopener noreferrer">Addy Osmani: Loop Engineering</a></cite>
+          </p>
+          <p>Treat this as an emerging practitioner framing. The article is intentionally speculative, warns about token cost, and names a product-specific collection of automations, worktrees, Skills, connectors, subagents, and memory. Direct prompting remains the right tool for many bounded tasks; a loop earns its machinery only when work truly needs to recur and can be checked safely.</p>
+        </section>
+
+        <section class="content-section practice-section" id="practice" aria-labelledby="practice-heading">
+          <h2 id="practice-heading">Practice: reconstruct one prompt you actually need</h2>
+          <p>Choose a consequential prompt you expect to use next week. Do not make it longer yet. First annotate what is already there.</p>
+          <ol class="practice-steps">
+            <li>Underline the requested result. Is the audience or use visible?</li>
+            <li>Circle the context that could change the result. Remove context that cannot.</li>
+            <li>Name the expected output and the one or two boundaries that prevent real problems.</li>
+            <li>Write one check whose evidence the agent can show you.</li>
+            <li>List the material the agent should inspect on demand instead of receiving upfront.</li>
+            <li>Write one follow-up that would correct direction without restarting the task.</li>
+            <li>Mark anything that cannot be made reliable by wording alone. Does it require persistent guidance, a reference or Skill, harness enforcement, or a recurring loop?</li>
+          </ol>
+          <p>If you can explain those choices, you have reconstructed the central argument of all three companion readings without turning any one product's advice into a universal formula.</p>
+        </section>
+
+        <section class="content-section" id="references" aria-labelledby="references-heading">
+          <h2 id="references-heading">References</h2>
+          <h3>Main companion readings</h3>
+          <ul class="source-list reference-list">
+            <li><a href="https://learn.chatgpt.com/docs/prompting" target="_blank" rel="noopener noreferrer">OpenAI — Prompting</a><small>Living documentation; checked August 25, 2026. Main teaching sequence for results, useful context, output, boundaries, final checks, follow-ups, steering, and product examples.</small></li>
+            <li><a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener noreferrer">Anthropic — Best practices for Claude Code</a><small>Living documentation; checked August 25, 2026. Agentic coding guidance for verification, exploration, concrete context, communication, session management, and product-specific extensions.</small></li>
+            <li><a href="https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models" target="_blank" rel="noopener noreferrer">Thariq Shihipar, Anthropic — The new rules of context engineering for Claude 5 generation models</a><small>July 24, 2026. Product- and model-generation-specific guidance on simplifying instructions, judgment, interface design, progressive disclosure, tool descriptions, memory, and rich references.</small></li>
+          </ul>
+          <h3>Supporting and closing references</h3>
+          <ul class="source-list reference-list">
+            <li><a href="https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns" target="_blank" rel="noopener noreferrer">Anthropic — A field guide to Claude Fable: Finding your unknowns</a><small>July 6, 2026. Optional product field guide for blind-spot passes, interviews, references, brainstorming, and prototypes.</small></li>
+            <li><a href="https://www.langchain.com/blog/the-anatomy-of-an-agent-harness" target="_blank" rel="noopener noreferrer">Vivek Trivedy, LangChain — The Anatomy of an Agent Harness</a><small>March 10, 2026. A deliberately broad practitioner definition of the system surrounding a model.</small></li>
+            <li><a href="https://addyo.substack.com/p/loop-engineering" target="_blank" rel="noopener noreferrer">Addy Osmani — Loop Engineering</a><small>June 8, 2026. An early practitioner account of systems that repeatedly discover, assign, check, and record agent work.</small></li>
+          </ul>
+          <h3>Extended references</h3>
+          <p>Earlier Chapter 3 sources on context engineering, harness case studies, and workflow graphs are no longer part of the teaching spine. They can remain useful for readers who want to go further, but they are intentionally not used to structure this chapter. See the book's <a href="../extended-reading/">Extended Reading</a> page.</p>
+        </section>
+
+        <footer class="footer book-chapter-nav" aria-label="Book navigation">
+          <a href="../modern-agent-systems/">← Previous: Chapter 2</a>
+          <a href="../">Book home</a>
+          <a href="../writing-great-skills/">Next: Chapter 4 →</a>
+        </footer>
+      </main>
+    </div>
     <script src="../../assets/spooky-qa.js" defer></script>
     <script src="../../assets/spooky-launcher.js" defer></script>
   </body>
