@@ -1,0 +1,21 @@
+[
+  {
+    "type": "custom_tool_call_output",
+    "id": "ctco_01a1460a-e5d5-7f81-b952-8d688f9fe7ad",
+    "call_id": "call_0973053139634110a46695f3ae30fc3d",
+    "output": [
+      {
+        "type": "input_text",
+        "text": "Script failed\nWall time 0.1 seconds\nOutput:\n"
+      },
+      {
+        "type": "input_text",
+        "text": "Script error:\nTool call blocked by PreToolUse hook: Refusal: Destination Organized/Notes/Workshop packing list - copy A.txt already exists. Preserve both files; inspect again and choose a new name.. Tool: mcp__workspace_organizer__move_file"
+      }
+    ],
+    "internal_chat_message_metadata_passthrough": {
+      "turn_id": "01a1460a-b2f8-73d0-8744-f629d698978d",
+      "create_time": 1792176481.749087
+    }
+  }
+]

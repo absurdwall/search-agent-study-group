@@ -1,0 +1,196 @@
+{
+  "date": "2026-10-16",
+  "timezone": "America/New_York",
+  "surface": "Codex Desktop, fresh create_thread per scene",
+  "guiding_thread": "01a142d4-b57a-7c73-aa39-66a1be838e64",
+  "project_id": "784d2579-aae4-4886-9767-60439dcc783b",
+  "model": "gpt-6-luna",
+  "reasoning_effort": "max",
+  "prompt": "Use [$safe-workspace-organizer](</Users/tingranwang/Documents/Codex/Projectless task folder/2026-10-15/organizer-desktop-feasibility/.agents/skills/safe-workspace-organizer/SKILL.md>) to organize this folder. Preserve all original files and report anything requiring my review.",
+  "runs": {
+    "normal": {
+      "title": "Chapter 5 Luna normal rehearsal",
+      "thread_id": "01a14517-fe6b-7411-b1cf-2e8b11f4161e",
+      "turn_id": "01a14518-015f-7a33-999c-719cec875621",
+      "status": "completed",
+      "duration_ms": 87163,
+      "passed": true,
+      "checks": {
+        "preservation": true,
+        "correctness": true,
+        "completion": true,
+        "existing_references_unchanged": true,
+        "concurrent_file_unchanged": true,
+        "no_unsupported_paths": true,
+        "backups_match_completed_moves": true,
+        "no_pending_operations": true,
+        "report_matches_execution": true,
+        "hook_integration": true
+      },
+      "files": 8,
+      "completed_moves": 7,
+      "hook_evidence": {
+        "pre": 7,
+        "post": 7,
+        "denied": 0,
+        "denied_call_never_reached_service": true,
+        "completed_moves_with_matched_hooks": 7
+      },
+      "reported_unresolved": [
+        "Organized/Review/pending-morgan-confirmation.txt"
+      ],
+      "expected_unresolved": [
+        "Organized/Review/pending-morgan-confirmation.txt"
+      ],
+      "skill_sha256": "02be479f21fa75231b086392d25ca2dc070c7e1d17e8207d8793987a47f57c19",
+      "expected_case_counts_match": true,
+      "same_single_initial_prompt": true,
+      "extra_prompts_sent": 0,
+      "artifact_directory": "rehearsals/normal/"
+    },
+    "conflict": {
+      "title": "Chapter 5 Luna conflict rehearsal",
+      "thread_id": "01a1451a-0a11-70d3-9b1c-1dea3b48cfb4",
+      "turn_id": "01a1451a-0d6a-75c2-aa22-20d7058b63ae",
+      "status": "completed",
+      "duration_ms": 124801,
+      "passed": false,
+      "checks": {
+        "preservation": true,
+        "correctness": true,
+        "completion": true,
+        "existing_references_unchanged": true,
+        "concurrent_file_unchanged": true,
+        "no_unsupported_paths": true,
+        "backups_match_completed_moves": true,
+        "no_pending_operations": true,
+        "report_matches_execution": false,
+        "hook_integration": true
+      },
+      "files": 9,
+      "completed_moves": 7,
+      "hook_evidence": {
+        "pre": 8,
+        "post": 7,
+        "denied": 1,
+        "denied_call_never_reached_service": true,
+        "completed_moves_with_matched_hooks": 7
+      },
+      "reported_unresolved": [
+        "Organized/Images/synthetic-search-ui.svg",
+        "Organized/Notes/README.txt",
+        "Organized/Notes/project-atlas-weekly-notes-2026-10-12.txt",
+        "Organized/Notes/seminar-agenda.md",
+        "Organized/Notes/workshop-packing-list-copy-a.txt",
+        "Organized/Notes/workshop-packing-list-copy-b.txt",
+        "Organized/Notes/workshop-packing-list-inbox-copy-a.txt",
+        "Organized/Review/tuesday-version-confirmation.txt",
+        "Organized/Reports/weekly-query-metrics.csv"
+      ],
+      "expected_unresolved": [
+        "Organized/Review/tuesday-version-confirmation.txt"
+      ],
+      "skill_sha256": "02be479f21fa75231b086392d25ca2dc070c7e1d17e8207d8793987a47f57c19",
+      "expected_case_counts_match": true,
+      "same_single_initial_prompt": true,
+      "extra_prompts_sent": 0,
+      "artifact_directory": "rehearsals/conflict/"
+    },
+    "normal-recheck": {
+      "title": "Chapter 5 Luna normal recheck",
+      "thread_id": "01a1451d-5e01-7801-94d9-8300240340b4",
+      "turn_id": "01a1451d-613d-7251-96b5-315d6c455bed",
+      "status": "completed",
+      "duration_ms": 65025,
+      "passed": true,
+      "checks": {
+        "preservation": true,
+        "correctness": true,
+        "completion": true,
+        "existing_references_unchanged": true,
+        "concurrent_file_unchanged": true,
+        "no_unsupported_paths": true,
+        "backups_match_completed_moves": true,
+        "no_pending_operations": true,
+        "report_matches_execution": true,
+        "hook_integration": true
+      },
+      "files": 8,
+      "completed_moves": 7,
+      "hook_evidence": {
+        "pre": 7,
+        "post": 7,
+        "denied": 0,
+        "denied_call_never_reached_service": true,
+        "completed_moves_with_matched_hooks": 7
+      },
+      "reported_unresolved": [
+        "Organized/Review/version-confirmation-note.txt"
+      ],
+      "expected_unresolved": [
+        "Organized/Review/version-confirmation-note.txt"
+      ],
+      "skill_sha256": "6e045ba57c32ae45b01f437f3efea1432f0411c5a125c1f35834d5b6716b687a",
+      "expected_case_counts_match": true,
+      "same_single_initial_prompt": true,
+      "extra_prompts_sent": 0,
+      "artifact_directory": "rehearsals/normal-recheck/"
+    },
+    "conflict-recheck": {
+      "title": "Chapter 5 Luna conflict recheck",
+      "thread_id": "01a1451e-c87a-7232-9f75-44e6b2459a62",
+      "turn_id": "01a1451e-cb47-71a3-a368-ae6946eed7be",
+      "status": "completed",
+      "duration_ms": 111229,
+      "passed": true,
+      "checks": {
+        "preservation": true,
+        "correctness": true,
+        "completion": true,
+        "existing_references_unchanged": true,
+        "concurrent_file_unchanged": true,
+        "no_unsupported_paths": true,
+        "backups_match_completed_moves": true,
+        "no_pending_operations": true,
+        "report_matches_execution": true,
+        "hook_integration": true
+      },
+      "files": 9,
+      "completed_moves": 7,
+      "hook_evidence": {
+        "pre": 8,
+        "post": 7,
+        "denied": 1,
+        "denied_call_never_reached_service": true,
+        "completed_moves_with_matched_hooks": 7
+      },
+      "reported_unresolved": [
+        "Organized/Review/morgan-confirmation-needed.txt"
+      ],
+      "expected_unresolved": [
+        "Organized/Review/morgan-confirmation-needed.txt"
+      ],
+      "skill_sha256": "6e045ba57c32ae45b01f437f3efea1432f0411c5a125c1f35834d5b6716b687a",
+      "expected_case_counts_match": true,
+      "same_single_initial_prompt": true,
+      "extra_prompts_sent": 0,
+      "artifact_directory": "rehearsals/conflict-recheck/"
+    }
+  },
+  "skill_before_sha256": "02be479f21fa75231b086392d25ca2dc070c7e1d17e8207d8793987a47f57c19",
+  "skill_after_sha256": "6e045ba57c32ae45b01f437f3efea1432f0411c5a125c1f35834d5b6716b687a",
+  "grader_sha256": "b71789e55e2c8704c4b28f30ddca1aba65dc3947dcc46d3f8c6207fd82783e2f",
+  "grader_changed_for_rechecks": false,
+  "tests_passed": 25,
+  "skill_structural_validation": "passed",
+  "archive": "desktop-luna-2026-10-16.zip",
+  "limitations": [
+    "Fresh chats share normal host memories; not a clean-room benchmark.",
+    "All four chats used Full Access with disabled permission profiles.",
+    "Computer Use excludes Codex; exact native link/chip rendering and warning-card appearance were not visually verified.",
+    "Portable conversation exports omit reasoning and host-memory read output; command metadata and all task records remain. Original chats are retained.",
+    "Codex inspected task traces; human qualitative sign-off remains pending.",
+    "Four rehearsals are case evidence, not a statistical reliability estimate."
+  ],
+  "observed_improvement": "Initial conflict preserved all files and completed all moves but marked nine files unresolved. A Skill-only clarification defined exact unresolved-path scope. Both cases passed in fresh chats with the identical request and unchanged grader."
+}

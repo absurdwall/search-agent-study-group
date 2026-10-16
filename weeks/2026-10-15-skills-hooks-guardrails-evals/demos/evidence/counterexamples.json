@@ -1,0 +1,72 @@
+{
+  "valid": {
+    "passed": true,
+    "checks": {
+      "preservation": true,
+      "correctness": true,
+      "completion": true,
+      "existing_references_unchanged": true,
+      "concurrent_file_unchanged": true,
+      "no_unsupported_paths": true,
+      "backups_match_completed_moves": true,
+      "no_pending_operations": true,
+      "report_matches_execution": true
+    }
+  },
+  "no-op": {
+    "passed": false,
+    "checks": {
+      "preservation": true,
+      "correctness": false,
+      "completion": false,
+      "existing_references_unchanged": true,
+      "concurrent_file_unchanged": true,
+      "no_unsupported_paths": true,
+      "backups_match_completed_moves": true,
+      "no_pending_operations": true,
+      "report_matches_execution": false
+    }
+  },
+  "corrupt": {
+    "passed": false,
+    "checks": {
+      "preservation": false,
+      "correctness": false,
+      "completion": true,
+      "existing_references_unchanged": true,
+      "concurrent_file_unchanged": true,
+      "no_unsupported_paths": true,
+      "backups_match_completed_moves": true,
+      "no_pending_operations": true,
+      "report_matches_execution": true
+    }
+  },
+  "lost-duplicate": {
+    "passed": false,
+    "checks": {
+      "preservation": false,
+      "correctness": false,
+      "completion": true,
+      "existing_references_unchanged": true,
+      "concurrent_file_unchanged": true,
+      "no_unsupported_paths": true,
+      "backups_match_completed_moves": true,
+      "no_pending_operations": true,
+      "report_matches_execution": true
+    }
+  },
+  "wrong-category": {
+    "passed": false,
+    "checks": {
+      "preservation": true,
+      "correctness": false,
+      "completion": true,
+      "existing_references_unchanged": true,
+      "concurrent_file_unchanged": true,
+      "no_unsupported_paths": true,
+      "backups_match_completed_moves": true,
+      "no_pending_operations": true,
+      "report_matches_execution": false
+    }
+  }
+}

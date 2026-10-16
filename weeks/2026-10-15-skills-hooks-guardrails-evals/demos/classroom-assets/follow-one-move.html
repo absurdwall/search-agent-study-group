@@ -1,0 +1,105 @@
+<div id="ch5-move-gate">
+  <style>
+    #ch5-move-gate .journey { position:relative; padding:24px 0 12px; }
+    #ch5-move-gate .stations { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    #ch5-move-gate .station { display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px; min-width:0; }
+    #ch5-move-gate .station strong { font-weight:500; }
+    #ch5-move-gate .rail { height:110px; position:relative; margin:16px 0; }
+    #ch5-move-gate .rail::before { content:""; position:absolute; top:28px; left:12px; right:12px; height:2px; background:var(--border); }
+    #ch5-move-gate .packet { position:absolute; left:calc((100% - 140px) * var(--travel,0)); width:140px; text-align:center; color:var(--foreground); transition:left .55s ease; }
+    #ch5-move-gate .packet-mark { display:flex; align-items:center; justify-content:center; height:56px; }
+    #ch5-move-gate .packet-name { display:block; overflow-wrap:anywhere; }
+    #ch5-move-gate .gate-state { color:var(--foreground); font-weight:500; }
+    #ch5-move-gate[data-gate="deny"] .gate-state { color:var(--red); }
+    #ch5-move-gate[data-gate="allow"] .gate-state { color:var(--green); }
+    #ch5-move-gate .destination { min-height:48px; overflow-wrap:anywhere; }
+    #ch5-move-gate .event { min-height:48px; }
+    #ch5-move-gate .counter { margin-inline-start:auto; }
+    @media (prefers-reduced-motion:reduce) { #ch5-move-gate .packet { transition:none; } }
+    @media (max-width:420px) { #ch5-move-gate .stations { gap:6px; } #ch5-move-gate .counter { margin-inline-start:0; } }
+  </style>
+  <div class="viz-controls">
+    <label class="form-label">Destination
+      <select class="form-select" data-scenario aria-label="Destination scenario">
+        <option value="normal">Free destination</option>
+        <option value="conflict">Concurrent file appears</option>
+      </select>
+    </label>
+  </div>
+  <div class="journey" role="img" aria-label="A planned file move travels from the model through a Codex pre hook to the MCP service">
+    <div class="stations">
+      <div class="station"><i data-lucide="folder-open" aria-hidden="true"></i><strong>Model</strong><span class="text-small">Inspect and plan</span></div>
+      <div class="station"><i data-lucide="shield-check" aria-hidden="true"></i><strong>Codex pre hook</strong><span class="gate-state text-small" data-gate-label>Waiting</span></div>
+      <div class="station"><i data-lucide="folder-check" aria-hidden="true"></i><strong>MCP service</strong><span class="text-small" data-service>0 moves received</span></div>
+    </div>
+    <div class="rail"><div class="packet" data-packet><div class="packet-mark"><i data-lucide="file-text" aria-hidden="true"></i></div><span class="packet-name text-small" data-name>packing-list.txt</span></div></div>
+    <div class="destination text-small" data-destination>Original: Inbox. Destination: free.</div>
+  </div>
+  <p class="event" data-event aria-live="polite">Ready to inspect the original file.</p>
+  <div class="viz-row">
+    <button class="btn btn-primary" type="button" data-next>Inspect and plan</button>
+    <span class="counter text-small tabular-nums" data-counter>Phase 1 of 6</span>
+  </div>
+  <script>
+    (() => {
+      const root = document.getElementById('ch5-move-gate');
+      const scenario = root.querySelector('[data-scenario]');
+      const next = root.querySelector('[data-next]');
+      const normal = [
+        ['Ready to inspect the original file.',0,'Waiting',0,'Original: Inbox. Destination: free.','Inspect and plan'],
+        ['The model reads the file and records its destination plan.',0,'Waiting',0,'Original: Inbox. Destination: planned and free.','Request the move'],
+        ['The model requests move_file. Codex runs the pre hook first.',.45,'Checking',0,'Original: Inbox. No move has reached the service.','Check the destination'],
+        ['The pre hook allows this call; service execution is next.',.5,'Allow',0,'Original: Inbox. Destination: still free.','Execute the move'],
+        ['The MCP service rechecks, backs up and moves the original.',1,'Allow',1,'Original: Organized/Notes/packing-list.txt. Backup retained.','Record the completion'],
+        ['Codex runs the post hook to record the completed call.',1,'Allow',1,'Original: organized. The independent Eval happens after the run.','Replay']
+      ];
+      const conflict = [
+        ['Ready to inspect the original file.',0,'Waiting',0,'Original: Inbox. Destination: free.','Inspect and plan'],
+        ['The model reads the file and records its destination plan.',0,'Waiting',0,'Original: Inbox. Destination: planned and free.','Let another writer act'],
+        ['A concurrent writer creates different content at the planned destination.',0,'Waiting',0,'Original: Inbox. Existing packing-list.txt must be preserved.','Request the move'],
+        ['The model requests its planned move. The pre hook runs first.',.45,'Checking',0,'Original: Inbox. Destination: occupied.','Check the destination'],
+        ['Denied before dispatch: the destination already exists.',.45,'Deny',0,'Both files are unchanged. No denied move reached the service.','Receive feedback and inspect'],
+        ['The worker receives the blocking error and inspects the folder again.',0,'Deny',0,'Original: Inbox. Concurrent destination preserved.','Choose a fresh name'],
+        ['The model prepares a new plan using packing-list-inbox.txt.',0,'Waiting',0,'New destination: packing-list-inbox.txt. Existing file kept.','Request the revised move'],
+        ['The worker requests the revised move. The pre hook checks again.',.45,'Checking',0,'Original: Inbox. New destination: free.','Check the new destination'],
+        ['The pre hook allows the revised call.',.5,'Allow',0,'Both files are still unchanged before service execution.','Execute the revised move'],
+        ['The service rechecks, backs up and moves to the fresh destination.',1,'Allow',1,'packing-list.txt and packing-list-inbox.txt both survive.','Record the completion'],
+        ['The post hook records the successful call. Eval can check the outcome.',1,'Allow',1,'Both files survive. One denied attempt, one executed move.','Replay']
+      ];
+      const steps = mode => mode === 'conflict' ? conflict : normal;
+      function decode(saved) {
+        const value = saved && saved.modelContent;
+        const mode = value && value.scenario === 'conflict' ? 'conflict' : 'normal';
+        const phase = value && Number.isInteger(value.phase) ? Math.max(0,Math.min(value.phase,steps(mode).length-1)) : 0;
+        return {scenario:mode,phase};
+      }
+      let state = decode(window.openai && window.openai.widgetState);
+      function render() {
+        const items = steps(state.scenario);
+        const item = items[state.phase];
+        scenario.value = state.scenario;
+        root.dataset.gate = item[2].toLowerCase();
+        root.querySelector('[data-packet]').style.setProperty('--travel',item[1]);
+        root.querySelector('[data-gate-label]').textContent = item[2];
+        root.querySelector('[data-service]').textContent = item[3] + (item[3] === 1 ? ' move received' : ' moves received');
+        root.querySelector('[data-destination]').textContent = item[4];
+        root.querySelector('[data-event]').textContent = item[0];
+        root.querySelector('[data-name]').textContent = state.scenario === 'conflict' && state.phase >= 6 ? 'packing-list-inbox.txt' : 'packing-list.txt';
+        root.querySelector('[data-counter]').textContent = 'Phase ' + (state.phase+1) + ' of ' + items.length;
+        next.textContent = item[5];
+      }
+      function save() {
+        if (window.openai && typeof window.openai.setWidgetState === 'function') {
+          Promise.resolve(window.openai.setWidgetState({modelContent:{scenario:state.scenario,phase:state.phase},privateContent:null})).catch(() => {});
+        }
+      }
+      scenario.addEventListener('change',() => {state = {scenario:scenario.value,phase:0};render();save();});
+      next.addEventListener('click',() => {state.phase = (state.phase+1) % steps(state.scenario).length;render();save();});
+      window.addEventListener('openai:set_globals',event => {
+        const globals = event.detail && event.detail.globals;
+        if (globals && Object.prototype.hasOwnProperty.call(globals,'widgetState')) {state=decode(globals.widgetState);render();}
+      });
+      render();
+    })();
+  </script>
+</div>
