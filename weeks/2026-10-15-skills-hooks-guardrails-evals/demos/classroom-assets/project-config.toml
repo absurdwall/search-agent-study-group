@@ -1,0 +1,45 @@
+default_permissions = "organizer-readonly"
+[permissions.organizer-readonly]
+extends = ":read-only"
+[features]
+hooks = true
+apps = false
+browser_use = false
+computer_use = false
+multi_agent = false
+[mcp_servers.workspace_organizer]
+command = "/Users/tingranwang/anaconda3/bin/python"
+args = ["/Users/tingranwang/Documents/Codex/Projectless task folder/2026-10-15/organizer-desktop-feasibility/.agents/skills/safe-workspace-organizer/scripts/runtime.py", "serve", "--config", "/private/var/folders/1l/xh7kf4ss1rqg3vxjr17q9_0w0000gn/T/ch5-desktop-implementation-wakn_7hu/state/service.json"]
+required = true
+
+[mcp_servers.workspace_organizer.tools.inspect_workspace]
+approval_mode = "approve"
+
+[mcp_servers.workspace_organizer.tools.read_file]
+approval_mode = "approve"
+
+[mcp_servers.workspace_organizer.tools.prepare_moves]
+approval_mode = "approve"
+
+[mcp_servers.workspace_organizer.tools.move_file]
+approval_mode = "approve"
+
+[mcp_servers.workspace_organizer.tools.recover_move]
+approval_mode = "approve"
+
+[mcp_servers.workspace_organizer.tools.record_report]
+approval_mode = "approve"
+
+[mcp_servers.safe_publisher]
+command = "/Users/tingranwang/anaconda3/bin/python"
+args = ["/Users/tingranwang/Documents/Codex/Projectless task folder/2026-10-15/organizer-desktop-feasibility/.agents/skills/safe-github-publisher/scripts/publisher.py", "serve", "--config", "/private/var/folders/1l/xh7kf4ss1rqg3vxjr17q9_0w0000gn/T/ch5-desktop-implementation-wakn_7hu/publisher/state/publisher.json"]
+required = true
+
+[mcp_servers.safe_publisher.tools.inspect_repository]
+approval_mode = "approve"
+
+[mcp_servers.safe_publisher.tools.prepare_publication]
+approval_mode = "approve"
+
+[mcp_servers.safe_publisher.tools.publish]
+approval_mode = "approve"

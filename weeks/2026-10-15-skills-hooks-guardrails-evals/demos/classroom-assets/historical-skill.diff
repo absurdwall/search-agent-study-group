@@ -1,0 +1,17 @@
+--- before/SKILL.md
++++ after/SKILL.md
+@@ -31,9 +31,11 @@
+    the completed operation IDs. Distinguish your readback from an independent Eval;
+    only claim an external grade if its actual result was supplied.
+ 
+-In `record_report`, `unresolved_paths` includes both files still in Inbox and files
+-placed in Organized/Review. Those are different completion states: a file can be
+-successfully organized while its meaning remains unresolved.
++In `record_report`, build `unresolved_paths` from the final inspection: exactly
++the files still in Inbox, files in Organized/Review, and unsupported paths.
++Successfully organized files in other categories and unchanged references are
++resolved. Describe a preserved concurrent destination in `interventions`.
++A file in Review can be successfully organized while its meaning remains unresolved.
+ 
+ The service moves regular files from Inbox into configured Organized categories.
+ It preserves bytes, keeps backups outside the working tree, and refuses replacement.

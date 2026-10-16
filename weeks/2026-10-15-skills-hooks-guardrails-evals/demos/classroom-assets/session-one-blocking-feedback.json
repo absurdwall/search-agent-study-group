@@ -1,0 +1,9 @@
+[
+  {
+    "source_rollout": "/Users/tingranwang/.codex/sessions/2026/10/16/rollout-2026-10-16T12-24-43-01a14587-b1aa-7c42-905a-a25fbb13213e.jsonl",
+    "line": 129,
+    "turn_id": "01a14589-5bf0-78c2-b40b-deb46dd287ec",
+    "outer_call_id": "call_f49b3aba5968424abbef7fb73156cc6a",
+    "output": "{\"source\":\"Inbox/agenda-copy-a.txt\",\"result\":{\"thrown\":\"Tool call blocked by PreToolUse hook: Refusal: Destination Organized/Notes/workshop-packing-list-copy-a.txt already exists. Preserve both files; inspect again and choose a new name.. Tool: mcp__workspace_organizer__move_file\"}}"
+  }
+]

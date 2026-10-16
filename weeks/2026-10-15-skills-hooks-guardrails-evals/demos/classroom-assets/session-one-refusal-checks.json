@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "checks": {
+    "git_commit_rejected": true,
+    "ready_false_feedback": true,
+    "no_new_publish_request": true,
+    "target_unchanged": true,
+    "source_head_unchanged": true,
+    "no_new_publish_hook": true,
+    "marker_value_omitted_from_public_messages": true,
+    "staged_marker_preserved": true
+  },
+  "before": {
+    "head": "6ba7be76dc6a8721696c6bf326df9ce48b1a5d1d",
+    "target_refs": "6ba7be76dc6a8721696c6bf326df9ce48b1a5d1d refs/heads/study-demo",
+    "publish_requests": 1,
+    "hook_lines": 2
+  },
+  "after": {
+    "head": "6ba7be76dc6a8721696c6bf326df9ce48b1a5d1d",
+    "target_refs": "6ba7be76dc6a8721696c6bf326df9ce48b1a5d1d refs/heads/study-demo",
+    "publish_requests": 1,
+    "hook_lines": 2
+  }
+}

@@ -1,0 +1,1307 @@
+{
+  "page_id": "page_5c02287fab708191a9bd674ba6751694",
+  "url": "https://chatgpt.com/space/page_5c02287fab708191a9bd674ba6751694",
+  "title": "Chapter 5 Classroom Walkthrough for Skills Hooks Guardrails and Evals",
+  "sequence": 44,
+  "page_updated_at": "2026-10-16T18:55:46.599918Z",
+  "content_blocks": 107,
+  "export_method": "Read the complete authorized Page and UTF-8 attachments via Page tools; render ordered blocks as Markdown; remap native references to local assets.",
+  "changes": [
+    "Added export provenance and new-run instructions.",
+    "Replaced all 34 native references with local relative paths.",
+    "Replaced the widget image syntax with an HTML-source link and a static Mermaid explanation.",
+    "Native layout, widget state and preview UI are not rendered.",
+    "Relocated Markdown attachment navigation links; recorded original and exported digests. Original paths inside historical code examples are unchanged."
+  ],
+  "original_blocks": [
+    {
+      "id": "8ed2695f-cd36-4520-bb8d-71dbcb341885",
+      "hash": "559503c1a31546ec5e8918a6706c9bda518f353ab48aaaea5cc17f03d6ade4a3",
+      "kind": "markdown"
+    },
+    {
+      "id": "f6a4e4a3-c43b-457a-9d09-23d9245c22cc",
+      "hash": "a2c32e9a188bbae7971fab6ba47b4ad63ad2b0ea8a15eed43adaeb891ae14536",
+      "kind": "markdown"
+    },
+    {
+      "id": "40bff155-18a2-4559-a9ae-640d24ada75e",
+      "hash": "bf947399499e68789a7962f9d9ed68769685aa409355cb576c0e5bbfc004169e",
+      "kind": "markdown"
+    },
+    {
+      "id": "8dc3172f-0118-4d1e-a884-921e9911d8de",
+      "hash": "cf0323440e721d29b5dcd8ba575ea56e0c95401de90784a1be7e3ba8d44f58fc",
+      "kind": "markdown"
+    },
+    {
+      "id": "aa364edb-8c52-43a4-8587-e13ad116266d",
+      "hash": "c999cb6a360b9d1a69e9f1c9c0739595c51976ba481482f755bcb84aa8f9b8dc",
+      "kind": "markdown"
+    },
+    {
+      "id": "c629ce60-6e14-493a-854b-4e73c9d2fd5b",
+      "hash": "1d6ca9bd4b4e56b81d92129249940341b37cf7bef0f61ff753f2491fa96fcdad",
+      "kind": "markdown"
+    },
+    {
+      "id": "821089e9-076e-4fb5-8d42-9f1908ffcf57",
+      "hash": "2f9b8029a5ba16a660a4f1f9973ff377001bd6f5746e0bc558b745c89eb2ae1e",
+      "kind": "markdown"
+    },
+    {
+      "id": "d8ffe775-0472-4d73-a4c2-85a3575411d2",
+      "hash": "cc0eca3cb4922b89d2febdbb7c23e2d383e9c6a0d56f4a6667d5f94b7c2529b5",
+      "kind": "markdown"
+    },
+    {
+      "id": "cb3122ed-c770-4187-bfb2-cf9c1eba9a88",
+      "hash": "bb05856504188ee268bcf9b7cbb8d3a6cb87a9ffb9a0827edf089b4d75ed22df",
+      "kind": "markdown"
+    },
+    {
+      "id": "6c632546-b347-437d-a530-9b8f96954d41",
+      "hash": "795f440d890da0a229872d827fd6afbacd2b3f74b91401b78728f47df089d480",
+      "kind": "markdown"
+    },
+    {
+      "id": "82afb14e-0bea-43f0-9348-f44ca767ead0",
+      "hash": "d167ab70e0741d999b8202464fa4e4f375a1773ee96476a2dad2bb022f7bcab0",
+      "kind": "markdown"
+    },
+    {
+      "id": "1e408f0a-1208-4900-bc24-782747d4fdb6",
+      "hash": "2c676f2ef5c8f63f7a1fac3aa2275ee1fa3868f67e3a568cf3742457820f295e",
+      "kind": "markdown"
+    },
+    {
+      "id": "aeab6586-88c9-4b27-b1b4-febb07498f73",
+      "hash": "10cbe57470a4cbfe96f897155ab07d7dc105a3ac31464306dc0e505af356b119",
+      "kind": "markdown"
+    },
+    {
+      "id": "36c2dff3-4c17-49c4-b26e-35ca637c48e4",
+      "hash": "35414b4bb7466743748ce7a8ba517dd06c66d009d5c8e3b132985cb97a367a22",
+      "kind": "markdown"
+    },
+    {
+      "id": "46c50c2d-704d-4f29-8201-39d6bf6126bc",
+      "hash": "9f3c69922bdb574e46eed75a129a64c115dcdaf10d28f28036b0888461c643b4",
+      "kind": "markdown"
+    },
+    {
+      "id": "b8921705-b224-4926-a9a5-14ea7aeff89f",
+      "hash": "96349a09a84021baca9f9997b9a52327ec39da6afcb647af7e670460f9d35ff1",
+      "kind": "markdown"
+    },
+    {
+      "id": "85500f4f-9a1e-4d96-82d5-bfe8c01a3715",
+      "hash": "aa7dfbbe60767ef6bd78f2b992c1afdbc465d00782b02850a14fda0fd9b310f0",
+      "kind": "markdown"
+    },
+    {
+      "id": "c30c185f-fc29-404c-a31d-cb1a14e12f07",
+      "hash": "68b23944c97c7f7c7bbfa02c6c8fe9c76a60d1732ec0d22576c8e46c38ea7784",
+      "kind": "markdown"
+    },
+    {
+      "id": "056973bd-662b-472d-b98f-229a712f74ee",
+      "hash": "d33e8e36a9f93839405fab64ee97b14150a2b10df81a47cf390c34bd76f0951e",
+      "kind": "markdown"
+    },
+    {
+      "id": "12bfa0bb-2280-42d4-a2b1-d355800a2043",
+      "hash": "2ff23e8c7b38ae9ea565515d2fe14b5e4c708c478445b2292a0ab28adce74f2c",
+      "kind": "markdown"
+    },
+    {
+      "id": "9c3d1d0c-1687-4e35-81e9-905a14a1eb6c",
+      "hash": "74d9b892a20533a3701e216221c2215b15e4399254cb0c7a92b24894cd2544f0",
+      "kind": "markdown"
+    },
+    {
+      "id": "135ab0c0-13fb-4efa-be88-fe295ded31f8",
+      "hash": "183ef08145c2e445948b3bf64af18ef306195afebc07454aae2616ca179bb5db",
+      "kind": "markdown"
+    },
+    {
+      "id": "ddc04ff2-1294-424f-bcaf-e207b45158c3",
+      "hash": "33890dfc85be55b97a827640e9ea42b1e4eb6bbcd9b70d8c3cf7187f6e7fc5ac",
+      "kind": "markdown"
+    },
+    {
+      "id": "07e05927-f152-4bfa-9be9-690839cdbdf6",
+      "hash": "f170b10d9358c45a62e8bca67c8c36860c895301c33a78e709409a3207192553",
+      "kind": "markdown"
+    },
+    {
+      "id": "79a77927-26bd-4307-bd2d-c0c89687c70e",
+      "hash": "66ace76f35267540c7253d2d4457cc4ccc3edab31263b6c2b45078ef0f9f28fe",
+      "kind": "markdown"
+    },
+    {
+      "id": "ea2152ea-51c9-4b83-9897-604174aecb0a",
+      "hash": "18a481af58746f35a462b1b942c9075ac25be2cd477f1a885a7390ed6c7ba89b",
+      "kind": "markdown"
+    },
+    {
+      "id": "8bfd3cb9-33d7-4fe4-86fd-6daf5e4f611f",
+      "hash": "3af6934d785a835f539bf62148ba54948b9396bfe37f67d42b96f1f34b74e04c",
+      "kind": "markdown"
+    },
+    {
+      "id": "676e3294-fa79-4a06-8ad4-aafcfe076550",
+      "hash": "57fba8ff9c3b91c52387d494c70e58c02611fa8a3d48610644a3403adf61b3cc",
+      "kind": "markdown"
+    },
+    {
+      "id": "3a487a1e-dc55-400a-ab9b-d95072659d5c",
+      "hash": "e634d7c1c535bd0c1a1142cd8e74d6aae17dd00cb2471dc317e3564fb42f029d",
+      "kind": "markdown"
+    },
+    {
+      "id": "4ceee0d1-ebb6-4cff-b859-84c51e0a4ced",
+      "hash": "06e6de8f01a07e4c7a704f5a3a75e8cb6282535e9e8c4857ce0b7f5a1670c988",
+      "kind": "markdown"
+    },
+    {
+      "id": "2b4e2d80-165e-478e-80d9-204ae6afee13",
+      "hash": "0cfaf08021e006291caa10c7f57aeac1e69fa4e7ebe2894d8b25febf579c302c",
+      "kind": "markdown"
+    },
+    {
+      "id": "0564c9a2-f0be-4064-a0de-96799ae36dd6",
+      "hash": "92595ca2c425c8f6caceaa52877b794fb92ae51e4621a2394424d670f0125c77",
+      "kind": "markdown"
+    },
+    {
+      "id": "178892e2-9344-4dd6-affe-97410be56743",
+      "hash": "df8afaa04466f94e5aa031899fbacb36e9e6989db31bdf20b24584a4a4d9cd28",
+      "kind": "markdown"
+    },
+    {
+      "id": "ec6568cc-b410-45fa-8ee2-91dcc5f9fa74",
+      "hash": "249e8fdfbbceb7b846fbbebab432debc5553bf11e0a3a94b2f6517ba745cf558",
+      "kind": "markdown"
+    },
+    {
+      "id": "9c698c0f-b8cd-4c58-bace-c972a79aaa46",
+      "hash": "1a27c72fa1747925b1b4e6ba4691aa6907398f09b031e3bf13e97dda76b85fcb",
+      "kind": "markdown"
+    },
+    {
+      "id": "59e0cd2c-6cae-4cf2-873d-cb74e548a81e",
+      "hash": "52b6fbdf1ff0fa2bcb74c193072ac87713b106851d42307e609783c623dad4e6",
+      "kind": "markdown"
+    },
+    {
+      "id": "4d3633c7-322d-4740-b839-3c3f84c9944e",
+      "hash": "f170b10d9358c45a62e8bca67c8c36860c895301c33a78e709409a3207192553",
+      "kind": "markdown"
+    },
+    {
+      "id": "d673ad1d-04da-4ebc-9d14-fa5d17604e57",
+      "hash": "aa222e4ab10e851b421a94e8bda8bcf3997ee79e8825a0d8a3112c81c17c98d9",
+      "kind": "markdown"
+    },
+    {
+      "id": "b94e3d56-10fa-4f07-802e-8108779ae5bc",
+      "hash": "044a0b1bf9d627d7d0c499f71305797023e148e3eb8a3e5b7df1170a930005d1",
+      "kind": "markdown"
+    },
+    {
+      "id": "bd8716fc-ca12-4c9e-98fb-1498af7ec636",
+      "hash": "9a4ec30b1caa59ebfa379a354887164c49fc283acbfcd3f6e33eb4f8078b1afa",
+      "kind": "markdown"
+    },
+    {
+      "id": "cb646645-240c-42e2-85f6-feecf0775a24",
+      "hash": "150daecbdf9480a587bfde44e16fb71c530acd5dbd0928177b5523db1703f181",
+      "kind": "markdown"
+    },
+    {
+      "id": "a2a94d2d-759c-492e-a648-e3c502848068",
+      "hash": "93501eaecc6fe29407b8ec3dd107e427d7e7475b76817a3da313668ddfe185d8",
+      "kind": "markdown"
+    },
+    {
+      "id": "309c47a4-6428-492a-8353-c7f65d905c39",
+      "hash": "a73bf42cb8ab3369f64799c3aa7ab7c3943425fdaa8458faad1994fd35bf4890",
+      "kind": "markdown"
+    },
+    {
+      "id": "91b0f81b-4e85-4f5a-9e6a-70f8690472d0",
+      "hash": "720d1708fdb28b539348426451166350a961e3b107d398c9bca75a0044c361e5",
+      "kind": "markdown"
+    },
+    {
+      "id": "f1488b99-6b20-4f15-bc98-7419f4b04911",
+      "hash": "307e9105ca712feaf650fd00b564dc1c4216dd81785fe7a9ab8a2ae20e41ab82",
+      "kind": "markdown"
+    },
+    {
+      "id": "9fe7f192-2116-4bfa-918a-79fb6b5ddcce",
+      "hash": "6ec26a44552d0b51c77864edf54067ed01e3c7ce9fb5c3fe55a1fcdd8c24f337",
+      "kind": "markdown"
+    },
+    {
+      "id": "face3ec7-cc58-4a61-ab9c-6e259517a8c8",
+      "hash": "84d9e9c65d2ec1e863c79fe94488084719ca5fd7acde1ef3e0653f72678ba0bb",
+      "kind": "markdown"
+    },
+    {
+      "id": "43fe15c5-276f-4a2d-a92b-60c20d53bca9",
+      "hash": "36586e161abb7c3fd30e06b747e0d49d0e5c96fb063fd688ffcdb1aec8c3bf32",
+      "kind": "markdown"
+    },
+    {
+      "id": "afa51c41-b4c9-4aa3-9ed4-c6d7972f3cfc",
+      "hash": "a9ef5783cdc00238576db6a542d980ea677d01ce194a731307e3c37f985ab81c",
+      "kind": "markdown"
+    },
+    {
+      "id": "f6b4314f-bf40-42f3-a9f4-e756a663fae0",
+      "hash": "9d8698a62e44998684aa574c7894f742e3538b77ddb4a712adce1c955b62c599",
+      "kind": "markdown"
+    },
+    {
+      "id": "0a12bf7e-4317-4a92-9da7-ce4220f5fe78",
+      "hash": "30242d2a6e2b941f1877652d63344105966d1b4271088a5ea13fc8b46d3d40a7",
+      "kind": "markdown"
+    },
+    {
+      "id": "316ee317-1de3-4321-af9f-fee4634dc176",
+      "hash": "d85542c2796c6aa02253cd1279ae6e8ba2032d3bb123093331c05d43b6b013fa",
+      "kind": "markdown"
+    },
+    {
+      "id": "b0fa324f-8e29-460e-9580-f34a43ea63c4",
+      "hash": "12d396beaae1665c7cf58877c00abfede1e3fcac4db729c48848818bc5359c59",
+      "kind": "markdown"
+    },
+    {
+      "id": "60177d48-2f6a-4299-a35c-366bfe4102ac",
+      "hash": "4f75c13f875ddcb62e55b0b848a3ca1364b351fd75d61c7af55466fc4e73c3d7",
+      "kind": "markdown"
+    },
+    {
+      "id": "e005c539-fa76-4434-b472-e564d4adaeff",
+      "hash": "130dbdf21cf330d8c40a6540657ae5e80285bb62d5c6486831dd07759e9bac28",
+      "kind": "markdown"
+    },
+    {
+      "id": "dc1a242d-e320-4394-aa45-e9bff7ba7858",
+      "hash": "e679230efe9fb0fd0aea26386b26401fe2a8b44b2959d63a17dcc54244601a69",
+      "kind": "markdown"
+    },
+    {
+      "id": "99f0ef37-a04e-46f8-a01e-129e29614faa",
+      "hash": "6862c58dc6a9ebe1aa80fb4dc47a3e866926eb5bdd5808111a652bfde2dbc6fc",
+      "kind": "markdown"
+    },
+    {
+      "id": "4cef9951-32a4-4280-9ff2-ce89f9be1cb5",
+      "hash": "bac5fa8d3de2c51c3f3ab2497d53f5a132065e635ac9fe44898bb866393edd0d",
+      "kind": "markdown"
+    },
+    {
+      "id": "ce2a92b4-a5b4-4440-a900-3fe8343727b7",
+      "hash": "345fa22ad47a10ad392e677f2b8862b18097ca21b9986835238d433a32325511",
+      "kind": "markdown"
+    },
+    {
+      "id": "aba35261-5f3c-4a28-a529-1b1ef1f5616a",
+      "hash": "7f85776430185fad2f765b04711a606ae55a146569b629f0e1f79d87027e8548",
+      "kind": "markdown"
+    },
+    {
+      "id": "956a87fb-b83e-4d04-9754-a91e2650f8c4",
+      "hash": "6409170c192acefe6378ff60b12993f81a4b0864e4c51a8882d9d7cd99058c18",
+      "kind": "markdown"
+    },
+    {
+      "id": "807b76b0-79c7-4263-8f27-d5dec5e25522",
+      "hash": "986616ffc48eac02b96195696c8a015f224e93ca12602c9cf34667bdee7fec77",
+      "kind": "markdown"
+    },
+    {
+      "id": "49a7981f-0d2b-4e33-9cd2-cc8a06d1c9c9",
+      "hash": "cf24d8fec40518edcb1693f907381ee3c552999b210f1111a0d8197c847e9c21",
+      "kind": "markdown"
+    },
+    {
+      "id": "5a4d34a0-ab2b-4d8c-b890-5797c1e0dfa6",
+      "hash": "7ec602e9cce176f4010444bd61b98cf70bc27ddd32a8aef364b8ebf279d243fe",
+      "kind": "markdown"
+    },
+    {
+      "id": "3c901918-db75-4bc7-9c3e-2bd311893cc3",
+      "hash": "f7482367c7c95fb98c1ed60a0e862aba827a0713c9d6b059360c69dd68024572",
+      "kind": "markdown"
+    },
+    {
+      "id": "650294fe-7232-43e9-a06a-7739288aefa1",
+      "hash": "95b3534dc8e7578dbb0a2e6b657c4e6006c6ebfbdaed33cc8db6244cc2086811",
+      "kind": "markdown"
+    },
+    {
+      "id": "d5e406d0-6b7d-462e-8da1-3bd5bd4d172c",
+      "hash": "dc2107a760584d08b1e7b035c3086a3aafcdf5084eab708d14555fd3ca2a0e52",
+      "kind": "markdown"
+    },
+    {
+      "id": "86eb78f9-5e93-4cab-8a09-159007ec75b5",
+      "hash": "47bc683e016b4042308304c4dd163c5a59d7d9eec0a5f56728cb2e55062c0505",
+      "kind": "markdown"
+    },
+    {
+      "id": "96377f7f-340e-470d-b9a1-88aef06ae65b",
+      "hash": "24ce2e6bfb5a02d821ee838a1731bb807cf47870ac44aa1ba968648ad9e553e6",
+      "kind": "markdown"
+    },
+    {
+      "id": "e3b24783-4723-42aa-8119-1cfa947047be",
+      "hash": "daedc45b3a3be1e11bfc5623a2659ba337a6ca14fa8a564241849ad9ce0a1529",
+      "kind": "markdown"
+    },
+    {
+      "id": "20816def-b280-445d-b68a-ce80f197c2ba",
+      "hash": "0e54c4184cd519722f1fe1f2cbe6821343477f7f16b878d5218e7b2b994f6e5f",
+      "kind": "markdown"
+    },
+    {
+      "id": "528dca0f-a5f6-4e29-a98b-779843c39354",
+      "hash": "b9c7c9ed3f1bcc94ff833c83db4c105920610f1b7980732350391b29e5db205d",
+      "kind": "markdown"
+    },
+    {
+      "id": "d1bb3f1d-07c5-4848-b165-c461d327ae39",
+      "hash": "bbe572b40200d50497b1775b850796182f70f17b230b26354bccf1aec3c36bdd",
+      "kind": "markdown"
+    },
+    {
+      "id": "96eb95b1-f445-4fb3-8c5c-deb9c7977101",
+      "hash": "62a4fba0ffad96a4d852f85f8d8be643c9c5558583305f7a3d8a723c876709f8",
+      "kind": "markdown"
+    },
+    {
+      "id": "293b676a-0a29-4541-bab9-32d5671fa076",
+      "hash": "54028db541cd7e45c22a7284493d4d256690cf2f09f119d69703f483534bc002",
+      "kind": "markdown"
+    },
+    {
+      "id": "181023dc-81ff-49a0-9d7c-1cf3d79328c0",
+      "hash": "e618dde6e1d33c261fea8841e9af3568baf03f7c7a3f4361a029a6f77219269a",
+      "kind": "markdown"
+    },
+    {
+      "id": "ec72639f-a287-41ea-9c1f-d733907df616",
+      "hash": "82ef573e170be63555b054a0c935f8ce00c96b260a9e0eb53550950a66016aa1",
+      "kind": "markdown"
+    },
+    {
+      "id": "2c6c7ec0-aff0-479e-8ea1-2274eeb8a118",
+      "hash": "d36b9364b42daa672af9d9008c5ee117e9d0e67cc3a1f24283bb18e1412fe044",
+      "kind": "markdown"
+    },
+    {
+      "id": "e7710af9-ed42-4e60-8867-63ef57270906",
+      "hash": "19abcd7daa6e15e5c708ca171d4eec44e5f3656cfc089e043703ee3e91d95bd0",
+      "kind": "markdown"
+    },
+    {
+      "id": "17953424-1580-4ce5-9f66-3d0255c21ca6",
+      "hash": "03edb7bb56b28b444d6640fed8215817c03bbafe1eb14bff0c9d8fc67f1173e2",
+      "kind": "markdown"
+    },
+    {
+      "id": "57d7d627-7217-4a81-9276-f47a5e9fa3d2",
+      "hash": "007ef0f46c4030f616b79ef25c70def2f0e46bd2502445ccadb4e057bb2cf921",
+      "kind": "markdown"
+    },
+    {
+      "id": "d67b2357-b41f-42ef-a5d0-e7a1736f611d",
+      "hash": "e2c566c7d92cc4a199eb02caec5be3fceb2bfc9a7ea686b02dc0a18ab3dcbd23",
+      "kind": "markdown"
+    },
+    {
+      "id": "01497917-5d4b-4258-adbf-d75fa996230d",
+      "hash": "7775fdb1ecefb791186e91348426efdbbcd512bae21103b2819ee37fcb23029a",
+      "kind": "markdown"
+    },
+    {
+      "id": "55b067cc-4162-4322-a6b2-49482e69c7c4",
+      "hash": "cf890a8dc9b80458fb54e356dd9899985884ab572c5736910742cdc3787ff4c7",
+      "kind": "markdown"
+    },
+    {
+      "id": "cbe44de8-9160-41d3-ac1c-b0e8d5527e31",
+      "hash": "bcc8da0efd7bffd5ae1476c8a8f64ffd2f9962ad08b3ed01c61a6e3f2a7dba31",
+      "kind": "markdown"
+    },
+    {
+      "id": "96b296ca-e439-4ac9-9785-670906140536",
+      "hash": "a95a31f203f48569f7e00238fabf93385d9c7a895721bf7653beb0918cd0dca5",
+      "kind": "markdown"
+    },
+    {
+      "id": "11b3df52-08f8-4149-824d-df925d5a9219",
+      "hash": "5fa89519b447ce300ebf6a7e9720a49bad187ef18d37a8f637f74d937ca56c74",
+      "kind": "markdown"
+    },
+    {
+      "id": "5992bcfd-4fec-47d7-ab63-f6ffbfb3bfcd",
+      "hash": "7eea3c5c7e1c4bfa2c6bbab776dc0a32322538bb8d16c67975d33cc28e61876a",
+      "kind": "markdown"
+    },
+    {
+      "id": "89042fb2-564c-424e-8d39-59bcad3f1c46",
+      "hash": "f32f4fe29b9fcc1be5ae6ec8b9c1f49c4e72a4f410810e48974ddd3429dc3cdf",
+      "kind": "markdown"
+    },
+    {
+      "id": "85a8d504-224d-468f-bc26-e672c9a27c2f",
+      "hash": "fdcfbc4dd2b5401c814eba63e8b9fcbb5f7ee51bced33812119b8809070c65b2",
+      "kind": "markdown"
+    },
+    {
+      "id": "00230934-0907-4715-9df4-c6c51382e1a8",
+      "hash": "cee4da102805a87ab8dbbab6064254f73731dab6ea100919a259a279f6a06834",
+      "kind": "markdown"
+    },
+    {
+      "id": "59393ac5-5302-4fd2-8383-b87f181df753",
+      "hash": "06d1feb9cad00dae1d405a3e9932b27fafce1d1b89fff12552edf495352b9ec1",
+      "kind": "markdown"
+    },
+    {
+      "id": "4c5682c0-369e-4b85-8fb2-e0b930212a58",
+      "hash": "60377bcf7d03226b5ffb7e5f5716cb2ec5e8377313020ad770b1e23aa4828809",
+      "kind": "markdown"
+    },
+    {
+      "id": "525ee618-6699-418d-add3-80a87ee78040",
+      "hash": "bdd4bc86b17bf8dcb85b6144c11ea8d96c4da19e51e52d30ea50816bec9eb67f",
+      "kind": "markdown"
+    },
+    {
+      "id": "d88f9615-60e6-4200-99a5-2713b9c4cbb8",
+      "hash": "b0a23eb614ee91d00064fa4c22bc14c4e6a7ed6a81e28d42c54e4b0cb65d8c4f",
+      "kind": "markdown"
+    },
+    {
+      "id": "8192b27c-e20a-41bd-ab6c-38dee4035cff",
+      "hash": "2b80030ec784212a071b380f9a23fc52dfbd4e451e8596480087688877f0f0ac",
+      "kind": "markdown"
+    },
+    {
+      "id": "00610726-810c-4f49-88ad-8d155dcd7cf7",
+      "hash": "0c732493b24639ecaff76ba07b5ad8d985237544afd283c306a248817f288f9b",
+      "kind": "markdown"
+    },
+    {
+      "id": "04f4b0f9-f3f3-4d0e-b839-daf22da091ec",
+      "hash": "f8dd391d3fb0c540b028dd18b7a44476265036292ed9a326e06fa0419e4e7c4f",
+      "kind": "markdown"
+    },
+    {
+      "id": "b7cdef3e-0743-4150-8bd3-5f3c4c4bb303",
+      "hash": "bbbb1d2e31264d19bbe782c137c611b38acbeaa021c874d3c46fc9b283d2b521",
+      "kind": "markdown"
+    },
+    {
+      "id": "75118b3b-b9e7-4822-a157-f96c3b5e87a7",
+      "hash": "23ee1eec488df416f20f41ea87634450afbe1632ea51a08d9f0476cf24765870",
+      "kind": "markdown"
+    },
+    {
+      "id": "a1f18590-bd9c-4772-883a-2be9e187dbda",
+      "hash": "24eb421072e55b2209c22f575f1a213b79d9bd4592d0bfeecf9fecde03985011",
+      "kind": "markdown"
+    },
+    {
+      "id": "fa263489-9ee5-4f2b-abc4-b98df8addaa6",
+      "hash": "6b740fc2829149e64d48f626b1f8b81936725830c7c8f5bf0ffac13b61539c92",
+      "kind": "markdown"
+    },
+    {
+      "id": "73118c6b-ef80-47c3-ba06-ad81728c01f7",
+      "hash": "8662211a391057779705a5d3bda96feed98f2462d2fa160c38a7c0f8908c4ef5",
+      "kind": "markdown"
+    },
+    {
+      "id": "59f98ca6-6dda-40ce-94bf-14c51f5d8372",
+      "hash": "95f05816b1722e4719a495534a5206ceea1083759aad3de7cd93604008e3e39d",
+      "kind": "markdown"
+    },
+    {
+      "id": "1aaa5bf9-2bd3-45f4-ac81-08f7766e02c5",
+      "hash": "7b6a7dad5b68b6637e2d88fbedfc63a8988821b2c043b57a03338c341f5259ce",
+      "kind": "markdown"
+    },
+    {
+      "id": "861a9a8a-65d9-4c9f-8e16-c09169bb4a6e",
+      "hash": "da40c4e7acb901a12b25de09b3dda3fd22132116aa87f266ab73007ff98e7610",
+      "kind": "markdown"
+    },
+    {
+      "id": "a19983b7-f13a-48f9-8101-485a8fb8463d",
+      "hash": "8162c67ae832c3ab4342d6a7a11c8caf9b968fecf1749d6480b03c2075502cec",
+      "kind": "markdown"
+    }
+  ],
+  "attachments": [
+    {
+      "file": "session-one-index.json",
+      "labels": [
+        "Classroom evidence index"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV8yZHpIU0xCNkp2MUpoRGZxVWVXZ2Vn_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 11610,
+      "sha256": "2d598a990d78d2feab17eed257afd64f2aee6911ae34f06447f56090a4d02048",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-one-evidence.zip",
+      "labels": [
+        "2026-10-16 classroom evidence bundle"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9kVEhJMGdqWWR0emgzS2JCSlZHOU5B_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/zip",
+      "byte_size": 167559,
+      "sha256": "7d5457069626d3c132860ef063d99f0ff264494647f895301cb1d6dfe2e80e74",
+      "source": "Existing task-owned original bundle; byte size matches Page attachment; session two digest also recorded in Page."
+    },
+    {
+      "file": "organizer-SKILL.md",
+      "labels": [
+        "Installed Skill instructions"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9wbEUxYTd2MHhhSVRwQnA3MVRmSm9n_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "text/markdown",
+      "byte_size": 2956,
+      "sha256": "6e045ba57c32ae45b01f437f3efea1432f0411c5a125c1f35834d5b6716b687a",
+      "source": "Page reference read; source digest verified before relocating Markdown navigation links.",
+      "export_sha256": "36319b5ff572952d8bc4e3ad7c3b8888de533a5938aa02febcdde21d09faa144",
+      "export_byte_size": 3337
+    },
+    {
+      "file": "organizer-openai.yaml",
+      "labels": [
+        "UI metadata"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV8wYThLSkR0emxDTWxWd0hIdkpZVEl3_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/x-yaml",
+      "byte_size": 264,
+      "sha256": "fe177b7654d984ba8a4df1c9b71c7191b26220a015da3e7808c69b1fadbd4258",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "project-config.toml",
+      "labels": [
+        "MCP registration"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9ndnd1RVlYV1E2WHE2M1h2c3FEVVpR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/toml",
+      "byte_size": 1734,
+      "sha256": "89f215fc3465b10313cc231a54f8fa5dbf46e2c9d76d628d4e0e43506f47ef6d",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "organizer-runtime.py",
+      "labels": [
+        "Runtime"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9PX3NsRmx6UmdObmp3MUZTRlNjMUxn_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "text/x-python",
+      "byte_size": 11023,
+      "sha256": "7875599340ff76cf1084c28ec9c8a4afa3d3cd39a797eeaec671eb9b084cc462",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "organizer-operations.py",
+      "labels": [
+        "Guarded operations"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9wa2RyYzBfZWVjNkpJcVZBR1RjSm5R_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "text/x-python",
+      "byte_size": 10883,
+      "sha256": "1ef57503e837b869822597fbac5c8cee10aaf982b615fe4b7320759490f1b56c",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "project-hooks.json",
+      "labels": [
+        "Installed hook configuration"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9SSmtYNS1mbGN4TG14cUdHQkVxVDN3_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 2576,
+      "sha256": "b3241abf3c3a5c1bd3859de782f426017c04c7b240e7684c0e9e4a1ba079d8e4",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "organizer-cases.json",
+      "labels": [
+        "Cases and success criteria"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9WTW9tbnFwNF80bE1CSFpWbFZkc2ZR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 1846,
+      "sha256": "78aebd02b04878ac8ce447a80fa986e8a65aba823b844d6ab207b8a2a35e319a",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "follow-one-move.html",
+      "labels": [
+        "Follow one file move"
+      ],
+      "original_reference": "visualize:fde1_bGliZmlsZV9Ib0Rycks2dGl4YUdPVHptWmtqUFdn_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "text/html",
+      "byte_size": 8434,
+      "sha256": "2c4577911dbd40a5d36b3f44be3412840b9d25e52fd7e4bf51cdbb89dd450c37",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-one-normal-grade.json",
+      "labels": [
+        "Archived grade",
+        "Run A"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9hQlRqcnYzUXI0T1dTcXYzRjFwUEtB_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 2631,
+      "sha256": "ce6b438398c6cc57cd7548c8883634ec77b3b545915071d18fedb6f43c5279dc",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-one-denial.json",
+      "labels": [
+        "Exact denial"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9OM042bXVnN2R6TnBGWkxPV3NnUDJR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 830,
+      "sha256": "dd9cdc7cf75c3a024672554de5ca98775548a108dad84458b9dfe90760e93ad3",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-one-blocking-feedback.json",
+      "labels": [
+        "Blocking feedback"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9uT1pzdFI0d3Rxc1c5b2I4ak1jRFNR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 597,
+      "sha256": "eb30d4cd1008684a614dd1e21364684e0a264d199c259d9cd96a5e9426a130f1",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-one-requests.jsonl",
+      "labels": [
+        "Service journal"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV81SWFnaHlCMDJpcTREVEpiVzVkVTVR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "text/plain",
+      "byte_size": 5306,
+      "sha256": "68989964f439b6a678aa613957cac7140b105cbd6de08408ba9ef1340bce416b",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-one-conflict-grade.json",
+      "labels": [
+        "Run B grade",
+        "Run B"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9pcklWN3NHN2U2ZnFHRHhhc3BBZVJn_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 2908,
+      "sha256": "927d38a6c702d9f03bb5ef138040bb4ed9672cc1ebc14c9952270cdbda105a8e",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "instructor-snapshot.md",
+      "labels": [
+        "instructor guide",
+        "Exact commands and setup"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9TQUpoZjZFWGZBb3JabTQ3VDZ6N3R3_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "text/markdown",
+      "byte_size": 53788,
+      "sha256": "644a52a0fda3ef7fca91e3d6be52dcc92e01b1baaaad7041f15e57016bb11fcf",
+      "source": "Page reference read; source digest verified before relocating Markdown navigation links.",
+      "export_sha256": "10fead8041931eb3ea2ce1fb3da8659f0ebe9bfab20b1dbd11909098c75e99dd",
+      "export_byte_size": 53449
+    },
+    {
+      "file": "historical-conflict-failure.json",
+      "labels": [
+        "Historical conflict failure"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV8tZUVhTUloWnlLTzNlMXJKZE16V0x3_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 2911,
+      "sha256": "b7a65d97b94f2f7f5aa5897d9f0b8daa9f42244e4f422a4243783ac56dcb33ef",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "historical-skill.diff",
+      "labels": [
+        "Unified diff"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9lQjYxQ2ZGWlBjbHptZlNwVzc2ZmpR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/octet-stream",
+      "byte_size": 1010,
+      "sha256": "e5f1ac79952689fa88a43f172b8d8a382ada4e641912f7434ec3a771492aa546",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "historical-conflict-recheck.json",
+      "labels": [
+        "Historical conflict recheck"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9xYmJrWnc5SlFrQnlIWURnZ3BJYWVn_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 2900,
+      "sha256": "a30d9dc9cad326e2957e97a677d51f386aacd9359a119f89946e35eeb871132b",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "publisher-SKILL.md",
+      "labels": [
+        "Safe GitHub Publisher"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9rb3pxbWNlMW5ZckJoWVpLS0l3NFdn_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "text/markdown",
+      "byte_size": 2272,
+      "sha256": "22e86a9d5f940c7e4621111d07d714820fb64d150fe687f077ee3bba092ce756",
+      "source": "Page reference read; source digest verified before relocating Markdown navigation links.",
+      "export_sha256": "13a8a5be40da75521339be1397df877e122f67311ab641a34e739cdf1957804a",
+      "export_byte_size": 2598
+    },
+    {
+      "file": "session-one-publisher-grade.json",
+      "labels": [
+        "Archived grade",
+        "Local publication actual grade"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV84bmxWX0NZRlh3RzFieVBWSGx1NG5R_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 305,
+      "sha256": "9935899b3e3bf479b5f75f0695e3cf6239cdc7e69775553408c07271044bb2ac",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-one-before-refusal.json",
+      "labels": [
+        "Before-refusal snapshot"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9hRWc5c1FqWmZGWFlLSndMVUNXcEhB_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 183,
+      "sha256": "0a6a19429447d1c67970c857df3045e7078e1d39b99da9bf8ff0e7d18897ff61",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-one-refusal-checks.json",
+      "labels": [
+        "Preparation refusal evidence checks"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV93X2gtOTA1WHdXSHg4RnVVeEpIWldB_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 744,
+      "sha256": "a4240d5b9d878fb9da6e6130ea208577c04bb5266f6ce24836feff2f4b3febdc",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-normal-grade.json",
+      "labels": [
+        "New session 14 45 EDT Run A independent grade"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV8tZWdQOTZVXzE1cko4R2I3Nl9zZ3Vn_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 2657,
+      "sha256": "eac57e7427bf4e87f92a8de75dcf5f1cbe29fa772adaf87e79fda239afb78659",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-conflict-grade.json",
+      "labels": [
+        "New session Run B grade"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9ieVVLMHNTNHhqcXhxX0UzNkRmcXhn_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 2936,
+      "sha256": "c1ebacb7c7fa801228a4e8d5d5cc1ccfc7c68d7e4665b9b3658b74c020536e0d",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-denial.json",
+      "labels": [
+        "New session actual hook denial"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9CWnpnWFpGMWVUcm02WURUbVlOOVhR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 796,
+      "sha256": "dd882bce9ebe45091e1c3269777fc25a3cffedfb4ec8bcb4a1564160b1731f5d",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-blocking-feedback.json",
+      "labels": [
+        "New session blocking runtime feedback"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV83bUJQaFY1N1FjWWMwdUlxVzg4c2Rn_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 757,
+      "sha256": "102ce6111eb1fd6cef5ff42b98611add67521516776a1772526a4a111d5eda9e",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-requests.jsonl",
+      "labels": [
+        "New session service requests"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV82ck9pa0wweXFEb09ZUWZETzhZdGNR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "text/plain",
+      "byte_size": 5346,
+      "sha256": "f3e485e0a7d3e205bc2507ac2f9467a8104464266f06c823675ee2c5a46e0e01",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-publisher-grade.json",
+      "labels": [
+        "New local publication grade"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9UMnRQLWhzdkp2SzlYaWk4X0pDbzF3_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 305,
+      "sha256": "fc68ea369d90b60e71bb1559034813d2f54ad759f8cc065e97db392596f104fd",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-before-refusal.json",
+      "labels": [
+        "New before-refusal snapshot"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9pV0I0cjVvdU9vTjdEN09QWlQ0bWFR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 264,
+      "sha256": "cd738c58f8809e272e612c6876b1c96247fa5034aaf31aae7ff4343eec1416d0",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-refusal-checks.json",
+      "labels": [
+        "New preparation refusal checks"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9xQXU0UTFqbVkxNFRONkdpaWhuYlBR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 1136,
+      "sha256": "72376fa48283bfd622630fadca7b6a2768fdad0fa86c2087c7f9011407301183",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-index.json",
+      "labels": [
+        "New session 14 45 EDT evidence index"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV8yMVhfbjA0M2ppT3hCRjdIdlBxU293_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/json",
+      "byte_size": 11569,
+      "sha256": "11415652c6b1622597316dc15fbda24c947f37cd538f091250b7e4ae3f886d15",
+      "source": "Page reference read; source bytes preserved"
+    },
+    {
+      "file": "session-two-evidence.zip",
+      "labels": [
+        "New session 14 45 EDT evidence bundle"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9KVTFibHFQMktWNUxzVnlIS3h2YjRR_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "application/zip",
+      "byte_size": 280388,
+      "sha256": "9881eca8a72426f5011db6796dbb7449beaf107b205c35b45118917321ea3635",
+      "source": "Existing task-owned original bundle; byte size matches Page attachment; session two digest also recorded in Page."
+    },
+    {
+      "file": "session-two-recap.md",
+      "labels": [
+        "New session complete classroom recap"
+      ],
+      "original_reference": "library-file:fde1_bGliZmlsZV9ZYmNpOWlGRE5YUmNkc0s0N2VwcVln_FileDrive_c1e5cc3c35208191b58c79f5cc9081af",
+      "mime_type": "text/markdown",
+      "byte_size": 13845,
+      "sha256": "6f91a1563af4627ee28b142af1511ad3a63694c6ec91ddf0159be342914c461e",
+      "source": "Page reference read; source digest verified before relocating Markdown navigation links.",
+      "export_sha256": "293e8083e0a3abde3875a8be4add58e14174a00c94a6cc994413a334b49816a6",
+      "export_byte_size": 9096
+    }
+  ],
+  "markdown_attachment_link_changes": [
+    {
+      "file": "organizer-SKILL.md",
+      "links": [
+        {
+          "original": "references/runtime.md",
+          "destination": "../../../../.agents/skills/safe-workspace-organizer/references/runtime.md"
+        },
+        {
+          "original": "references/runtime.md",
+          "destination": "../../../../.agents/skills/safe-workspace-organizer/references/runtime.md"
+        }
+      ]
+    },
+    {
+      "file": "instructor-snapshot.md",
+      "links": [
+        {
+          "original": "/Users/tingranwang/Documents/Codex/projects/tortilla-flat/Search Agent Study Group/.agents/skills/safe-workspace-organizer/SKILL.md",
+          "destination": "../../../../.agents/skills/safe-workspace-organizer/SKILL.md"
+        },
+        {
+          "original": "/Users/tingranwang/Documents/Codex/projects/tortilla-flat/Search Agent Study Group/.agents/skills/safe-workspace-organizer/agents/openai.yaml",
+          "destination": "../../../../.agents/skills/safe-workspace-organizer/agents/openai.yaml"
+        },
+        {
+          "original": "/Users/tingranwang/Documents/Codex/projects/tortilla-flat/Search Agent Study Group/.agents/skills/safe-workspace-organizer/scripts/runtime.py",
+          "destination": "../../../../.agents/skills/safe-workspace-organizer/scripts/runtime.py"
+        },
+        {
+          "original": "/Users/tingranwang/Documents/Codex/Projectless task folder/2026-10-15/organizer-desktop-feasibility/.agents/skills/safe-workspace-organizer/SKILL.md",
+          "destination": "organizer-SKILL.md"
+        },
+        {
+          "original": "/Users/tingranwang/Documents/Codex/projects/tortilla-flat/Search Agent Study Group/weeks/2026-10-15-skills-hooks-guardrails-evals/demos/INSTRUCTOR.md",
+          "destination": "../../../../weeks/2026-10-15-skills-hooks-guardrails-evals/demos/INSTRUCTOR.md"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a1454c-2943-73f3-ae8e-31496ad19dc5/classroom-evidence/index.json",
+          "destination": "session-one-index.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a1454c-2943-73f3-ae8e-31496ad19dc5/classroom-evidence/guide-review.json",
+          "destination": "session-one-evidence.zip",
+          "archive_member": "guide-review.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a1454c-2943-73f3-ae8e-31496ad19dc5/classroom-evidence/guide-review.json",
+          "destination": "session-one-evidence.zip"
+        },
+        {
+          "original": "evidence/desktop-luna-2026-10-16.json",
+          "destination": "../evidence/desktop-luna-2026-10-16.json"
+        },
+        {
+          "original": "evals/README.md",
+          "destination": "../evals/README.md"
+        },
+        {
+          "original": "evidence/eval-workflow-2026-10-16.json",
+          "destination": "../evidence/eval-workflow-2026-10-16.json"
+        }
+      ]
+    },
+    {
+      "file": "publisher-SKILL.md",
+      "links": [
+        {
+          "original": "references/runtime.md",
+          "destination": "../../../../.agents/skills/safe-github-publisher/references/runtime.md"
+        }
+      ]
+    },
+    {
+      "file": "session-two-recap.md",
+      "links": [
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py:19",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py:19",
+          "destination": "session-two-evidence.zip#L19"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py:44",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py:44",
+          "destination": "session-two-evidence.zip#L44"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/operations.py",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/operations.py"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/operations.py",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py:90",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py:90",
+          "destination": "session-two-evidence.zip#L90"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.codex/config.toml",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-source-snapshots/.codex/config.toml"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.codex/config.toml",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/state/service.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-normal/state/service.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/state/service.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/agents/openai.yaml",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-source-snapshots/.agents/skills/safe-workspace-organizer/agents/openai.yaml"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/agents/openai.yaml",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/SKILL.md",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-source-snapshots/.agents/skills/safe-workspace-organizer/SKILL.md"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/SKILL.md",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/thread-evidence.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-normal/thread-evidence.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/thread-evidence.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/state/report.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-normal/state/report.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/state/report.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/files",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-normal/files"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/files",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/identity.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-normal/identity.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/identity.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/state/evaluation.json",
+          "destination": "session-two-normal-grade.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/state/requests.jsonl",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-normal/state/requests.jsonl"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/state/requests.jsonl",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/state/hooks.jsonl",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-normal/state/hooks.jsonl"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-normal/state/hooks.jsonl",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/thread-evidence.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-conflict/thread-evidence.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/thread-evidence.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/state/report.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-conflict/state/report.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/state/report.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/state/evaluation.json",
+          "destination": "session-two-conflict-grade.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/denial.json",
+          "destination": "session-two-denial.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/runtime-feedback.json",
+          "destination": "session-two-blocking-feedback.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/state/requests.jsonl",
+          "destination": "session-two-requests.jsonl"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/denial-correlation.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "organizer-conflict/denial-correlation.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/organizer-conflict/denial-correlation.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.codex/hooks.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-source-snapshots/.codex/hooks.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.codex/hooks.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py:120",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-source-snapshots/.agents/skills/safe-workspace-organizer/scripts/runtime.py:120",
+          "destination": "session-two-evidence.zip#L120"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/recorded-improvement/rehearsals/conflict/state/report.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "recorded-improvement/rehearsals/conflict/state/report.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/recorded-improvement/rehearsals/conflict/state/report.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/recorded-improvement/rehearsals/conflict/state/evaluation.json",
+          "destination": "historical-conflict-failure.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/recorded-improvement/verification/skill.diff",
+          "destination": "historical-skill.diff"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/recorded-improvement/rehearsals/conflict-recheck/state/evaluation.json",
+          "destination": "historical-conflict-recheck.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-success/thread-evidence.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "publisher-success/thread-evidence.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-success/thread-evidence.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-success/fixture/state/hooks.jsonl",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "publisher-success/fixture/state/hooks.jsonl"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-success/fixture/state/hooks.jsonl",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-success/fixture/state/evaluation.json",
+          "destination": "session-two-publisher-grade.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-success/before-refusal.json",
+          "destination": "session-two-before-refusal.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-refusal/git-commit-rejection.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "publisher-refusal/git-commit-rejection.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-refusal/git-commit-rejection.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-refusal/preflight-feedback.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "publisher-refusal/preflight-feedback.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-refusal/preflight-feedback.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-refusal/thread-evidence.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "publisher-refusal/thread-evidence.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-refusal/thread-evidence.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-refusal/refusal-checks.json",
+          "destination": "session-two-refusal-checks.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-verification.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "installed-verification.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/installed-verification.json",
+          "destination": "session-two-evidence.zip"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-reprepare.json",
+          "destination": "session-two-evidence.zip",
+          "archive_member": "publisher-reprepare.json"
+        },
+        {
+          "original": "/Users/tingranwang/.codex/visualizations/2026/10/16/01a14606-d82f-7560-8b20-1820864a3d8f/classroom-evidence/publisher-reprepare.json",
+          "destination": "session-two-evidence.zip"
+        }
+      ]
+    }
+  ]
+}

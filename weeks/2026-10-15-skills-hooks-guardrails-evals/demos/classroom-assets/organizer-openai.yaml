@@ -1,0 +1,4 @@
+interface:
+  display_name: "Safe Workspace Organizer"
+  short_description: "Organize files by content and preserve every copy"
+  default_prompt: "Use $safe-workspace-organizer to organize the authorized inbox by content, preserving duplicates and existing files."

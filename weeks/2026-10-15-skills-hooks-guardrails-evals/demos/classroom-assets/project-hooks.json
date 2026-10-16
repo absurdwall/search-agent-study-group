@@ -1,0 +1,53 @@
+{
+  "description": "Workspace Organizer classroom: reviewed scoped move policies",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^mcp__workspace_organizer__(move_file|recover_move)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/tingranwang/anaconda3/bin/python '/Users/tingranwang/Documents/Codex/Projectless task folder/2026-10-15/organizer-desktop-feasibility/.agents/skills/safe-workspace-organizer/scripts/runtime.py' hook --config /private/var/folders/1l/xh7kf4ss1rqg3vxjr17q9_0w0000gn/T/ch5-desktop-implementation-wakn_7hu/state/service.json",
+            "timeout": 5,
+            "statusMessage": "Checking move policy"
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__safe_publisher__publish$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/tingranwang/anaconda3/bin/python '/Users/tingranwang/Documents/Codex/Projectless task folder/2026-10-15/organizer-desktop-feasibility/.agents/skills/safe-github-publisher/scripts/publisher.py' hook --config /private/var/folders/1l/xh7kf4ss1rqg3vxjr17q9_0w0000gn/T/ch5-desktop-implementation-wakn_7hu/publisher/state/publisher.json",
+            "timeout": 10,
+            "statusMessage": "Checking publication plan"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^mcp__workspace_organizer__(move_file|recover_move)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/tingranwang/anaconda3/bin/python '/Users/tingranwang/Documents/Codex/Projectless task folder/2026-10-15/organizer-desktop-feasibility/.agents/skills/safe-workspace-organizer/scripts/runtime.py' hook --config /private/var/folders/1l/xh7kf4ss1rqg3vxjr17q9_0w0000gn/T/ch5-desktop-implementation-wakn_7hu/state/service.json",
+            "timeout": 5,
+            "statusMessage": "Recording move outcome"
+          }
+        ]
+      },
+      {
+        "matcher": "^mcp__safe_publisher__publish$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/tingranwang/anaconda3/bin/python '/Users/tingranwang/Documents/Codex/Projectless task folder/2026-10-15/organizer-desktop-feasibility/.agents/skills/safe-github-publisher/scripts/publisher.py' hook --config /private/var/folders/1l/xh7kf4ss1rqg3vxjr17q9_0w0000gn/T/ch5-desktop-implementation-wakn_7hu/publisher/state/publisher.json",
+            "timeout": 10,
+            "statusMessage": "Recording publication result"
+          }
+        ]
+      }
+    ]
+  }
+}
