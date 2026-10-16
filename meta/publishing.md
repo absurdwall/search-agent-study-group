@@ -2,6 +2,15 @@
 
 The intended publishing target is GitHub Pages.
 
+## Current Repository
+
+- Repository: <https://github.com/tykswtr/search-agent-study-group-backup>
+- Pages source: branch `main`, folder `/ (root)`.
+- Expected site URL after Pages is enabled: <https://tykswtr.github.io/search-agent-study-group-backup/>
+- The previous repository is retained locally as the `legacy-origin` remote.
+
+GitHub Pages still needs to be enabled in the new repository settings.
+
 ## Default Model
 
 - Keep publishable files in the repository root.

@@ -3,7 +3,7 @@
 Public website and teaching-materials workspace for a weekly study group on
 agentic AI systems.
 
-- [Study group website](https://absurdwall.github.io/search-agent-study-group/)
+- [Study group website](https://tykswtr.github.io/search-agent-study-group-backup/) (pending GitHub Pages setup)
 - [Learner lab](https://github.com/absurdwall/search-agent-lab)
 - [Notion resources](https://outrageous-tango-920.notion.site/Agent-Study-Group-Home-1566f86e0b05832bbbac817d762daad8?pvs=74)
 
@@ -36,5 +36,5 @@ From the repository root:
 python3 -m http.server 8765
 ```
 
-Then open <http://127.0.0.1:8765/>. The public site is published from `main`
-through GitHub Pages.
+Then open <http://127.0.0.1:8765/>. The public site is intended to publish from
+`main` through GitHub Pages; enable Pages for the new repository first.
