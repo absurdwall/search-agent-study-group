@@ -38,3 +38,24 @@ Interaction checks use a DOM simulation. Actual desktop/mobile rendering, native
 “Ask Spooky” calls `https://spooky-api-jcysmpnqda-ue.a.run.app/v1/chat`. A read-only OPTIONS preflight for POST with Content-Type returned **400 / Disallowed CORS origin** and no Access-Control-Allow-Origin for both `https://tykswtr.github.io` and the current ChatGPT Site origin. This is an observed existing backend configuration issue, not a missing static asset. The chat service and its model/provider availability are not reproduced by GitHub Pages; no chat request was made. Backend ownership and the correct origin allowlist need separate review. The frontend and unrelated repository services are unchanged.
 
 External canonical reading links remain external; they were not exhaustively live-checked. Hosting access/settings, the live chat path, and native browser layout remain acceptance checks after the PR is opened. Do not merge automatically.
+
+## Repository review correction
+
+The merge review found that the imported compact builder did not enforce the
+metadata and section contract retained in `glossary/README.md`. The canonical
+`glossary/build_glossary.py` now reuses the repository's previous strict parser
+and validator, including required and unknown fields, frontend field types,
+relationship/source shapes, duplicate sections, IDs and relation targets. The
+compatibility entry point still forwards to it. Output retains the imported
+metadata and array ordering, so the 44-term `terms.json`, term content and all
+website HTML/CSS/JavaScript are unchanged by this repair. This correction is
+separate from the source synchronization and its original validation record.
+
+After the correction, both `python3 glossary/build_glossary.py --check` and
+`python3 scripts/build_glossary.py --check` report 44 valid terms with the existing
+index current. Independent Standards and Spec review found no remaining merge
+blocker. A native local browser review confirmed the desktop Chapter 5 layout,
+Codex/Claude tab switching, the post-action illustration state, and glossary
+search plus both levels of Hook-card expansion; no glossary console errors were
+observed. This is a bounded desktop check, not full mobile, accessibility or print
+acceptance. The existing Spooky backend CORS limitation remains unchanged.
