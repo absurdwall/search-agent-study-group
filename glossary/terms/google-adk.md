@@ -2,23 +2,11 @@
 id: google-adk
 term: Google Agent Development Kit (ADK)
 aliases: ["Google ADK", "ADK", "Agent Development Kit"]
-category: frameworks-and-protocols
-status: published
-introduced_in: week-01
+category: earlier-week-1
+status: deprecated
 last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "llm-agent"},
-  {"type": "related", "target": "model-context-protocol"},
-  {"type": "related", "target": "runner"},
-  {"type": "related", "target": "session"}
-]
-sources: [
-  {
-    "title": "Agent Development Kit Technical Overview",
-    "url": "https://adk.dev/get-started/about/",
-    "note": "Describes ADK's core concepts and its support for building, managing, evaluating, and deploying agent applications."
-  }
-]
+relations: [{"type": "related", "target": "model-context-protocol"}, {"type": "related", "target": "runner"}, {"type": "related", "target": "session"}]
+sources: [{"title": "Agent Development Kit Technical Overview", "url": "https://adk.dev/get-started/about/", "note": "Describes ADK's core concepts and its support for building, managing, evaluating, and deploying agent applications."}]
 ---
 
 ## Simple definition
@@ -43,4 +31,4 @@ ADK is not an LLM and is not limited to Gemini or Python. It coordinates support
 
 ## Study-group notes
 
-Week 1 summarized ADK as `LlmAgent + Tool + Session + Runner + Callbacks`, with the framework owning the execution loop and plumbing.
+Earlier Week 1 framework background, retained for existing links. This API-specific entry is outside the current Chapters 1–5 teaching spine; consult the linked documentation before implementation.

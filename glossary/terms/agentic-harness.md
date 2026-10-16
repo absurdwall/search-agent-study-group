@@ -1,29 +1,12 @@
 ---
 id: agentic-harness
 term: Agentic harness
-aliases: ["agent harness", "AI agent harness"]
+aliases: ["harness engineering", "agent harness", "AI agent harness"]
 category: agent-systems
 status: published
-last_reviewed: 2026-07-27
-relations: [
-  {"type": "related", "target": "agentic-loop"},
-  {"type": "related", "target": "context-window"},
-  {"type": "related", "target": "runtime"},
-  {"type": "uses", "target": "large-language-model"},
-  {"type": "uses", "target": "tool"}
-]
-sources: [
-  {
-    "title": "Claude Code Glossary — Agentic harness",
-    "url": "https://code.claude.com/docs/en/glossary#agentic-harness",
-    "note": "Defines the Claude Code harness as the tools, context management, and execution environment around the model."
-  },
-  {
-    "title": "Claude Code — How Claude Code works",
-    "url": "https://code.claude.com/docs/en/how-claude-code-works",
-    "note": "Explains how Claude Code surrounds the Claude model with tools, context handling, and a recurring agentic loop."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "agentic-loop"}, {"type": "related", "target": "context-window"}, {"type": "related", "target": "runtime"}, {"type": "uses", "target": "large-language-model"}, {"type": "uses", "target": "tool"}]
+sources: [{"title": "Chapter 1 · Agentic harness", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

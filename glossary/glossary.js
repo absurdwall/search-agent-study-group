@@ -67,6 +67,7 @@
   }
 
   function matches(term) {
+    if (term.status === "deprecated" && state.category === "all" && !state.query && state.activeId !== term.id) return false;
     if (state.category !== "all" && term.category !== state.category) return false;
     if (!state.query) return true;
     const searchable = [
@@ -75,6 +76,9 @@
       term.sections["Simple definition"],
       term.sections["Working definition"],
       term.sections["Why it matters"],
+      term.sections["Common confusion"],
+      term.sections["Study-group notes"],
+      ...term.sources.map((source) => source.title),
     ].join(" ").toLocaleLowerCase();
     return searchable.includes(state.query);
   }
@@ -173,6 +177,7 @@
     if (term.introduced_in) {
       metadata.push(element("span", "term-week", weekLabel(term.introduced_in)));
     }
+    if (term.status === "deprecated") metadata.push(element("span", "term-week", "Earlier Week 1 background"));
     metadata.push(element("span", "term-aliases", `Also: ${term.aliases.join(" · ")}`));
     meta.append(...metadata);
 
@@ -318,7 +323,7 @@
       if (!response.ok) throw new Error(`Glossary data returned ${response.status}`);
       const payload = await response.json();
       if (!Array.isArray(payload.terms)) throw new Error("Glossary data has an invalid shape");
-      state.terms = payload.terms.filter((term) => term.status === "published");
+      state.terms = payload.terms.filter((term) => ["published", "deprecated"].includes(term.status));
       renderFilters();
       renderTerms();
       requestAnimationFrame(openHashTarget);

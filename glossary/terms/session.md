@@ -1,36 +1,21 @@
 ---
 id: session
 term: Session
-aliases: ["ADK session", "conversation session"]
+aliases: ["conversation session"]
 category: frameworks-and-protocols
 status: published
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "context-window"},
-  {"type": "related", "target": "llm-agent"},
-  {"type": "related", "target": "runner"}
-]
-sources: [
-  {
-    "title": "Conversational Context: Session, State, and Memory",
-    "url": "https://adk.dev/sessions/",
-    "note": "Defines Session as one conversation thread containing an event history and temporary State, distinct from cross-session Memory."
-  },
-  {
-    "title": "Session: Tracking Individual Conversations",
-    "url": "https://adk.dev/sessions/session/",
-    "note": "Documents session lifecycle, SessionService responsibilities, persistence options, events, and state updates."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "context-window"}, {"type": "related", "target": "runner"}]
+sources: [{"title": "Chapter 1 · Context", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context", "note": "Distinguishes records stored by the application from model-visible information."}]
 ---
 
 ## Simple definition
 
-ADK's record of one conversation thread, including its event history and temporary state.
+A stored record of an interaction that the system can use to continue work across model calls.
 
 ## Working definition
 
-A Session represents one ongoing interaction between a user and an ADK application. It contains the chronological events produced during that conversation and a State dictionary for temporary conversation-specific data; a SessionService manages its lifecycle and persistence.
+A session tracks an ongoing interaction, often including messages, execution events, and application state. The runtime selects relevant parts for each model call; what is persisted and how it is resumed depends on the product.
 
 ## Why it matters
 
@@ -38,12 +23,12 @@ The model itself does not retain application history between calls. Sessions giv
 
 ## Example
 
-A shopping session stores events for the original product search and the agent's response, plus temporary state such as an explicit purchase-confirmation flag used by a later callback.
+A resumed coding session supplies relevant earlier decisions and recent tool results without placing every stored event in the next context window.
 
 ## Common confusion
 
-Session, State, context window, and Memory are different. The Session is the conversation record, State is temporary structured data inside it, the context window is what reaches a model call, and Memory supports information beyond one session.
+A session record is not the active context window or cross-session memory. Ending a turn also need not end the session.
 
 ## Study-group notes
 
-Week 1 described Session as the agent's memory across turns. The precise ADK view is a stored conversation thread whose events and state allow the runtime to assemble later context.
+Chapter 1 distinguishes stored history from selected context; Chapter 3 discusses fresh sessions, compaction, and resuming work. Chapter 2’s full memory treatment is still planned.

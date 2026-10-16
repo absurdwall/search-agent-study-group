@@ -4,20 +4,9 @@ term: Workflow
 aliases: ["LLM workflow", "agentic workflow"]
 category: agent-systems
 status: published
-last_reviewed: 2026-07-27
-relations: [
-  {"type": "contrasts_with", "target": "agentic-loop"},
-  {"type": "related", "target": "agent"},
-  {"type": "uses", "target": "large-language-model"},
-  {"type": "uses", "target": "tool"}
-]
-sources: [
-  {
-    "title": "Anthropic — Building effective agents",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
-    "note": "Defines workflows as systems where LLMs and tools are orchestrated through predefined code paths and presents five common workflow patterns."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "contrasts_with", "target": "agentic-loop"}, {"type": "related", "target": "agent"}, {"type": "uses", "target": "large-language-model"}, {"type": "uses", "target": "tool"}]
+sources: [{"title": "Chapter 1 · Workflow", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

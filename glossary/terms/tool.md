@@ -4,26 +4,9 @@ term: Tool
 aliases: ["agent tool", "function tool"]
 category: agent-systems
 status: published
-introduced_in: week-01
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "agent"},
-  {"type": "related", "target": "callback"},
-  {"type": "related", "target": "guardrail"},
-  {"type": "related", "target": "model-context-protocol"}
-]
-sources: [
-  {
-    "title": "Custom Tools for ADK",
-    "url": "https://adk.dev/tools-custom/",
-    "note": "Defines a tool as a specific capability that lets an agent perform developer-defined actions beyond text generation."
-  },
-  {
-    "title": "A practical guide to building agents",
-    "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
-    "note": "Distinguishes data, action, and orchestration tools and explains how tools extend an agent through external systems."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "agent"}, {"type": "related", "target": "callback"}, {"type": "related", "target": "guardrail"}, {"type": "related", "target": "model-context-protocol"}]
+sources: [{"title": "Chapter 1 · Tool", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#tools", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition
@@ -48,4 +31,4 @@ The LLM does not directly execute a Python function or API. It produces a reques
 
 ## Study-group notes
 
-Week 1 emphasized the full protocol: schema shown to the model → structured tool request → framework execution → result returned as a new observation.
+Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system.
