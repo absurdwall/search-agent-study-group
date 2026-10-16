@@ -6,10 +6,14 @@ The intended publishing target is GitHub Pages.
 
 - Repository: <https://github.com/tykswtr/search-agent-study-group-backup>
 - Pages source: branch `main`, folder `/ (root)`.
-- Expected site URL after Pages is enabled: <https://tykswtr.github.io/search-agent-study-group-backup/>
+- GitHub Pages URL: <https://tykswtr.github.io/search-agent-study-group-backup/>
 - The previous repository is retained locally as the `legacy-origin` remote.
 
-GitHub Pages still needs to be enabled in the new repository settings.
+The public Pages URL returned HTTP 200 during the October 16, 2026 source sync.
+The repository still uses the root-based layout described here. Exact Pages
+settings could not be inspected through the blocked GitHub connector; confirm
+`main` / root before merging or changing deployment settings. See
+[Site version 14 source sync](site-sync-v14.md) for provenance and checks.
 
 ## Default Model
 

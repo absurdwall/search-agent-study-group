@@ -2,28 +2,11 @@
 id: llm-agent
 term: LlmAgent
 aliases: ["ADK Agent", "model-driven agent"]
-category: frameworks-and-protocols
-status: published
+category: earlier-week-1
+status: deprecated
 last_reviewed: 2026-07-12
-relations: [
-  {"type": "broader", "target": "agent"},
-  {"type": "uses", "target": "callback"},
-  {"type": "uses", "target": "react"},
-  {"type": "uses", "target": "system-prompt"},
-  {"type": "uses", "target": "tool"}
-]
-sources: [
-  {
-    "title": "Simple agents with LlmAgent",
-    "url": "https://adk.dev/agents/llm-agents/",
-    "note": "Documents LlmAgent as ADK's model-driven agent class and explains how instructions, models, and tools shape its behavior."
-  },
-  {
-    "title": "Agent Development Kit Technical Overview",
-    "url": "https://adk.dev/get-started/about/",
-    "note": "Places LlmAgent within ADK's broader set of agent, runtime, tool, callback, and session primitives."
-  }
-]
+relations: [{"type": "broader", "target": "agent"}, {"type": "uses", "target": "callback"}, {"type": "uses", "target": "react"}, {"type": "uses", "target": "system-prompt"}, {"type": "uses", "target": "tool"}]
+sources: [{"title": "Simple agents with LlmAgent", "url": "https://adk.dev/agents/llm-agents/", "note": "Documents LlmAgent as ADK's model-driven agent class and explains how instructions, models, and tools shape its behavior."}, {"title": "Agent Development Kit Technical Overview", "url": "https://adk.dev/get-started/about/", "note": "Places LlmAgent within ADK's broader set of agent, runtime, tool, callback, and session primitives."}]
 ---
 
 ## Simple definition
@@ -48,4 +31,4 @@ A shopping `LlmAgent` uses a selected model, a system instruction describing its
 
 ## Study-group notes
 
-Week 1 called `LlmAgent` the orchestrator that wraps a model with instructions, tools, and callbacks. More precisely, it defines the model-driven execution logic that ADK's runtime invokes.
+Earlier Week 1 framework background, retained for existing links. This API-specific entry is outside the current Chapters 1–5 teaching spine; consult the linked documentation before implementation.

@@ -4,19 +4,9 @@ term: Event loop
 aliases: ["agent runtime event loop", "execution event loop"]
 category: frameworks-and-protocols
 status: published
-last_reviewed: 2026-07-27
-relations: [
-  {"type": "related", "target": "agentic-loop"},
-  {"type": "related", "target": "runner"},
-  {"type": "related", "target": "runtime"}
-]
-sources: [
-  {
-    "title": "Google ADK — Runtime event loop",
-    "url": "https://adk.dev/runtime/event-loop/",
-    "note": "Explains how ADK's Runner processes execution logic, events, state changes, tool activity, callbacks, and resumptions during an invocation."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "agentic-loop"}, {"type": "related", "target": "runner"}, {"type": "related", "target": "runtime"}]
+sources: [{"title": "Chapter 1 · Event loop", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

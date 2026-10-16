@@ -3,7 +3,7 @@
 Public website and teaching-materials workspace for a weekly study group on
 agentic AI systems.
 
-- [Study group website](https://tykswtr.github.io/search-agent-study-group-backup/) (pending GitHub Pages setup)
+- [Study group website](https://tykswtr.github.io/search-agent-study-group-backup/)
 - [Learner lab](https://github.com/absurdwall/search-agent-lab)
 - [Notion resources](https://outrageous-tango-920.notion.site/Agent-Study-Group-Home-1566f86e0b05832bbbac817d762daad8?pvs=74)
 
@@ -38,3 +38,17 @@ python3 -m http.server 8765
 
 Then open <http://127.0.0.1:8765/>. The public site is intended to publish from
 `main` through GitHub Pages; enable Pages for the new repository first.
+
+## Published Site source
+
+The repository root contains the website synchronized from ChatGPT Site version
+14 (October 16, 2026), including Chapter 5, Extended Reading, book navigation,
+and the refreshed glossary. The original project folders and history remain.
+
+- [Current ChatGPT Site](https://search-agent-study-group.absurdgreaterfool.chatgpt.site/)
+- [Source provenance, hosting differences, and validation](meta/site-sync-v14.md)
+
+No build is required for the static website. After editing glossary Markdown,
+run `python3 glossary/build_glossary.py` and then
+`python3 glossary/build_glossary.py --check`. The existing
+`python3 scripts/build_glossary.py` command forwards to the same builder.

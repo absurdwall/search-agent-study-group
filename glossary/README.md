@@ -4,8 +4,8 @@ The Markdown files in `terms/` are the human-edited source of truth. Do not edit
 `terms.json` by hand; generate it from the repository root:
 
 ```sh
-python3 scripts/build_glossary.py
-python3 scripts/build_glossary.py --check
+python3 glossary/build_glossary.py
+python3 glossary/build_glossary.py --check
 ```
 
 The first command validates every term and writes deterministic JSON. The
@@ -53,3 +53,7 @@ short, beginner-friendly line of at most 180 characters, used by the glossary
 card preview.
 `Study-group notes` may be empty, but
 its heading remains so the term can accumulate group-specific context later.
+
+## Current scope
+
+Refreshed against the actual Chapters 0–5 on 2026-10-16. Chapter 0 is planned; Chapter 4 contains published sections within a planned chapter. Links point to substantive sections, not promised future coverage. Earlier ADK-specific entries remain available by search, category, and their existing deep links, but are omitted from the default core list.

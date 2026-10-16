@@ -1,49 +1,34 @@
 ---
 id: sub-agent
 term: Sub-agent
-aliases: ["child agent", "ADK sub-agent"]
+aliases: ["subagent", "child agent"]
 category: agent-systems
 status: published
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "broader", "target": "agent"},
-  {"type": "related", "target": "llm-agent"},
-  {"type": "related", "target": "runner"}
-]
-sources: [
-  {
-    "title": "Agents in ADK",
-    "url": "https://adk.dev/agents/",
-    "note": "Describes ADK agents as self-contained execution units that can be composed into multi-agent systems."
-  },
-  {
-    "title": "Function tools: Agent-as-a-Tool",
-    "url": "https://adk.dev/tools/function-tools/",
-    "note": "Explicitly distinguishes responsibility transfer to a sub-agent from calling another agent through AgentTool and returning control to the parent."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "broader", "target": "agent"}, {"type": "related", "target": "runner"}]
+sources: [{"title": "Chapter 1 · Keep context efficient", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context", "note": "Introduces delegation into a separate context and returning findings."}]
 ---
 
 ## Simple definition
 
-A child agent that can receive delegated responsibility from a parent agent inside a multi-agent system.
+An agent assigned a bounded part of another agent’s work.
 
 ## Working definition
 
-A sub-agent is an agent composed beneath another agent and available for delegated work. In current ADK terminology, transferring to a sub-agent changes which agent is responsible for answering, while wrapping an agent with `AgentTool` creates an agent-as-a-tool whose result returns to the parent.
+A sub-agent handles delegated work with its own instructions and execution context, then returns findings or takes responsibility according to the host’s design. Isolation, inherited context, available tools, and control transfer are product-specific.
 
 ## Why it matters
 
-Specialized agents can isolate instructions, tools, models, and responsibilities. Choosing between transfer and call-and-return affects routing, conversational ownership, context, cost, and which agent handles the next user message.
+Delegation can keep a large investigation in a separate context and return only the useful findings, leaving the parent more room for the main task.
 
 ## Example
 
-A shopping agent transfers a returns conversation to a returns sub-agent that continues with the user. By contrast, it may call a research agent through `AgentTool`, receive a product summary, and then retain control of the conversation.
+A parent asks a research sub-agent to inspect a large source set and return relevant findings, keeping the full investigation out of the parent’s context.
 
 ## Common confusion
 
-ADK does not use “sub-agent” and “agent-as-a-tool” as interchangeable terms. A sub-agent receives control through delegation or transfer; an `AgentTool` performs bounded work and returns its answer to the calling agent.
+Loading a Skill adds guidance to an agent; delegating to a sub-agent runs another agent. Call-and-return and transfer of conversational control are different patterns, not universal synonyms.
 
 ## Study-group notes
 
-Week 1 used “sub-agent called as a tool” as broad shorthand. This glossary keeps the teaching comparison—separate agent versus loaded instructions—but adopts ADK's current, more precise distinction.
+Chapter 1 uses subagents as a context-efficiency strategy. Chapter 2’s dedicated Subagents section is still planned.
