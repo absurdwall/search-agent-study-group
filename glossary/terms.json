@@ -11,12 +11,8 @@
       ],
       "category": "agent-systems",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
-        {
-          "type": "narrower",
-          "target": "llm-agent"
-        },
         {
           "type": "narrower",
           "target": "sub-agent"
@@ -36,14 +32,9 @@
       ],
       "sources": [
         {
-          "title": "Building effective agents",
-          "url": "https://www.anthropic.com/engineering/building-effective-agents",
-          "note": "Supports the distinction between model-directed agents and systems that follow predefined code paths."
-        },
-        {
-          "title": "A practical guide to building agents",
-          "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
-          "note": "Describes agents as systems that independently complete tasks by managing workflow execution and selecting tools within guardrails."
+          "title": "Chapter 1 · Agent",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#agentic-loop",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
@@ -52,20 +43,20 @@
         "Why it matters": "Agents are useful when a task's path cannot be completely specified in advance. That flexibility enables ambiguous, multi-step work, but it also increases cost, latency, variability, and the need for evaluation and guardrails.",
         "Example": "Given “find organic milk under $4 and add the cheapest,” an agent searches the live catalog, compares the returned products, calls the cart tool with the selected item, and then reports the result.",
         "Common confusion": "Adding an LLM to an application does not automatically make it an agent. The defining property in this glossary is model-directed execution: the model chooses the next step rather than only filling a fixed position in a predefined pipeline.",
-        "Study-group notes": "Week 1 shorthand: “Agent = LLM + Tools + Loop.” The formula is a useful architectural map, while the fuller definition emphasizes that the model controls the evolving path."
-      },
-      "introduced_in": "week-01"
+        "Study-group notes": "Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system."
+      }
     },
     {
       "id": "agentic-harness",
       "term": "Agentic harness",
       "aliases": [
+        "harness engineering",
         "agent harness",
         "AI agent harness"
       ],
       "category": "agent-systems",
       "status": "published",
-      "last_reviewed": "2026-07-27",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
@@ -90,14 +81,9 @@
       ],
       "sources": [
         {
-          "title": "Claude Code Glossary — Agentic harness",
-          "url": "https://code.claude.com/docs/en/glossary#agentic-harness",
-          "note": "Defines the Claude Code harness as the tools, context management, and execution environment around the model."
-        },
-        {
-          "title": "Claude Code — How Claude Code works",
-          "url": "https://code.claude.com/docs/en/how-claude-code-works",
-          "note": "Explains how Claude Code surrounds the Claude model with tools, context handling, and a recurring agentic loop."
+          "title": "Chapter 1 · Agentic harness",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
@@ -118,7 +104,7 @@
       ],
       "category": "agent-systems",
       "status": "published",
-      "last_reviewed": "2026-07-27",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
@@ -143,19 +129,9 @@
       ],
       "sources": [
         {
-          "title": "Claude Code Glossary — Agentic loop",
-          "url": "https://code.claude.com/docs/en/glossary#agentic-loop",
-          "note": "Defines Claude Code's product-specific loop as gathering context, taking action, verifying results, and repeating until done."
-        },
-        {
-          "title": "Claude Agent SDK — How the agent loop works",
-          "url": "https://code.claude.com/docs/en/agent-sdk/agent-loop",
-          "note": "Shows model evaluation, tool execution, returned results, repetition, and the final-answer exit."
-        },
-        {
-          "title": "OpenAI Agents SDK — Running agents",
-          "url": "https://openai.github.io/openai-agents-python/running_agents/",
-          "note": "Documents a framework loop that invokes a model, executes tool calls, appends results, and stops at configured final output."
+          "title": "Chapter 1 · Agentic loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#agentic-loop",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
@@ -168,24 +144,72 @@
       }
     },
     {
+      "id": "artifact",
+      "term": "Artifact",
+      "aliases": [
+        "output artifact",
+        "generated artifact"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Inspect the trace and the artifacts",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
+          "note": "Defines the term and its role in the chapter’s examples."
+        },
+        {
+          "title": "Chapter 5: Three files remain. Did all three originals survive?",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#evidence-lab",
+          "note": "Shows why checking file counts alone misses changed contents or lost duplicate copies."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "trace"
+        },
+        {
+          "type": "related",
+          "target": "fixture"
+        },
+        {
+          "type": "related",
+          "target": "trial"
+        },
+        {
+          "type": "related",
+          "target": "grader"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "An inspectable output of a run, such as a generated file.",
+        "Working definition": "An artifact is a produced output that a reviewer or grader can inspect independently of the agent’s final message. In agent evaluations, artifacts include generated code, documents, and reports. Check that they came from the current trial and assess their contents or behavior against the case’s criteria.",
+        "Why it matters": "Inspecting outputs can reveal incomplete or incorrect work even when an agent reports success or its trace contains plausible-looking actions.",
+        "Example": "For an app task, inspect the new package.json and components, then run the required build. For an organizer, compare the final files’ contents and copy counts with the originals.",
+        "Common confusion": "File presence does not prove a correct result, and an unchanged file count does not prove preservation. Final files also cannot establish that no temporary forbidden effect occurred during execution.",
+        "Study-group notes": "Use artifacts together with traces and external state. The chapter’s organizer examples are constructed teaching states, not recorded agent runs."
+      }
+    },
+    {
       "id": "callback",
       "term": "Callback",
       "aliases": [
         "lifecycle callback",
-        "agent callback",
-        "hook"
+        "agent callback"
       ],
       "category": "control-and-quality",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
           "target": "guardrail"
-        },
-        {
-          "type": "related",
-          "target": "llm-agent"
         },
         {
           "type": "related",
@@ -198,23 +222,239 @@
       ],
       "sources": [
         {
-          "title": "Callbacks: Observe, Customize, and Control Agent Behavior",
-          "url": "https://adk.dev/callbacks/",
-          "note": "Documents callbacks as functions invoked at predefined points before or after agent, model, and tool execution."
-        },
-        {
-          "title": "ADK Technical Overview",
-          "url": "https://adk.dev/get-started/about/",
-          "note": "Summarizes callbacks as custom code for checks, logging, and behavior modification at specific process points."
+          "title": "Chapter 5 · Hooks",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#hooks",
+          "note": "Relates hooks to framework callback mechanisms."
         }
       ],
       "sections": {
-        "Simple definition": "Code ADK runs at a defined point in the agent process to observe, modify, block, or replace behavior.",
-        "Working definition": "A callback is developer-supplied code registered at a defined point in an ADK agent's lifecycle, such as before or after agent, model, or tool execution. Depending on the hook, it can inspect data, record events, modify requests or results, block an action, or short-circuit a step.",
+        "Simple definition": "A function registered for the runtime to call at a supported point in execution.",
+        "Working definition": "A callback is developer code invoked by a framework around a supported operation, such as a model or tool call. It may observe, modify, skip, or reject work only where the framework’s interface permits.",
         "Why it matters": "Callbacks provide controlled intervention points without rewriting the core agent loop. They support tracing, policy enforcement, approvals, caching, state updates, request adaptation, and performance optimizations.",
         "Example": "A `before_tool` callback checks a proposed `place_order` call. If the session lacks explicit customer confirmation, it returns a blocked result and the purchasing function never runs.",
-        "Common confusion": "A callback is a mechanism, not automatically a safety policy. The same hook system can implement a guardrail, collect metrics, alter a request, or skip unnecessary model work.",
-        "Study-group notes": "Week 1 demonstrated three callback patterns: a tool-round limit, an action gate, and a short-circuit that avoids an extra model call after a tool has already built the response."
+        "Common confusion": "Callback and hook are related implementation terms, not a promise of identical behavior across frameworks. A callback only enforces a guardrail if it runs at the right time and has the required authority.",
+        "Study-group notes": "Chapter 5 connects SDK callbacks to the broader lifecycle-hook idea; the runtime determines their exact coverage and effects."
+      }
+    },
+    {
+      "id": "cognitive-load",
+      "term": "Cognitive load",
+      "aliases": [
+        "human discovery burden"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 4: Writing Great Skills — Writing for Agents",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
+          "note": "The two loads defines the human discovery burden and compares user-invoked with model-invoked Skills."
+        }
+      ],
+      "relations": [
+        {
+          "type": "contrasts_with",
+          "target": "context-load"
+        },
+        {
+          "type": "related",
+          "target": "skill-activation"
+        },
+        {
+          "type": "related",
+          "target": "context-pointer"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "In the chapter’s writing model, the effort a person spends remembering which documents exist and when to invoke them.",
+        "Working definition": "Chapter 4 uses cognitive load for the human side of document discovery. When a workflow requires deliberate invocation, the person must remember the available document or Skill and recognize the right moment to call it. This preserves human selection but makes the human responsible for indexing the available guidance.",
+        "Why it matters": "Removing discovery material from model context does not eliminate the selection problem. It can shift that work to a person, who may forget a valuable procedure or choose the wrong one.",
+        "Example": "A user-invoked review Skill stays out of autonomous discovery, so the user must remember to request it whenever a chapter needs that review.",
+        "Common confusion": "The chapter uses a bounded authoring meaning, not a general psychological measure or the model’s reasoning effort. Lower context load can increase this human burden, but the tradeoff depends on the host’s invocation design.",
+        "Study-group notes": "Use the two-load comparison from Chapter 4 when choosing whether a document should be found automatically or deliberately called. The goal is reliable behavior, not minimizing one budget in isolation."
+      }
+    },
+    {
+      "id": "compaction",
+      "term": "Compaction",
+      "aliases": [
+        "context compaction",
+        "conversation compaction"
+      ],
+      "category": "foundations",
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "relations": [
+        {
+          "type": "related",
+          "target": "context"
+        },
+        {
+          "type": "related",
+          "target": "context-window"
+        },
+        {
+          "type": "related",
+          "target": "session"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Chapter 1 · When the context window fills",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
+          "note": "Current chapter treatment and teaching distinctions."
+        }
+      ],
+      "sections": {
+        "Simple definition": "Replacing older conversation material with a shorter summary to make room in the context window.",
+        "Working definition": "Compaction is a context-management strategy that condenses accumulated history while trying to preserve important decisions and recent work. What is retained, cleared, or reloaded depends on the product.",
+        "Why it matters": "Long runs need room for new observations and output, but summaries can lose details needed later.",
+        "Example": "A coding assistant summarizes earlier investigation and keeps the latest failure and agreed constraints available for the next call.",
+        "Common confusion": "Compaction is lossy, not a perfect archive or model retraining. Persisting a file and loading it later is a separate mechanism.",
+        "Study-group notes": "Chapter 1 uses Claude Code as a concrete example; Chapter 3 discusses managing a session during iterative work."
+      }
+    },
+    {
+      "id": "completion-criteria",
+      "term": "Completion criteria",
+      "aliases": [
+        "success criteria",
+        "definition of done",
+        "finish line"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 4: Writing Great Skills — Writing for Agents",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
+          "note": "Completion criteria and the practical review pass call for checkable, demanding, exhaustive finish lines."
+        },
+        {
+          "title": "Chapter 4: Writing Great Skills — A practical delivery path",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#workflow-heading",
+          "note": "The code-review stage distinguishes repository standards from fulfillment of the agreed specification."
+        },
+        {
+          "title": "Chapter 2: A Map of Modern Agent Systems — Skills",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills",
+          "note": "The documentation-review walkthrough supplies concrete validation and reporting steps used in the illustrative example."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "skill"
+        },
+        {
+          "type": "related",
+          "target": "workflow"
+        },
+        {
+          "type": "related",
+          "target": "context-pointer"
+        },
+        {
+          "type": "related",
+          "target": "verification"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "Observable requirements that specify what must be true before a step or task counts as finished.",
+        "Working definition": "Completion criteria turn a vague instruction to finish into a checkable outcome. Chapter 4 recommends criteria that are both observable and sufficiently comprehensive to require the necessary work. They belong at the ends of steps and should make omissions visible instead of leaving success to a general impression.",
+        "Why it matters": "Clear finish lines resist premature completion and make review meaningful. They let a person or agent compare the result with the intended outcome and identify remaining work.",
+        "Example": "A chapter review is complete only after the full chapter has been inspected, every cited link has been checked, desktop and mobile layouts have been reviewed, and unresolved issues have been reported.",
+        "Common confusion": "A short task list or “make it good” is not a checkable definition of done. Passing one check does not prove all requirements were met, and natural-language criteria still need real execution and evidence.",
+        "Study-group notes": "Chapter 4’s writing review tightens each finish line. Its delivery example also checks repository standards and the agreed specification separately so success on one axis cannot hide failure on the other."
+      }
+    },
+    {
+      "id": "context-load",
+      "term": "Context load",
+      "aliases": [
+        "always-loaded context cost"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 4: Writing Great Skills — Writing for Agents",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
+          "note": "The two loads defines context load, and the hierarchy and pruning sections explain how authoring choices affect it."
+        }
+      ],
+      "relations": [
+        {
+          "type": "contrasts_with",
+          "target": "cognitive-load"
+        },
+        {
+          "type": "related",
+          "target": "context-window"
+        },
+        {
+          "type": "related",
+          "target": "progressive-disclosure"
+        },
+        {
+          "type": "related",
+          "target": "instruction-file"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "The token and attention cost of material kept in the agent’s context whether or not the current task needs it.",
+        "Working definition": "In Chapter 4’s Writing for Agents model, context load is the ongoing cost of material such as instruction-file lines and Skill descriptions that is loaded for discovery or general guidance. Choosing what to keep immediately visible, defer, or remove changes that cost and the agent’s ability to find the important instructions.",
+        "Why it matters": "Always-present text makes relevant guidance easier to encounter, but unnecessary text consumes space and attention. Good authoring preserves behavior while avoiding material that does no useful work.",
+        "Example": "A catalog keeps short Skill descriptions visible so the model can choose a method, while the full source-policy reference loads only during a citation review.",
+        "Common confusion": "Context load is not the context window’s maximum capacity, and it is not simply document length. A short but misleading pointer can save tokens while making the workflow less reliable.",
+        "Study-group notes": "This term comes from Chapter 4’s practitioner model, not a universal runtime metric. Discuss it alongside cognitive load: moving selection work out of model context may move it onto the human."
+      }
+    },
+    {
+      "id": "context-pointer",
+      "term": "Context pointer",
+      "aliases": [
+        "document pointer",
+        "reference pointer"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 4: Writing Great Skills — Writing for Agents",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
+          "note": "Context pointers and the practical review pass require a description of the material and the distinct trigger branches that should load it."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "progressive-disclosure"
+        },
+        {
+          "type": "related",
+          "target": "skill-activation"
+        },
+        {
+          "type": "related",
+          "target": "instruction-file"
+        },
+        {
+          "type": "related",
+          "target": "completion-criteria"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "A short instruction that says what further material exists and when the agent should load it.",
+        "Working definition": "A context pointer directs an agent to supporting material while stating the distinct task conditions that make it relevant. The target may be a policy, Skill, reference, or other document. The pointer’s wording is part of the discovery mechanism: a good target alone cannot ensure that the agent finds it.",
+        "Why it matters": "Pointers make progressive disclosure practical. They preserve a concise active path while keeping the necessary branch-specific guidance reachable at the moment it matters.",
+        "Example": "“When verifying factual claims or adding citations, read source-policy.md for approved sources and citation rules” identifies both the material and its trigger.",
+        "Common confusion": "A bare filename or vague “see the docs” link may not explain when to load the target. Repeating synonyms for one trigger does not cover a genuinely different branch, and hidden mandatory steps are not a good hierarchy.",
+        "Study-group notes": "Chapter 4 makes pointer quality a behavior question: will the agent take the intended branch? Review the pointer together with its target, rather than polishing the target in isolation."
       }
     },
     {
@@ -226,7 +466,7 @@
       ],
       "category": "foundations",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
@@ -247,14 +487,9 @@
       ],
       "sources": [
         {
-          "title": "Understand and count tokens",
-          "url": "https://ai.google.dev/gemini-api/docs/tokens",
-          "note": "Defines a model's context window as the token limit covering the input it can receive and the output it can generate."
-        },
-        {
-          "title": "Long context",
-          "url": "https://ai.google.dev/gemini-api/docs/long-context",
-          "note": "Explains how finite context affects use cases, cost, latency, and strategies for providing relevant information."
+          "title": "Chapter 1 · Context window",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
@@ -263,9 +498,149 @@
         "Why it matters": "Context determines what information is available to the model at a given step. Larger or poorly managed context can increase cost and latency, exceed model limits, or bury relevant instructions among unnecessary material.",
         "Example": "An agent includes its system prompt, recent conversation events, a product-search result, and the newest user message in the next request while omitting an unrelated old transcript.",
         "Common confusion": "The context window is not durable memory. Information must be selected and placed into a model request each time; a session or memory service stores information outside the model and helps the application decide what to include.",
-        "Study-group notes": "Week 1 emphasized the engineering tradeoff: give the model everything it needs while keeping the request focused enough to control cost, latency, and distraction."
-      },
-      "introduced_in": "week-01"
+        "Study-group notes": "Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system."
+      }
+    },
+    {
+      "id": "context",
+      "term": "Context",
+      "aliases": [
+        "model context",
+        "working context"
+      ],
+      "category": "foundations",
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "relations": [
+        {
+          "type": "related",
+          "target": "context-window"
+        },
+        {
+          "type": "related",
+          "target": "prompt"
+        },
+        {
+          "type": "related",
+          "target": "agentic-harness"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Chapter 1 · Context",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
+          "note": "Current chapter treatment and teaching distinctions."
+        }
+      ],
+      "sections": {
+        "Simple definition": "The information available to the model while it produces the current output.",
+        "Working definition": "Context is the model-visible material supplied for a call: instructions, the current request, selected history, tool definitions, observations, and retrieved references. The harness chooses what is included.",
+        "Why it matters": "A fact stored by the application cannot guide the current response unless the model receives it. Selecting useful context matters as much as storing information.",
+        "Example": "After a file-search tool returns matching paths, those paths enter the next call as context and can change the next action.",
+        "Common confusion": "Context is the information; the context window is its finite capacity. Neither is the complete session record or permanent memory.",
+        "Study-group notes": "Chapters 1 and 3 distinguish assembled context from the current prompt and from information stored elsewhere."
+      }
+    },
+    {
+      "id": "evaluation-suite",
+      "term": "Evaluation suite",
+      "aliases": [
+        "eval suite",
+        "test suite"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: What belongs in a small evaluation suite?",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-suite",
+          "note": "Defines the term and its role in the chapter’s examples."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "test-case"
+        },
+        {
+          "type": "related",
+          "target": "trial"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        },
+        {
+          "type": "related",
+          "target": "grader"
+        },
+        {
+          "type": "related",
+          "target": "guardrail"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "A collection of test cases chosen to assess different requirements and failure modes.",
+        "Working definition": "An evaluation suite groups cases for repeatable testing. A useful small suite includes normal work, forbidden actions, unavailable checks, and incomplete outcomes rather than many near-identical easy tasks. Retain observed failures as regression cases and add fresh cases to test whether improvements generalize.",
+        "Why it matters": "A suite can expose weaknesses that a happy-path demonstration misses and show whether fixing one behavior breaks another.",
+        "Example": "Test an allowed edit, a protected edit, an unavailable validator, two runs from a reset fixture, and organizer outputs with changed bytes, a lost duplicate, or no completed moves.",
+        "Common confusion": "If an agent never attempts a forbidden action, that trial does not test the guardrail’s denial path. A higher aggregate score can also reflect easier cases or weaker checks rather than improvement.",
+        "Study-group notes": "Test a guardrail directly with allowed and denied requests, then test the complete agent workflow. Keep success criteria comparable across versions and inspect individual failures."
+      }
+    },
+    {
+      "id": "evaluation",
+      "term": "Evaluation",
+      "aliases": [
+        "eval",
+        "evals",
+        "agent evaluation"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Evals",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#evals",
+          "note": "Defines the term and its role in the chapter’s examples."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "test-case"
+        },
+        {
+          "type": "related",
+          "target": "trial"
+        },
+        {
+          "type": "related",
+          "target": "trace"
+        },
+        {
+          "type": "related",
+          "target": "artifact"
+        },
+        {
+          "type": "related",
+          "target": "grader"
+        },
+        {
+          "type": "related",
+          "target": "evaluation-suite"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "A repeatable way to give a system a task, record what happens, and assess it against stated criteria.",
+        "Working definition": "An evaluation defines cases and success criteria, runs trials from known starting states, captures evidence, and uses graders to assess results. Agent evaluations examine the model together with instructions, tools, runtime, and controls. Results describe the selected cases, environment, evidence, and grading methods.",
+        "Why it matters": "One impressive run cannot show whether a system is reliable. Repeatable cases help reveal variation, diagnose failures, compare changes, and catch returning bugs.",
+        "Example": "Run an app-creation task in fresh repositories, inspect the generated files, independently test the build, and review the layout against a rubric. Report completion and quality separately.",
+        "Common confusion": "A single completion hook is not an eval suite. Passing selected checks does not prove all future tasks will succeed, and a successful test runner does not mean the agent’s task passed.",
+        "Study-group notes": "Chapter 5’s sequence is case → trial → evidence → graders → results → improvement. Preserve failing cases for regression tests and keep success criteria comparable when testing revisions."
+      }
     },
     {
       "id": "event-loop",
@@ -276,7 +651,7 @@
       ],
       "category": "frameworks-and-protocols",
       "status": "published",
-      "last_reviewed": "2026-07-27",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
@@ -293,9 +668,9 @@
       ],
       "sources": [
         {
-          "title": "Google ADK — Runtime event loop",
-          "url": "https://adk.dev/runtime/event-loop/",
-          "note": "Explains how ADK's Runner processes execution logic, events, state changes, tool activity, callbacks, and resumptions during an invocation."
+          "title": "Chapter 1 · Event loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
@@ -308,6 +683,50 @@
       }
     },
     {
+      "id": "fixture",
+      "term": "Fixture",
+      "aliases": [
+        "test fixture",
+        "eval fixture"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Write a case before running the agent",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
+          "note": "Defines the term and its role in the chapter’s examples."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "test-case"
+        },
+        {
+          "type": "related",
+          "target": "trial"
+        },
+        {
+          "type": "related",
+          "target": "artifact"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "Saved starting files or data that let a test run begin from a known state.",
+        "Working definition": "A fixture supplies the known input files or data for a test case. Restore the intended starting state before each trial, and keep the original reference outside the agent’s editable output when it is needed to check preservation.",
+        "Why it matters": "Leftover outputs or changed inputs can make a failed task appear successful and make two trials incomparable.",
+        "Example": "A file-organizer fixture contains three originals with contents A, B, and B. Each trial begins with those same three files; an independent reference records both contents and copy counts.",
+        "Common confusion": "The fixture is the starting input, not the generated result. The full test case also includes the request and success criteria; clean files alone do not establish identical tools or permissions.",
+        "Study-group notes": "Chapter 5 uses a fresh repository for the app example and preserved originals for the organizer. Record environment and permission differences separately from the fixture."
+      }
+    },
+    {
       "id": "google-adk",
       "term": "Google Agent Development Kit (ADK)",
       "aliases": [
@@ -315,14 +734,10 @@
         "ADK",
         "Agent Development Kit"
       ],
-      "category": "frameworks-and-protocols",
-      "status": "published",
+      "category": "earlier-week-1",
+      "status": "deprecated",
       "last_reviewed": "2026-07-12",
       "relations": [
-        {
-          "type": "related",
-          "target": "llm-agent"
-        },
         {
           "type": "related",
           "target": "model-context-protocol"
@@ -349,9 +764,61 @@
         "Why it matters": "An agent framework supplies the execution machinery around a model: tool dispatch, events, session persistence, callbacks, streaming, and composition. This lets developers focus on agent behavior without rebuilding the entire runtime loop.",
         "Example": "A developer defines an `LlmAgent` with instructions and catalog tools, creates a `SessionService`, and uses a `Runner` to process user messages and stream execution events.",
         "Common confusion": "ADK is not an LLM and is not limited to Gemini or Python. It coordinates supported models and agent components; model capabilities, external services, and application code remain separate dependencies.",
-        "Study-group notes": "Week 1 summarized ADK as `LlmAgent + Tool + Session + Runner + Callbacks`, with the framework owning the execution loop and plumbing."
-      },
-      "introduced_in": "week-01"
+        "Study-group notes": "Earlier Week 1 framework background, retained for existing links. This API-specific entry is outside the current Chapters 1–5 teaching spine; consult the linked documentation before implementation."
+      }
+    },
+    {
+      "id": "grader",
+      "term": "Grader",
+      "aliases": [
+        "eval grader",
+        "evaluation grader"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Apply graders that match the question",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
+          "note": "Defines the term and its role in the chapter’s examples."
+        },
+        {
+          "title": "Chapter 5: File presence is a limited check",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-grader-example",
+          "note": "Uses a file-existence grader to illustrate how a passing check can establish much less than task success."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "rubric"
+        },
+        {
+          "type": "related",
+          "target": "trial"
+        },
+        {
+          "type": "related",
+          "target": "trace"
+        },
+        {
+          "type": "related",
+          "target": "artifact"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "Code, a model, or a human reviewer that assesses evidence from a trial against a criterion.",
+        "Working definition": "A grader applies a particular check or judgment to a trial’s evidence. Code can test exact conditions such as valid files or a passing build. A model or human can review quality using an explicit rubric. Several graders can assess different requirements within the same evaluation.",
+        "Why it matters": "A score is only useful when its check matches the real requirement. Weak graders can reward missing, incorrect, or incomplete work.",
+        "Example": "One grader checks that the app builds; another judges whether its header and cards are understandable. A file-existence check alone would miss an app that cannot run.",
+        "Common confusion": "The grader is not the runner that launches the trial, and validly formatted grading output can still be wrong. Test graders on known good and deliberately bad results.",
+        "Study-group notes": "Chapter 5 separates exact checks from quality judgments. Compare model grades with human review, require evidence, and investigate disagreements rather than trusting the aggregate score."
+      }
     },
     {
       "id": "guardrail",
@@ -362,41 +829,138 @@
         "action gate"
       ],
       "category": "control-and-quality",
-      "status": "published",
-      "last_reviewed": "2026-07-12",
+      "sources": [
+        {
+          "title": "Chapter 5: Guardrails",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#guardrails",
+          "note": "Defines the term and its role in the chapter’s examples."
+        },
+        {
+          "title": "Chapter 5: Prevent an accidental overwrite",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#action-boundary",
+          "note": "Shows why an early check and enforcement inside the acting tool serve complementary purposes."
+        }
+      ],
       "relations": [
+        {
+          "type": "related",
+          "target": "hook"
+        },
+        {
+          "type": "related",
+          "target": "tool"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        },
+        {
+          "type": "related",
+          "target": "callback"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "A check or limit intended to keep an agent’s behavior within a rule.",
+        "Working definition": "A guardrail checks or restricts access, operations, content, approvals, or outputs. It may be implemented through permissions, tool behavior, validators, hooks, or an approval flow. Its protection depends on its timing, coverage, authority, and failure policy; a framework’s named Guardrails API covers only particular kinds of checks.",
+        "Why it matters": "Agents can affect files and external systems. Appropriate controls can limit those effects and provide feedback for safe recovery when an operation is denied or cannot be validated.",
+        "Example": "A pre-tool check rejects moving a receipt onto an occupied path. The move tool also enforces a no-replace rule at execution, protecting the original if the earlier check becomes stale or is skipped.",
+        "Common confusion": "A prompt stating a rule is not strong enforcement. A content scan can miss problems, an output check cannot undo a completed upload, and a validator error is not a passing check.",
+        "Study-group notes": "Start with the rule, then choose a component with the information and authority to enforce it. Test allowed, denied, unavailable-validator, and safely incomplete outcomes separately."
+      }
+    },
+    {
+      "id": "hook",
+      "term": "Hook",
+      "aliases": [
+        "agent hook",
+        "lifecycle hook"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Hooks",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#hooks",
+          "note": "Defines the term and its role in the chapter’s examples."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "lifecycle-event"
+        },
         {
           "type": "related",
           "target": "callback"
         },
         {
           "type": "related",
-          "target": "llm-agent"
+          "target": "runtime"
         },
         {
           "type": "related",
-          "target": "tool"
-        }
-      ],
-      "sources": [
-        {
-          "title": "A practical guide to building agents",
-          "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
-          "note": "Describes layered model-based and rules-based guardrails for managing privacy, safety, relevance, and tool risk."
+          "target": "guardrail"
         },
         {
-          "title": "Callbacks: Observe, Customize, and Control Agent Behavior",
-          "url": "https://adk.dev/callbacks/",
-          "note": "Shows how ADK callbacks can enforce safety rules, validate data, and prevent disallowed operations."
+          "type": "related",
+          "target": "evaluation"
         }
       ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
       "sections": {
-        "Simple definition": "A check or control that keeps an agent's inputs, outputs, and actions within defined boundaries.",
-        "Working definition": "A guardrail is a policy-enforcing check or control applied to an agent's inputs, outputs, tool requests, state, or execution. Guardrails can use deterministic rules, model-based checks, permissions, approvals, or callback code to keep behavior within safety, policy, quality, and scope boundaries.",
-        "Why it matters": "Agents can follow variable paths and may affect external systems. Layered guardrails help reject unsafe requests, constrain risky actions, validate results, limit runaway behavior, and escalate work when automation should stop.",
-        "Example": "Before an order tool runs, a code-level guardrail verifies that the cart is valid, the user explicitly confirmed the purchase, and the proposed amount is within the agent's authorization limit.",
-        "Common confusion": "Prompt instructions alone are not strong enforcement, and guardrails do not replace authentication, authorization, least privilege, secure software design, or human oversight. They are one layer in a broader control system.",
-        "Study-group notes": "Week 1 used callbacks to implement guardrails. The callback is the lifecycle hook; the guardrail is the boundary or policy enforced through that hook."
+        "Simple definition": "A way to run registered code when the agent system reaches a defined event.",
+        "Working definition": "A hook connects a supported runtime event to code supplied by a developer. Its event specifies when to run, an optional matcher selects occurrences, and its handler performs the work. The handler may receive event data and return information or a supported decision to the runtime.",
+        "Why it matters": "Hooks make jobs such as notifications, formatting, context reminders, and pre-action checks happen at supported moments without relying on the model to remember to request them.",
+        "Example": "A notification hook sends a desktop alert when a permission request is waiting. The request remains pending until a separate approval decision is made.",
+        "Common confusion": "A hook is a mechanism, not automatically a guardrail. A post-action hook cannot prevent an effect that already happened. Event names, tool coverage, response formats, and failure behavior differ across products.",
+        "Study-group notes": "Chapter 5 teaches event → matcher → handler. Verify the observable effect, actual tool input, timing, coverage, and behavior when the handler fails. Related SDKs may expose callbacks instead of command hooks."
+      }
+    },
+    {
+      "id": "instruction-file",
+      "term": "Instruction file",
+      "aliases": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        "project instructions"
+      ],
+      "category": "agent-systems",
+      "sources": [
+        {
+          "title": "Chapter 2: A Map of Modern Agent Systems — Instruction files",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#instruction-files",
+          "note": "Defines instruction files and explains discovery, composition, scoping, host-specific precedence, and the limits of natural-language guidance."
+        }
+      ],
+      "relations": [
+        {
+          "type": "contrasts_with",
+          "target": "skill"
+        },
+        {
+          "type": "related",
+          "target": "prompt"
+        },
+        {
+          "type": "related",
+          "target": "context-window"
+        },
+        {
+          "type": "related",
+          "target": "context-pointer"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "A file of durable project guidance that a compatible host loads according to its own discovery and scope rules.",
+        "Working definition": "An instruction file stores guidance that should recur across tasks, such as repository structure, validation commands, coding conventions, and human decision boundaries. A compatible host finds applicable files, combines their text, resolves precedence, and places the selected guidance in model context. Filename, location, and loading behavior depend on the product.",
+        "Why it matters": "Keeping recurring rules beside the project makes them reviewable and versionable. Appropriate scoping helps the agent receive relevant rules without loading every team’s procedures for every task.",
+        "Example": "While editing a book chapter, the host may combine repository-wide guidance with book-specific instructions to preserve stable URLs and run the book checks. Instructions in an unrelated frontend subtree need not apply.",
+        "Common confusion": "Writing AGENTS.md does not guarantee that every host reads it, and natural-language instructions are not hard enforcement. AGENTS.md and CLAUDE.md can share content without sharing identical loaders or precedence rules.",
+        "Study-group notes": "Chapter 2 begins here: durable guidance answers “What rules apply while I work here?” Compare it with a Skill’s task-specific method and MCP’s connection boundary. Check the host before assuming that the nearest file wins."
       }
     },
     {
@@ -408,7 +972,7 @@
       ],
       "category": "foundations",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
@@ -421,14 +985,9 @@
       ],
       "sources": [
         {
-          "title": "A practical guide to building agents",
-          "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
-          "note": "Identifies the model as the component that supplies an agent's reasoning and decision-making rather than the whole agent system."
-        },
-        {
-          "title": "Understand and count tokens",
-          "url": "https://ai.google.dev/gemini-api/docs/tokens",
-          "note": "Explains token-based model inputs and outputs and the finite context window within which a model processes them."
+          "title": "Chapter 1 · Large language model (LLM)",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#llm",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
@@ -437,9 +996,52 @@
         "Why it matters": "Separating the model from the system around it makes agent architecture easier to understand. Model quality affects reasoning and generation, while the framework determines what context is supplied, which capabilities are available, and what happens after each output.",
         "Example": "Given a customer question and relevant policy text, an LLM can draft an answer. To verify a live order, an agent framework must expose an order tool, execute the requested call, and return the result to the model in a later step.",
         "Common confusion": "An LLM and an agent are not synonyms. A hosted model API may offer convenient features, but the model itself does not maintain an application's durable session history or execute arbitrary business functions.",
-        "Study-group notes": "Week 1 shorthand: `f(token_sequence) → output`. “No memory, tools, or loop” describes the bare model call; those capabilities come from the surrounding application or framework."
-      },
-      "introduced_in": "week-01"
+        "Study-group notes": "Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system."
+      }
+    },
+    {
+      "id": "lifecycle-event",
+      "term": "Lifecycle event",
+      "aliases": [
+        "hook event",
+        "agent lifecycle event"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Where hooks fit in the lifecycle",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#hook-events",
+          "note": "Defines the term and its role in the chapter’s examples."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "hook"
+        },
+        {
+          "type": "related",
+          "target": "runtime"
+        },
+        {
+          "type": "related",
+          "target": "session"
+        },
+        {
+          "type": "related",
+          "target": "tool"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "A named moment in an agent run, such as session start, a pending tool call, or completion of a turn.",
+        "Working definition": "A lifecycle event is a runtime-defined occurrence to which a hook can be attached. Events can surround prompts, tool calls, permission requests, context compression, delegated work, or completion. The specific product defines when an event fires, what data it supplies, and which decisions a handler may return.",
+        "Why it matters": "Choosing the right moment determines whether code can prevent an action, react to an effect, or check that work is complete.",
+        "Example": "A pre-tool event can inspect a pending file edit before it executes. A post-tool event can inspect or format the resulting file after execution.",
+        "Common confusion": "Finishing a turn is different from ending a session. Similar event names in two products do not guarantee identical timing, inputs, or authority.",
+        "Study-group notes": "Choose the lifecycle stage before copying an event name. Chapter 5 distinguishes session start, pre-tool, post-tool, stop, interrupt, and session-end behavior."
+      }
     },
     {
       "id": "llm-agent",
@@ -448,8 +1050,8 @@
         "ADK Agent",
         "model-driven agent"
       ],
-      "category": "frameworks-and-protocols",
-      "status": "published",
+      "category": "earlier-week-1",
+      "status": "deprecated",
       "last_reviewed": "2026-07-12",
       "relations": [
         {
@@ -491,7 +1093,46 @@
         "Why it matters": "`LlmAgent` is the point where the general idea of an agent becomes a concrete ADK component. Understanding its configuration clarifies which concerns belong to the model, the agent definition, and the runtime.",
         "Example": "A shopping `LlmAgent` uses a selected model, a system instruction describing its job, product and cart tools, and a `before_tool` callback that blocks unconfirmed purchases.",
         "Common confusion": "`LlmAgent` defines model-driven behavior but does not execute by itself. A Runner and supporting services provide invocation, session handling, event persistence, and interaction with the surrounding application.",
-        "Study-group notes": "Week 1 called `LlmAgent` the orchestrator that wraps a model with instructions, tools, and callbacks. More precisely, it defines the model-driven execution logic that ADK's runtime invokes."
+        "Study-group notes": "Earlier Week 1 framework background, retained for existing links. This API-specific entry is outside the current Chapters 1–5 teaching spine; consult the linked documentation before implementation."
+      }
+    },
+    {
+      "id": "loop-engineering",
+      "term": "Loop engineering",
+      "aliases": [
+        "recurring agent loop"
+      ],
+      "category": "agent-systems",
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "relations": [
+        {
+          "type": "related",
+          "target": "agentic-loop"
+        },
+        {
+          "type": "related",
+          "target": "agentic-harness"
+        },
+        {
+          "type": "related",
+          "target": "workflow"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Chapter 3 · Beyond prompting",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#beyond-prompting",
+          "note": "Current chapter treatment and teaching distinctions."
+        }
+      ],
+      "sections": {
+        "Simple definition": "Designing a system that repeatedly finds work, assigns it, checks results, and records what comes next.",
+        "Working definition": "An emerging practitioner framing for the recurring system around individual agent runs. It combines work discovery, assignment, checks, durable records, and a decision about the next run.",
+        "Why it matters": "Repeated jobs need explicit progress records and stopping rules, not just a longer initial prompt.",
+        "Example": "A maintenance process finds an issue, delegates a bounded repair, checks the result, records it, and decides whether another task should run.",
+        "Common confusion": "This is not the minimal model–tool–result agentic loop or a standardized architecture. Recurrence adds cost and risk and should be justified by the task.",
+        "Study-group notes": "Chapter 3 presents loop engineering as an emerging, deliberately qualified extension beyond direct prompting."
       }
     },
     {
@@ -502,53 +1143,67 @@
         "Model Context Protocol"
       ],
       "category": "frameworks-and-protocols",
-      "status": "published",
-      "last_reviewed": "2026-07-12",
-      "relations": [
+      "sources": [
         {
-          "type": "related",
-          "target": "google-adk"
+          "title": "Chapter 2: A Map of Modern Agent Systems — Model Context Protocol",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#mcp",
+          "note": "Provides the definition, integration motivation, participant roles, primitives, connection walkthrough, and host-policy boundary."
         },
+        {
+          "title": "Chapter 2: A Map of Modern Agent Systems — How the pieces relate",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#how-the-pieces-relate",
+          "note": "Places MCP beside instruction files and Skills without making it a required stage of the agentic loop."
+        }
+      ],
+      "relations": [
         {
           "type": "related",
           "target": "tool"
-        }
-      ],
-      "sources": [
-        {
-          "title": "Model Context Protocol specification overview",
-          "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/index",
-          "note": "Defines the protocol's JSON-RPC base, lifecycle, capabilities, and client-server responsibilities."
         },
         {
-          "title": "MCP server features",
-          "url": "https://modelcontextprotocol.io/specification/2025-06-18/server/index",
-          "note": "Documents the tools, resources, and prompts that MCP servers can expose to clients."
+          "type": "contrasts_with",
+          "target": "skill"
         }
       ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
       "sections": {
-        "Simple definition": "An open protocol connecting AI applications to tools, resources, and prompt templates through client-server interfaces.",
-        "Working definition": "Model Context Protocol is an open client-server protocol for exposing capabilities and context to AI applications through standardized messages. MCP servers can offer tools, resources, and prompt templates; MCP clients negotiate capabilities and make those primitives available to the host application or agent.",
-        "Why it matters": "MCP separates capability providers from agent frameworks. A compatible server can expose the same integration to multiple clients, reducing one-off adapter code and giving applications a consistent discovery and invocation model.",
-        "Example": "An inventory MCP server exposes `search_products` and `get_stock` tools. ADK connects as an MCP client and presents their schemas to an agent alongside local tools.",
-        "Common confusion": "MCP is a protocol, not an agent framework or a tool by itself. It defines how clients and servers communicate; the server implements capabilities, the host manages connections, and the model may decide when to request an exposed tool.",
-        "Study-group notes": "Week 1 used the “standard plug shape” analogy: an MCP client such as ADK connects to a server and makes its remote capabilities available in the agent's tool set."
+        "Simple definition": "An open protocol for AI applications to discover external capabilities and exchange requests, results, and related messages.",
+        "Working definition": "MCP provides a shared client–server boundary between an AI application and capability providers. The host is the application; a client is its protocol component for one server; the server exposes underlying capabilities. Servers can offer Tools (operations), Resources (readable information), and Prompts (reusable interaction templates). The protocol standardizes discovery and message exchange, while the host decides what reaches the model and how results enter the workflow.",
+        "Why it matters": "A reusable boundary reduces duplicated integration work when many applications connect to many providers. It is useful when interoperability or discovery matters, but adds little to a simple local function that needs neither.",
+        "Example": "A study-group editor connects to an approved issue-tracker server, discovers its issue-query tool, exposes that tool to the model, and brings the returned issue data into the chapter-review loop.",
+        "Common confusion": "MCP is neither an agent nor one tool. A server may run locally, and an MCP Prompt is not a packaged Skill. The protocol does not supply the task method, choose trustworthy providers, grant permission for every action, or make every advertised capability model-visible.",
+        "Study-group notes": "Chapter 2 separates connection from method and execution. Its M×N-to-M+N analogy describes integration structure, not a guaranteed cost formula. Follow the chapter’s versioned discussion rather than treating every older protocol lifecycle as permanent."
       }
     },
     {
-      "id": "prompt",
-      "term": "Prompt",
+      "id": "progressive-disclosure",
+      "term": "Progressive disclosure",
       "aliases": [
-        "model prompt",
-        "LLM prompt"
+        "on-demand loading",
+        "staged loading"
       ],
-      "category": "foundations",
-      "status": "published",
-      "last_reviewed": "2026-07-12",
+      "category": "agent-systems",
+      "sources": [
+        {
+          "title": "Chapter 2: A Map of Modern Agent Systems — Skills",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills",
+          "note": "The Progressive disclosure subsection explains metadata, core instructions, support material, and available versus model-visible information."
+        },
+        {
+          "title": "Chapter 4: Writing Great Skills — Writing for Agents",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
+          "note": "Explains why progressive disclosure protects the document’s information hierarchy as well as its context budget."
+        }
+      ],
       "relations": [
         {
-          "type": "narrower",
-          "target": "system-prompt"
+          "type": "related",
+          "target": "skill"
+        },
+        {
+          "type": "related",
+          "target": "skill-activation"
         },
         {
           "type": "related",
@@ -556,30 +1211,59 @@
         },
         {
           "type": "related",
-          "target": "large-language-model"
+          "target": "context-pointer"
+        },
+        {
+          "type": "related",
+          "target": "context-load"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "Loading a small discovery description first, the selected procedure next, and deeper material only when needed.",
+        "Working definition": "Progressive disclosure keeps retrievable knowledge available without putting all of it in every model call. For Skills, compact metadata supports discovery, the main SKILL.md loads after activation, and references or other supporting files are accessed when a step calls for them. Available files and model-visible context are different sets.",
+        "Why it matters": "It preserves a clear active workflow and limits irrelevant context. The procedure can remain readable while detailed policies, rubrics, and templates stay accessible at the right point.",
+        "Example": "A review Skill exposes its name and description, loads the review sequence when selected, and opens the detailed citation policy only when checking sources.",
+        "Common confusion": "This is not merely shortening a document or hiding required instructions. Essential steps must remain discoverable, pointers must name their triggers, and a supporting script can execute without its full source entering the prompt.",
+        "Study-group notes": "Chapter 2 teaches the three levels. Chapter 4 treats the same mechanism as information hierarchy: keep immediate steps visible and put branch-specific depth behind reliable pointers."
+      }
+    },
+    {
+      "id": "prompt",
+      "term": "Prompt",
+      "aliases": [
+        "user prompt",
+        "prompting"
+      ],
+      "category": "foundations",
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "relations": [
+        {
+          "type": "related",
+          "target": "context"
+        },
+        {
+          "type": "related",
+          "target": "system-prompt"
         }
       ],
       "sources": [
         {
-          "title": "Introduction to prompting",
-          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/introduction-prompt-design",
-          "note": "Defines prompts as requests to a language model and describes instructions, context, examples, and system instructions as prompt components."
-        },
-        {
-          "title": "Prompt design strategies",
-          "url": "https://ai.google.dev/gemini-api/docs/prompting-strategies",
-          "note": "Provides current guidance for structuring instructions and context to elicit useful model responses."
+          "title": "Chapter 3 · Start with the result",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#result-first",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
-        "Simple definition": "The instructions, context, examples, and input supplied to a model for one request.",
-        "Working definition": "A prompt is the information presented to a language model to shape one generation. Depending on the API and framework, it can include system instructions, user messages, conversation history, examples, retrieved context, tool results, and the current task.",
-        "Why it matters": "The model can only respond to the information and instructions available in its current request. Prompt content and structure therefore affect relevance, reliability, formatting, tool selection, cost, and how much room remains in the context window.",
-        "Example": "Before an agent answers “add the cheapest one,” its framework assembles system instructions, earlier product-search results, the prior assistant response, and the newest user message into the information sent to the model.",
-        "Common confusion": "A prompt is not necessarily just the sentence typed by the user. In an agent application, the user message is often one component of a larger request assembled by the framework.",
-        "Study-group notes": "Week 1 treated the prompt as “everything the LLM sees for this call,” while noting that APIs may transmit some components, such as tool schemas, in separate structured fields."
-      },
-      "introduced_in": "week-01"
+        "Simple definition": "A question, instruction, or goal that asks the model or agent for a result.",
+        "Working definition": "In this book’s practical prompting chapter, a prompt states what is wanted in the current interaction. Useful details can include the goal, context, intended output, and boundaries; include only the components that change the work.",
+        "Why it matters": "An observable result and a meaningful check give the agent clearer direction than a long list of prescribed steps.",
+        "Example": "“Draft a one-page project update for leadership from this plan, flag unknowns, and do not publish it.”",
+        "Common confusion": "Prompt is sometimes used broadly for all model input. Here the current request is distinguished from the wider assembled context, including system guidance, tools, history, and retrieved material.",
+        "Study-group notes": "Chapter 3 replaces the old Week 1 shorthand “everything the model sees” with a practical request-versus-context distinction."
+      }
     },
     {
       "id": "react",
@@ -590,15 +1274,11 @@
       ],
       "category": "agent-systems",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
           "target": "agent"
-        },
-        {
-          "type": "related",
-          "target": "llm-agent"
         },
         {
           "type": "uses",
@@ -611,14 +1291,9 @@
       ],
       "sources": [
         {
-          "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
-          "url": "https://arxiv.org/abs/2210.03629",
-          "note": "Introduces the ReAct paradigm of interleaving reasoning traces with task-specific actions and observations."
-        },
-        {
-          "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
-          "url": "https://research.google/blog/react-synergizing-reasoning-and-acting-in-language-models/",
-          "note": "Provides the Google Research explanation of how reasoning, actions, and environmental observations work together."
+          "title": "Chapter 1 · ReAct",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
@@ -627,56 +1302,91 @@
         "Why it matters": "ReAct allows the path to adapt to information learned during execution. It is useful when the necessary tools or number of steps cannot be known reliably before the task begins.",
         "Example": "An agent first searches for milk, observes product IDs and prices, selects the cheapest qualifying result, calls the cart tool, and then observes whether the cart update succeeded before responding.",
         "Common confusion": "ReAct names an interaction pattern, not a requirement to expose private model reasoning to users or logs. Production implementations can preserve the action-and-observation loop while keeping internal reasoning private.",
-        "Study-group notes": "Week 1 visualized ReAct as Reason → Act → Observe → repeat, with tool results becoming new context for the next model call."
+        "Study-group notes": "Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system."
+      }
+    },
+    {
+      "id": "rubric",
+      "term": "Rubric",
+      "aliases": [
+        "grading rubric",
+        "evaluation rubric"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Apply graders that match the question",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
+          "note": "Defines the term and its role in the chapter’s examples."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "grader"
+        },
+        {
+          "type": "related",
+          "target": "artifact"
+        },
+        {
+          "type": "related",
+          "target": "test-case"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "Written criteria that guide judgments about output quality.",
+        "Working definition": "A rubric states the qualities a reviewer should assess and what acceptable or unacceptable work looks like. It helps a model or human grader make judgments against an explicit standard, especially when quality cannot be reduced to a simple exact check.",
+        "Why it matters": "Clear criteria make subjective review more consistent and make disagreements easier to inspect and resolve.",
+        "Example": "For an app with a header and two cards, ask whether the parts are distinguishable and their order is understandable. Include examples when those requirements are ambiguous.",
+        "Common confusion": "A rubric is the review standard, not the grader or its score. A model’s plausible explanation does not prove its judgment is correct, and layout quality does not establish build success.",
+        "Study-group notes": "Keep rubric-based quality checks separate from completion and safety checks. Review real outputs and calibrate automated judgments with people before relying on small score differences."
       }
     },
     {
       "id": "runner",
       "term": "Runner",
       "aliases": [
-        "ADK Runner",
-        "agent runner"
+        "agent runner",
+        "ADK Runner"
       ],
       "category": "frameworks-and-protocols",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
-          "target": "callback"
+          "target": "runtime"
         },
         {
           "type": "related",
-          "target": "google-adk"
+          "target": "agentic-harness"
         },
         {
-          "type": "uses",
-          "target": "llm-agent"
-        },
-        {
-          "type": "uses",
-          "target": "session"
+          "type": "related",
+          "target": "event-loop"
         }
       ],
       "sources": [
         {
-          "title": "ADK Runtime Event Loop",
-          "url": "https://adk.dev/runtime/event-loop/",
-          "note": "Explains how Runner coordinates agents, callbacks, tools, events, sessions, and runtime services during an invocation."
-        },
-        {
-          "title": "ADK Agent Team tutorial",
-          "url": "https://adk.dev/tutorials/agent-team/",
-          "note": "Shows Runner as the engine that accepts user input, invokes agent logic, manages session updates, and yields execution events."
+          "title": "Chapter 1 · Harness, runtime, Runner, and event loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
-        "Simple definition": "The ADK runtime component that executes agents and coordinates sessions, tools, callbacks, and emitted events.",
-        "Working definition": "A Runner is ADK's entry point for processing user input through an agent application. It creates the invocation context, retrieves the appropriate Session through a service, invokes agent execution logic, coordinates callbacks and tools, persists resulting events and state changes, and yields events to the caller.",
-        "Why it matters": "Runner connects a static agent definition to a live application turn. It centralizes runtime concerns that would otherwise need custom orchestration code around every model and tool call.",
-        "Example": "An application passes a user ID, session ID, and new message to `runner.run_async(...)`, then consumes streamed events until it receives the final response.",
-        "Common confusion": "Runner is not the agent and does not supply the model's task instructions. The `LlmAgent` defines model-driven behavior; Runner executes that behavior within ADK's runtime and service environment.",
-        "Study-group notes": "Week 1 called Runner the component that wires agent, session, and I/O together. Its event stream also exposes tool calls and results without requiring access to private model reasoning."
+        "Simple definition": "A framework-specific object or entry point that starts and drives an agent run.",
+        "Working definition": "A Runner provides an application interface for executing an agent. Its exact duties vary: it may invoke models, route tools, process events, manage session updates, and return final output.",
+        "Why it matters": "It connects an agent definition to live execution while exposing the framework’s particular control and state model.",
+        "Example": "Application code starts a run through a Runner and consumes its returned result or streamed events.",
+        "Common confusion": "Runner is not a universal synonym for runtime, harness, or agentic loop. Those terms describe different scopes, and frameworks divide responsibilities differently.",
+        "Study-group notes": "Chapter 1 compares OpenAI Agents SDK and Google ADK without treating either implementation as the universal definition."
       }
     },
     {
@@ -688,7 +1398,7 @@
       ],
       "category": "frameworks-and-protocols",
       "status": "published",
-      "last_reviewed": "2026-07-27",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
@@ -713,14 +1423,9 @@
       ],
       "sources": [
         {
-          "title": "OpenAI Agents SDK — Running agents",
-          "url": "https://openai.github.io/openai-agents-python/running_agents/",
-          "note": "Shows a framework-specific Runner that invokes models, executes tool calls, appends results, and returns final output."
-        },
-        {
-          "title": "Google ADK — Runtime event loop",
-          "url": "https://adk.dev/runtime/event-loop/",
-          "note": "Documents ADK's broader Runtime, Runner, execution logic, services, events, state changes, callbacks, and resumptions."
+          "title": "Chapter 1 · Runtime",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
@@ -736,20 +1441,15 @@
       "id": "session",
       "term": "Session",
       "aliases": [
-        "ADK session",
         "conversation session"
       ],
       "category": "frameworks-and-protocols",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
           "target": "context-window"
-        },
-        {
-          "type": "related",
-          "target": "llm-agent"
         },
         {
           "type": "related",
@@ -758,23 +1458,72 @@
       ],
       "sources": [
         {
-          "title": "Conversational Context: Session, State, and Memory",
-          "url": "https://adk.dev/sessions/",
-          "note": "Defines Session as one conversation thread containing an event history and temporary State, distinct from cross-session Memory."
-        },
-        {
-          "title": "Session: Tracking Individual Conversations",
-          "url": "https://adk.dev/sessions/session/",
-          "note": "Documents session lifecycle, SessionService responsibilities, persistence options, events, and state updates."
+          "title": "Chapter 1 · Context",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
+          "note": "Distinguishes records stored by the application from model-visible information."
         }
       ],
       "sections": {
-        "Simple definition": "ADK's record of one conversation thread, including its event history and temporary state.",
-        "Working definition": "A Session represents one ongoing interaction between a user and an ADK application. It contains the chronological events produced during that conversation and a State dictionary for temporary conversation-specific data; a SessionService manages its lifecycle and persistence.",
+        "Simple definition": "A stored record of an interaction that the system can use to continue work across model calls.",
+        "Working definition": "A session tracks an ongoing interaction, often including messages, execution events, and application state. The runtime selects relevant parts for each model call; what is persisted and how it is resumed depends on the product.",
         "Why it matters": "The model itself does not retain application history between calls. Sessions give the runtime a durable record from which it can reconstruct relevant context, continue a conversation, and track state changes.",
-        "Example": "A shopping session stores events for the original product search and the agent's response, plus temporary state such as an explicit purchase-confirmation flag used by a later callback.",
-        "Common confusion": "Session, State, context window, and Memory are different. The Session is the conversation record, State is temporary structured data inside it, the context window is what reaches a model call, and Memory supports information beyond one session.",
-        "Study-group notes": "Week 1 described Session as the agent's memory across turns. The precise ADK view is a stored conversation thread whose events and state allow the runtime to assemble later context."
+        "Example": "A resumed coding session supplies relevant earlier decisions and recent tool results without placing every stored event in the next context window.",
+        "Common confusion": "A session record is not the active context window or cross-session memory. Ending a turn also need not end the session.",
+        "Study-group notes": "Chapter 1 distinguishes stored history from selected context; Chapter 3 discusses fresh sessions, compaction, and resuming work. Chapter 2’s full memory treatment is still planned."
+      }
+    },
+    {
+      "id": "skill-activation",
+      "term": "Skill activation",
+      "aliases": [
+        "Skill invocation",
+        "implicit activation",
+        "explicit invocation"
+      ],
+      "category": "agent-systems",
+      "sources": [
+        {
+          "title": "Chapter 2: A Map of Modern Agent Systems — Skills",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills",
+          "note": "Discovery and activation separates catalog metadata, implicit or explicit selection, core instructions, and later support-file access."
+        },
+        {
+          "title": "Chapter 4: Writing Great Skills — Writing for Agents",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
+          "note": "Connects model-invoked and user-invoked documents to context load and human cognitive load."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "skill"
+        },
+        {
+          "type": "related",
+          "target": "progressive-disclosure"
+        },
+        {
+          "type": "related",
+          "target": "context-load"
+        },
+        {
+          "type": "related",
+          "target": "cognitive-load"
+        },
+        {
+          "type": "related",
+          "target": "context-pointer"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "The step that selects a discovered Skill and makes its full procedure available for the current task.",
+        "Working definition": "After a host discovers Skill metadata, a model or host may match the task to a description and activate the Skill implicitly, or a user may invoke it explicitly. Activation loads the main procedure; supporting files can remain deferred. Exact commands, selection policies, and access rules are host-specific.",
+        "Why it matters": "A good procedure cannot help if it is never selected. Clear descriptions and explicit invocation help diagnose misses while controlling how much context and human attention discovery requires.",
+        "Example": "The host shows a short documentation-review description. A chapter-review request triggers it, or the user names that Skill directly; the agent then reads its full SKILL.md.",
+        "Common confusion": "Discovery is not activation: seeing a name and description does not mean the procedure has been loaded. Implicit matching is not guaranteed, and invocation does not by itself create tools, permissions, or a new agent.",
+        "Study-group notes": "Chapter 2 traces discovery through loading. Chapter 4’s two-load model adds the tradeoff: autonomous selection uses model-visible discovery material, while deliberate invocation requires the human to remember the right method."
       }
     },
     {
@@ -782,55 +1531,69 @@
       "term": "Skill",
       "aliases": [
         "agent skill",
+        "Agent Skills",
         "SKILL.md"
       ],
       "category": "agent-systems",
-      "status": "published",
-      "last_reviewed": "2026-07-12",
+      "sources": [
+        {
+          "title": "Chapter 2: A Map of Modern Agent Systems — Skills",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills",
+          "note": "Defines the portable package, SKILL.md, optional directories, discovery and activation, progressive disclosure, and neighboring concepts."
+        },
+        {
+          "title": "Chapter 4: Writing Great Skills — Writing for Agents",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
+          "note": "Applies the writing-for-agents review model to Skill descriptions, procedures, pointers, and completion criteria."
+        }
+      ],
       "relations": [
         {
-          "type": "related",
-          "target": "context-window"
+          "type": "contrasts_with",
+          "target": "instruction-file"
+        },
+        {
+          "type": "contrasts_with",
+          "target": "tool"
+        },
+        {
+          "type": "contrasts_with",
+          "target": "model-context-protocol"
         },
         {
           "type": "related",
-          "target": "llm-agent"
-        }
-      ],
-      "sources": [
+          "target": "skill-activation"
+        },
         {
-          "title": "Skills for ADK agents",
-          "url": "https://adk.dev/skills/",
-          "note": "Defines an ADK Skill as a modular task-specific unit of instructions, resources, and tools that can be loaded incrementally."
+          "type": "uses",
+          "target": "progressive-disclosure"
         }
       ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
       "sections": {
-        "Simple definition": "A modular package of task-specific instructions, resources, and tools that an agent can load when needed.",
-        "Working definition": "An agent Skill packages specialized guidance for a task or domain so it can be discovered and loaded incrementally. In ADK, a Skill can include metadata, instructions, reference resources, scripts, assets, and associated tools rather than requiring all domain knowledge to remain in the base prompt.",
-        "Why it matters": "Skills organize expertise into reusable modules and reduce unnecessary context. They let an agent load detailed guidance only when relevant, improving maintainability and conserving context-window space.",
-        "Example": "A recipe Skill exposes a short description for discovery and loads detailed dietary rules, tool instructions, and reference material only after the agent recognizes a recipe request.",
-        "Common confusion": "A Skill is not another agent. Loading one enriches the current agent's available instructions and resources; it does not inherently create a separate model call, execution loop, or isolated session.",
-        "Study-group notes": "Week 1 used a simple two-tier `SKILL.md` pattern: short metadata always available, with fuller Markdown instructions loaded on demand. Current ADK Skills can also package resources and tools, and the feature is experimental as of this review."
+        "Simple definition": "A reusable package of procedural instructions and optional references, scripts, and assets that an agent can load when relevant.",
+        "Working definition": "A Skill packages a recognizable task method in a folder whose entry point is SKILL.md. Compact metadata supports discovery; the main instructions describe inputs, steps, decisions, boundaries, and outputs. References, scripts, and assets supply optional depth. A compatible client determines discovery locations, activation, access, and execution rules.",
+        "Why it matters": "Skills preserve a team’s method without repeating a full playbook in every request or loading every procedure permanently. They can combine model judgment with maintained references and deterministic helpers.",
+        "Example": "A documentation-review Skill directs the agent to read the chapter, consult a source policy, execute a link checker, apply a review rubric, and use a report template.",
+        "Common confusion": "A Skill is neither one callable Tool nor another agent. It supplies a method; MCP supplies a connection, and tools perform operations. Following the package format does not guarantee identical activation or execution in every host.",
+        "Study-group notes": "Chapter 2 provides the full introduction and three-level loading model. Chapter 4 remains planned overall, with bounded delivery and writing examples rather than a complete authoring guide."
       }
     },
     {
       "id": "sub-agent",
       "term": "Sub-agent",
       "aliases": [
-        "child agent",
-        "ADK sub-agent"
+        "subagent",
+        "child agent"
       ],
       "category": "agent-systems",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "broader",
           "target": "agent"
-        },
-        {
-          "type": "related",
-          "target": "llm-agent"
         },
         {
           "type": "related",
@@ -839,35 +1602,29 @@
       ],
       "sources": [
         {
-          "title": "Agents in ADK",
-          "url": "https://adk.dev/agents/",
-          "note": "Describes ADK agents as self-contained execution units that can be composed into multi-agent systems."
-        },
-        {
-          "title": "Function tools: Agent-as-a-Tool",
-          "url": "https://adk.dev/tools/function-tools/",
-          "note": "Explicitly distinguishes responsibility transfer to a sub-agent from calling another agent through AgentTool and returning control to the parent."
+          "title": "Chapter 1 · Keep context efficient",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
+          "note": "Introduces delegation into a separate context and returning findings."
         }
       ],
       "sections": {
-        "Simple definition": "A child agent that can receive delegated responsibility from a parent agent inside a multi-agent system.",
-        "Working definition": "A sub-agent is an agent composed beneath another agent and available for delegated work. In current ADK terminology, transferring to a sub-agent changes which agent is responsible for answering, while wrapping an agent with `AgentTool` creates an agent-as-a-tool whose result returns to the parent.",
-        "Why it matters": "Specialized agents can isolate instructions, tools, models, and responsibilities. Choosing between transfer and call-and-return affects routing, conversational ownership, context, cost, and which agent handles the next user message.",
-        "Example": "A shopping agent transfers a returns conversation to a returns sub-agent that continues with the user. By contrast, it may call a research agent through `AgentTool`, receive a product summary, and then retain control of the conversation.",
-        "Common confusion": "ADK does not use “sub-agent” and “agent-as-a-tool” as interchangeable terms. A sub-agent receives control through delegation or transfer; an `AgentTool` performs bounded work and returns its answer to the calling agent.",
-        "Study-group notes": "Week 1 used “sub-agent called as a tool” as broad shorthand. This glossary keeps the teaching comparison—separate agent versus loaded instructions—but adopts ADK's current, more precise distinction."
+        "Simple definition": "An agent assigned a bounded part of another agent’s work.",
+        "Working definition": "A sub-agent handles delegated work with its own instructions and execution context, then returns findings or takes responsibility according to the host’s design. Isolation, inherited context, available tools, and control transfer are product-specific.",
+        "Why it matters": "Delegation can keep a large investigation in a separate context and return only the useful findings, leaving the parent more room for the main task.",
+        "Example": "A parent asks a research sub-agent to inspect a large source set and return relevant findings, keeping the full investigation out of the parent’s context.",
+        "Common confusion": "Loading a Skill adds guidance to an agent; delegating to a sub-agent runs another agent. Call-and-return and transfer of conversational control are different patterns, not universal synonyms.",
+        "Study-group notes": "Chapter 1 uses subagents as a context-efficiency strategy. Chapter 2’s dedicated Subagents section is still planned."
       }
     },
     {
       "id": "system-prompt",
       "term": "System prompt",
       "aliases": [
-        "system instruction",
-        "developer instruction"
+        "system instruction"
       ],
       "category": "foundations",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "broader",
@@ -876,33 +1633,111 @@
         {
           "type": "related",
           "target": "guardrail"
-        },
-        {
-          "type": "related",
-          "target": "llm-agent"
         }
       ],
       "sources": [
         {
-          "title": "System instructions",
-          "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/system-instruction-introduction",
-          "note": "Explains system instructions as developer-provided guidance for model role, goals, rules, context, style, and output format."
-        },
-        {
-          "title": "Simple agents with LlmAgent",
-          "url": "https://adk.dev/agents/llm-agents/",
-          "note": "Documents the ADK instruction field used to guide an LlmAgent's identity, behavior, and tool use."
+          "title": "Chapter 3 · A prompt is only part of what the model receives",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#useful-context",
+          "note": "Places system guidance alongside the user request and other context."
         }
       ],
       "sections": {
         "Simple definition": "Developer-provided instructions that set a model's role, rules, and behavior for a request or conversation.",
-        "Working definition": "A system prompt, also called a system instruction in some APIs, is higher-priority developer guidance supplied alongside user input. It commonly defines the agent's purpose, behavioral rules, tool-routing guidance, tone, constraints, and expected output format.",
+        "Working definition": "Instructions supplied by the application or platform to set the model’s role, behavior, and constraints. APIs can distinguish system and developer messages with different priorities; their names and precedence are product-specific.",
         "Why it matters": "System prompts provide a consistent operating frame across many user messages. Clear instructions reduce ambiguity and improve behavior, but they remain model inputs rather than an unbreakable security boundary.",
         "Example": "A shopping agent's system prompt says to use the catalog tool for product facts, never invent prices, request confirmation before purchases, and answer concisely.",
         "Common confusion": "A system prompt can guide behavior but cannot guarantee policy enforcement or keep embedded secrets safe. High-impact constraints should also be enforced through permissions, validation, callbacks, and guardrails.",
-        "Study-group notes": "Week 1 described the system prompt as the agent's job description: identity, hard rules, behavioral guidelines, routing logic, and output expectations."
-      },
-      "introduced_in": "week-01"
+        "Study-group notes": "Chapters 1–3 place persistent instructions inside the assembled model context. Instructions guide behavior; enforcement belongs to the surrounding system."
+      }
+    },
+    {
+      "id": "test-case",
+      "term": "Test case",
+      "aliases": [
+        "eval case",
+        "evaluation case"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Follow one case through an evaluation",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
+          "note": "Defines the term and its role in the chapter’s examples."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "fixture"
+        },
+        {
+          "type": "related",
+          "target": "trial"
+        },
+        {
+          "type": "related",
+          "target": "grader"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        },
+        {
+          "type": "related",
+          "target": "evaluation-suite"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "A defined request, known starting state, and criteria for deciding whether the system succeeds.",
+        "Working definition": "A test case specifies the task an agent will receive, the starting files or data, and the checks or quality criteria used to assess it. It should also make relevant permissions and allowed effects clear. The same case can be run repeatedly as separate trials.",
+        "Why it matters": "Writing a case before execution prevents success from being redefined to fit the result and makes comparisons more meaningful.",
+        "Example": "Start from a fresh disposable repository. Ask for a demo app with a header and two cards. Require expected files, a passing build, an understandable layout, and no publication.",
+        "Common confusion": "A prompt alone may leave the starting state and success conditions unspecified. An agent’s statement that it finished is a claim to check, not a sufficient success criterion.",
+        "Study-group notes": "For a Skill case, include realistic prompts and necessary inputs. A captured conversation is a useful starting point but must be reviewed before treating it as a correct reference."
+      }
+    },
+    {
+      "id": "tool-call",
+      "term": "Tool call",
+      "aliases": [
+        "function call",
+        "tool request"
+      ],
+      "category": "agent-systems",
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "relations": [
+        {
+          "type": "related",
+          "target": "tool"
+        },
+        {
+          "type": "related",
+          "target": "agentic-loop"
+        },
+        {
+          "type": "related",
+          "target": "runtime"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Chapter 1 · Tools",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#tools",
+          "note": "Current chapter treatment and teaching distinctions."
+        }
+      ],
+      "sections": {
+        "Simple definition": "A structured model request to use a named tool with specific arguments.",
+        "Working definition": "A tool call identifies an operation and its inputs. The application or runtime routes the request; tool code or a hosted service executes it and returns a result, which may be data, status, or an error.",
+        "Why it matters": "This boundary separates a proposed action from an executed one and explains how new evidence enters the next model call.",
+        "Example": "The model requests search_files(query=\"parser\"); software runs the search and returns matching file paths.",
+        "Common confusion": "A tool definition describes a capability; a tool call requests one use; a tool result reports what happened. Producing the call does not perform the operation.",
+        "Study-group notes": "Chapter 1 follows the complete definition → call → execution → result round trip."
+      }
     },
     {
       "id": "tool",
@@ -913,7 +1748,7 @@
       ],
       "category": "agent-systems",
       "status": "published",
-      "last_reviewed": "2026-07-12",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "related",
@@ -934,14 +1769,9 @@
       ],
       "sources": [
         {
-          "title": "Custom Tools for ADK",
-          "url": "https://adk.dev/tools-custom/",
-          "note": "Defines a tool as a specific capability that lets an agent perform developer-defined actions beyond text generation."
-        },
-        {
-          "title": "A practical guide to building agents",
-          "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
-          "note": "Distinguishes data, action, and orchestration tools and explains how tools extend an agent through external systems."
+          "title": "Chapter 1 · Tool",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#tools",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {
@@ -950,9 +1780,152 @@
         "Why it matters": "Tools connect model reasoning to current data and real effects. Clear names, descriptions, schemas, narrow permissions, predictable outputs, and useful errors strongly affect whether an agent behaves reliably and safely.",
         "Example": "A `lookup_order(order_id)` tool accepts an order identifier and returns structured shipment status. The model chooses whether and how to request it, while application code performs the actual lookup.",
         "Common confusion": "The LLM does not directly execute a Python function or API. It produces a request; the framework or application decides whether to allow the request, runs the tool, and adds the result to the next model context.",
-        "Study-group notes": "Week 1 emphasized the full protocol: schema shown to the model → structured tool request → framework execution → result returned as a new observation."
-      },
-      "introduced_in": "week-01"
+        "Study-group notes": "Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system."
+      }
+    },
+    {
+      "id": "trace",
+      "term": "Trace",
+      "aliases": [
+        "execution trace",
+        "agent trace"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Inspect the trace and the artifacts",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
+          "note": "Defines the term and its role in the chapter’s examples."
+        },
+        {
+          "title": "Chapter 5: Read a documented command-start event",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-trace-example",
+          "note": "Explains why an item.started event with in_progress status is evidence of a start, not success."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "trial"
+        },
+        {
+          "type": "related",
+          "target": "artifact"
+        },
+        {
+          "type": "related",
+          "target": "grader"
+        },
+        {
+          "type": "related",
+          "target": "runtime"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "A captured record of execution events, such as model responses, tool calls, and tool results.",
+        "Working definition": "A trace records the events and data an instrumented runtime captures during a run. It can show attempted operations, returned results, and reported statuses, but its coverage is limited by the capture system. Inspect completion events and independent outcome evidence rather than relying on an action’s appearance in the record.",
+        "Why it matters": "Traces help locate where an agent diverged from the intended process and distinguish a missing tool, rejected operation, failed command, or misleading final report.",
+        "Example": "A saved command-start event says a build is in progress. Find the corresponding completion result and inspect the produced app before grading the build as successful.",
+        "Common confusion": "A trace is not proof of external reality and does not reveal all hidden reasoning. A booking claim in a trace does not establish that a reservation exists; missing data remains unknown.",
+        "Study-group notes": "Chapter 5 captures Codex events as JSONL and compares them with files and final state. Keep claims, recorded events, and independently verified outcomes distinct."
+      }
+    },
+    {
+      "id": "trial",
+      "term": "Trial",
+      "aliases": [
+        "eval trial",
+        "evaluation trial"
+      ],
+      "category": "control-and-quality",
+      "sources": [
+        {
+          "title": "Chapter 5: Run a trial and save the evidence",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
+          "note": "Defines the term and its role in the chapter’s examples."
+        }
+      ],
+      "relations": [
+        {
+          "type": "related",
+          "target": "test-case"
+        },
+        {
+          "type": "related",
+          "target": "fixture"
+        },
+        {
+          "type": "related",
+          "target": "trace"
+        },
+        {
+          "type": "related",
+          "target": "artifact"
+        },
+        {
+          "type": "related",
+          "target": "grader"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        }
+      ],
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "sections": {
+        "Simple definition": "One attempt at running a defined test case.",
+        "Working definition": "A trial executes a test case once from its intended starting state. Capture its trace, outputs, errors, and outcome, together with model/runtime versions, instructions, tools, and permissions. Repeating a case produces multiple trials that may behave differently.",
+        "Why it matters": "Separating cases from attempts makes variability visible and prevents a single successful run from standing in for reliability.",
+        "Example": "Run the same app request three times, resetting the repository each time. If two builds pass and one fails, report two of three successful build checks and investigate the failure.",
+        "Common confusion": "A case describes what to test; a trial is one execution of it. Retries inside one agent run are not automatically independent trials, and starting a command does not prove it completed.",
+        "Study-group notes": "Save command exit status and error output as well as structured events. A blocked or failed trial is still useful evidence and should not silently disappear from the results."
+      }
+    },
+    {
+      "id": "verification",
+      "term": "Verification",
+      "aliases": [
+        "final check"
+      ],
+      "category": "control-and-quality",
+      "status": "published",
+      "last_reviewed": "2026-10-16",
+      "relations": [
+        {
+          "type": "related",
+          "target": "guardrail"
+        },
+        {
+          "type": "related",
+          "target": "completion-criteria"
+        },
+        {
+          "type": "related",
+          "target": "evaluation"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Chapter 3 · Boundaries and verification",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#boundaries-verification",
+          "note": "Current chapter treatment and teaching distinctions."
+        }
+      ],
+      "sections": {
+        "Simple definition": "Checking a result against observable evidence that can show it is wrong or incomplete.",
+        "Working definition": "Verification compares the delivered work with a relevant signal: tests, source evidence, reconciled figures, required sections, or a rendered reference. The signal should be capable of disagreeing with the agent’s claim of completion.",
+        "Why it matters": "Without a checkable result, confident completion can hide missing requirements or errors.",
+        "Example": "Reproduce a failing test, apply the fix, and rerun the same test before reporting success.",
+        "Common confusion": "Asking “Are you finished?” is another assertion, not independent evidence. Verification of one result is also different from an eval across repeatable tasks and trials.",
+        "Study-group notes": "Chapter 3 introduces observable checks; Chapter 5 develops gates and systematic evaluation."
+      }
     },
     {
       "id": "workflow",
@@ -963,7 +1936,7 @@
       ],
       "category": "agent-systems",
       "status": "published",
-      "last_reviewed": "2026-07-27",
+      "last_reviewed": "2026-10-16",
       "relations": [
         {
           "type": "contrasts_with",
@@ -984,9 +1957,9 @@
       ],
       "sources": [
         {
-          "title": "Anthropic — Building effective agents",
-          "url": "https://www.anthropic.com/engineering/building-effective-agents",
-          "note": "Defines workflows as systems where LLMs and tools are orchestrated through predefined code paths and presents five common workflow patterns."
+          "title": "Chapter 1 · Workflow",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
+          "note": "Current chapter treatment and teaching distinctions."
         }
       ],
       "sections": {

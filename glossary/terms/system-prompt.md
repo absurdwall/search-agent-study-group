@@ -1,28 +1,12 @@
 ---
 id: system-prompt
 term: System prompt
-aliases: ["system instruction", "developer instruction"]
+aliases: ["system instruction"]
 category: foundations
 status: published
-introduced_in: week-01
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "broader", "target": "prompt"},
-  {"type": "related", "target": "guardrail"},
-  {"type": "related", "target": "llm-agent"}
-]
-sources: [
-  {
-    "title": "System instructions",
-    "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/system-instruction-introduction",
-    "note": "Explains system instructions as developer-provided guidance for model role, goals, rules, context, style, and output format."
-  },
-  {
-    "title": "Simple agents with LlmAgent",
-    "url": "https://adk.dev/agents/llm-agents/",
-    "note": "Documents the ADK instruction field used to guide an LlmAgent's identity, behavior, and tool use."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "broader", "target": "prompt"}, {"type": "related", "target": "guardrail"}]
+sources: [{"title": "Chapter 3 · A prompt is only part of what the model receives", "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#useful-context", "note": "Places system guidance alongside the user request and other context."}]
 ---
 
 ## Simple definition
@@ -31,7 +15,7 @@ Developer-provided instructions that set a model's role, rules, and behavior for
 
 ## Working definition
 
-A system prompt, also called a system instruction in some APIs, is higher-priority developer guidance supplied alongside user input. It commonly defines the agent's purpose, behavioral rules, tool-routing guidance, tone, constraints, and expected output format.
+Instructions supplied by the application or platform to set the model’s role, behavior, and constraints. APIs can distinguish system and developer messages with different priorities; their names and precedence are product-specific.
 
 ## Why it matters
 
@@ -47,4 +31,4 @@ A system prompt can guide behavior but cannot guarantee policy enforcement or ke
 
 ## Study-group notes
 
-Week 1 described the system prompt as the agent's job description: identity, hard rules, behavioral guidelines, routing logic, and output expectations.
+Chapters 1–3 place persistent instructions inside the assembled model context. Instructions guide behavior; enforcement belongs to the surrounding system.

@@ -3,46 +3,32 @@ id: model-context-protocol
 term: Model Context Protocol (MCP)
 aliases: ["MCP", "Model Context Protocol"]
 category: frameworks-and-protocols
+sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Model Context Protocol", "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#mcp", "note": "Provides the definition, integration motivation, participant roles, primitives, connection walkthrough, and host-policy boundary."}, {"title": "Chapter 2: A Map of Modern Agent Systems — How the pieces relate", "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#how-the-pieces-relate", "note": "Places MCP beside instruction files and Skills without making it a required stage of the agentic loop."}]
+relations: [{"type": "related", "target": "tool"}, {"type": "contrasts_with", "target": "skill"}]
 status: published
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "google-adk"},
-  {"type": "related", "target": "tool"}
-]
-sources: [
-  {
-    "title": "Model Context Protocol specification overview",
-    "url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/index",
-    "note": "Defines the protocol's JSON-RPC base, lifecycle, capabilities, and client-server responsibilities."
-  },
-  {
-    "title": "MCP server features",
-    "url": "https://modelcontextprotocol.io/specification/2025-06-18/server/index",
-    "note": "Documents the tools, resources, and prompts that MCP servers can expose to clients."
-  }
-]
+last_reviewed: 2026-10-16
 ---
 
 ## Simple definition
 
-An open protocol connecting AI applications to tools, resources, and prompt templates through client-server interfaces.
+An open protocol for AI applications to discover external capabilities and exchange requests, results, and related messages.
 
 ## Working definition
 
-Model Context Protocol is an open client-server protocol for exposing capabilities and context to AI applications through standardized messages. MCP servers can offer tools, resources, and prompt templates; MCP clients negotiate capabilities and make those primitives available to the host application or agent.
+MCP provides a shared client–server boundary between an AI application and capability providers. The host is the application; a client is its protocol component for one server; the server exposes underlying capabilities. Servers can offer Tools (operations), Resources (readable information), and Prompts (reusable interaction templates). The protocol standardizes discovery and message exchange, while the host decides what reaches the model and how results enter the workflow.
 
 ## Why it matters
 
-MCP separates capability providers from agent frameworks. A compatible server can expose the same integration to multiple clients, reducing one-off adapter code and giving applications a consistent discovery and invocation model.
+A reusable boundary reduces duplicated integration work when many applications connect to many providers. It is useful when interoperability or discovery matters, but adds little to a simple local function that needs neither.
 
 ## Example
 
-An inventory MCP server exposes `search_products` and `get_stock` tools. ADK connects as an MCP client and presents their schemas to an agent alongside local tools.
+A study-group editor connects to an approved issue-tracker server, discovers its issue-query tool, exposes that tool to the model, and brings the returned issue data into the chapter-review loop.
 
 ## Common confusion
 
-MCP is a protocol, not an agent framework or a tool by itself. It defines how clients and servers communicate; the server implements capabilities, the host manages connections, and the model may decide when to request an exposed tool.
+MCP is neither an agent nor one tool. A server may run locally, and an MCP Prompt is not a packaged Skill. The protocol does not supply the task method, choose trustworthy providers, grant permission for every action, or make every advertised capability model-visible.
 
 ## Study-group notes
 
-Week 1 used the “standard plug shape” analogy: an MCP client such as ADK connects to a server and makes its remote capabilities available in the agent's tool set.
+Chapter 2 separates connection from method and execution. Its M×N-to-M+N analogy describes integration structure, not a guaranteed cost formula. Follow the chapter’s versioned discussion rather than treating every older protocol lifecycle as permanent.

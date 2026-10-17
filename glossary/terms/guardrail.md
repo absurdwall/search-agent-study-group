@@ -3,47 +3,32 @@ id: guardrail
 term: Guardrail
 aliases: ["agent guardrail", "safety guardrail", "action gate"]
 category: control-and-quality
+sources: [{"title": "Chapter 5: Guardrails", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#guardrails", "note": "Defines the term and its role in the chapter’s examples."}, {"title": "Chapter 5: Prevent an accidental overwrite", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#action-boundary", "note": "Shows why an early check and enforcement inside the acting tool serve complementary purposes."}]
+relations: [{"type": "related", "target": "hook"}, {"type": "related", "target": "tool"}, {"type": "related", "target": "evaluation"}, {"type": "related", "target": "callback"}]
 status: published
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "callback"},
-  {"type": "related", "target": "llm-agent"},
-  {"type": "related", "target": "tool"}
-]
-sources: [
-  {
-    "title": "A practical guide to building agents",
-    "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
-    "note": "Describes layered model-based and rules-based guardrails for managing privacy, safety, relevance, and tool risk."
-  },
-  {
-    "title": "Callbacks: Observe, Customize, and Control Agent Behavior",
-    "url": "https://adk.dev/callbacks/",
-    "note": "Shows how ADK callbacks can enforce safety rules, validate data, and prevent disallowed operations."
-  }
-]
+last_reviewed: 2026-10-16
 ---
 
 ## Simple definition
 
-A check or control that keeps an agent's inputs, outputs, and actions within defined boundaries.
+A check or limit intended to keep an agent’s behavior within a rule.
 
 ## Working definition
 
-A guardrail is a policy-enforcing check or control applied to an agent's inputs, outputs, tool requests, state, or execution. Guardrails can use deterministic rules, model-based checks, permissions, approvals, or callback code to keep behavior within safety, policy, quality, and scope boundaries.
+A guardrail checks or restricts access, operations, content, approvals, or outputs. It may be implemented through permissions, tool behavior, validators, hooks, or an approval flow. Its protection depends on its timing, coverage, authority, and failure policy; a framework’s named Guardrails API covers only particular kinds of checks.
 
 ## Why it matters
 
-Agents can follow variable paths and may affect external systems. Layered guardrails help reject unsafe requests, constrain risky actions, validate results, limit runaway behavior, and escalate work when automation should stop.
+Agents can affect files and external systems. Appropriate controls can limit those effects and provide feedback for safe recovery when an operation is denied or cannot be validated.
 
 ## Example
 
-Before an order tool runs, a code-level guardrail verifies that the cart is valid, the user explicitly confirmed the purchase, and the proposed amount is within the agent's authorization limit.
+A pre-tool check rejects moving a receipt onto an occupied path. The move tool also enforces a no-replace rule at execution, protecting the original if the earlier check becomes stale or is skipped.
 
 ## Common confusion
 
-Prompt instructions alone are not strong enforcement, and guardrails do not replace authentication, authorization, least privilege, secure software design, or human oversight. They are one layer in a broader control system.
+A prompt stating a rule is not strong enforcement. A content scan can miss problems, an output check cannot undo a completed upload, and a validator error is not a passing check.
 
 ## Study-group notes
 
-Week 1 used callbacks to implement guardrails. The callback is the lifecycle hook; the guardrail is the boundary or policy enforced through that hook.
+Start with the rule, then choose a component with the information and authority to enforce it. Test allowed, denied, unavailable-validator, and safely incomplete outcomes separately.

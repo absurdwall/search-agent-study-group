@@ -4,24 +4,9 @@ term: Large language model (LLM)
 aliases: ["LLM", "language model"]
 category: foundations
 status: published
-introduced_in: week-01
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "context-window"},
-  {"type": "related", "target": "prompt"}
-]
-sources: [
-  {
-    "title": "A practical guide to building agents",
-    "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
-    "note": "Identifies the model as the component that supplies an agent's reasoning and decision-making rather than the whole agent system."
-  },
-  {
-    "title": "Understand and count tokens",
-    "url": "https://ai.google.dev/gemini-api/docs/tokens",
-    "note": "Explains token-based model inputs and outputs and the finite context window within which a model processes them."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "context-window"}, {"type": "related", "target": "prompt"}]
+sources: [{"title": "Chapter 1 · Large language model (LLM)", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#llm", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition
@@ -46,4 +31,4 @@ An LLM and an agent are not synonyms. A hosted model API may offer convenient fe
 
 ## Study-group notes
 
-Week 1 shorthand: `f(token_sequence) → output`. “No memory, tools, or loop” describes the bare model call; those capabilities come from the surrounding application or framework.
+Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system.

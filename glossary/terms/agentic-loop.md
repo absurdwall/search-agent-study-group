@@ -4,31 +4,9 @@ term: Agentic loop
 aliases: ["agent loop", "model-tool loop"]
 category: agent-systems
 status: published
-last_reviewed: 2026-07-27
-relations: [
-  {"type": "related", "target": "context-window"},
-  {"type": "related", "target": "react"},
-  {"type": "related", "target": "runtime"},
-  {"type": "uses", "target": "large-language-model"},
-  {"type": "uses", "target": "tool"}
-]
-sources: [
-  {
-    "title": "Claude Code Glossary — Agentic loop",
-    "url": "https://code.claude.com/docs/en/glossary#agentic-loop",
-    "note": "Defines Claude Code's product-specific loop as gathering context, taking action, verifying results, and repeating until done."
-  },
-  {
-    "title": "Claude Agent SDK — How the agent loop works",
-    "url": "https://code.claude.com/docs/en/agent-sdk/agent-loop",
-    "note": "Shows model evaluation, tool execution, returned results, repetition, and the final-answer exit."
-  },
-  {
-    "title": "OpenAI Agents SDK — Running agents",
-    "url": "https://openai.github.io/openai-agents-python/running_agents/",
-    "note": "Documents a framework loop that invokes a model, executes tool calls, appends results, and stops at configured final output."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "context-window"}, {"type": "related", "target": "react"}, {"type": "related", "target": "runtime"}, {"type": "uses", "target": "large-language-model"}, {"type": "uses", "target": "tool"}]
+sources: [{"title": "Chapter 1 · Agentic loop", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#agentic-loop", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

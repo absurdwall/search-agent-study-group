@@ -4,26 +4,9 @@ term: Context window
 aliases: ["model context window", "context limit"]
 category: foundations
 status: published
-introduced_in: week-01
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "large-language-model"},
-  {"type": "related", "target": "prompt"},
-  {"type": "related", "target": "session"},
-  {"type": "related", "target": "skill"}
-]
-sources: [
-  {
-    "title": "Understand and count tokens",
-    "url": "https://ai.google.dev/gemini-api/docs/tokens",
-    "note": "Defines a model's context window as the token limit covering the input it can receive and the output it can generate."
-  },
-  {
-    "title": "Long context",
-    "url": "https://ai.google.dev/gemini-api/docs/long-context",
-    "note": "Explains how finite context affects use cases, cost, latency, and strategies for providing relevant information."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "large-language-model"}, {"type": "related", "target": "prompt"}, {"type": "related", "target": "session"}, {"type": "related", "target": "skill"}]
+sources: [{"title": "Chapter 1 · Context window", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition
@@ -48,4 +31,4 @@ The context window is not durable memory. Information must be selected and place
 
 ## Study-group notes
 
-Week 1 emphasized the engineering tradeoff: give the model everything it needs while keeping the request focused enough to control cost, latency, and distraction.
+Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system.

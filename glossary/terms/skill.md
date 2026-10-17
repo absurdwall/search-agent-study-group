@@ -1,43 +1,34 @@
 ---
 id: skill
 term: Skill
-aliases: ["agent skill", "SKILL.md"]
+aliases: ["agent skill", "Agent Skills", "SKILL.md"]
 category: agent-systems
+sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Skills", "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills", "note": "Defines the portable package, SKILL.md, optional directories, discovery and activation, progressive disclosure, and neighboring concepts."}, {"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading", "note": "Applies the writing-for-agents review model to Skill descriptions, procedures, pointers, and completion criteria."}]
+relations: [{"type": "contrasts_with", "target": "instruction-file"}, {"type": "contrasts_with", "target": "tool"}, {"type": "contrasts_with", "target": "model-context-protocol"}, {"type": "related", "target": "skill-activation"}, {"type": "uses", "target": "progressive-disclosure"}]
 status: published
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "context-window"},
-  {"type": "related", "target": "llm-agent"}
-]
-sources: [
-  {
-    "title": "Skills for ADK agents",
-    "url": "https://adk.dev/skills/",
-    "note": "Defines an ADK Skill as a modular task-specific unit of instructions, resources, and tools that can be loaded incrementally."
-  }
-]
+last_reviewed: 2026-10-16
 ---
 
 ## Simple definition
 
-A modular package of task-specific instructions, resources, and tools that an agent can load when needed.
+A reusable package of procedural instructions and optional references, scripts, and assets that an agent can load when relevant.
 
 ## Working definition
 
-An agent Skill packages specialized guidance for a task or domain so it can be discovered and loaded incrementally. In ADK, a Skill can include metadata, instructions, reference resources, scripts, assets, and associated tools rather than requiring all domain knowledge to remain in the base prompt.
+A Skill packages a recognizable task method in a folder whose entry point is SKILL.md. Compact metadata supports discovery; the main instructions describe inputs, steps, decisions, boundaries, and outputs. References, scripts, and assets supply optional depth. A compatible client determines discovery locations, activation, access, and execution rules.
 
 ## Why it matters
 
-Skills organize expertise into reusable modules and reduce unnecessary context. They let an agent load detailed guidance only when relevant, improving maintainability and conserving context-window space.
+Skills preserve a team’s method without repeating a full playbook in every request or loading every procedure permanently. They can combine model judgment with maintained references and deterministic helpers.
 
 ## Example
 
-A recipe Skill exposes a short description for discovery and loads detailed dietary rules, tool instructions, and reference material only after the agent recognizes a recipe request.
+A documentation-review Skill directs the agent to read the chapter, consult a source policy, execute a link checker, apply a review rubric, and use a report template.
 
 ## Common confusion
 
-A Skill is not another agent. Loading one enriches the current agent's available instructions and resources; it does not inherently create a separate model call, execution loop, or isolated session.
+A Skill is neither one callable Tool nor another agent. It supplies a method; MCP supplies a connection, and tools perform operations. Following the package format does not guarantee identical activation or execution in every host.
 
 ## Study-group notes
 
-Week 1 used a simple two-tier `SKILL.md` pattern: short metadata always available, with fuller Markdown instructions loaded on demand. Current ADK Skills can also package resources and tools, and the feature is experimental as of this review.
+Chapter 2 provides the full introduction and three-level loading model. Chapter 4 remains planned overall, with bounded delivery and writing examples rather than a complete authoring guide.

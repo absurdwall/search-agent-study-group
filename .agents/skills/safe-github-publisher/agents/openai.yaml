@@ -1,0 +1,4 @@
+interface:
+  display_name: "Safe GitHub Publisher"
+  short_description: "Review staged files and history before publication"
+  default_prompt: "Use $safe-github-publisher to prepare this repository for publication and show the exact commit and destination for review."

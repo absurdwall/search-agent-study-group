@@ -2,6 +2,23 @@
 
 The intended publishing target is GitHub Pages.
 
+## Current Repository
+
+- Repository: <https://github.com/absurdwall/search-agent-study-group>
+- Pages source: branch `main`, folder `/ (root)`.
+- GitHub Pages URL: <https://absurdwall.github.io/search-agent-study-group/>
+- Primary local remote: `origin`.
+- The temporary repository, <https://github.com/tykswtr/search-agent-study-group-backup>,
+  is retained as `backup-origin` for recovery; it is no longer a publishing target.
+
+The original `absurdwall` repository is the primary repository again. Its Pages
+configuration was verified through the GitHub API on October 17, 2026: branch
+`main`, folder `/ (root)`. Migration preserves the six commits added on the
+temporary repository, including the Chapter 5 demos and Site version 14 sync.
+The historical [Site version 14 source sync](site-sync-v14.md) record retains
+the backup URLs used at that time; current navigation and glossary citations
+point to the original repository and Pages URL above.
+
 ## Default Model
 
 - Keep publishable files in the repository root.

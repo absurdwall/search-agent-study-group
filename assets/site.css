@@ -147,6 +147,14 @@ a:focus-visible {
   color: var(--link-hover);
 }
 
+.side-toc a[aria-current="page"],
+.mobile-book-nav a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 760;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .site-name {
   color: var(--ink);
   font-size: 0.95rem;

@@ -4,25 +4,9 @@ term: ReAct
 aliases: ["ReAct loop", "Reason + Act"]
 category: agent-systems
 status: published
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "agent"},
-  {"type": "uses", "target": "large-language-model"},
-  {"type": "related", "target": "llm-agent"},
-  {"type": "uses", "target": "tool"}
-]
-sources: [
-  {
-    "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
-    "url": "https://arxiv.org/abs/2210.03629",
-    "note": "Introduces the ReAct paradigm of interleaving reasoning traces with task-specific actions and observations."
-  },
-  {
-    "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
-    "url": "https://research.google/blog/react-synergizing-reasoning-and-acting-in-language-models/",
-    "note": "Provides the Google Research explanation of how reasoning, actions, and environmental observations work together."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "agent"}, {"type": "uses", "target": "large-language-model"}, {"type": "uses", "target": "tool"}]
+sources: [{"title": "Chapter 1 · ReAct", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition
@@ -47,4 +31,4 @@ ReAct names an interaction pattern, not a requirement to expose private model re
 
 ## Study-group notes
 
-Week 1 visualized ReAct as Reason → Act → Observe → repeat, with tool results becoming new context for the next model call.
+Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system.

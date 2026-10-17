@@ -1,0 +1,26 @@
+[
+  {
+    "file": ".agents/skills/safe-workspace-organizer/scripts/runtime.py",
+    "same_ast_as_desktop_runtime": true,
+    "source_sha256": "7875599340ff76cf1084c28ec9c8a4afa3d3cd39a797eeaec671eb9b084cc462",
+    "observed_runtime_sha256": "5515c21ccf4167c4d277bef3f2edb2dbb1211c76ca90342131a964ac01d74a77"
+  },
+  {
+    "file": ".agents/skills/safe-workspace-organizer/scripts/operations.py",
+    "same_ast_as_desktop_runtime": true,
+    "source_sha256": "174e6f2e292b7e1cd3c2b9a1f1db94bc17ddc4dd8bf045e7b62c8dc1333a80b4",
+    "observed_runtime_sha256": "1ef57503e837b869822597fbac5c8cee10aaf982b615fe4b7320759490f1b56c"
+  },
+  {
+    "file": ".agents/skills/safe-workspace-organizer/scripts/setup.py",
+    "same_ast_as_desktop_runtime": true,
+    "source_sha256": "2400addff74aaec0fdae95671dcdd0882e98b76e35c50d01efd5f70bb07ffd74",
+    "observed_runtime_sha256": "fd01d51d855b38a9735276eef1ce53fbf88fa71a0d85221318b332e23099d5e9"
+  },
+  {
+    "file": ".agents/skills/safe-github-publisher/scripts/publisher.py",
+    "same_ast_as_desktop_runtime": true,
+    "source_sha256": "034c9dbe9f0b461c8c100102f2b88e2f5630a1c09ee7e18fc8b6b0cdb97aa9be",
+    "observed_runtime_sha256": "034c9dbe9f0b461c8c100102f2b88e2f5630a1c09ee7e18fc8b6b0cdb97aa9be"
+  }
+]

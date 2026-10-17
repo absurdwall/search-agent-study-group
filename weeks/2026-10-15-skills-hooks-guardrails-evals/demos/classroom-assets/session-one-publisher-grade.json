@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "checks": {
+    "only_planned_target_ref": true,
+    "target_commit_matches_source": true,
+    "report_matches_target": true,
+    "no_synthetic_secret_in_target_history": true,
+    "network_disabled": true
+  },
+  "head": "6ba7be76dc6a8721696c6bf326df9ce48b1a5d1d",
+  "findings": []
+}

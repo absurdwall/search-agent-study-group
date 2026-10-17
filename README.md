@@ -26,7 +26,7 @@ working agreement.
 - [Animal Orders exercise intro](presentations/orders-agent-intro.html)
 - [MCP, Skills, and Subagents](presentations/mcp-skills-subagents-intro.html)
 
-Both decks are self-contained HTML files and work offline in a modern browser.
+The decks are self-contained HTML files and work offline in a modern browser.
 
 ## Local preview
 
@@ -36,5 +36,19 @@ From the repository root:
 python3 -m http.server 8765
 ```
 
-Then open <http://127.0.0.1:8765/>. The public site is published from `main`
-through GitHub Pages.
+Then open <http://127.0.0.1:8765/>. The public site is intended to publish from
+`main` through GitHub Pages at the study group website linked above.
+
+## Published Site source
+
+The repository root contains the website synchronized from ChatGPT Site version
+14 (October 16, 2026), including Chapter 5, Extended Reading, book navigation,
+and the refreshed glossary. The original project folders and history remain.
+
+- [Current ChatGPT Site](https://search-agent-study-group.absurdgreaterfool.chatgpt.site/)
+- [Source provenance, hosting differences, and validation](meta/site-sync-v14.md)
+
+No build is required for the static website. After editing glossary Markdown,
+run `python3 glossary/build_glossary.py` and then
+`python3 glossary/build_glossary.py --check`. The existing
+`python3 scripts/build_glossary.py` command forwards to the same builder.

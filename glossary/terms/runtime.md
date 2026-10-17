@@ -4,26 +4,9 @@ term: Runtime
 aliases: ["agent runtime", "execution runtime"]
 category: frameworks-and-protocols
 status: published
-last_reviewed: 2026-07-27
-relations: [
-  {"type": "related", "target": "agentic-harness"},
-  {"type": "related", "target": "agentic-loop"},
-  {"type": "related", "target": "context-window"},
-  {"type": "related", "target": "runner"},
-  {"type": "uses", "target": "tool"}
-]
-sources: [
-  {
-    "title": "OpenAI Agents SDK — Running agents",
-    "url": "https://openai.github.io/openai-agents-python/running_agents/",
-    "note": "Shows a framework-specific Runner that invokes models, executes tool calls, appends results, and returns final output."
-  },
-  {
-    "title": "Google ADK — Runtime event loop",
-    "url": "https://adk.dev/runtime/event-loop/",
-    "note": "Documents ADK's broader Runtime, Runner, execution logic, services, events, state changes, callbacks, and resumptions."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "agentic-harness"}, {"type": "related", "target": "agentic-loop"}, {"type": "related", "target": "context-window"}, {"type": "related", "target": "runner"}, {"type": "uses", "target": "tool"}]
+sources: [{"title": "Chapter 1 · Runtime", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

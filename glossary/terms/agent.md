@@ -4,27 +4,9 @@ term: Agent
 aliases: ["AI agent", "LLM agent"]
 category: agent-systems
 status: published
-introduced_in: week-01
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "uses", "target": "large-language-model"},
-  {"type": "uses", "target": "react"},
-  {"type": "uses", "target": "tool"},
-  {"type": "narrower", "target": "llm-agent"},
-  {"type": "narrower", "target": "sub-agent"}
-]
-sources: [
-  {
-    "title": "Building effective agents",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
-    "note": "Supports the distinction between model-directed agents and systems that follow predefined code paths."
-  },
-  {
-    "title": "A practical guide to building agents",
-    "url": "https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/",
-    "note": "Describes agents as systems that independently complete tasks by managing workflow execution and selecting tools within guardrails."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "narrower", "target": "sub-agent"}, {"type": "uses", "target": "large-language-model"}, {"type": "uses", "target": "react"}, {"type": "uses", "target": "tool"}]
+sources: [{"title": "Chapter 1 · Agent", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#agentic-loop", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition
@@ -49,4 +31,4 @@ Adding an LLM to an application does not automatically make it an agent. The def
 
 ## Study-group notes
 
-Week 1 shorthand: “Agent = LLM + Tools + Loop.” The formula is a useful architectural map, while the fuller definition emphasizes that the model controls the evolving path.
+Chapter 1 uses this concept in its provider-neutral map of the minimal agentic system.

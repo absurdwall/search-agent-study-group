@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-16T18:48:01.731688+00:00",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "mcp__workspace_organizer__move_file",
+  "tool_use_id": "exec-75038f2c-a576-4947-843a-fd7edfc990f0",
+  "session_id": "01a14608-fb39-74d1-9b42-fce527b10ce3",
+  "turn_id": "01a1460a-b2f8-73d0-8744-f629d698978d",
+  "model": "gpt-6-luna",
+  "arguments": {
+    "operation_id": "a7b844709e904b3e8714e55cb7909fc4",
+    "source": "Inbox/agenda-copy-a.txt",
+    "destination": "Organized/Notes/Workshop packing list - copy A.txt",
+    "expected_sha256": "26b2855f6c7fd85d5974be4c2532f61a60cbea2272478537786f190c7ddceea8"
+  },
+  "decision": "deny",
+  "reason": "Refusal: Destination Organized/Notes/Workshop packing list - copy A.txt already exists. Preserve both files; inspect again and choose a new name."
+}

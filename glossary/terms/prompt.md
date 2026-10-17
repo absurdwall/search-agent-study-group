@@ -1,50 +1,34 @@
 ---
 id: prompt
 term: Prompt
-aliases: ["model prompt", "LLM prompt"]
+aliases: ["user prompt", "prompting"]
 category: foundations
 status: published
-introduced_in: week-01
-last_reviewed: 2026-07-12
-relations: [
-  {"type": "related", "target": "context-window"},
-  {"type": "related", "target": "large-language-model"},
-  {"type": "narrower", "target": "system-prompt"}
-]
-sources: [
-  {
-    "title": "Introduction to prompting",
-    "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/introduction-prompt-design",
-    "note": "Defines prompts as requests to a language model and describes instructions, context, examples, and system instructions as prompt components."
-  },
-  {
-    "title": "Prompt design strategies",
-    "url": "https://ai.google.dev/gemini-api/docs/prompting-strategies",
-    "note": "Provides current guidance for structuring instructions and context to elicit useful model responses."
-  }
-]
+last_reviewed: 2026-10-16
+relations: [{"type": "related", "target": "context"}, {"type": "related", "target": "system-prompt"}]
+sources: [{"title": "Chapter 3 · Start with the result", "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#result-first", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition
 
-The instructions, context, examples, and input supplied to a model for one request.
+A question, instruction, or goal that asks the model or agent for a result.
 
 ## Working definition
 
-A prompt is the information presented to a language model to shape one generation. Depending on the API and framework, it can include system instructions, user messages, conversation history, examples, retrieved context, tool results, and the current task.
+In this book’s practical prompting chapter, a prompt states what is wanted in the current interaction. Useful details can include the goal, context, intended output, and boundaries; include only the components that change the work.
 
 ## Why it matters
 
-The model can only respond to the information and instructions available in its current request. Prompt content and structure therefore affect relevance, reliability, formatting, tool selection, cost, and how much room remains in the context window.
+An observable result and a meaningful check give the agent clearer direction than a long list of prescribed steps.
 
 ## Example
 
-Before an agent answers “add the cheapest one,” its framework assembles system instructions, earlier product-search results, the prior assistant response, and the newest user message into the information sent to the model.
+“Draft a one-page project update for leadership from this plan, flag unknowns, and do not publish it.”
 
 ## Common confusion
 
-A prompt is not necessarily just the sentence typed by the user. In an agent application, the user message is often one component of a larger request assembled by the framework.
+Prompt is sometimes used broadly for all model input. Here the current request is distinguished from the wider assembled context, including system guidance, tools, history, and retrieved material.
 
 ## Study-group notes
 
-Week 1 treated the prompt as “everything the LLM sees for this call,” while noting that APIs may transmit some components, such as tool schemas, in separate structured fields.
+Chapter 3 replaces the old Week 1 shorthand “everything the model sees” with a practical request-versus-context distinction.
