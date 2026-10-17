@@ -6,7 +6,7 @@ category: agent-systems
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "related", "target": "agent"}, {"type": "uses", "target": "large-language-model"}, {"type": "uses", "target": "tool"}]
-sources: [{"title": "Chapter 1 · ReAct", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop", "note": "Current chapter treatment and teaching distinctions."}]
+sources: [{"title": "Chapter 1 · ReAct", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

@@ -3,7 +3,7 @@ id: guardrail
 term: Guardrail
 aliases: ["agent guardrail", "safety guardrail", "action gate"]
 category: control-and-quality
-sources: [{"title": "Chapter 5: Guardrails", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#guardrails", "note": "Defines the term and its role in the chapter’s examples."}, {"title": "Chapter 5: Prevent an accidental overwrite", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#action-boundary", "note": "Shows why an early check and enforcement inside the acting tool serve complementary purposes."}]
+sources: [{"title": "Chapter 5: Guardrails", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#guardrails", "note": "Defines the term and its role in the chapter’s examples."}, {"title": "Chapter 5: Prevent an accidental overwrite", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#action-boundary", "note": "Shows why an early check and enforcement inside the acting tool serve complementary purposes."}]
 relations: [{"type": "related", "target": "hook"}, {"type": "related", "target": "tool"}, {"type": "related", "target": "evaluation"}, {"type": "related", "target": "callback"}]
 status: published
 last_reviewed: 2026-10-16

@@ -6,7 +6,7 @@ category: foundations
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "broader", "target": "prompt"}, {"type": "related", "target": "guardrail"}]
-sources: [{"title": "Chapter 3 · A prompt is only part of what the model receives", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/prompting-and-context/#useful-context", "note": "Places system guidance alongside the user request and other context."}]
+sources: [{"title": "Chapter 3 · A prompt is only part of what the model receives", "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#useful-context", "note": "Places system guidance alongside the user request and other context."}]
 ---
 
 ## Simple definition

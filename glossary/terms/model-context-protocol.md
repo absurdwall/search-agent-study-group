@@ -3,7 +3,7 @@ id: model-context-protocol
 term: Model Context Protocol (MCP)
 aliases: ["MCP", "Model Context Protocol"]
 category: frameworks-and-protocols
-sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Model Context Protocol", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#mcp", "note": "Provides the definition, integration motivation, participant roles, primitives, connection walkthrough, and host-policy boundary."}, {"title": "Chapter 2: A Map of Modern Agent Systems — How the pieces relate", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#how-the-pieces-relate", "note": "Places MCP beside instruction files and Skills without making it a required stage of the agentic loop."}]
+sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Model Context Protocol", "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#mcp", "note": "Provides the definition, integration motivation, participant roles, primitives, connection walkthrough, and host-policy boundary."}, {"title": "Chapter 2: A Map of Modern Agent Systems — How the pieces relate", "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#how-the-pieces-relate", "note": "Places MCP beside instruction files and Skills without making it a required stage of the agentic loop."}]
 relations: [{"type": "related", "target": "tool"}, {"type": "contrasts_with", "target": "skill"}]
 status: published
 last_reviewed: 2026-10-16

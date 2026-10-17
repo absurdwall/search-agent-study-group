@@ -6,7 +6,7 @@ category: foundations
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "related", "target": "context-window"}, {"type": "related", "target": "prompt"}]
-sources: [{"title": "Chapter 1 · Large language model (LLM)", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#llm", "note": "Current chapter treatment and teaching distinctions."}]
+sources: [{"title": "Chapter 1 · Large language model (LLM)", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#llm", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

@@ -4,16 +4,20 @@ The intended publishing target is GitHub Pages.
 
 ## Current Repository
 
-- Repository: <https://github.com/tykswtr/search-agent-study-group-backup>
+- Repository: <https://github.com/absurdwall/search-agent-study-group>
 - Pages source: branch `main`, folder `/ (root)`.
-- GitHub Pages URL: <https://tykswtr.github.io/search-agent-study-group-backup/>
-- The previous repository is retained locally as the `legacy-origin` remote.
+- GitHub Pages URL: <https://absurdwall.github.io/search-agent-study-group/>
+- Primary local remote: `origin`.
+- The temporary repository, <https://github.com/tykswtr/search-agent-study-group-backup>,
+  is retained as `backup-origin` for recovery; it is no longer a publishing target.
 
-The public Pages URL returned HTTP 200 during the October 16, 2026 source sync.
-The repository still uses the root-based layout described here. Exact Pages
-settings could not be inspected through the blocked GitHub connector; confirm
-`main` / root before merging or changing deployment settings. See
-[Site version 14 source sync](site-sync-v14.md) for provenance and checks.
+The original `absurdwall` repository is the primary repository again. Its Pages
+configuration was verified through the GitHub API on October 17, 2026: branch
+`main`, folder `/ (root)`. Migration preserves the six commits added on the
+temporary repository, including the Chapter 5 demos and Site version 14 sync.
+The historical [Site version 14 source sync](site-sync-v14.md) record retains
+the backup URLs used at that time; current navigation and glossary citations
+point to the original repository and Pages URL above.
 
 ## Default Model
 

@@ -6,7 +6,7 @@ category: control-and-quality
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "related", "target": "guardrail"}, {"type": "related", "target": "completion-criteria"}, {"type": "related", "target": "evaluation"}]
-sources: [{"title": "Chapter 3 · Boundaries and verification", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/prompting-and-context/#boundaries-verification", "note": "Current chapter treatment and teaching distinctions."}]
+sources: [{"title": "Chapter 3 · Boundaries and verification", "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#boundaries-verification", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

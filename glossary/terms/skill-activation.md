@@ -3,7 +3,7 @@ id: skill-activation
 term: Skill activation
 aliases: ["Skill invocation", "implicit activation", "explicit invocation"]
 category: agent-systems
-sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Skills", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#skills", "note": "Discovery and activation separates catalog metadata, implicit or explicit selection, core instructions, and later support-file access."}, {"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading", "note": "Connects model-invoked and user-invoked documents to context load and human cognitive load."}]
+sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Skills", "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills", "note": "Discovery and activation separates catalog metadata, implicit or explicit selection, core instructions, and later support-file access."}, {"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading", "note": "Connects model-invoked and user-invoked documents to context load and human cognitive load."}]
 relations: [{"type": "related", "target": "skill"}, {"type": "related", "target": "progressive-disclosure"}, {"type": "related", "target": "context-load"}, {"type": "related", "target": "cognitive-load"}, {"type": "related", "target": "context-pointer"}]
 status: published
 last_reviewed: 2026-10-16

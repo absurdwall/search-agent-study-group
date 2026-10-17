@@ -3,7 +3,7 @@ id: skill
 term: Skill
 aliases: ["agent skill", "Agent Skills", "SKILL.md"]
 category: agent-systems
-sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Skills", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#skills", "note": "Defines the portable package, SKILL.md, optional directories, discovery and activation, progressive disclosure, and neighboring concepts."}, {"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading", "note": "Applies the writing-for-agents review model to Skill descriptions, procedures, pointers, and completion criteria."}]
+sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Skills", "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills", "note": "Defines the portable package, SKILL.md, optional directories, discovery and activation, progressive disclosure, and neighboring concepts."}, {"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading", "note": "Applies the writing-for-agents review model to Skill descriptions, procedures, pointers, and completion criteria."}]
 relations: [{"type": "contrasts_with", "target": "instruction-file"}, {"type": "contrasts_with", "target": "tool"}, {"type": "contrasts_with", "target": "model-context-protocol"}, {"type": "related", "target": "skill-activation"}, {"type": "uses", "target": "progressive-disclosure"}]
 status: published
 last_reviewed: 2026-10-16

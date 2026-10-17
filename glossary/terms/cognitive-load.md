@@ -3,7 +3,7 @@ id: cognitive-load
 term: Cognitive load
 aliases: ["human discovery burden"]
 category: control-and-quality
-sources: [{"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading", "note": "The two loads defines the human discovery burden and compares user-invoked with model-invoked Skills."}]
+sources: [{"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading", "note": "The two loads defines the human discovery burden and compares user-invoked with model-invoked Skills."}]
 relations: [{"type": "contrasts_with", "target": "context-load"}, {"type": "related", "target": "skill-activation"}, {"type": "related", "target": "context-pointer"}]
 status: published
 last_reviewed: 2026-10-16

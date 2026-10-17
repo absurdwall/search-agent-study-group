@@ -3,7 +3,7 @@ id: trial
 term: Trial
 aliases: ["eval trial", "evaluation trial"]
 category: control-and-quality
-sources: [{"title": "Chapter 5: Run a trial and save the evidence", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow", "note": "Defines the term and its role in the chapter’s examples."}]
+sources: [{"title": "Chapter 5: Run a trial and save the evidence", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow", "note": "Defines the term and its role in the chapter’s examples."}]
 relations: [{"type": "related", "target": "test-case"}, {"type": "related", "target": "fixture"}, {"type": "related", "target": "trace"}, {"type": "related", "target": "artifact"}, {"type": "related", "target": "grader"}, {"type": "related", "target": "evaluation"}]
 status: published
 last_reviewed: 2026-10-16

@@ -6,7 +6,7 @@ category: agent-systems
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "related", "target": "agentic-loop"}, {"type": "related", "target": "agentic-harness"}, {"type": "related", "target": "workflow"}]
-sources: [{"title": "Chapter 3 · Beyond prompting", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/prompting-and-context/#beyond-prompting", "note": "Current chapter treatment and teaching distinctions."}]
+sources: [{"title": "Chapter 3 · Beyond prompting", "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#beyond-prompting", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

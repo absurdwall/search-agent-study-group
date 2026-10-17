@@ -3,7 +3,7 @@ id: lifecycle-event
 term: Lifecycle event
 aliases: ["hook event", "agent lifecycle event"]
 category: control-and-quality
-sources: [{"title": "Chapter 5: Where hooks fit in the lifecycle", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#hook-events", "note": "Defines the term and its role in the chapter’s examples."}]
+sources: [{"title": "Chapter 5: Where hooks fit in the lifecycle", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#hook-events", "note": "Defines the term and its role in the chapter’s examples."}]
 relations: [{"type": "related", "target": "hook"}, {"type": "related", "target": "runtime"}, {"type": "related", "target": "session"}, {"type": "related", "target": "tool"}]
 status: published
 last_reviewed: 2026-10-16

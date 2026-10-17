@@ -3,7 +3,7 @@ id: hook
 term: Hook
 aliases: ["agent hook", "lifecycle hook"]
 category: control-and-quality
-sources: [{"title": "Chapter 5: Hooks", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#hooks", "note": "Defines the term and its role in the chapter’s examples."}]
+sources: [{"title": "Chapter 5: Hooks", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#hooks", "note": "Defines the term and its role in the chapter’s examples."}]
 relations: [{"type": "related", "target": "lifecycle-event"}, {"type": "related", "target": "callback"}, {"type": "related", "target": "runtime"}, {"type": "related", "target": "guardrail"}, {"type": "related", "target": "evaluation"}]
 status: published
 last_reviewed: 2026-10-16

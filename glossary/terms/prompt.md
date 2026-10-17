@@ -6,7 +6,7 @@ category: foundations
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "related", "target": "context"}, {"type": "related", "target": "system-prompt"}]
-sources: [{"title": "Chapter 3 · Start with the result", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/prompting-and-context/#result-first", "note": "Current chapter treatment and teaching distinctions."}]
+sources: [{"title": "Chapter 3 · Start with the result", "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#result-first", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

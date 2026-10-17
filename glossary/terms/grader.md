@@ -3,7 +3,7 @@ id: grader
 term: Grader
 aliases: ["eval grader", "evaluation grader"]
 category: control-and-quality
-sources: [{"title": "Chapter 5: Apply graders that match the question", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow", "note": "Defines the term and its role in the chapter’s examples."}, {"title": "Chapter 5: File presence is a limited check", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-grader-example", "note": "Uses a file-existence grader to illustrate how a passing check can establish much less than task success."}]
+sources: [{"title": "Chapter 5: Apply graders that match the question", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow", "note": "Defines the term and its role in the chapter’s examples."}, {"title": "Chapter 5: File presence is a limited check", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-grader-example", "note": "Uses a file-existence grader to illustrate how a passing check can establish much less than task success."}]
 relations: [{"type": "related", "target": "rubric"}, {"type": "related", "target": "trial"}, {"type": "related", "target": "trace"}, {"type": "related", "target": "artifact"}, {"type": "related", "target": "evaluation"}]
 status: published
 last_reviewed: 2026-10-16

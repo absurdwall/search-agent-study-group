@@ -6,7 +6,7 @@ category: control-and-quality
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "related", "target": "guardrail"}, {"type": "related", "target": "runner"}, {"type": "related", "target": "tool"}]
-sources: [{"title": "Chapter 5 · Hooks", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#hooks", "note": "Relates hooks to framework callback mechanisms."}]
+sources: [{"title": "Chapter 5 · Hooks", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#hooks", "note": "Relates hooks to framework callback mechanisms."}]
 ---
 
 ## Simple definition

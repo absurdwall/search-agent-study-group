@@ -3,7 +3,7 @@ id: fixture
 term: Fixture
 aliases: ["test fixture", "eval fixture"]
 category: control-and-quality
-sources: [{"title": "Chapter 5: Write a case before running the agent", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow", "note": "Defines the term and its role in the chapter’s examples."}]
+sources: [{"title": "Chapter 5: Write a case before running the agent", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow", "note": "Defines the term and its role in the chapter’s examples."}]
 relations: [{"type": "related", "target": "test-case"}, {"type": "related", "target": "trial"}, {"type": "related", "target": "artifact"}, {"type": "related", "target": "evaluation"}]
 status: published
 last_reviewed: 2026-10-16

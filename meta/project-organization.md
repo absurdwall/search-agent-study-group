@@ -2,7 +2,7 @@
 
 This repository supports the Agent Study Group: selected weekly material, collaborative study, and published HTML slide decks.
 
-Repository: <https://github.com/tykswtr/search-agent-study-group-backup>. The local working branch is `main`; the previous repository is retained as the `legacy-origin` remote. See `meta/publishing.md` for GitHub Pages setup.
+Repository: <https://github.com/absurdwall/search-agent-study-group>. The local working branch is `main`; the temporary backup repository is retained as the `backup-origin` remote. The original repository is again the primary `origin` remote. See `meta/publishing.md` for GitHub Pages setup.
 
 The project borrows the `raw / wiki / meta` style from the LLM-wiki pattern, but the main unit here is the weekly meeting and its published deck. For now, keep the structure simple: `weeks/`, `raw/`, `meta/`, and `templates/`.
 

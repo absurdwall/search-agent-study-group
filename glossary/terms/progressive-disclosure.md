@@ -3,7 +3,7 @@ id: progressive-disclosure
 term: Progressive disclosure
 aliases: ["on-demand loading", "staged loading"]
 category: agent-systems
-sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Skills", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#skills", "note": "The Progressive disclosure subsection explains metadata, core instructions, support material, and available versus model-visible information."}, {"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading", "note": "Explains why progressive disclosure protects the document’s information hierarchy as well as its context budget."}]
+sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Skills", "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills", "note": "The Progressive disclosure subsection explains metadata, core instructions, support material, and available versus model-visible information."}, {"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading", "note": "Explains why progressive disclosure protects the document’s information hierarchy as well as its context budget."}]
 relations: [{"type": "related", "target": "skill"}, {"type": "related", "target": "skill-activation"}, {"type": "related", "target": "context-window"}, {"type": "related", "target": "context-pointer"}, {"type": "related", "target": "context-load"}]
 status: published
 last_reviewed: 2026-10-16

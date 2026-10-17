@@ -6,7 +6,7 @@ category: frameworks-and-protocols
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "related", "target": "context-window"}, {"type": "related", "target": "runner"}]
-sources: [{"title": "Chapter 1 · Context", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context", "note": "Distinguishes records stored by the application from model-visible information."}]
+sources: [{"title": "Chapter 1 · Context", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context", "note": "Distinguishes records stored by the application from model-visible information."}]
 ---
 
 ## Simple definition

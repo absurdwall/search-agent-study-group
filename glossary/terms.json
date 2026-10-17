@@ -33,7 +33,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Agent",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#agentic-loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#agentic-loop",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -82,7 +82,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Agentic harness",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -130,7 +130,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Agentic loop",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#agentic-loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#agentic-loop",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -154,12 +154,12 @@
       "sources": [
         {
           "title": "Chapter 5: Inspect the trace and the artifacts",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
           "note": "Defines the term and its role in the chapter’s examples."
         },
         {
           "title": "Chapter 5: Three files remain. Did all three originals survive?",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#evidence-lab",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#evidence-lab",
           "note": "Shows why checking file counts alone misses changed contents or lost duplicate copies."
         }
       ],
@@ -223,7 +223,7 @@
       "sources": [
         {
           "title": "Chapter 5 · Hooks",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#hooks",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#hooks",
           "note": "Relates hooks to framework callback mechanisms."
         }
       ],
@@ -246,7 +246,7 @@
       "sources": [
         {
           "title": "Chapter 4: Writing Great Skills — Writing for Agents",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
           "note": "The two loads defines the human discovery burden and compares user-invoked with model-invoked Skills."
         }
       ],
@@ -302,7 +302,7 @@
       "sources": [
         {
           "title": "Chapter 1 · When the context window fills",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -327,17 +327,17 @@
       "sources": [
         {
           "title": "Chapter 4: Writing Great Skills — Writing for Agents",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
           "note": "Completion criteria and the practical review pass call for checkable, demanding, exhaustive finish lines."
         },
         {
           "title": "Chapter 4: Writing Great Skills — A practical delivery path",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#workflow-heading",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#workflow-heading",
           "note": "The code-review stage distinguishes repository standards from fulfillment of the agreed specification."
         },
         {
           "title": "Chapter 2: A Map of Modern Agent Systems — Skills",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#skills",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills",
           "note": "The documentation-review walkthrough supplies concrete validation and reporting steps used in the illustrative example."
         }
       ],
@@ -380,7 +380,7 @@
       "sources": [
         {
           "title": "Chapter 4: Writing Great Skills — Writing for Agents",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
           "note": "The two loads defines context load, and the hierarchy and pruning sections explain how authoring choices affect it."
         }
       ],
@@ -424,7 +424,7 @@
       "sources": [
         {
           "title": "Chapter 4: Writing Great Skills — Writing for Agents",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
           "note": "Context pointers and the practical review pass require a description of the material and the distinct trigger branches that should load it."
         }
       ],
@@ -488,7 +488,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Context window",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -528,7 +528,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Context",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -552,7 +552,7 @@
       "sources": [
         {
           "title": "Chapter 5: What belongs in a small evaluation suite?",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-suite",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-suite",
           "note": "Defines the term and its role in the chapter’s examples."
         }
       ],
@@ -601,7 +601,7 @@
       "sources": [
         {
           "title": "Chapter 5: Evals",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#evals",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#evals",
           "note": "Defines the term and its role in the chapter’s examples."
         }
       ],
@@ -669,7 +669,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Event loop",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -693,7 +693,7 @@
       "sources": [
         {
           "title": "Chapter 5: Write a case before running the agent",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
           "note": "Defines the term and its role in the chapter’s examples."
         }
       ],
@@ -778,12 +778,12 @@
       "sources": [
         {
           "title": "Chapter 5: Apply graders that match the question",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
           "note": "Defines the term and its role in the chapter’s examples."
         },
         {
           "title": "Chapter 5: File presence is a limited check",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-grader-example",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-grader-example",
           "note": "Uses a file-existence grader to illustrate how a passing check can establish much less than task success."
         }
       ],
@@ -832,12 +832,12 @@
       "sources": [
         {
           "title": "Chapter 5: Guardrails",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#guardrails",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#guardrails",
           "note": "Defines the term and its role in the chapter’s examples."
         },
         {
           "title": "Chapter 5: Prevent an accidental overwrite",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#action-boundary",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#action-boundary",
           "note": "Shows why an early check and enforcement inside the acting tool serve complementary purposes."
         }
       ],
@@ -881,7 +881,7 @@
       "sources": [
         {
           "title": "Chapter 5: Hooks",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#hooks",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#hooks",
           "note": "Defines the term and its role in the chapter’s examples."
         }
       ],
@@ -930,7 +930,7 @@
       "sources": [
         {
           "title": "Chapter 2: A Map of Modern Agent Systems — Instruction files",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#instruction-files",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#instruction-files",
           "note": "Defines instruction files and explains discovery, composition, scoping, host-specific precedence, and the limits of natural-language guidance."
         }
       ],
@@ -986,7 +986,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Large language model (LLM)",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#llm",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#llm",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -1010,7 +1010,7 @@
       "sources": [
         {
           "title": "Chapter 5: Where hooks fit in the lifecycle",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#hook-events",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#hook-events",
           "note": "Defines the term and its role in the chapter’s examples."
         }
       ],
@@ -1122,7 +1122,7 @@
       "sources": [
         {
           "title": "Chapter 3 · Beyond prompting",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/prompting-and-context/#beyond-prompting",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#beyond-prompting",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -1146,12 +1146,12 @@
       "sources": [
         {
           "title": "Chapter 2: A Map of Modern Agent Systems — Model Context Protocol",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#mcp",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#mcp",
           "note": "Provides the definition, integration motivation, participant roles, primitives, connection walkthrough, and host-policy boundary."
         },
         {
           "title": "Chapter 2: A Map of Modern Agent Systems — How the pieces relate",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#how-the-pieces-relate",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#how-the-pieces-relate",
           "note": "Places MCP beside instruction files and Skills without making it a required stage of the agentic loop."
         }
       ],
@@ -1187,12 +1187,12 @@
       "sources": [
         {
           "title": "Chapter 2: A Map of Modern Agent Systems — Skills",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#skills",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills",
           "note": "The Progressive disclosure subsection explains metadata, core instructions, support material, and available versus model-visible information."
         },
         {
           "title": "Chapter 4: Writing Great Skills — Writing for Agents",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
           "note": "Explains why progressive disclosure protects the document’s information hierarchy as well as its context budget."
         }
       ],
@@ -1252,7 +1252,7 @@
       "sources": [
         {
           "title": "Chapter 3 · Start with the result",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/prompting-and-context/#result-first",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#result-first",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -1292,7 +1292,7 @@
       "sources": [
         {
           "title": "Chapter 1 · ReAct",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -1316,7 +1316,7 @@
       "sources": [
         {
           "title": "Chapter 5: Apply graders that match the question",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
           "note": "Defines the term and its role in the chapter’s examples."
         }
       ],
@@ -1376,7 +1376,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Harness, runtime, Runner, and event loop",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -1424,7 +1424,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Runtime",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -1459,7 +1459,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Context",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
           "note": "Distinguishes records stored by the application from model-visible information."
         }
       ],
@@ -1484,12 +1484,12 @@
       "sources": [
         {
           "title": "Chapter 2: A Map of Modern Agent Systems — Skills",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#skills",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills",
           "note": "Discovery and activation separates catalog metadata, implicit or explicit selection, core instructions, and later support-file access."
         },
         {
           "title": "Chapter 4: Writing Great Skills — Writing for Agents",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
           "note": "Connects model-invoked and user-invoked documents to context load and human cognitive load."
         }
       ],
@@ -1538,12 +1538,12 @@
       "sources": [
         {
           "title": "Chapter 2: A Map of Modern Agent Systems — Skills",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#skills",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#skills",
           "note": "Defines the portable package, SKILL.md, optional directories, discovery and activation, progressive disclosure, and neighboring concepts."
         },
         {
           "title": "Chapter 4: Writing Great Skills — Writing for Agents",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading",
           "note": "Applies the writing-for-agents review model to Skill descriptions, procedures, pointers, and completion criteria."
         }
       ],
@@ -1603,7 +1603,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Keep context efficient",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context",
           "note": "Introduces delegation into a separate context and returning findings."
         }
       ],
@@ -1638,7 +1638,7 @@
       "sources": [
         {
           "title": "Chapter 3 · A prompt is only part of what the model receives",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/prompting-and-context/#useful-context",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#useful-context",
           "note": "Places system guidance alongside the user request and other context."
         }
       ],
@@ -1662,7 +1662,7 @@
       "sources": [
         {
           "title": "Chapter 5: Follow one case through an evaluation",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
           "note": "Defines the term and its role in the chapter’s examples."
         }
       ],
@@ -1726,7 +1726,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Tools",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#tools",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#tools",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -1770,7 +1770,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Tool",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#tools",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#tools",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -1794,12 +1794,12 @@
       "sources": [
         {
           "title": "Chapter 5: Inspect the trace and the artifacts",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
           "note": "Defines the term and its role in the chapter’s examples."
         },
         {
           "title": "Chapter 5: Read a documented command-start event",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-trace-example",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-trace-example",
           "note": "Explains why an item.started event with in_progress status is evidence of a start, not success."
         }
       ],
@@ -1847,7 +1847,7 @@
       "sources": [
         {
           "title": "Chapter 5: Run a trial and save the evidence",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow",
           "note": "Defines the term and its role in the chapter’s examples."
         }
       ],
@@ -1914,7 +1914,7 @@
       "sources": [
         {
           "title": "Chapter 3 · Boundaries and verification",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/prompting-and-context/#boundaries-verification",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/prompting-and-context/#boundaries-verification",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],
@@ -1958,7 +1958,7 @@
       "sources": [
         {
           "title": "Chapter 1 · Workflow",
-          "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#beyond-minimal-loop",
+          "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#beyond-minimal-loop",
           "note": "Current chapter treatment and teaching distinctions."
         }
       ],

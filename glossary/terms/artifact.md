@@ -3,7 +3,7 @@ id: artifact
 term: Artifact
 aliases: ["output artifact", "generated artifact"]
 category: control-and-quality
-sources: [{"title": "Chapter 5: Inspect the trace and the artifacts", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-workflow", "note": "Defines the term and its role in the chapter’s examples."}, {"title": "Chapter 5: Three files remain. Did all three originals survive?", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#evidence-lab", "note": "Shows why checking file counts alone misses changed contents or lost duplicate copies."}]
+sources: [{"title": "Chapter 5: Inspect the trace and the artifacts", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-workflow", "note": "Defines the term and its role in the chapter’s examples."}, {"title": "Chapter 5: Three files remain. Did all three originals survive?", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#evidence-lab", "note": "Shows why checking file counts alone misses changed contents or lost duplicate copies."}]
 relations: [{"type": "related", "target": "trace"}, {"type": "related", "target": "fixture"}, {"type": "related", "target": "trial"}, {"type": "related", "target": "grader"}, {"type": "related", "target": "evaluation"}]
 status: published
 last_reviewed: 2026-10-16

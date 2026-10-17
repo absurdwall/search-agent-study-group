@@ -6,7 +6,7 @@ category: agent-systems
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "related", "target": "tool"}, {"type": "related", "target": "agentic-loop"}, {"type": "related", "target": "runtime"}]
-sources: [{"title": "Chapter 1 · Tools", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#tools", "note": "Current chapter treatment and teaching distinctions."}]
+sources: [{"title": "Chapter 1 · Tools", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#tools", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition

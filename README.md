@@ -3,7 +3,7 @@
 Public website and teaching-materials workspace for a weekly study group on
 agentic AI systems.
 
-- [Study group website](https://tykswtr.github.io/search-agent-study-group-backup/)
+- [Study group website](https://absurdwall.github.io/search-agent-study-group/)
 - [Learner lab](https://github.com/absurdwall/search-agent-lab)
 - [Notion resources](https://outrageous-tango-920.notion.site/Agent-Study-Group-Home-1566f86e0b05832bbbac817d762daad8?pvs=74)
 
@@ -26,7 +26,7 @@ working agreement.
 - [Animal Orders exercise intro](presentations/orders-agent-intro.html)
 - [MCP, Skills, and Subagents](presentations/mcp-skills-subagents-intro.html)
 
-Both decks are self-contained HTML files and work offline in a modern browser.
+The decks are self-contained HTML files and work offline in a modern browser.
 
 ## Local preview
 
@@ -37,7 +37,7 @@ python3 -m http.server 8765
 ```
 
 Then open <http://127.0.0.1:8765/>. The public site is intended to publish from
-`main` through GitHub Pages; enable Pages for the new repository first.
+`main` through GitHub Pages at the study group website linked above.
 
 ## Published Site source
 

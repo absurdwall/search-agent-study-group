@@ -3,7 +3,7 @@ id: evaluation-suite
 term: Evaluation suite
 aliases: ["eval suite", "test suite"]
 category: control-and-quality
-sources: [{"title": "Chapter 5: What belongs in a small evaluation suite?", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/guardrails-hooks-and-evals/#eval-suite", "note": "Defines the term and its role in the chapter’s examples."}]
+sources: [{"title": "Chapter 5: What belongs in a small evaluation suite?", "url": "https://absurdwall.github.io/search-agent-study-group/book/guardrails-hooks-and-evals/#eval-suite", "note": "Defines the term and its role in the chapter’s examples."}]
 relations: [{"type": "related", "target": "test-case"}, {"type": "related", "target": "trial"}, {"type": "related", "target": "evaluation"}, {"type": "related", "target": "grader"}, {"type": "related", "target": "guardrail"}]
 status: published
 last_reviewed: 2026-10-16

@@ -3,7 +3,7 @@ id: context-pointer
 term: Context pointer
 aliases: ["document pointer", "reference pointer"]
 category: control-and-quality
-sources: [{"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading", "note": "Context pointers and the practical review pass require a description of the material and the distinct trigger branches that should load it."}]
+sources: [{"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading", "note": "Context pointers and the practical review pass require a description of the material and the distinct trigger branches that should load it."}]
 relations: [{"type": "related", "target": "progressive-disclosure"}, {"type": "related", "target": "skill-activation"}, {"type": "related", "target": "instruction-file"}, {"type": "related", "target": "completion-criteria"}]
 status: published
 last_reviewed: 2026-10-16

@@ -9,17 +9,16 @@ export of the classroom lesson and recorded results, including its historical
 improvement example. [INSTRUCTOR.md](INSTRUCTOR.md) contains presenter notes and
 earlier machine-specific rehearsals. Neither requires access to the shared Page.
 
-## Get the demo branch
+## Get the demo materials
 
 For a fresh checkout containing these materials:
 
 ```sh
-git clone --branch codex/ch5-teaching-skills https://github.com/tykswtr/search-agent-study-group-backup.git
-cd search-agent-study-group-backup
+git clone --branch main https://github.com/absurdwall/search-agent-study-group.git
+cd search-agent-study-group
 ```
 
-The repository's default branch may not contain this demo yet. Keep the selected
-branch when following the steps below.
+The demos are included on `main`; no separate demo branch is required.
 
 ## Requirements
 

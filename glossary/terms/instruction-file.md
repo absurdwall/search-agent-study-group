@@ -3,7 +3,7 @@ id: instruction-file
 term: Instruction file
 aliases: ["AGENTS.md", "CLAUDE.md", "project instructions"]
 category: agent-systems
-sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Instruction files", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/modern-agent-systems/#instruction-files", "note": "Defines instruction files and explains discovery, composition, scoping, host-specific precedence, and the limits of natural-language guidance."}]
+sources: [{"title": "Chapter 2: A Map of Modern Agent Systems — Instruction files", "url": "https://absurdwall.github.io/search-agent-study-group/book/modern-agent-systems/#instruction-files", "note": "Defines instruction files and explains discovery, composition, scoping, host-specific precedence, and the limits of natural-language guidance."}]
 relations: [{"type": "contrasts_with", "target": "skill"}, {"type": "related", "target": "prompt"}, {"type": "related", "target": "context-window"}, {"type": "related", "target": "context-pointer"}]
 status: published
 last_reviewed: 2026-10-16

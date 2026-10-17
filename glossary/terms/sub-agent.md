@@ -6,7 +6,7 @@ category: agent-systems
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "broader", "target": "agent"}, {"type": "related", "target": "runner"}]
-sources: [{"title": "Chapter 1 · Keep context efficient", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context", "note": "Introduces delegation into a separate context and returning findings."}]
+sources: [{"title": "Chapter 1 · Keep context efficient", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context", "note": "Introduces delegation into a separate context and returning findings."}]
 ---
 
 ## Simple definition

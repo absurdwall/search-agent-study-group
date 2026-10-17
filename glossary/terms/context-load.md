@@ -3,7 +3,7 @@ id: context-load
 term: Context load
 aliases: ["always-loaded context cost"]
 category: control-and-quality
-sources: [{"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/writing-great-skills/#writing-for-agents-heading", "note": "The two loads defines context load, and the hierarchy and pruning sections explain how authoring choices affect it."}]
+sources: [{"title": "Chapter 4: Writing Great Skills — Writing for Agents", "url": "https://absurdwall.github.io/search-agent-study-group/book/writing-great-skills/#writing-for-agents-heading", "note": "The two loads defines context load, and the hierarchy and pruning sections explain how authoring choices affect it."}]
 relations: [{"type": "contrasts_with", "target": "cognitive-load"}, {"type": "related", "target": "context-window"}, {"type": "related", "target": "progressive-disclosure"}, {"type": "related", "target": "instruction-file"}]
 status: published
 last_reviewed: 2026-10-16

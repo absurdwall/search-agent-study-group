@@ -6,7 +6,7 @@ category: foundations
 status: published
 last_reviewed: 2026-10-16
 relations: [{"type": "related", "target": "context"}, {"type": "related", "target": "context-window"}, {"type": "related", "target": "session"}]
-sources: [{"title": "Chapter 1 · When the context window fills", "url": "https://tykswtr.github.io/search-agent-study-group-backup/book/minimal-agentic-system/#context", "note": "Current chapter treatment and teaching distinctions."}]
+sources: [{"title": "Chapter 1 · When the context window fills", "url": "https://absurdwall.github.io/search-agent-study-group/book/minimal-agentic-system/#context", "note": "Current chapter treatment and teaching distinctions."}]
 ---
 
 ## Simple definition
