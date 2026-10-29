@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search Agent Study Group · Season 1 Celebration</title>
+  <meta name="description" content="Season 1 celebration: four months of learning together, memories, an interactive glossary, and thanks to our explorers.">
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="glossary.css">
+</head>
+<body>
+  <a class="skip-link" href="#deck">Skip to slides</a>
+
+  <header class="topbar">
+    <a class="brand" href="#s1"><span class="brand-mark">SA</span><span>Search Agent Study Group</span></a>
+    <span class="draft-pill" title="Placeholder content marked [like this] will be replaced">DRAFT</span>
+    <div class="topbar-actions">
+      <a class="icon-btn" href="../../../" aria-label="Back to study group" title="Back to study group" style="text-decoration:none">↩</a>
+      <button class="icon-btn" id="btn-overview" aria-label="Toggle overview (O)" title="Overview (O)">▦</button>
+      <button class="icon-btn" id="btn-full" aria-label="Toggle fullscreen (F)" title="Fullscreen (F)">⛶</button>
+    </div>
+  </header>
+
+  <main id="deck" class="deck" aria-live="polite">
+
+    <!-- 1 · COVER -->
+    <section class="slide poster" id="s1" data-title="Welcome">
+      <h1 class="sr-only">Search Agent Study Group: 4 Months of Learning Together, July to October 2026</h1>
+      <div class="poster-bg" aria-hidden="true"></div>
+      <img class="poster-img" src="assets/cover.jpg" alt="Animal classmates and a friendly blue robot gather around a laptop at a lakeside table under a hanging sign reading Search Agent Study Group, 4 Months of Learning Together, July to October 2026. Signposts point to Agents, MCP, Skills, Subagents and Codex.">
+      <span class="sparkles" aria-hidden="true"></span>
+      <button class="start-hint" data-next>Begin the journey →</button>
+    </section>
+
+    <!-- 2 · WHY WE STARTED -->
+    <section class="slide split ahead why" id="s2" data-title="Why we started">
+      <div>
+        <p class="eyebrow">Why we started</p>
+        <h2>Where it all <mark class="hl">began</mark></h2>
+        <p class="why-lede">We had just wrapped up the Walmart hackathon on our neural ranking auto research project. It left us with three big questions:</p>
+        <div class="stack">
+          <article class="card"><h3><span class="n">01</span>What's the best way to use Wibey?</h3><p>Getting real, everyday leverage out of the tools we already have.</p></article>
+          <article class="card"><h3><span class="n">02</span>How do we write great skills?</h3><p>The kind that make an agent reliably good at our work.</p></article>
+          <article class="card"><h3><span class="n">03</span>Can agents work while we slack off?</h3><p>Let the agent do the work while we get away with a little slacking off.</p></article>
+        </div>
+        <p class="route-end"><b>★</b> The goal: learn together and become state-of-the-art experts at mastering agentic systems</p>
+      </div>
+      <figure class="crop crop-lab"><img src="assets/research-lab.webp" alt="A fox with glasses takes notes at a wooden desk while a friendly blue robot points at a chalkboard of charts, loops and a cloud server."></figure>
+    </section>
+
+    <!-- 3 · BY THE NUMBERS -->
+    <section class="slide" id="s3" data-title="By the numbers">
+      <p class="eyebrow">By the numbers · Jul 14 – Oct 23</p>
+      <h2>What <mark class="hl">four months</mark> looks like</h2>
+      <div class="stats">
+        <div class="stat"><strong data-count="15">15</strong><span>Weekly sessions</span></div>
+        <div class="stat"><strong data-count="13.2">13.2</strong><span>Hours of recordings</span></div>
+        <div class="stat"><strong data-count="33">33</strong><span>Unique attendees</span></div>
+        <div class="stat"><strong data-count="15">15</strong><span>Came to 5+ sessions</span></div>
+      </div>
+      <div class="bars" aria-label="Average Zoom attendance: Fridays 13.9, Tuesdays 7.7">
+        <div class="bar-row"><span>Friday avg</span><div class="bar"><i style="--w:100%"></i></div><b>13.9</b></div>
+        <div class="bar-row"><span>Tuesday avg</span><div class="bar"><i class="alt" style="--w:55%"></i></div><b>7.7</b></div>
+      </div>
+      <p class="note">Zoom host reports; attending = 5+ minutes. Tuesdays were in person (Hoboken), so Zoom counts understate real attendance, especially then. Sessions moved to Fridays on Sep 11.</p>
+      <div class="confetti" aria-hidden="true"></div>
+    </section>
+
+    <!-- 4 · ROUTE -->
+    <section class="slide" id="s4" data-title="Four sections">
+      <p class="eyebrow">The route · Jul 7 – Oct 27</p>
+      <h2>Four sections, <mark class="hl">one trail</mark></h2>
+      <div class="months">
+        <article class="month-card">
+          <span class="num">Section 1</span>
+          <h3>Hands-on with agents</h3>
+          <ul>
+            <li><b>0</b> Kickoff: Agent 101</li>
+            <li><b>1</b> Agent concepts</li>
+            <li><b>2</b> First agent with Google ADK</li>
+            <li><b>3</b> Orders agent and Phoenix traces</li>
+            <li><b>5</b> MCP, Skills and subagents lab</li>
+            <li><b>6</b> Our own mini Sparky</li>
+          </ul>
+        </article>
+        <article class="month-card">
+          <span class="num">Section 2</span>
+          <h3>The knowledge, systematically</h3>
+          <ul>
+            <li><b>4</b> MCP and Skills</li>
+            <li><b>7</b> Prompting for agents</li>
+            <li><b>14</b> Hooks, guardrails and evals</li>
+          </ul>
+        </article>
+        <article class="month-card">
+          <span class="num">Section 3</span>
+          <h3>Codex Master Class</h3>
+          <ul>
+            <li><b>9</b> App tour</li>
+            <li><b>10</b> Build a project together</li>
+            <li><b>11</b> Choosing models</li>
+            <li><b>12</b> Projects, worktrees and cloud</li>
+            <li><b>15</b> Final session</li>
+          </ul>
+        </article>
+        <article class="month-card">
+          <span class="num">Section 4</span>
+          <h3>Beyond the curriculum</h3>
+          <ul>
+            <li><b>8</b> Hugging Face incident</li>
+            <li><b>13</b> Data analysis with Codex</li>
+            <li><b>+</b> [Other topics]</li>
+          </ul>
+        </article>
+      </div>
+      <p class="route-end"><b>16</b> And today: the celebration</p>
+    </section>
+
+    <!-- 5 · SECTION 1a · TRACES -->
+    <section class="slide split shot-slide" id="s5" data-title="See through traces">
+      <div>
+        <p class="eyebrow">Section 1 · Hands-on with agents</p>
+        <h2>Basic concepts, then <mark class="hl">see through the traces</mark></h2>
+        <ul class="points">
+          <li><b>Weeks 0–1</b><span>Agent 101: a plain LLM call vs. an agent that reasons, acts and observes. Prompt vs. context vs. harness.</span></li>
+          <li><b>Weeks 2–3</b><span>Built a first Google ADK agent, then an orders agent from two plain Python tools.</span></li>
+          <li><b>The big unlock</b><span>Reading the Phoenix trace of every model and tool step: no more guessing what the agent did.</span></li>
+        </ul>
+      </div>
+      <figure class="shot tilt">
+        <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="assets/shot-phoenix.jpg" alt="Phoenix trace of the orders agent: a call_llm span, execute_tool list_orders, call_llm, execute_tool get_order, then a final answer listing the most recent order.">
+        <figcaption>Phoenix trace of our orders agent: model call, <code>list_orders</code>, model call, <code>get_order</code>, answer.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 6 · SECTION 1b · MINI SPARKY -->
+    <section class="slide split reverse shot-slide" id="s6" data-title="Mini Sparky">
+      <figure class="shot tilt">
+        <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="assets/shot-sparky.jpg" alt="A JupyterLab notebook from the sparky-demo project listing skills as short markdown files: auto-care, order-care, product-search, recipe-and-meal-planning and web-search.">
+        <figcaption>Our mini Sparky: skills are short markdown playbooks (9 to 43 lines each).</figcaption>
+      </figure>
+      <div>
+        <p class="eyebrow">Section 1 · Hands-on with agents</p>
+        <h2>And then we built our own <mark class="hl">mini Sparky</mark></h2>
+        <ul class="points">
+          <li><b>Week 5</b><span>One order-lookup task solved four ways, compared on traces and token cost.</span></li>
+          <li><b>Week 6</b><span>An orchestrator with catalog and purchase-history tools, sub-agents for product Q&amp;A and web search, and skills as markdown.</span></li>
+          <li><b>Why it matters</b><span>A real shopping-assistant shape, small enough to read end to end.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7 · SECTION 2 · BOOK -->
+    <section class="slide split shot-slide" id="s7" data-title="Systematic knowledge">
+      <div>
+        <p class="eyebrow">Section 2 · The knowledge</p>
+        <h2>We learned it <mark class="hl">systematically</mark></h2>
+        <ul class="points">
+          <li><b>Week 4</b><span>The minimal agent (LLM, tools, loop), then instruction files, MCP and Skills.</span></li>
+          <li><b>Week 7</b><span>Prompting for agents: goal, context, output, boundaries, and checks the agent can observe.</span></li>
+          <li><b>Week 14</b><span>Hooks, guardrails and evals: from a written method to controlled actions and checked results.</span></li>
+          <li><b>The book</b><span>A living study-group guide, <i>Understanding agent systems</i>, that grew with every session.</span></li>
+        </ul>
+      </div>
+      <figure class="shot tilt tall">
+        <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="assets/shot-book.jpg" alt="The study group guide Understanding agent systems, with a chapter list from the minimal agentic system to hooks, guardrails and evals.">
+        <figcaption>The study-group guide, with chapters from the minimal agent to guardrails and evals.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 8 · SECTION 3 · CODEX -->
+    <section class="slide split reverse shot-slide" id="s8" data-title="Codex Master Class">
+      <div class="shot-wrap">
+        <figure class="shot tilt">
+        <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="assets/shot-codex.jpg" alt="The Codex Masterclass workshop site: animal classmates and a robot guide on a trail, and a row of guide cards under the heading One useful step at a time.">
+        <figcaption>The Codex Masterclass workshop site we followed together.</figcaption>
+      </figure>
+        <figure class="pet" aria-label="Our own Codex pet, an octopus">
+          <img src="assets/pet-octopus.png" alt="A cheerful red clay-style octopus, the Codex pet we created in the Master Class.">
+          <figcaption>We made our own Codex pet!</figcaption>
+        </figure>
+      </div>
+      <div>
+        <p class="eyebrow">Section 3 · Codex Master Class</p>
+        <h2>Five sessions with <mark class="hl">Codex</mark></h2>
+        <ul class="points compact">
+          <li><b>Wk 9</b><span>App tour: projects, plugins and skills, dictation, sub-agents.</span></li>
+          <li><b>Wk 10</b><span>Build a dev project together over SSH on a shared cloud VM.</span></li>
+          <li><b>Wk 11</b><span>Choosing a model: intelligence, reasoning effort and cost.</span></li>
+          <li><b>Wk 12</b><span>Model defaults, worktrees, a scheduled task, cloud environments, the CLI.</span></li>
+          <li><b>Wk 15</b><span>The final Codex session.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 9 · SECTION 4 · INCIDENT -->
+    <section class="slide split shot-slide" id="s9" data-title="Beyond the curriculum">
+      <div>
+        <p class="eyebrow">Section 4 · Beyond the curriculum</p>
+        <h2>Beyond the <mark class="hl">curriculum</mark></h2>
+        <ul class="points">
+          <li><b>Week 8</b><span>We walked through the OpenAI / Hugging Face incident: evaluation agents that found a shared message board and worked around test limits.</span></li>
+          <li><b>Themes</b><span>Evaluation gaming, isolation and monitoring, agent-to-agent channels.</span></li>
+          <li><b>Week 13</b><span>Data analysis with Codex: from a plain-language business question to a dashboard on BigQuery data, with the SQL and evidence behind each chart.</span></li>
+          <li><b>And more</b><span>[Other topics we touched along the way]</span></li>
+        </ul>
+      </div>
+      <figure class="shot tilt">
+        <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="assets/shot-incident.jpg" alt="Slide from our Week 8 deck: One path from task to collective, showing a sandboxed agent stuck on an impossible task, finding an unsanctioned message board, and joining more than 1,200 agents collaborating to trick the scorer.">
+        <figcaption>From our Week 8 deck, based on the METR figure: one path from task to collective.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 10 · GLOSSARY -->
+    <section class="slide gloss-slide" id="s10" data-title="Glossary">
+      <div class="gloss-head">
+        <div>
+          <p class="eyebrow">Our vocabulary · <span id="g-count" aria-live="polite">72 terms</span></p>
+          <h2>The words we <mark class="hl">learned</mark></h2>
+        </div>
+        <div class="g-right">
+          <div class="g-switch" id="g-switch" role="group" aria-label="Choose a view">
+            <button type="button" data-view="stars" class="on" aria-selected="true"><span aria-hidden="true">✦</span> Stars</button>
+            <button type="button" data-view="table" aria-selected="false"><span aria-hidden="true">▦</span> Table</button>
+          </div>
+          <div class="g-tools">
+            <label class="g-search"><span class="sr-only">Search terms</span><input id="g-q" type="search" placeholder="Search terms…  (press /)" autocomplete="off"></label>
+            <button class="button g-surprise" id="g-surprise" type="button">Surprise me</button>
+          </div>
+        </div>
+      </div>
+      <div class="g-chips-row" style="display:flex;gap:.8rem;align-items:center;flex-wrap:wrap">
+        <div class="g-chips" id="g-chips" role="group" aria-label="Filter by topic"></div>
+      </div>
+      <div class="gloss-wall" id="g-wall" data-noswipe hidden></div>
+      <div class="g-stage g-stars" id="g-stars" data-noswipe></div>
+      <p class="g-empty" id="g-empty" hidden>No terms match. <button id="g-clear" type="button">Clear filters</button></p>
+    </section>
+
+    <!-- 11 · MEMORIES -->
+    <section class="slide gallery" id="s11" data-title="Memories">
+      <p class="eyebrow">Postcards from the trail</p>
+      <h2>Memories from the <mark class="hl">trail</mark></h2>
+      <div class="marquee" aria-label="Memories from the study group">
+        <div class="marquee-track">
+          <figure class="polaroid"><img class="top" src="assets/shot-phoenix.jpg" alt=""><figcaption>Wk 3 · Reading a Phoenix trace</figcaption></figure>
+          <figure class="polaroid"><img class="top" src="assets/shot-sparky.jpg" alt=""><figcaption>Wk 6 · Our mini Sparky</figcaption></figure>
+          <figure class="polaroid"><img class="top" src="assets/shot-book.jpg" alt=""><figcaption>The study-group guide</figcaption></figure>
+          <figure class="polaroid"><img class="top" src="assets/shot-incident.jpg" alt=""><figcaption>Wk 8 · The incident, at a glance</figcaption></figure>
+          <figure class="polaroid"><img class="top" src="assets/shot-codex.jpg" alt=""><figcaption>Wk 9–15 · Codex Master Class</figcaption></figure>
+          <figure class="polaroid"><img src="assets/cover.jpg" alt=""><figcaption>Wk 16 · Celebration</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 · AHEAD -->
+    <section class="slide split shot-slide ahead" id="s12" data-title="What's ahead">
+      <div>
+        <p class="eyebrow">Looking ahead</p>
+        <h2>The trail doesn't end <mark class="hl">here</mark></h2>
+        <div class="stack">
+          <article class="card"><h3><span class="n">01</span>Try our search-algo skills in Wibey</h3><p>Our Search Algo skill set is live in the MetaRegistry. Install it, try it out, and help us grow it.</p></article>
+          <article class="card"><h3><span class="n">02</span>Get more done, much faster</h3><p>100+ agents working for you at once, putting all 120M Wibey credits to use, and thousands of commits and PRs every month.</p></article>
+          <article class="card"><h3><span class="n">03</span>Auto research</h3><p>Agents that help improve our models automatically.</p></article>
+          <article class="card"><h3><span class="n">04</span>Zero-hassle workflows</h3><p>Workflows that document and manage your work for you.</p></article>
+        </div>
+      </div>
+      <figure class="shot tilt">
+        <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="assets/shot-metaregistry.jpg" alt="The search-algo plugin page in the Walmart MetaRegistry, showing the install command wibey --plugin-install search-algo and a README listing skills such as ab-test, ad-group and etl-pipelines.">
+        <figcaption><code>wibey --plugin-install search-algo</code> · <a href="https://dx.walmart.com/metaregistry/plugins/search-algo" target="_blank" rel="noopener">MetaRegistry: search-algo</a></figcaption>
+      </figure>
+    </section>
+
+    <!-- 13 · THANK YOU -->
+    <section class="slide split reverse thanks-slide" id="s13" data-title="Thank you">
+      <figure class="crop crop-robot"><img src="assets/cover.jpg" alt="" aria-hidden="true"></figure>
+      <div>
+        <p class="eyebrow">With gratitude</p>
+        <h2>Thank <mark class="hl">you</mark></h2>
+        <div class="thanks">
+          <article class="thank">
+            <h3>Nidhin</h3>
+            <p>Thank you for all the time, thoughts and effort you put into this. You completely elevated the level of the study group.</p>
+          </article>
+          <article class="thank">
+            <h3>All of you</h3>
+            <p>For showing up, taking part, and giving us every kind of feedback along the way.</p>
+          </article>
+          <article class="thank">
+            <h3>Yang</h3>
+            <p>For the treats, coffee and drinks today.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 · CERTIFICATE -->
+    <section class="slide split cert-slide" id="s14" data-title="Certificate">
+      <div>
+        <p class="eyebrow">One last thing</p>
+        <h2>Every explorer gets a <mark class="hl">certificate</mark></h2>
+        <p class="lead">A Certificate of Exploration, for four months of learning, friendship, and shared discoveries. See you on the trail!</p>
+        <p class="meta">[How to collect yours] · #search-agent-study-group</p>
+      </div>
+      <figure class="cert tilt">
+        <img src="assets/certificate.jpg" alt="Search Agent Study Group Certificate of Exploration, with a blank line for the explorer's name, animal classmates and a robot hiking toward signposts reading Agents, MCP, Skills, Codex and What's Next.">
+      </figure>
+      <div class="confetti" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <div class="overview" id="overview" hidden>
+    <div class="overview-grid" id="overview-grid"></div>
+  </div>
+
+  <footer class="controls">
+    <button class="icon-btn" id="prev" aria-label="Previous slide">←</button>
+    <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
+    <span class="counter" id="counter">1 / 14</span>
+    <button class="icon-btn" id="next" aria-label="Next slide">→</button>
+  </footer>
+  <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+
+
+  <div class="g-modal" id="g-modal" hidden role="dialog" aria-modal="true" aria-labelledby="g-title">
+    <div class="g-backdrop" data-close></div>
+    <article class="g-card">
+      <button class="g-x" type="button" data-close aria-label="Close entry">×</button>
+      <div class="g-main" id="g-main"></div>
+      <aside class="g-map-wrap" aria-label="Connected terms">
+        <p class="g-map-title">Connected terms</p>
+        <div id="g-map"></div>
+        <div class="g-rel" id="g-rel"></div>
+        <div class="g-nav">
+          <button type="button" id="g-prev" aria-label="Previous term">←</button>
+          <span id="g-pos" aria-live="polite"></span>
+          <button type="button" id="g-next" aria-label="Next term">→</button>
+          <button type="button" id="g-random" aria-label="Random term" title="Random term">🎲</button>
+        </div>
+      </aside>
+    </article>
+  </div>
+
+  <script src="glossary-data.js"></script>
+  <script src="glossary.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
